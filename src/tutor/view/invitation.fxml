@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="500.0" maxWidth="600.0" minHeight="300.0" minWidth="400.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: dimgrey;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <AnchorPane prefHeight="36.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField id="tf_inviteviamail" alignment="CENTER" prefHeight="36.0" prefWidth="400.0" promptText="Receiver email" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <effect>
+                  <DropShadow>
+                     <input>
+                        <InnerShadow height="5.0" radius="2.0" width="5.0" />
+                     </input>
+                  </DropShadow>
+               </effect></TextField>
+         </children>
+      </AnchorPane>
+   </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField id="tf_messageText" alignment="TOP_LEFT" promptText="Your message (optional)" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <effect>
+                  <DropShadow />
+               </effect></TextField>
+         </children>
+      </AnchorPane>
+   </center>
+   <bottom>
+      <AnchorPane prefHeight="34.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+         <children>
+            <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" styleClass="footer" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Button id="btn_send" mnemonicParsing="false" styleClass="custombutton" text="Send">
+                     <effect>
+                        <Glow level="0.81" />
+                     </effect></Button>
+               </children>
+               <effect>
+                  <InnerShadow height="10.0" radius="3.25" width="5.0">
+                     <input>
+                        <DropShadow />
+                     </input>
+                  </InnerShadow>
+               </effect>
+            </FlowPane>
+         </children>
+      </AnchorPane>
+   </bottom>
+</BorderPane>

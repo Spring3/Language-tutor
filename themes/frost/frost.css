@@ -1,4 +1,30 @@
+//INVITATION VIEW
+#tf_inviteviamail{
+  -fx-background-color: #29506D;
+  -fx-text-fill: #92BEDA;
+  -fx-prompt-text-fill: #92BEDA;
+  -fx-font-size: 18;
+  -fx-font-family: "Calibri Light";
+  -fx-background-radius: 0;
+}
 
+#tf_messageText{
+  -fx-background-color: #20364C;
+  -fx-text-fill: #92BEDA;
+  -fx-prompt-text-fill: #92BEDA;
+  -fx-font-size: 18;
+  -fx-font-family: "Calibri Light";
+  -fx-background-radius: 0;
+}
+
+#btn_send{
+  -fx-font-family: "Calibri Light";
+  -fx-font-size: 14;
+  -fx-padding: 6 15 6 15;
+}
+
+
+//MAIN VIEW
 //shadow logo
 .logoShadow{
   -fx-text-fill: #203D53;
@@ -10,23 +36,23 @@
 
 //buttons
 .custombutton{
-  -fx-background-color: #3D3C3A;
-  -fx-border-color:  #707070;
+  -fx-background-color: #024156;
+  -fx-border-color:  #012E3D;
   -fx-text-fill:  #DDD4BC;
   -fx-border-radius: 2;
   -fx-border-width: 1;
 }
 
 .custombutton: hover{
-  -fx-background-color: #AFAF3F;
+  -fx-background-color: #055C79;
 }
 
-//for tab panel' anchorpane
+//for tab panel's anchorpane
 .tabpanel{
   -fx-background-color: #20364C;
 }
 
-//tabbutton
+//tab button
 .tabbutton{
   -fx-background-color: #29506D;
 }
@@ -63,7 +89,6 @@
   -fx-background-color:#044E6A;
 }
 
-//tab pane header area
 .tab-pane .tab-header-area .tab-header-background{
   -fx-background-color: #2F3F52;
 }
@@ -86,15 +111,35 @@
   -fx-scale-y:1;
 }
 
-//taskheaders
+//vk
+#socb_vk{
+  -fx-image: url("../../resources/social/vk_icon.png");
+}
+
+//facebook
+#socb_fb{
+  -fx-image: url("../../resources/social/fb_icon.png");
+}
+
+//google +
+#socb_ggle{
+  -fx-image: url("../../resources/social/google_plus_icon.png");
+}
+
+//twitter
+#socb_tw{
+  -fx-image: url("../../resources/social/twitter-icon.png");
+}
+
+//task headers
 .taskheader{
-  -fx-text-fill: #AABAFF;
+  -fx-text-fill: #92BEDA;
   -fx-font-weight: bold;
   -fx-font-size: 40;
   -fx-font-family: "Calibri Light";
 }
 
-//taskheaderseparators
+//task header separators
 .taskheaderseparator .line{
   -fx-background: #1F3E59;
   -fx-border-width: 2;
