@@ -39,8 +39,11 @@
   -fx-background-color: #024156;
   -fx-border-color:  #012E3D;
   -fx-text-fill:  #DDD4BC;
+  -fx-font-family: "Calibri Light";
+  -fx-font-size: 14;
   -fx-border-radius: 2;
   -fx-border-width: 1;
+  -fx-padding: 8 6 8 6;
 }
 
 .custombutton: hover{
@@ -49,6 +52,10 @@
 
 //for tab panel's anchorpane
 .tabpanel{
+  -fx-background-color: #20364C;
+}
+
+.anchor-pane{
   -fx-background-color: #20364C;
 }
 
@@ -134,9 +141,8 @@
 //task headers
 .taskheader{
   -fx-text-fill: #92BEDA;
-  -fx-font-weight: bold;
-  -fx-font-size: 40;
-  -fx-font-family: "Calibri Light";
+  -fx-font-size: 36;
+  -fx-font-family: "Harlow Solid Italic";
 }
 
 //task header separators

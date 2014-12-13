@@ -121,31 +121,13 @@
                                  <content>
                                     <AnchorPane prefHeight="302.0" prefWidth="600.0" styleClass="tabpanel">
                                        <children>
-                                          <Label styleClass="taskheader" text="Offline tasks" textFill="#575656" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <Label alignment="TOP_LEFT" contentDisplay="CENTER" prefHeight="61.0" prefWidth="213.0" styleClass="taskheader" text="Offline tasks" textFill="#575656" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <font>
-                                                <Font name="Calibri Light" size="36.0" />
+                                                <Font name="Harlow Solid Italic" size="36.0" />
                                              </font>
                                              <padding>
-                                                <Insets left="10.0" top="10.0" />
+                                                <Insets left="10.0" top="-8.0" />
                                              </padding>
-                                             <effect>
-                                                <InnerShadow choke="0.08" color="#456da1" height="32.63" radius="15.8125" width="32.62">
-                                                   <input>
-                                                      <Glow level="0.81">
-                                                         <input>
-                                                            <Lighting>
-                                                               <bumpInput>
-                                                                  <Shadow />
-                                                               </bumpInput>
-                                                               <light>
-                                                                  <Light.Distant />
-                                                               </light>
-                                                            </Lighting>
-                                                         </input>
-                                                      </Glow>
-                                                   </input>
-                                                </InnerShadow>
-                                             </effect>
                                           </Label>
                                           <Separator layoutY="50.0" prefWidth="200.0" styleClass="taskheaderseparator" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
                                           <GridPane hgap="5.0" layoutY="62.0" prefHeight="203.0" prefWidth="598.0" vgap="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="62.0">
@@ -163,31 +145,13 @@
                                                 <Insets left="5.0" right="5.0" />
                                              </padding>
                                           </GridPane>
-                                          <Label styleClass="taskheader" text="Lingualeo tasks" textFill="#575656" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="265.0">
+                                          <Label prefHeight="54.0" prefWidth="251.0" styleClass="taskheader" text="Lingualeo tasks" textFill="#575656" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="265.0">
                                              <font>
                                                 <Font name="Calibri Light" size="36.0" />
                                              </font>
                                              <padding>
-                                                <Insets left="10.0" top="10.0" />
+                                                <Insets left="10.0" top="-7.0" />
                                              </padding>
-                                             <effect>
-                                                <InnerShadow choke="0.08" color="#456da1" height="32.63" radius="15.8125" width="32.62">
-                                                   <input>
-                                                      <Glow level="0.81">
-                                                         <input>
-                                                            <Lighting>
-                                                               <bumpInput>
-                                                                  <Shadow />
-                                                               </bumpInput>
-                                                               <light>
-                                                                  <Light.Distant />
-                                                               </light>
-                                                            </Lighting>
-                                                         </input>
-                                                      </Glow>
-                                                   </input>
-                                                </InnerShadow>
-                                             </effect>
                                           </Label>
                                           <Separator prefWidth="200.0" styleClass="taskheaderseparator" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="320.0" />
                                           <GridPane hgap="5.0" prefHeight="203.0" prefWidth="598.0" vgap="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="325.0">
