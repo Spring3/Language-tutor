@@ -8,12 +8,17 @@
   -fx-background-radius: 0;
 }
 
-#tf_messageText{
-  -fx-background-color: #20364C;
+#ta_messageText {
+
   -fx-text-fill: #92BEDA;
   -fx-prompt-text-fill: #92BEDA;
   -fx-font-size: 18;
   -fx-font-family: "Calibri Light";
+
+}
+
+#ta_messageText .content{
+  -fx-background-color: #20364C;
   -fx-background-radius: 0;
 }
 
@@ -120,22 +125,22 @@
 
 //vk
 #socb_vk{
-  -fx-image: url("../../resources/social/vk_icon.png");
+  -fx-image: url("socialbuttons/vk_icon.png");
 }
 
 //facebook
 #socb_fb{
-  -fx-image: url("../../resources/social/fb_icon.png");
+  -fx-image: url("socialbuttons/fb_icon.png");
 }
 
 //google +
 #socb_ggle{
-  -fx-image: url("../../resources/social/google_plus_icon.png");
+  -fx-image: url("socialbuttons/google_plus_icon.png");
 }
 
 //twitter
 #socb_tw{
-  -fx-image: url("../../resources/social/twitter-icon.png");
+  -fx-image: url("socialbuttons/twitter-icon.png");
 }
 
 //task headers

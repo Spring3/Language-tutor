@@ -13,6 +13,7 @@ public class UserConfigHelper extends ConfigKeys{
     private static UserConfigHelper instance = null;
     private Properties userConfigFile = null;
     private static final String CONFIG_FILE_PATH = "user_config.properties";
+    public static final String SELECTED_THEME = "SELECTED_THEME";
 
     public static UserConfigHelper getInstance(){
         if (instance == null){
@@ -63,7 +64,7 @@ public class UserConfigHelper extends ConfigKeys{
     }
 
     private void loadDefaultSettings(){
-        setParameter(THEME_FROST, ConfigHelper.getInstance().getParameter(THEME_FROST));
+        setParameter(this.SELECTED_THEME, ConfigHelper.getInstance().getParameter(THEME_FROST));
         setParameter(LANGUAGE, ConfigHelper.getInstance().getParameter(LANGUAGE));
         setParameter(DATA_SOURCE, ConfigHelper.getInstance().getParameter(DATA_SOURCE));
         setParameter(DATA_SOURCE_URL, ConfigHelper.getInstance().getParameter(DATA_SOURCE_URL));

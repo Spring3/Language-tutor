@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import tutor.controllers.Controller;
 import tutor.util.UserConfigHelper;
 
 import java.util.Locale;
@@ -13,13 +14,17 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Locale.setDefault(Locale.ENGLISH);
-        Parent root = FXMLLoader.load(getClass().getResource("view/main.fxml"));
+        Locale.setDefault(new Locale(UserConfigHelper.getInstance().getParameter(UserConfigHelper.LANGUAGE)));
         primaryStage.setTitle("Language Tutor");
-        Scene mainScene = new Scene(root, 600, 400);
-        mainScene.getStylesheets().add(UserConfigHelper.getInstance().getParameter(UserConfigHelper.THEME_FROST));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/main.fxml"));
+        Parent root = loader.load();
+        Controller controller = loader.getController();
+        controller.setCurrentMainStage(primaryStage);
+        Scene mainScene = new Scene(root);
+        mainScene.getStylesheets().add(UserConfigHelper.getInstance().getParameter(UserConfigHelper.SELECTED_THEME));
         primaryStage.setScene(mainScene);
         primaryStage.show();
+
     }
 
 
