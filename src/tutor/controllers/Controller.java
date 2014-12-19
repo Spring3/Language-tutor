@@ -26,9 +26,9 @@ public class Controller implements Initializable {
     private Parent additionalRoot = null;
     private FXMLLoader additionalLoader = null;
     private Scene additionalScene = null;
-    private static final String INVITATION_VIEW_PATH = "view/invitation.fxml";
-    private static final String MAIN_VIEW_PATH = "view/main.fxml";
-    private static final String EDIT_SETTINGS_PATH = "view/settings.fxml";
+    private static final String INVITATION_VIEW_PATH = "../view/invitation.fxml";
+    private static final String MAIN_VIEW_PATH = "../view/main.fxml";
+    private static final String EDIT_SETTINGS_PATH = "../view/settings.fxml";
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
@@ -60,7 +60,7 @@ public class Controller implements Initializable {
                 mainStage.setTitle(title);
                 mainStage.setOnHiding((WindowEvent windowEvent) -> {
                     mainStage = null;
-                    System.out.println("Main stage reseted");
+                    System.out.println("Main stage was reseted");
                 });
                 mainStage.show();
             } catch (IOException ex) {
@@ -86,7 +86,7 @@ public class Controller implements Initializable {
                 additionalStage.setTitle(title);
                 additionalStage.setOnHiding((WindowEvent windowEvent) -> {
                     additionalStage = null;
-                    System.out.println("Additional stage reseted");
+                    System.out.println("Additional stage was reseted");
                 });
                 additionalStage.show();
 
@@ -107,7 +107,6 @@ public class Controller implements Initializable {
 
     public void EditSettingsClick(ActionEvent actionEvent) {
         navigateTo(EDIT_SETTINGS_PATH, "Settings", false);
-
     }
 
     public void Shutdown(ActionEvent actionEvent) {

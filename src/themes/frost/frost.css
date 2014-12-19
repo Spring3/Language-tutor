@@ -82,7 +82,11 @@
 
 .context-menu{
   -fx-background-color: #29506D;
-  -fx-skin: blue;
+}
+
+.treeview {
+  -fx-background-color: #E6E6DC;
+  -fx-region-background: #E6E6DC;
 }
 
 .menubutton{
