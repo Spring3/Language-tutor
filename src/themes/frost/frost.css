@@ -1,3 +1,10 @@
+
+//Settings view
+.listview{
+  -fx-background-color: #284361;
+  -fx-text-fill:#92BEDA;
+}
+
 //INVITATION VIEW
 #tf_inviteviamail{
   -fx-background-color: #29506D;
@@ -82,11 +89,6 @@
 
 .context-menu{
   -fx-background-color: #29506D;
-}
-
-.treeview {
-  -fx-background-color: #E6E6DC;
-  -fx-region-background: #E6E6DC;
 }
 
 .menubutton{

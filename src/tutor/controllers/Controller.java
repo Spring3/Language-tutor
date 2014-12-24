@@ -16,7 +16,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Controller implements Initializable {
+public class Controller extends Navigator implements Initializable
+{
 
     private Stage mainStage = null;
     private Parent mainRoot = null;
@@ -26,9 +27,7 @@ public class Controller implements Initializable {
     private Parent additionalRoot = null;
     private FXMLLoader additionalLoader = null;
     private Scene additionalScene = null;
-    private static final String INVITATION_VIEW_PATH = "../view/invitation.fxml";
-    private static final String MAIN_VIEW_PATH = "../view/main.fxml";
-    private static final String EDIT_SETTINGS_PATH = "../view/settings.fxml";
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb){

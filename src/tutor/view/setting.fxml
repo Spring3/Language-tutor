@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tutor.controllers.SettingsController">
+   <left>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ListView fx:id="listView" prefHeight="200.0" prefWidth="200.0" styleClass="listview" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <effect>
+                  <DropShadow />
+               </effect></ListView>
+         </children>
+      </AnchorPane>
+   </left>
+   <center>
+      <AnchorPane prefHeight="400.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane fx:id="pane_lang" prefHeight="200.0" prefWidth="200.0" styleClass="tabpanel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <effect>
+                  <DropShadow />
+               </effect></Pane>
+            <Pane fx:id="pane_data_source" prefHeight="200.0" prefWidth="200.0" styleClass="tabpanel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Pane>
+            <Pane fx:id="pane_theme" prefHeight="200.0" prefWidth="200.0" styleClass="tabpanel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
