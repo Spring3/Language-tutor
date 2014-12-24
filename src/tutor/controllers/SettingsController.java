@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -23,18 +24,18 @@ public class SettingsController extends Navigator implements Initializable {
     ListView listView;
 
     @FXML
-    Pane pane_lang;
+    StackPane pane_lang;
 
     @FXML
-    Pane pane_data_source;
+    StackPane pane_data_source;
 
     @FXML
-    Pane pane_theme;
+    StackPane pane_theme;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Pane[] panes = {pane_data_source, pane_lang, pane_theme};
+        StackPane[] panes = {pane_data_source, pane_lang, pane_theme};
         ObservableList<String> items = FXCollections.observableArrayList("Data Source", "Language", "Theme");
         listView.setItems(items);
 
