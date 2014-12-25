@@ -5,15 +5,10 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -23,19 +18,57 @@ public class SettingsController extends Navigator implements Initializable {
 
     //UI components, injected from the settings.fxml
     @FXML
-    private TextField textField_backupLocalDBPath;
+    private ChoiceBox<String> choiceBox_localizeTo;
+    @FXML
+    private Button btn_reportLocaleMistake;
     @FXML
     private RadioButton radioButton_wordAndTranslation;
-    @FXML
-    private StackPane pane_data_source;
-    @FXML
-    private StackPane pane_theme;
     @FXML
     private TextField textField_dropboxFileURL;
     @FXML
     private Button btn_connectToLingualeo;
     @FXML
+    private RadioButton radioButton_wordsOnlyGoogleDocs;
+    @FXML
+    private RadioButton radioButton_wordsOnlyDropbox;
+    @FXML
+    private Button btn_ok;
+    @FXML
+    private RadioButton radioButton_wordAndTranslationDropbox;
+    @FXML
+    private TextField textField_localDBPath;
+    @FXML
+    private Button btn_loadLocalDB;
+    @FXML
+    private RadioButton radioButton_wordAndTranslationGoogleDocs;
+    @FXML
+    private StackPane pane_lang;
+    @FXML
+    private ChoiceBox<String> choiceBox_activeLocale;
+    @FXML
+    private TextField textField_lingualeoProfileURL;
+    @FXML
+    private ListView<String> listView;
+    @FXML
+    private ChoiceBox<String> choiceBox_uncorrectLocale;
+    @FXML
+    private Button btn_apply;
+    @FXML
+    private RadioButton radioButton_wordsOnly;
+    @FXML
+    private RadioButton radioButton_localizeManually;
+    @FXML
+    private Button btn_downloadLocale;
+    @FXML
+    private TextField textField_backupLocalDBPath;
+    @FXML
+    private StackPane pane_data_source;
+    @FXML
+    private StackPane pane_other;
+    @FXML
     private Button btn_createLocalDB;
+    @FXML
+    private Button btn_localize;
     @FXML
     private CheckBox checkBox_autobackup;
     @FXML
@@ -45,33 +78,32 @@ public class SettingsController extends Navigator implements Initializable {
     @FXML
     private RadioButton radioButton_translationOnly;
     @FXML
-    private TextField textField_localDBPath;
+    private RadioButton radioButton_translationOnlyGoogleDocs;
+    @FXML
+    private RadioButton radioButton_translationOnlyDropbox;
+    @FXML
+    private RadioButton radioButton_localizeAutomatically;
     @FXML
     private TextField textField_googleDocsFIleURL;
     @FXML
-    private Button btn_loadLocalDB;
+    private Label label_errorMessage;
     @FXML
     private Button btn_chooseBackupLocalDBPath;
     @FXML
-    private StackPane pane_lang;
-    @FXML
-    private TextField textField_lingualeoProfileURL;
+    private Button btn_cancel;
     @FXML
     private Button btn_connectoToGoogleDocs;
     @FXML
     private Button btn_connectToDropBox;
     @FXML
-    private ListView<String> listView;
-    @FXML
-    private RadioButton radioButton_wordsOnly;
-
+    private Button btn_correctLocaleMistake;
 
     //initialization method
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Initializing items for listView
-        StackPane[] panes = {pane_data_source, pane_lang, pane_theme};
-        ObservableList<String> items = FXCollections.observableArrayList("Data Source", "Language", "Theme");
+        StackPane[] panes = {pane_data_source, pane_lang, pane_other};
+        ObservableList<String> items = FXCollections.observableArrayList("Data Source", "Language", "Others");
         listView.setItems(items);
 
         listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -97,5 +129,19 @@ public class SettingsController extends Navigator implements Initializable {
         radioButton_translationOnly.setToggleGroup(radioButtonToggleGroup);
         radioButton_wordAndTranslation.setToggleGroup(radioButtonToggleGroup);
         radioButton_wordsOnly.setToggleGroup(radioButtonToggleGroup);
+
+        ToggleGroup radioButtonGoogleToggleGroup = new ToggleGroup();
+        radioButton_translationOnlyGoogleDocs.setToggleGroup(radioButtonGoogleToggleGroup);
+        radioButton_wordAndTranslationGoogleDocs.setToggleGroup(radioButtonGoogleToggleGroup);
+        radioButton_wordsOnlyGoogleDocs.setToggleGroup(radioButtonGoogleToggleGroup);
+
+        ToggleGroup radioButtonDropboxToggleGroup = new ToggleGroup();
+        radioButton_translationOnlyDropbox.setToggleGroup(radioButtonDropboxToggleGroup);
+        radioButton_wordAndTranslationDropbox.setToggleGroup(radioButtonDropboxToggleGroup);
+        radioButton_wordsOnlyDropbox.setToggleGroup(radioButtonDropboxToggleGroup);
+
+        ToggleGroup languagePanelRadioButtonToggleGroup = new ToggleGroup();
+        radioButton_localizeAutomatically.setToggleGroup(languagePanelRadioButtonToggleGroup);
+        radioButton_localizeManually.setToggleGroup(languagePanelRadioButtonToggleGroup);
     }
 }
