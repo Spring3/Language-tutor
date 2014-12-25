@@ -16,6 +16,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Main controller for the main.fxml view.
+ */
 public class Controller extends Navigator implements Initializable
 {
 

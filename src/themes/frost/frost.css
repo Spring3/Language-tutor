@@ -12,9 +12,25 @@
   -fx-text-fill: #92BEDA;
 }
 
+.settings_rbutton .radio{
+  -fx-background-color: #92BEDA;
+}
+
+.settings_rbutton .radio:selected {
+    -fx-background-color: #92BEDA;
+}
+
+.settings_rbutton{
+  -fx-text-fill: #92BEDA;
+  -fx-font-family: "Calibri Light";
+  -fx-font-size: 12px;
+}
+
 .settings_button{
   -fx-text-fill: #92BEDA;
   -fx-background-color: #1D3B58;
+  -fx-border-radius: 0;
+  -fx-border-width:0;
 }
 
 .settings_button:hover{
@@ -57,15 +73,7 @@
   -fx-background-color: #41789C;
 }
 
-/*.settingslistview .list-cell:filled:hover{
-  -fx-background-color: #669BBD;
-}*/
-
-.settings_stackpane{
-  -fx-background-color: #284361;
-}
-
-.settings_anchorpane{
+.settings_stackpane, .settings_anchorpane{
   -fx-background-color: #284361;
 }
 
@@ -80,7 +88,6 @@
 }
 
 #ta_messageText {
-
   -fx-text-fill: #92BEDA;
   -fx-prompt-text-fill: #92BEDA;
   -fx-font-size: 18;
@@ -127,21 +134,14 @@
 }
 
 //for tab panel's anchorpane
-.tabpanel{
-  -fx-background-color: #20364C;
-}
-
+.tabpanel,
 .anchor-pane{
   -fx-background-color: #20364C;
 }
 
-//tab button
-.tabbutton{
-  -fx-background-color: #29506D;
-}
-
-//menu bar
-.menu-bar{
+.tabbutton,
+.menu-bar,
+.context-menu{
   -fx-background-color: #29506D;
 }
 
@@ -149,10 +149,6 @@
   -fx-text-fill: white;
   -fx-font-family: "Calibri Light";
   -fx-font-size: 14;
-}
-
-.context-menu{
-  -fx-background-color: #29506D;
 }
 
 .menubutton{
@@ -195,22 +191,22 @@
 
 //vk
 #socb_vk{
-  -fx-image: url("socialbuttons/vk_icon.png");
+  -fx-image: url("icons/vk_icon.png");
 }
 
 //facebook
 #socb_fb{
-  -fx-image: url("socialbuttons/fb_icon.png");
+  -fx-image: url("icons/fb_icon.png");
 }
 
 //google +
 #socb_ggle{
-  -fx-image: url("socialbuttons/google_plus_icon.png");
+  -fx-image: url("icons/google_plus_icon.png");
 }
 
 //twitter
 #socb_tw{
-  -fx-image: url("socialbuttons/twitter-icon.png");
+  -fx-image: url("icons/twitter-icon.png");
 }
 
 //task headers
@@ -275,38 +271,41 @@
 .scroll-bar:vertical .thumb:pressed {
  -fx-background-color: rgb(255,255,255);
 }
-.scroll-bar:vertical .increment-button, .scroll-bar:vertical .decrement-button {
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button,
+.scroll-bar:horizontal .increment-button,
+.scroll-bar:horizontal .decrement-button {
  -fx-background-color:transparent;
  -fx-background-radius: 2em;
  -fx-padding: 4;
 }
-.scroll-bar:horizontal .increment-button, .scroll-bar:horizontal .decrement-button {
- -fx-background-color:transparent;
- -fx-background-radius: 2em;
- -fx-padding: 4;
-}
-.scroll-bar:horizontal .increment-arrow {
+
+.scroll-bar:horizontal .increment-arrow, .scroll-bar:vertical .increment-arrow{
  -fx-shape: "M 0 0 L 4 8 L 8 0 Z";
  -fx-background-color: rgb(211,211,211);
  -fx-padding: 0.25em;
- -fx-rotate: -90;
+
 }
+
+.scroll-bar:horizontal .increment-arrow{
+  -fx-rotate: -90;
+}
+
 .scroll-bar:vertical .increment-arrow {
- -fx-background-color: rgb(211,211,211);
- -fx-shape: "M 0 0 L 4 8 L 8 0 Z";
- -fx-padding: 0.25em;
  -fx-rotate: 0;
 }
-.scroll-bar:horizontal .decrement-arrow {
+.scroll-bar:horizontal .decrement-arrow,
+.scroll-bar:vertical .decrement-arrow{
  -fx-background-color: rgb(211,211,211);
  -fx-shape: "M 0 0 L 4 8 L 8 0 Z";
  -fx-padding: 0.25em;
- -fx-rotate: 90;
 }
+
+.scroll-bar:horizontal .decrement-arrow{
+  -fx-rotate: 90;
+}
+
 .scroll-bar:vertical .decrement-arrow {
- -fx-background-color: rgb(211,211,211);
- -fx-shape: "M 0 0 L 4 8 L 8 0 Z";
- -fx-padding: 0.25em;
  -fx-rotate: -180;
 }
 .scroll-bar:vertical:focused,
