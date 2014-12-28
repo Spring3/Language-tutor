@@ -11,7 +11,7 @@
    <center>
       <AnchorPane maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="10.0" styleClass="settings_anchorpane" BorderPane.alignment="CENTER">
          <children>
-            <StackPane fx:id="pane_lang" maxWidth="800.0" minHeight="0.0" minWidth="500.0" styleClass="settings_stackpane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <StackPane fx:id="pane_lang" maxWidth="800.0" minHeight="0.0" minWidth="500.0" styleClass="settings_stackpane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <AnchorPane maxWidth="800.0" minHeight="0.0" minWidth="500.0" StackPane.alignment="TOP_LEFT">
                      <children>
@@ -25,15 +25,23 @@
                         <RadioButton fx:id="radioButton_localizeAutomatically" layoutX="358.0" layoutY="120.0" mnemonicParsing="false" styleClass="settings_rbutton" text="Automatically" AnchorPane.rightAnchor="54.0" AnchorPane.topAnchor="120.0" />
                         <RadioButton fx:id="radioButton_localizeManually" layoutX="343.0" layoutY="152.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="97.0" styleClass="settings_rbutton" text="Manually" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="152.0" />
                         <Button fx:id="btn_localize" disable="true" layoutX="358.0" layoutY="183.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" styleClass="settings_button" text="Localize" AnchorPane.rightAnchor="67.0" AnchorPane.topAnchor="183.0" />
-                        <Label alignment="CENTER" layoutX="34.0" layoutY="291.0" maxWidth="150.0" styleClass="settings_label" text="Localization:" AnchorPane.leftAnchor="34.0" AnchorPane.topAnchor="291.0" />
-                        <ChoiceBox fx:id="choiceBox_uncorrectLocale" layoutX="173.0" layoutY="288.0" maxWidth="400.0" prefHeight="25.0" prefWidth="145.0" styleClass="settings_choiceBox" AnchorPane.leftAnchor="173.0" AnchorPane.rightAnchor="182.0" AnchorPane.topAnchor="288.0" />
-                        <Button fx:id="btn_correctLocaleMistake" disable="true" layoutX="358.0" layoutY="286.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" styleClass="settings_button" text="Correct" AnchorPane.rightAnchor="67.0" AnchorPane.topAnchor="286.0" />
-                        <Label alignment="CENTER" layoutX="127.0" layoutY="250.0" maxWidth="600.0" prefHeight="22.0" prefWidth="257.0" styleClass="settings_header_label" text="Localization mistakes" AnchorPane.leftAnchor="127.0" AnchorPane.rightAnchor="116.0" AnchorPane.topAnchor="250.0" />
-                        <Button fx:id="btn_reportLocaleMistake" disable="true" layoutX="358.0" layoutY="322.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" styleClass="settings_button" text="Report" AnchorPane.rightAnchor="67.0" AnchorPane.topAnchor="322.0" />
+                        <Label alignment="CENTER" layoutX="34.0" layoutY="491.0" maxWidth="150.0" styleClass="settings_label" text="Localization:" AnchorPane.leftAnchor="34.0" AnchorPane.topAnchor="491.0" />
+                        <ChoiceBox fx:id="choiceBox_uncorrectLocale" layoutX="173.0" layoutY="488.0" maxWidth="400.0" prefHeight="25.0" prefWidth="145.0" styleClass="settings_choiceBox" AnchorPane.leftAnchor="173.0" AnchorPane.rightAnchor="182.0" AnchorPane.topAnchor="488.0" />
+                        <Button fx:id="btn_correctLocaleMistake" disable="true" layoutX="348.0" layoutY="486.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" styleClass="settings_button" text="Correct" AnchorPane.rightAnchor="67.0" AnchorPane.topAnchor="486.0" />
+                        <Label alignment="CENTER" layoutX="127.0" layoutY="450.0" maxWidth="600.0" prefHeight="22.0" prefWidth="257.0" styleClass="settings_header_label" text="Localization mistakes" AnchorPane.leftAnchor="127.0" AnchorPane.rightAnchor="116.0" AnchorPane.topAnchor="450.0" />
+                        <Button fx:id="btn_reportLocaleMistake" disable="true" layoutX="348.0" layoutY="522.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" styleClass="settings_button" text="Report" AnchorPane.rightAnchor="67.0" AnchorPane.topAnchor="522.0" />
+                        <ListView layoutX="28.0" layoutY="257.0" maxWidth="680.0" prefHeight="170.0" prefWidth="421.0" styleClass="settingslistview" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="51.0" AnchorPane.topAnchor="257.0">
+                           <effect>
+                              <DropShadow color="#1b2940" height="5.0" radius="2.0" width="5.0" />
+                           </effect>
+                        </ListView>
+                        <Label alignment="CENTER" layoutX="33.0" layoutY="225.0" maxWidth="600.0" prefHeight="17.0" prefWidth="435.0" styleClass="settings_header_label" text="Languages to learn" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="225.0" />
+                        <Button layoutX="463.0" layoutY="257.0" mnemonicParsing="false" styleClass="settings_button" text="+" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="257.0" />
+                        <Button layoutX="463.0" layoutY="297.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="31.0" styleClass="settings_button" text="-" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="297.0" />
                      </children></AnchorPane>
                </children>
             </StackPane>
-            <StackPane fx:id="pane_data_source" maxWidth="800.0" minHeight="0.0" minWidth="10.0" styleClass="settings_stackpane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <StackPane fx:id="pane_data_source" maxWidth="800.0" minHeight="0.0" minWidth="10.0" styleClass="settings_stackpane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <AnchorPane maxWidth="800.0" minHeight="0.0" minWidth="10.0" StackPane.alignment="CENTER_LEFT">
                      <children>
@@ -47,40 +55,40 @@
                         <CheckBox fx:id="checkBox_autobackup" layoutX="117.0" layoutY="92.0" mnemonicParsing="false" styleClass="settings_checkbox" text="Automatic backup" AnchorPane.leftAnchor="117.0" AnchorPane.topAnchor="92.0" />
                         <Label alignment="CENTER_RIGHT" disable="true" layoutX="9.0" layoutY="130.0" prefHeight="22.0" prefWidth="107.0" styleClass="settings_label" text="Backup path:" textAlignment="CENTER" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="130.0" />
                         <TextField fx:id="textField_backupLocalDBPath" disable="true" editable="false" layoutX="117.0" layoutY="126.0" maxWidth="600.0" prefHeight="25.0" prefWidth="295.0" styleClass="settings_input" AnchorPane.leftAnchor="117.0" AnchorPane.rightAnchor="83.0" AnchorPane.topAnchor="126.0" />
-                        <Label layoutX="27.0" layoutY="253.0" prefHeight="23.0" prefWidth="111.0" styleClass="settings_header_label" text="Google Docs" underline="true" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="253.0">
+                        <Label layoutX="27.0" layoutY="257.0" prefHeight="23.0" prefWidth="111.0" styleClass="settings_header_label" text="Google Docs" underline="true" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="257.0">
                            <font>
                               <Font name="System Italic" size="12.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="281.0" prefHeight="18.0" prefWidth="88.0" styleClass="settings_label" text="Source URL:" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="281.0" />
-                        <TextField fx:id="textField_googleDocsFIleURL" layoutX="118.0" layoutY="278.0" maxWidth="600.0" prefHeight="25.0" prefWidth="295.0" styleClass="settings_input" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="82.0" AnchorPane.topAnchor="278.0" />
-                        <Button fx:id="btn_connectoToGoogleDocs" disable="true" layoutX="418.0" layoutY="312.0" mnemonicParsing="false" prefHeight="25.0" styleClass="settings_button" text="Connect" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="312.0" />
-                        <Label layoutX="26.0" layoutY="354.0" prefHeight="23.0" prefWidth="108.0" styleClass="settings_header_label" text="Dropbox file" underline="true" wrapText="true" AnchorPane.leftAnchor="26.0" AnchorPane.topAnchor="354.0" />
-                        <Button fx:id="btn_connectToDropBox" disable="true" layoutX="418.0" layoutY="408.0" mnemonicParsing="false" prefHeight="25.0" styleClass="settings_button" text="Connect" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="408.0" />
-                        <TextField fx:id="textField_dropboxFileURL" layoutX="118.0" layoutY="376.0" maxWidth="600.0" prefHeight="25.0" prefWidth="295.0" styleClass="settings_input" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="82.0" AnchorPane.topAnchor="376.0" />
-                        <Label alignment="CENTER_RIGHT" layoutX="27.0" layoutY="380.0" prefHeight="18.0" styleClass="settings_label" text="Source URL:" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="380.0" />
-                        <Label layoutX="4.0" layoutY="435.0" prefHeight="22.0" styleClass="settings_header_label" text="Services" underline="true" AnchorPane.leftAnchor="4.0" AnchorPane.topAnchor="435.0" />
+                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="289.0" prefHeight="18.0" prefWidth="88.0" styleClass="settings_label" text="Source URL:" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="289.0" />
+                        <TextField fx:id="textField_googleDocsFIleURL" layoutX="118.0" layoutY="286.0" maxWidth="600.0" prefHeight="25.0" prefWidth="295.0" styleClass="settings_input" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="82.0" AnchorPane.topAnchor="286.0" />
+                        <Button fx:id="btn_connectoToGoogleDocs" disable="true" layoutX="418.0" layoutY="320.0" mnemonicParsing="false" prefHeight="25.0" styleClass="settings_button" text="Connect" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="320.0" />
+                        <Label layoutX="26.0" layoutY="362.0" prefHeight="23.0" prefWidth="108.0" styleClass="settings_header_label" text="Dropbox file" underline="true" wrapText="true" AnchorPane.leftAnchor="26.0" AnchorPane.topAnchor="362.0" />
+                        <Button fx:id="btn_connectToDropBox" disable="true" layoutX="418.0" layoutY="420.0" mnemonicParsing="false" prefHeight="25.0" styleClass="settings_button" text="Connect" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="420.0" />
+                        <TextField fx:id="textField_dropboxFileURL" layoutX="118.0" layoutY="388.0" maxWidth="600.0" prefHeight="25.0" prefWidth="295.0" styleClass="settings_input" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="82.0" AnchorPane.topAnchor="388.0" />
+                        <Label alignment="CENTER_RIGHT" layoutX="27.0" layoutY="392.0" prefHeight="18.0" styleClass="settings_label" text="Source URL:" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="392.0" />
+                        <Label layoutX="4.0" layoutY="447.0" prefHeight="22.0" styleClass="settings_header_label" text="Services" underline="true" AnchorPane.leftAnchor="4.0" AnchorPane.topAnchor="447.0" />
                         <Button fx:id="btn_chooseBackupLocalDBPath" disable="true" layoutX="424.0" layoutY="124.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" styleClass="settings_button" text="Choose" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="124.0" />
-                        <Label layoutX="27.0" layoutY="463.0" prefHeight="18.0" styleClass="settings_header_label" text="Lingualeo" underline="true" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="463.0" />
-                        <Label alignment="CENTER_RIGHT" layoutX="25.0" layoutY="487.0" prefHeight="18.0" prefWidth="88.0" styleClass="settings_label" text="Profile URL:" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="487.0" />
-                        <TextField fx:id="textField_lingualeoProfileURL" layoutX="116.0" layoutY="482.0" maxWidth="600.0" prefHeight="25.0" prefWidth="295.0" styleClass="settings_input" AnchorPane.leftAnchor="116.0" AnchorPane.rightAnchor="84.0" AnchorPane.topAnchor="482.0" />
-                        <Button fx:id="btn_connectToLingualeo" disable="true" layoutX="419.0" layoutY="479.0" mnemonicParsing="false" prefHeight="25.0" styleClass="settings_button" text="Connect" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="479.0" />
+                        <Label layoutX="27.0" layoutY="475.0" prefHeight="18.0" styleClass="settings_header_label" text="Lingualeo" underline="true" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="475.0" />
+                        <Label alignment="CENTER_RIGHT" layoutX="25.0" layoutY="503.0" prefHeight="18.0" prefWidth="88.0" styleClass="settings_label" text="Profile URL:" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="503.0" />
+                        <TextField fx:id="textField_lingualeoProfileURL" layoutX="116.0" layoutY="498.0" maxWidth="600.0" prefHeight="25.0" prefWidth="295.0" styleClass="settings_input" AnchorPane.leftAnchor="116.0" AnchorPane.rightAnchor="84.0" AnchorPane.topAnchor="498.0" />
+                        <Button fx:id="btn_connectToLingualeo" disable="true" layoutX="419.0" layoutY="495.0" mnemonicParsing="false" prefHeight="25.0" styleClass="settings_button" text="Connect" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="495.0" />
                         <Button fx:id="btn_loadLocalFile" disable="true" layoutX="418.0" layoutY="199.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" styleClass="settings_button" text="Load" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="199.0" />
                         <TextField fx:id="textField_localFilePath" layoutX="117.0" layoutY="165.0" maxWidth="600.0" prefHeight="25.0" prefWidth="295.0" styleClass="settings_input" AnchorPane.leftAnchor="117.0" AnchorPane.rightAnchor="83.0" AnchorPane.topAnchor="165.0" />
                         <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="4.0" layoutY="169.0" prefHeight="18.0" prefWidth="110.0" styleClass="settings_label" text="File:" textAlignment="RIGHT" AnchorPane.leftAnchor="4.0" AnchorPane.topAnchor="169.0" />
                         <RadioButton fx:id="radioButton_wordAndTranslation" layoutX="69.0" layoutY="202.0" mnemonicParsing="false" styleClass="settings_rbutton" text="Word-translation" AnchorPane.leftAnchor="69.0" AnchorPane.topAnchor="202.0" />
                         <RadioButton fx:id="radioButton_wordsOnly" layoutX="198.0" layoutY="202.0" mnemonicParsing="false" styleClass="settings_rbutton" text="Words only" AnchorPane.leftAnchor="198.0" AnchorPane.topAnchor="202.0" />
                         <RadioButton fx:id="radioButton_translationOnly" layoutX="298.0" layoutY="202.0" mnemonicParsing="false" styleClass="settings_rbutton" text="Translation only" AnchorPane.leftAnchor="298.0" AnchorPane.topAnchor="202.0" />
-                        <RadioButton fx:id="radioButton_translationOnlyGoogleDocs" layoutX="300.0" layoutY="318.0" mnemonicParsing="false" styleClass="settings_rbutton" text="Translation only" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="318.0" />
-                        <RadioButton fx:id="radioButton_wordsOnlyGoogleDocs" layoutX="200.0" layoutY="318.0" mnemonicParsing="false" styleClass="settings_rbutton" text="Words only" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="318.0" />
-                        <RadioButton fx:id="radioButton_wordAndTranslationGoogleDocs" layoutX="71.0" layoutY="318.0" mnemonicParsing="false" styleClass="settings_rbutton" text="Word-translation" AnchorPane.leftAnchor="71.0" AnchorPane.topAnchor="318.0" />
-                        <RadioButton fx:id="radioButton_wordAndTranslationDropbox" layoutX="71.0" layoutY="411.0" mnemonicParsing="false" styleClass="settings_rbutton" text="Word-translation" AnchorPane.leftAnchor="71.0" AnchorPane.topAnchor="411.0" />
-                        <RadioButton fx:id="radioButton_wordsOnlyDropbox" layoutX="200.0" layoutY="411.0" mnemonicParsing="false" styleClass="settings_rbutton" text="Words only" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="411.0" />
-                        <RadioButton fx:id="radioButton_translationOnlyDropbox" layoutX="300.0" layoutY="411.0" mnemonicParsing="false" styleClass="settings_rbutton" text="Translation only" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="411.0" />
+                        <RadioButton fx:id="radioButton_translationOnlyGoogleDocs" layoutX="300.0" layoutY="326.0" mnemonicParsing="false" styleClass="settings_rbutton" text="Translation only" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="326.0" />
+                        <RadioButton fx:id="radioButton_wordsOnlyGoogleDocs" layoutX="200.0" layoutY="326.0" mnemonicParsing="false" styleClass="settings_rbutton" text="Words only" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="326.0" />
+                        <RadioButton fx:id="radioButton_wordAndTranslationGoogleDocs" layoutX="71.0" layoutY="326.0" mnemonicParsing="false" styleClass="settings_rbutton" text="Word-translation" AnchorPane.leftAnchor="71.0" AnchorPane.topAnchor="326.0" />
+                        <RadioButton fx:id="radioButton_wordAndTranslationDropbox" layoutX="71.0" layoutY="423.0" mnemonicParsing="false" styleClass="settings_rbutton" text="Word-translation" AnchorPane.leftAnchor="71.0" AnchorPane.topAnchor="423.0" />
+                        <RadioButton fx:id="radioButton_wordsOnlyDropbox" layoutX="200.0" layoutY="423.0" mnemonicParsing="false" styleClass="settings_rbutton" text="Words only" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="423.0" />
+                        <RadioButton fx:id="radioButton_translationOnlyDropbox" layoutX="300.0" layoutY="423.0" mnemonicParsing="false" styleClass="settings_rbutton" text="Translation only" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="423.0" />
                         <Button fx:id="btn_openLocalDB" layoutX="419.0" layoutY="48.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="72.0" styleClass="settings_button" text="Open" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="48.0" />
                         <Button fx:id="btn_openFile" layoutX="418.0" layoutY="163.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="72.0" styleClass="settings_button" text="Open" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="163.0" />
-                        <Button fx:id="btn_openGoogleDocFile" layoutX="418.0" layoutY="276.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="72.0" styleClass="settings_button" text="Open" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="276.0" />
-                        <Button fx:id="btn_openDropboxFile" layoutX="418.0" layoutY="374.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="72.0" styleClass="settings_button" text="Open" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="374.0" />
+                        <Button fx:id="btn_openGoogleDocFile" layoutX="419.0" layoutY="284.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="72.0" styleClass="settings_button" text="Open" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="284.0" />
+                        <Button fx:id="btn_openDropboxFile" layoutX="419.0" layoutY="386.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="72.0" styleClass="settings_button" text="Open" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="386.0" />
                      </children>
                      <StackPane.margin>
                         <Insets left="5.0" />

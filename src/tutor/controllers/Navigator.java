@@ -6,7 +6,7 @@ package tutor.controllers;
  * All paths must be relative!
  */
 public abstract class Navigator {
-    public static final String INVITATION_VIEW_PATH = "../view/invitation.fxml";
-    public static final String MAIN_VIEW_PATH = "../view/main.fxml";
-    public static final String EDIT_SETTINGS_PATH = "../view/setting.fxml";
+    public static final String INVITATION_VIEW_PATH = "view/invitation.fxml";
+    public static final String MAIN_VIEW_PATH = "view/main.fxml";
+    public static final String EDIT_SETTINGS_PATH = "view/setting.fxml";
 }

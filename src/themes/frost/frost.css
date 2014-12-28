@@ -90,7 +90,7 @@
 }
 
 .settings_button:hover{
-  -fx-background-color: #5186BE;
+  -fx-background-color: #B7D8FA;
 }
 
 .settings_input{
@@ -269,7 +269,7 @@
 .taskheader{
   -fx-text-fill: #92BEDA;
   -fx-font-size: 36;
-  -fx-font-family: "Harlow Solid Italic";
+  -fx-font-family: "Callibri";
 }
 
 //task header separators

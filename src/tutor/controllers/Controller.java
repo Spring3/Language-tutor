@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import tutor.Main;
 import tutor.util.UserConfigHelper;
 
 import java.io.IOException;
@@ -39,11 +40,11 @@ public class Controller extends Navigator implements Initializable
 
     /**
      * Navigation dispatcher.
-     * @param fxmlViewPath a path to the new view
+     * @param fxmlViewURL a URL to the new view
      * @param title title for a new scene
      * @param isMain wheather it should be shown as a main stage or not.
      */
-    private void navigateTo(@NotNull String fxmlViewPath, @NotNull String title, @NotNull boolean isMain) {
+    private void navigateTo(@NotNull URL fxmlViewURL, @NotNull String title, @NotNull boolean isMain) {
         if (isMain) {
             try {
                 if (mainStage != null){
@@ -51,7 +52,7 @@ public class Controller extends Navigator implements Initializable
                        return;
                     }
                 }
-                mainLoader = new FXMLLoader(getClass().getResource(fxmlViewPath));
+                mainLoader = new FXMLLoader(fxmlViewURL);
                 mainRoot = mainLoader.load();
                 mainScene = new Scene(mainRoot);
                 mainScene.getStylesheets().add(UserConfigHelper.getInstance().getParameter(UserConfigHelper.SELECTED_THEME));
@@ -77,7 +78,7 @@ public class Controller extends Navigator implements Initializable
                        return;
                     }
                 }
-                additionalLoader = new FXMLLoader(getClass().getResource(fxmlViewPath));
+                additionalLoader = new FXMLLoader(fxmlViewURL);
                 additionalRoot = additionalLoader.load();
                 additionalScene = new Scene(additionalRoot);
                 additionalScene.getStylesheets().add(UserConfigHelper.getInstance().getParameter(UserConfigHelper.SELECTED_THEME));
@@ -104,11 +105,11 @@ public class Controller extends Navigator implements Initializable
      * @param actionEvent
      */
     public void InvitationMenuItemClicked(ActionEvent actionEvent) {
-        navigateTo(INVITATION_VIEW_PATH, "Invite a friend via email" , false);
+        navigateTo(Main.class.getResource(INVITATION_VIEW_PATH), "Invite a friend via email" , false);
     }
 
     public void EditSettingsClick(ActionEvent actionEvent) {
-        navigateTo(EDIT_SETTINGS_PATH, "Settings", false);
+        navigateTo(Main.class.getResource(EDIT_SETTINGS_PATH), "Settings", false);
     }
 
     public void Shutdown(ActionEvent actionEvent) {
