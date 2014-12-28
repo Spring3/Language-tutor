@@ -1,3 +1,28 @@
+//news view
+.header {
+  -fx-background-color: #92BEDA;
+}
+
+.news_textarea{
+  -fx-background-color: #284361;
+  -fx-border-radius: 0;
+  -fx-text-fill: #92BEDA;
+  -fx-font-size: 16px;
+  -fx-font-family: "Calibri";
+  -fx-font-style: italic;
+}
+
+.news_textarea .content{
+  -fx-background-color: #284361;
+  -fx-background-radius: 0;
+}
+
+.header_textField{
+  -fx-text-fill: #7DA1DF;
+  -fx-font-size: 28px;
+  -fx-background-color: #20364C;
+  -fx-background-radius: 0;
+}
 
 //Settings view
 .settings_tableview{
@@ -134,7 +159,7 @@
 }
 
 //INVITATION VIEW
-#tf_inviteviamail{
+.tf_input{
   -fx-background-color: #29506D;
   -fx-text-fill: #92BEDA;
   -fx-prompt-text-fill: #92BEDA;
@@ -143,7 +168,7 @@
   -fx-background-radius: 0;
 }
 
-#ta_messageText {
+.textArea {
   -fx-text-fill: #92BEDA;
   -fx-prompt-text-fill: #92BEDA;
   -fx-font-size: 18;
@@ -151,7 +176,7 @@
 
 }
 
-#ta_messageText .content{
+.textArea .content{
   -fx-background-color: #20364C;
   -fx-background-radius: 0;
 }
@@ -164,6 +189,41 @@
 
 
 //MAIN VIEW
+.newsItem {
+  -fx-border-color: #375486;
+  -fx-opacity: 0.6;
+
+}
+
+.newsItem:hover:pressed {
+  -fx-opacity: 0.8;
+}
+
+.newsItem:hover{
+  -fx-opacity: 1.0;
+}
+
+.blurredLabel{
+  -fx-background-color: #0C1320;
+  -fx-opacity: 0.8;
+}
+
+#img_smallRes{
+  -fx-image: url("icons/twitter-icon.png");
+}
+
+#img_highRes{
+  -fx-image: url("icons/Screenshot_3.png");
+}
+
+#img_tall{
+  -fx-image: url("icons/b31.jpg");
+}
+
+.newsImage{
+  -fx-background-size: cover;
+}
+
 //shadow logo
 .logoShadow{
   -fx-text-fill: #203D53;

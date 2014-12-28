@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="settings_anchorpane" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="img_newsImage" fitHeight="323.0" fitWidth="226.0" layoutX="7.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="367.0" AnchorPane.topAnchor="6.0" />
+            <TextArea fx:id="ta_newsText" layoutX="239.0" layoutY="-1.0" prefHeight="342.0" prefWidth="361.0" styleClass="news_textarea" wrapText="true" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="239.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0" />
+         </children>
+      </AnchorPane>
+   </center>
+   <top>
+      <AnchorPane prefHeight="59.0" prefWidth="600.0" styleClass="header" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="tf_newsHeader" alignment="CENTER" editable="false" styleClass="header_textField" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+   </top>
+</BorderPane>

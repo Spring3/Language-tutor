@@ -9,28 +9,18 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:controller="tutor.controllers.InvitationViewController" maxHeight="500.0" maxWidth="600.0" minHeight="300.0" minWidth="400.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: dimgrey;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="500.0" maxWidth="600.0" minHeight="300.0" minWidth="400.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: dimgrey;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tutor.controllers.InvitationViewController">
    <top>
       <AnchorPane prefHeight="36.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField id="tf_inviteviamail" alignment="CENTER" prefHeight="36.0" prefWidth="400.0" promptText="Receiver email" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <effect>
-                  <DropShadow>
-                     <input>
-                        <InnerShadow height="5.0" radius="2.0" width="5.0" />
-                     </input>
-                  </DropShadow>
-               </effect></TextField>
+            <TextField alignment="CENTER" prefHeight="36.0" prefWidth="400.0" promptText="Receiver email" styleClass="tf_input" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
    </top>
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <TextArea id="ta_messageText" prefHeight="200.0" prefWidth="200.0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <effect>
-                  <DropShadow />
-               </effect></TextArea>
+            <TextArea prefHeight="200.0" prefWidth="200.0" styleClass="textArea" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
    </center>
@@ -44,15 +34,11 @@
                         <Glow level="0.81" />
                      </effect></Button>
                </children>
-               <effect>
-                  <InnerShadow height="10.0" radius="3.25" width="5.0">
-                     <input>
-                        <DropShadow />
-                     </input>
-                  </InnerShadow>
-               </effect>
             </FlowPane>
          </children>
       </AnchorPane>
    </bottom>
+   <effect>
+      <DropShadow />
+   </effect>
 </BorderPane>
