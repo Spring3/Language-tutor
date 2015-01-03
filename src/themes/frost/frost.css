@@ -1,3 +1,53 @@
+.customLabel{
+  -fx-font-size: 20px;
+  -fx-text-fill: #92BEDA;
+  -fx-font-family: "Calibri Light";
+}
+
+.historyHeader{
+  -fx-font-size: 40px;
+  -fx-font-family: "Calibri";
+  -fx-text-fill: #92BEDA;
+  -fx-background-color: #11263A;
+}
+
+.historyDetailsHeader{
+  -fx-text-fill: #92BEDA;
+  -fx-font-size: 25px;
+  -fx-font-family: "Calibri Light";
+}
+
+.historyLabel{
+  -fx-font-size: 30px;
+  -fx-font-family: "Calibri";
+  -fx-text-fill: #92BEDA;
+  -fx-font-weight: bold;
+}
+
+.historyResultHeader{
+  -fx-font-size: 25px;
+  -fx-text-fill: #92BEDA;
+  -fx-font-family: "Calibri Light";
+}
+
+.bigButton{
+  -fx-background-color: transparent;
+  -fx-text-fill: #92BEDA;
+  -fx-border-color: #92BEDA;
+  -fx-border-radius: 0;
+  -fx-padding: 8 20 8 20;
+  -fx-font-size: 20px;
+  -fx-font-family: "Calibri";
+}
+
+.bigButton:hover{
+  -fx-background-color: #C1DDF0;
+}
+
+.bigButton:hover:pressed{
+  -fx-background-color: #41789C;
+}
+
 //news view
 .header {
   -fx-background-color: #92BEDA;
@@ -235,18 +285,23 @@
 
 //buttons
 .custombutton{
-  -fx-background-color: #024156;
-  -fx-border-color:  #012E3D;
-  -fx-text-fill:  #DDD4BC;
+  -fx-background-color: transparent;
+  -fx-background-radius: 0;
+  -fx-border-color:  #92BEDA;
+  -fx-text-fill:  white;
   -fx-font-family: "Calibri Light";
   -fx-font-size: 14;
-  -fx-border-radius: 2;
-  -fx-border-width: 1;
-  -fx-padding: 8 6 8 6;
+  -fx-border-radius: 0;
+  -fx-border-width: 0.4;
+  -fx-padding: 10 8 10 8;
 }
 
-.custombutton: hover{
-  -fx-background-color: #055C79;
+.custombutton:hover{
+  -fx-background-color:#92BEDA;
+}
+
+.custombutton:hover:pressed{
+  -fx-background-color: #366D94;
 }
 
 //for tab panel's anchorpane
@@ -289,20 +344,28 @@
 
 //footer
 .footer {
-  -fx-background-color: #29506D;
+  -fx-background-color: #20364C;
   -fborder-color: transparent;
 }
 
 //socialbuttons
+
 .socialbutton:hover{
   -fx-scale-x:1.1;
   -fx-scale-y:1.1;
-
 }
 
-.socialbutton: focused{
-  -fx-scale-x:1;
-  -fx-scale-y:1;
+.socialbutton:hover:pressed{
+  -fx-scale-x:1.0;
+  -fx-scale-y:1.0;
+}
+
+.socialbutton{
+  -fx-background-color:transparent;
+  -fx-border-color:#92BEDA;
+  -fx-text-fill:#DDD4BC;
+  -fx-border-radius: 30;
+  -fx-border-width: 0.4;
 }
 
 //vk

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <AnchorPane prefHeight="239.0" prefWidth="600.0" styleClass="settings_anchorpane" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="img_taskImage" fitHeight="323.0" fitWidth="226.0" layoutX="7.0" layoutY="6.0" pickOnBounds="true" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="367.0" AnchorPane.topAnchor="6.0" />
+            <TextArea fx:id="ta_taskDescription" editable="false" layoutX="239.0" layoutY="-1.0" prefHeight="342.0" prefWidth="361.0" styleClass="news_textarea" wrapText="true" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="239.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+   </center>
+   <top>
+      <AnchorPane prefWidth="600.0" styleClass="header" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="tf_taskHeader" alignment="CENTER" editable="false" styleClass="header_textField" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+   </top>
+   <bottom>
+      <FlowPane alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="600.0" styleClass="footer" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btn_startTask" mnemonicParsing="false" styleClass="bigButton" text="Start">
+               <FlowPane.margin>
+                  <Insets right="10.0" />
+               </FlowPane.margin>
+            </Button>
+         </children>
+         <effect>
+            <InnerShadow height="6.5" radius="2.375" width="5.0" />
+         </effect>
+      </FlowPane>
+   </bottom>
+   <effect>
+      <DropShadow />
+   </effect>
+</BorderPane>

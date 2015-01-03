@@ -25,17 +25,17 @@
       </AnchorPane>
    </center>
    <bottom>
-      <AnchorPane prefHeight="34.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="42.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <children>
             <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" styleClass="footer" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Button id="btn_send" mnemonicParsing="false" styleClass="custombutton" text="Send">
-                     <effect>
-                        <Glow level="0.81" />
-                     </effect></Button>
+                  <Button id="btn_send" mnemonicParsing="false" styleClass="custombutton" text="Send" />
                </children>
             </FlowPane>
          </children>
+         <effect>
+            <InnerShadow height="6.5" radius="2.375" width="5.0" />
+         </effect>
       </AnchorPane>
    </bottom>
    <effect>

@@ -5,7 +5,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="316.0" prefWidth="460.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="settings_anchorpane" BorderPane.alignment="CENTER">
@@ -25,6 +24,13 @@
             <Label layoutY="5.0" styleClass="settings_label" text="Type:" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
             <Button fx:id="btn_sendFeedback" disable="true" layoutX="396.0" layoutY="1.0" mnemonicParsing="false" styleClass="settings_button" text="Send" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="1.0" />
          </children>
+         <effect>
+            <DropShadow height="0.0" radius="0.75" width="5.0">
+               <input>
+                  <InnerShadow height="6.25" radius="2.3125" width="5.0" />
+               </input>
+            </DropShadow>
+         </effect>
       </AnchorPane>
    </bottom>
 </BorderPane>

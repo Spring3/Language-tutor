@@ -41,7 +41,7 @@
                      </children></AnchorPane>
                </children>
             </StackPane>
-            <StackPane fx:id="pane_data_source" maxWidth="800.0" minHeight="0.0" minWidth="10.0" styleClass="settings_stackpane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <StackPane fx:id="pane_data_source" maxWidth="800.0" minHeight="0.0" minWidth="10.0" styleClass="settings_stackpane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <AnchorPane maxWidth="800.0" minHeight="0.0" minWidth="10.0" StackPane.alignment="CENTER_LEFT">
                      <children>
@@ -178,6 +178,9 @@
               </items>
             </ToolBar>
          </children>
+         <effect>
+            <InnerShadow height="7.5" radius="2.625" width="5.0" />
+         </effect>
       </AnchorPane>
    </bottom>
 </BorderPane>
