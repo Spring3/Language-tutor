@@ -9,4 +9,8 @@ public abstract class Navigator {
     public static final String INVITATION_VIEW_PATH = "view/invitation.fxml";
     public static final String MAIN_VIEW_PATH = "view/main.fxml";
     public static final String EDIT_SETTINGS_PATH = "view/setting.fxml";
+    public static final String NEWS_ITEM_VIEW_PATH = "view/news.fxml";
+    public static final String OFFLINE_TASK_VIEW_PATH = "view/details.fxml";
+    public static final String ONLINE_TASK_VIEW_PATH = "view/details.fxml";
+    public static final String HISTORY_ITEM_VIEW_PATH = "view/historyDetails.fxml";
 }
