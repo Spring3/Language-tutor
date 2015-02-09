@@ -143,5 +143,7 @@ public class SettingsController extends Navigator implements Initializable {
         ToggleGroup languagePanelRadioButtonToggleGroup = new ToggleGroup();
         radioButton_localizeAutomatically.setToggleGroup(languagePanelRadioButtonToggleGroup);
         radioButton_localizeManually.setToggleGroup(languagePanelRadioButtonToggleGroup);
+
+
     }
 }

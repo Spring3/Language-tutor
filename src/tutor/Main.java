@@ -9,6 +9,7 @@ import tutor.controllers.Controller;
 import tutor.util.UserConfigHelper;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class Main extends Application {
 
@@ -16,6 +17,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Locale.setDefault(new Locale(UserConfigHelper.getInstance().getParameter(UserConfigHelper.LANGUAGE)));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view/main.fxml"));
+        loader.setResources(ResourceBundle.getBundle("locale/lang", Locale.getDefault()));
         Parent root = loader.load();
         Controller controller = loader.getController();
         controller.navigateTo(getClass().getResource("view/main.fxml"),"Language Tutor", 0 );

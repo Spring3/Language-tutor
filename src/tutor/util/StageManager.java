@@ -1,18 +1,17 @@
 package tutor.util;
 
 import com.sun.istack.internal.NotNull;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Stream;
+import java.util.ResourceBundle;
 
 /**
  * Created by user on 08.02.2015.
@@ -86,6 +85,7 @@ public class StageManager {
         Parent parent = null;
         Scene scene = null;
         loader = new FXMLLoader(fxmlPath); //changing main stage
+        loader.setResources(ResourceBundle.getBundle("locale/lang", Locale.getDefault()));
         try {
             parent = loader.load();
             scene = new Scene(parent);

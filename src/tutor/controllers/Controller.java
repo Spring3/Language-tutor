@@ -127,4 +127,12 @@ public class Controller extends Navigator implements Initializable
     public void historyItemClicked(Event event) {
         stageManager.navigateTo(Main.class.getResource(HISTORY_ITEM_VIEW_PATH), history_header.getText(), 1);
     }
+
+    public void sendFeedbackClicked(ActionEvent actionEvent) {
+        stageManager.navigateTo(Main.class.getResource(SEND_FEEDBACK_VIEW_PATH), "Feedback", 1);
+    }
+
+    public void statisticsClicked(ActionEvent actionEvent) {
+        stageManager.navigateTo(Main.class.getResource(USER_RATE_VIEW_PATH), "Statistics", 1);
+    }
 }
