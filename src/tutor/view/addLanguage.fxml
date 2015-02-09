@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="300.0" styleClass="settings_anchorpane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <effect>
+      <DropShadow />
+   </effect>
+   <children>
+      <Label layoutX="14.0" layoutY="24.0" styleClass="settings_label" text="%label_language" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="24.0" />
+      <CheckBox fx:id="checkBox_isMothertongue" layoutX="162.0" layoutY="61.0" mnemonicParsing="false" styleClass="settings_checkbox" text="%checkBox_isMothertongue" AnchorPane.leftAnchor="162.0" AnchorPane.topAnchor="61.0" />
+      <TextField fx:id="textField_language" layoutX="88.0" layoutY="23.0" prefHeight="25.0" prefWidth="202.0" styleClass="settings_input" AnchorPane.leftAnchor="88.0" AnchorPane.topAnchor="23.0" />
+      <Button fx:id="btn_addLanguage" layoutX="130.0" layoutY="103.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="53.0" styleClass="custombutton" text="%btn_add" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="103.0" />
+   </children>
+</AnchorPane>

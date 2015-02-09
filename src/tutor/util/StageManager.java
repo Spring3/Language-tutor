@@ -1,10 +1,12 @@
 package tutor.util;
 
 import com.sun.istack.internal.NotNull;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -48,28 +50,31 @@ public class StageManager {
      * @param layerIndex is a layer of a stage to be shown on
      */
     public void navigateTo(@NotNull URL fxmlViewURL, @NotNull String title, @NotNull int layerIndex) {
-        Stage stage = null;
-        if (layerIndex > maxLayer || layerIndex < 0)
-            return;
-        if (stages.get(layerIndex) == null || stagePaths.get(layerIndex) == null) {
-            addStage(bakeStage(fxmlViewURL, title, layerIndex), fxmlViewURL, layerIndex);
+        try {
+            Stage stage = null;
+            if (layerIndex > maxLayer || layerIndex < 0)
+                return;
+            if (stages.get(layerIndex) == null || stagePaths.get(layerIndex) == null) {
+                addStage(bakeStage(fxmlViewURL, title, layerIndex), fxmlViewURL, layerIndex);
 
-        }
-        stage = stages.get(layerIndex);
-        String mainFMXLViewPath = stagePaths.get(layerIndex).toExternalForm();
+            }
+            stage = stages.get(layerIndex);
+            String mainFMXLViewPath = stagePaths.get(layerIndex).toExternalForm();
             if (mainFMXLViewPath.equals(fxmlViewURL.toExternalForm())) {
                 if (stage.isShowing())
                     return;
                 stage.show();
-            }
-            else {
+            } else {
                 stage.close();
                 addStage(bakeStage(fxmlViewURL, title, layerIndex), fxmlViewURL, layerIndex);
                 stage = stages.get(layerIndex);
                 stage.show();
             }
-        stages.put(layerIndex, stage);
-        stagePaths.put(layerIndex, fxmlViewURL);
+            stages.put(layerIndex, stage);
+            stagePaths.put(layerIndex, fxmlViewURL);
+        }catch (NullPointerException ex){
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -93,14 +98,15 @@ public class StageManager {
             stage = new Stage();
             stage.setScene(scene);
             stage.setTitle(title);
-            stage.setOnHiding(windowEvent -> {
-                System.out.println("A stage on layer " + layerIndex + " was resetted");
-            });
+            stage.setOnHiding(windowEvent -> System.out.println("A stage on layer " + layerIndex + " was resetted"));
+            final Stage stageDuplicate = stage;
+            stageDuplicate.setOnCloseRequest(windowEvent -> StageManager.this.closeStage(stageDuplicate));
+            return stageDuplicate;
         }
         catch(IOException ex){
             ex.printStackTrace();
         }
-        return stage;
+        return null;
     }
 
     /**
@@ -111,11 +117,13 @@ public class StageManager {
      * @return
      */
     private void addStage(Stage stage, URL viewURL,  int layerNumber) {
-        if (stages.get(layerNumber) != null) {
-            stages.get(layerNumber).close();
+        if (stage != null) {
+            if (stages.get(layerNumber) != null) {
+                stages.get(layerNumber).close();
+            }
+            stages.put(layerNumber, stage);
+            stagePaths.put(layerNumber, viewURL);
         }
-        stages.put(layerNumber, stage);
-        stagePaths.put(layerNumber, viewURL);
     }
 
     /**
@@ -125,6 +133,28 @@ public class StageManager {
         for (int i = 0; i < maxLayer; i ++){
             if (stages.get(i) != null){
                 stages.get(i).close();
+            }
+        }
+    }
+
+    public void closeStage(Stage stageToClose){
+        int foundStageIndex = maxLayer;
+        for (int i = 0 ; i < maxLayer; i++){
+            if (stages.get(i) != null){
+                if (stages.get(i) == stageToClose){
+                    stages.get(i).close();
+                    stages.put(i, null);
+                    stagePaths.put(i, null);
+                    foundStageIndex = i;
+                    break;
+                }
+            }
+        }
+        for (int i = foundStageIndex + 1; i < maxLayer; i ++){
+            if (stages.get(i) != null) {
+                stages.get(i).close();
+                stages.put(i, null);
+                stagePaths.put(i, null);
             }
         }
     }

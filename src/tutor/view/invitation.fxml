@@ -13,7 +13,7 @@
    <top>
       <AnchorPane prefHeight="36.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField alignment="CENTER" prefHeight="36.0" prefWidth="400.0" promptText="Receiver email" styleClass="tf_input" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <TextField alignment="CENTER" prefHeight="36.0" prefWidth="400.0" promptText="%prompt_label_receiver_email" styleClass="tf_input" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
    </top>
@@ -29,7 +29,7 @@
          <children>
             <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" styleClass="footer" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Button id="btn_send" mnemonicParsing="false" styleClass="custombutton" text="Send" />
+                  <Button id="btn_send" mnemonicParsing="false" styleClass="custombutton" text="%btn_send" />
                </children>
             </FlowPane>
          </children>

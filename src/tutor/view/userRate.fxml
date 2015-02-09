@@ -4,25 +4,24 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="settings_anchorpane" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" layoutX="14.0" layoutY="11.0" prefHeight="58.0" prefWidth="575.0" styleClass="historyHeader" text="VDSpring's statistics" />
-            <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="14.0" layoutY="87.0" prefHeight="23.0" prefWidth="280.0" styleClass="customLabel" text="Registered:" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="306.0" AnchorPane.topAnchor="87.0" />
+            <Label alignment="CENTER" layoutX="14.0" layoutY="11.0" prefHeight="58.0" prefWidth="575.0" styleClass="historyHeader" text="%label_statistics" />
+            <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="14.0" layoutY="87.0" prefHeight="23.0" prefWidth="280.0" styleClass="customLabel" text="%label_registered" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="306.0" AnchorPane.topAnchor="87.0" />
             <Label fx:id="lbl_regDate" layoutX="300.0" layoutY="87.0" prefHeight="23.0" prefWidth="288.0" styleClass="customLabel" text="05/30/2014" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="87.0" />
-            <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="14.0" layoutY="125.0" prefHeight="23.0" prefWidth="280.0" styleClass="customLabel" text="Language:" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="306.0" AnchorPane.topAnchor="125.0" />
+            <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="14.0" layoutY="125.0" prefHeight="23.0" prefWidth="280.0" styleClass="customLabel" text="%label_language" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="306.0" AnchorPane.topAnchor="125.0" />
             <ChoiceBox fx:id="chb_language" layoutX="300.0" layoutY="124.0" prefWidth="150.0" styleClass="settings_choiceBox" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="124.0" />
-            <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="17.0" layoutY="166.0" prefHeight="23.0" prefWidth="277.0" styleClass="customLabel" text="Words added:" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="306.0" AnchorPane.topAnchor="166.0" />
+            <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="17.0" layoutY="166.0" prefHeight="23.0" prefWidth="277.0" styleClass="customLabel" text="%label_words_added" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="306.0" AnchorPane.topAnchor="166.0" />
             <Label fx:id="lbl_totalWordsCount" layoutX="301.0" layoutY="166.0" prefHeight="23.0" prefWidth="288.0" styleClass="customLabel" text="3" AnchorPane.leftAnchor="301.0" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="166.0" />
             <Label fx:id="lbl_passedTasksCount" layoutX="300.0" layoutY="206.0" prefHeight="23.0" prefWidth="288.0" styleClass="customLabel" text="5" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="206.0" />
-            <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="12.0" layoutY="206.0" prefHeight="23.0" prefWidth="282.0" styleClass="customLabel" text="Tasks taken:" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="306.0" AnchorPane.topAnchor="206.0" />
-            <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="14.0" layoutY="243.0" prefHeight="23.0" prefWidth="282.0" styleClass="customLabel" text="Correct/mistake:" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="305.0" AnchorPane.topAnchor="243.0" />
+            <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="12.0" layoutY="206.0" prefHeight="23.0" prefWidth="282.0" styleClass="customLabel" text="%label_tasks_taken" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="306.0" AnchorPane.topAnchor="206.0" />
+            <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="14.0" layoutY="243.0" prefHeight="23.0" prefWidth="282.0" styleClass="customLabel" text="%label_correct_mistake" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="305.0" AnchorPane.topAnchor="243.0" />
             <Label fx:id="lbl_correctToMistakeRate" layoutX="300.0" layoutY="243.0" prefHeight="23.0" prefWidth="283.0" styleClass="customLabel" text="0.9" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="243.0" />
-            <Label alignment="CENTER_RIGHT" layoutX="17.0" layoutY="301.0" prefHeight="35.0" prefWidth="278.0" styleClass="historyLabel" text="Total success rate:" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="305.0" AnchorPane.topAnchor="301.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="17.0" layoutY="301.0" prefHeight="35.0" prefWidth="278.0" styleClass="historyLabel" text="%label_total_success_rate" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="305.0" AnchorPane.topAnchor="301.0" />
             <Label fx:id="lbl_totalSuccessRate" layoutX="299.0" layoutY="301.0" prefHeight="35.0" prefWidth="287.0" styleClass="historyLabel" text="0.99" AnchorPane.leftAnchor="299.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="301.0" />
-            <Button fx:id="btn_ok" layoutX="275.0" layoutY="353.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="53.0" styleClass="custombutton" text="OK" />
+            <Button fx:id="btn_ok" layoutX="275.0" layoutY="353.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="53.0" styleClass="custombutton" text="%btn_ok" />
          </children>
       </AnchorPane>
    </center>

@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="400.0" prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tutor.controllers.SettingsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="400.0" prefHeight="600.0" prefWidth="750.0"  xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tutor.controllers.SettingsController">
    <center>
       <AnchorPane maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="10.0" styleClass="settings_anchorpane" BorderPane.alignment="CENTER">
          <children>
@@ -36,22 +36,22 @@
                            </effect>
                         </ListView>
                         <Label alignment="CENTER" layoutX="33.0" layoutY="225.0" maxWidth="600.0" prefHeight="17.0" prefWidth="435.0" styleClass="settings_header_label" text="%langs_toLearn_label" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="225.0" />
-                        <Button layoutX="463.0" layoutY="257.0" mnemonicParsing="false" styleClass="settings_button" text="+" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="257.0" />
+                        <Button layoutX="463.0" onAction="#btn_addLanguage_clicked" layoutY="257.0" mnemonicParsing="false" styleClass="settings_button" text="+" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="257.0" />
                         <Button layoutX="463.0" layoutY="297.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="31.0" styleClass="settings_button" text="-" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="297.0" />
                      </children></AnchorPane>
                </children>
             </StackPane>
-            <StackPane fx:id="pane_data_source" maxWidth="800.0" minHeight="0.0" minWidth="10.0" styleClass="settings_stackpane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <StackPane fx:id="pane_data_source" maxWidth="800.0" minHeight="0.0" minWidth="10.0" styleClass="settings_stackpane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <AnchorPane maxWidth="800.0" minHeight="0.0" minWidth="10.0" StackPane.alignment="CENTER_LEFT">
                      <children>
                         <Label alignment="TOP_CENTER" layoutX="35.0" layoutY="5.0" maxWidth="400.0" prefHeight="18.0" prefWidth="330.0" styleClass="settings_header_label" text="%data_source_settings_label" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="5.0" />
                         <Button fx:id="btn_removeDataSource" layoutX="447.0" layoutY="334.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" styleClass="settings_button" text="-" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="334.0" />
-                        <Label alignment="CENTER" layoutX="63.0" layoutY="309.0" maxWidth="400.0" prefHeight="22.0" prefWidth="377.0" styleClass="settings_label" text="Active data sources" AnchorPane.leftAnchor="63.0" AnchorPane.rightAnchor="55.0" AnchorPane.topAnchor="309.0" />
+                        <Label alignment="CENTER" layoutX="63.0" layoutY="309.0" maxWidth="400.0" prefHeight="22.0" prefWidth="377.0" styleClass="settings_label" text="%label_active_data_sources" AnchorPane.leftAnchor="63.0" AnchorPane.rightAnchor="55.0" AnchorPane.topAnchor="309.0" />
                         <TableView fx:id="tableview_datasources" layoutX="61.0" layoutY="334.0" maxWidth="400.0" prefHeight="221.0" prefWidth="380.0" styleClass="settings_tableview" AnchorPane.leftAnchor="61.0" AnchorPane.rightAnchor="54.0" AnchorPane.topAnchor="334.0">
                            <columns>
-                              <TableColumn prefWidth="103.0" text="Type" />
-                              <TableColumn prefWidth="275.0" text="Source" />
+                              <TableColumn prefWidth="103.0" text="%label_settings_type" />
+                              <TableColumn prefWidth="275.0" text="%label_settings_source" />
                            </columns>
                         </TableView>
                         <StackPane fx:id="stackpanel_localDB" layoutX="40.0" layoutY="72.0" maxWidth="400.0" prefHeight="243.0" prefWidth="422.0" visible="false" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="72.0">
@@ -136,7 +136,7 @@
                            </children>
                         </StackPane>
                         <Label layoutX="52.0" layoutY="50.0" styleClass="settings_label" text="%data_source_choose_type_label" AnchorPane.leftAnchor="52.0" AnchorPane.topAnchor="50.0" />
-                        <ChoiceBox layoutX="236.0" layoutY="49.0" maxWidth="-Infinity" prefHeight="25.0" prefWidth="207.0" styleClass="settings_choiceBox" AnchorPane.leftAnchor="236.0" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="49.0" />
+                        <ChoiceBox fx:id="choiceBox_data_source_type" layoutX="236.0" layoutY="49.0" maxWidth="-Infinity" prefHeight="25.0" prefWidth="207.0" styleClass="settings_choiceBox" AnchorPane.leftAnchor="236.0" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="49.0" />
                      </children>
                      <StackPane.margin>
                         <Insets left="5.0" />
@@ -172,7 +172,7 @@
          <children>
             <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="750.0" styleClass="settings_toolbar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <items>
-                  <Button fx:id="btn_cancel" mnemonicParsing="false" styleClass="settings_button" text="%btn_cancel" />
+                  <Button fx:id="btn_cancel" onAction="#btn_cancel_clicked" mnemonicParsing="false" styleClass="settings_button" text="%btn_cancel" />
                   <Button fx:id="btn_apply" mnemonicParsing="false" styleClass="settings_button" text="%btn_apply" />
                 <Button fx:id="btn_ok" mnemonicParsing="false" styleClass="settings_button" text="%btn_ok" />
               </items>

@@ -1,28 +1,18 @@
 package tutor.controllers;
 
 import com.sun.istack.internal.NotNull;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import tutor.Main;
 import tutor.util.StageManager;
-import tutor.util.UserConfigHelper;
-
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -111,7 +101,6 @@ public class Controller extends Navigator implements Initializable
         stageManager.navigateTo(fxmlURL, title, layerIndex);
     }
 
-
     public void newsItemClicked(Event event) {
         stageManager.navigateTo(Main.class.getResource(NEWS_ITEM_VIEW_PATH), newsItemLabel.getText(), 1);
     }
@@ -134,5 +123,13 @@ public class Controller extends Navigator implements Initializable
 
     public void statisticsClicked(ActionEvent actionEvent) {
         stageManager.navigateTo(Main.class.getResource(USER_RATE_VIEW_PATH), "Statistics", 1);
+    }
+
+    public void menuItem_about_clicked(ActionEvent actionEvent) {
+        stageManager.navigateTo(Main.class.getResource(ABOUT_VIEW_PATH), "About", 1);
+    }
+
+    public void menuItem_dictionary_clicked(ActionEvent actionEvent) {
+        stageManager.navigateTo(Main.class.getResource(DICTIONARY_VIEW_PATH), "Dictionary", 1);
     }
 }

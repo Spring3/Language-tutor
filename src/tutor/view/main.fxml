@@ -37,7 +37,7 @@
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
-              <MenuItem fx:id="mItem_dictionary" mnemonicParsing="false" text="%menuItem_dictionary">
+              <MenuItem fx:id="mItem_dictionary" onAction="#menuItem_dictionary_clicked" mnemonicParsing="false" text="%menuItem_dictionary">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
@@ -46,7 +46,7 @@
                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                  <MenuItem fx:id="mItem_about" mnemonicParsing="false" text="%menuItem_about">
+                  <MenuItem fx:id="mItem_about" onAction="#menuItem_about_clicked" mnemonicParsing="false" text="%menuItem_about">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="HOME" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
