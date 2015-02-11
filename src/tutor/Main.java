@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import tutor.controllers.Controller;
+import tutor.util.DbManager;
 import tutor.util.UserConfigHelper;
 
 import java.util.Locale;
@@ -15,6 +16,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        DbManager dbManager = DbManager.getInstance();
+        if(dbManager.checkConnection()){
+            System.out.println("Connection succeeded");
+        }
+        else System.out.println("Connection failed");
         Locale.setDefault(new Locale(UserConfigHelper.getInstance().getParameter(UserConfigHelper.LANGUAGE)));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view/main.fxml"));
         loader.setResources(ResourceBundle.getBundle("locale/lang", Locale.getDefault()));
@@ -26,6 +32,5 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
-
     }
 }

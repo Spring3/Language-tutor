@@ -55,7 +55,5 @@ public class ConfigHelper extends ConfigKeys{
     private void loadDefaultSettings(){
         setParameter(THEME_FROST, "themes/frost/frost.css");
         setParameter(LANGUAGE, "en");
-        setParameter(DATA_SOURCE, "local_db");
-        setParameter(DATA_SOURCE_URL, "");
     }
 }

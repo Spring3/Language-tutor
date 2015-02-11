@@ -66,8 +66,6 @@ public class UserConfigHelper extends ConfigKeys{
     private void loadDefaultSettings(){
         setParameter(this.SELECTED_THEME, ConfigHelper.getInstance().getParameter(THEME_FROST));
         setParameter(LANGUAGE, ConfigHelper.getInstance().getParameter(LANGUAGE));
-        setParameter(DATA_SOURCE, ConfigHelper.getInstance().getParameter(DATA_SOURCE));
-        setParameter(DATA_SOURCE_URL, ConfigHelper.getInstance().getParameter(DATA_SOURCE_URL));
     }
 
 
