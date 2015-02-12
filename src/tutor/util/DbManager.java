@@ -13,12 +13,6 @@ public class DbManager {
     private static DbManager instance;
 
     private DbManager(){
-        try {
-            Class.forName("org.h2.Driver");
-        }
-        catch(ClassNotFoundException ex){
-            ex.printStackTrace();
-        }
     }
 
     public static DbManager getInstance(){
@@ -32,9 +26,9 @@ public class DbManager {
         return instance;
     }
 
-    private Connection getConnection() {
+    public Connection getConnection() {
         try {
-            return DriverManager.getConnection("jdbc:h2:file:./data/langTutor", "langtutor", "hearthstone");
+            return DriverManager.getConnection("jdbc:h2:file:./data/langTutor;MV_STORE=FALSE;MVCC=FALSE", "langtutor", "hearthstone");
         }
         catch (SQLException ex){
             ex.printStackTrace();
@@ -43,39 +37,51 @@ public class DbManager {
     }
 
     public boolean checkConnection(){
-        if (!new File("/data/langTutor.mv.db").exists())
+        if (!new File("./data/langTutor.h2.db").exists())
             initializeDb();
         Connection connection = getConnection();
         if (connection != null) {
             try {
                 Statement testStatement = connection.createStatement();
-                testStatement.executeQuery("select * from USERS ");
+                testStatement.executeQuery("select * from USERS WHERE id=1");
+                connection.close();
                 return true;
             }
             catch (SQLException ex){
                 ex.printStackTrace();
             }
         }
+        try {
+            connection.close();
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+        }
         return false;
     }
 
     public void initializeDb(){
         String[] initQueries = new String[]{
-                "CREATE TABLE IF NOT EXISTS USERS(id bigint auto_increment, nickname varchar(40), email varchar(40), password varchar(100), register_date timestamp, success_rate decimal(5,2));",
-                "CREATE TABLE IF NOT EXISTS LANGUAGES(id bigint auto_increment, lang_name varchar(40), isNative boolean, user_id integer);",
-                "CREATE TABLE IF NOT EXISTS DICTIONARY(id bigint auto_increment, word varchar(100), word_translation varchar(100), lang_id integer);",
-                "CREATE TABLE IF NOT EXISTS DATA_SOURCE(id bigint auto_increment, link varchar(100), type varchar(50), service varchar(50), credentials_id integer, language_id integer);",
-                "CREATE TABLE IF NOT EXISTS USER_INFO(id bigint auto_increment, user_id integer, username varchar(40), email varchar(40), password varchar(40));"
+                "CREATE TABLE IF NOT EXISTS USERS(id integer IDENTITY PRIMARY KEY , username varchar(40), email varchar(40), password varchar(100), register_date timestamp, success_rate decimal(5,2), seed int);",
+                "CREATE TABLE IF NOT EXISTS LANGUAGES(id integer IDENTITY PRIMARY KEY, lang_name varchar(40), user_id integer);",
+                "CREATE TABLE IF NOT EXISTS DICTIONARY(id integer IDENTITY PRIMARY KEY, word varchar(100), word_translation varchar(100), lang_id integer);",
+                "CREATE TABLE IF NOT EXISTS DATA_SRC(id integer IDENTITY PRIMARY KEY, link varchar(100), type varchar(50), service varchar(50), credentials_id integer, language_id integer);",
+                "CREATE TABLE IF NOT EXISTS USER_INFO(id integer IDENTITY PRIMARY KEY, user_id integer, username varchar(40), email varchar(40), password varchar(40));"
         };
         Connection connection = getConnection();
-        for (int i = 0; i < initQueries.length; i++) {
-            try {
+        try {
+            for (int i = 0; i < initQueries.length; i++) {
+
                 connection.createStatement().execute(initQueries[i]);
+
             }
-            catch(SQLException ex){
-                ex.printStackTrace();
-            }
+            connection.close();
         }
+
+        catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+        System.out.println("Db initialized");
 
     }
 }

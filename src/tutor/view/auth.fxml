@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="settings_anchorpane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tutor.controllers.AuthController">
+   <children>
+      <AnchorPane fx:id="pane_register" prefHeight="373.0" prefWidth="600.0" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button fx:id="btn_showEnterPane" layoutX="212.0" layoutY="318.0" mnemonicParsing="false" onAction="#showEnterPaneClicked" prefHeight="35.0" prefWidth="174.0" styleClass="custombutton" text="%btn_show_enterPanel" AnchorPane.leftAnchor="212.0" AnchorPane.topAnchor="318.0" />
+            <TextField fx:id="txtb_reg_username" alignment="CENTER" prefHeight="32.0" prefWidth="326.0" promptText="%prompt_label_username" styleClass="auth_input" AnchorPane.leftAnchor="137.0" AnchorPane.topAnchor="126.0">
+               <effect>
+                  <InnerShadow color="#142443" height="20.0" radius="9.5" width="20.0" />
+               </effect>
+            </TextField>
+            <PasswordField fx:id="txtb_reg_pass1" alignment="CENTER" prefHeight="32.0" prefWidth="326.0" promptText="%prompt_label_password" styleClass="auth_input" AnchorPane.leftAnchor="136.0" AnchorPane.topAnchor="183.0">
+               <effect>
+                  <InnerShadow color="#142443" height="20.0" radius="9.5" width="20.0" />
+               </effect>
+            </PasswordField>
+            <PasswordField fx:id="txtb_reg_pass2" alignment="CENTER" prefHeight="32.0" prefWidth="326.0" promptText="%prompt_label_password_repeat" styleClass="auth_input" AnchorPane.leftAnchor="136.0" AnchorPane.topAnchor="230.0">
+               <effect>
+                  <InnerShadow color="#142443" />
+               </effect>
+            </PasswordField>
+            <Button fx:id="btn_register" layoutX="212.0" layoutY="276.0" mnemonicParsing="false" onAction="#registerClicked" prefHeight="35.0" prefWidth="174.0" styleClass="custombutton" text="%btn_register" AnchorPane.leftAnchor="212.0" AnchorPane.topAnchor="276.0" />
+         </children>
+      </AnchorPane>
+      <Label layoutX="137.0" layoutY="14.0" styleClass="logoShadow" text="Language tutor">
+         <effect>
+            <InnerShadow color="#0e1f46" height="10.06" radius="4.515000000000001" width="10.0">
+               <input>
+                  <Glow level="0.08" />
+               </input>
+            </InnerShadow>
+         </effect>
+      </Label>
+      <AnchorPane fx:id="pane_enter" prefHeight="373.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button fx:id="btn_showRegPane" layoutX="213.0" layoutY="318.0" mnemonicParsing="false" onAction="#showRegPaneClicked" prefHeight="35.0" prefWidth="174.0" styleClass="custombutton" text="%btn_show_regPanel" AnchorPane.leftAnchor="213.0" AnchorPane.topAnchor="318.0" />
+            <TextField fx:id="txtb_enter_username" alignment="CENTER" prefHeight="32.0" prefWidth="326.0" promptText="%prompt_label_username" styleClass="auth_input" AnchorPane.leftAnchor="137.0" AnchorPane.topAnchor="126.0">
+               <effect>
+                  <InnerShadow color="#142443" height="20.0" radius="9.5" width="20.0" />
+               </effect>
+            </TextField>
+            <PasswordField fx:id="txtb_enter_password" alignment="CENTER" prefHeight="32.0" prefWidth="326.0" promptText="%prompt_label_password" styleClass="auth_input" AnchorPane.leftAnchor="136.0" AnchorPane.topAnchor="183.0">
+               <effect>
+                  <InnerShadow color="#142443" height="20.0" radius="9.5" width="20.0" />
+               </effect>
+            </PasswordField>
+            <Button fx:id="btn_enter" layoutX="213.0" layoutY="276.0" mnemonicParsing="false" onAction="#enterProgramClicked" prefHeight="35.0" prefWidth="174.0" styleClass="custombutton" text="%btn_enter" AnchorPane.leftAnchor="213.0" AnchorPane.topAnchor="276.0" />
+         </children>
+      </AnchorPane>
+   </children>
+   <effect>
+      <DropShadow />
+   </effect>
+</AnchorPane>

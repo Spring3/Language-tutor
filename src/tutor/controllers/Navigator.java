@@ -18,4 +18,5 @@ public abstract class Navigator {
     public static final String USER_RATE_VIEW_PATH = "view/userRate.fxml";
     public static final String ABOUT_VIEW_PATH = "view/about.fxml";
     public static final String ADD_LANGUAGE_VIEW_PATH = "view/addLanguage.fxml";
+    public static final String AUTHENTICATION_VIEW_PATH = "view/auth.fxml";
 }

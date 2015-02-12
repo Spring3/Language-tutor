@@ -1,3 +1,11 @@
+.auth_input{
+  -fx-background-color: #1D3B58;
+  -fx-background-radius: 0;
+  -fx-text-fill: #92BEDA;
+  -fx-font-size: 14px;
+  -fx-prompt-text-fill: #6993AC;
+}
+
 .customLabel{
   -fx-font-size: 20px;
   -fx-text-fill: #92BEDA;
@@ -288,12 +296,12 @@
   -fx-background-color: transparent;
   -fx-background-radius: 0;
   -fx-border-color:  #92BEDA;
-  -fx-text-fill:  white;
+  -fx-text-fill: #6993AC;
   -fx-font-family: "Calibri Light";
   -fx-font-size: 14;
   -fx-border-radius: 0;
   -fx-border-width: 0.4;
-  -fx-padding: 10 8 10 8;
+  -fx-padding: 8 10 8 10;
 }
 
 .custombutton:hover{

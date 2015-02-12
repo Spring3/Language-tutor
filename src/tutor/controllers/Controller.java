@@ -97,10 +97,6 @@ public class Controller extends Navigator implements Initializable
         stageManager.Shutdown();
     }
 
-    public void navigateTo(@NotNull URL fxmlURL, @NotNull String title, @NotNull int layerIndex){
-        stageManager.navigateTo(fxmlURL, title, layerIndex);
-    }
-
     public void newsItemClicked(Event event) {
         stageManager.navigateTo(Main.class.getResource(NEWS_ITEM_VIEW_PATH), newsItemLabel.getText(), 1);
     }
