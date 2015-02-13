@@ -76,6 +76,16 @@ public class AuthController extends Navigator implements Initializable {
     private final static String WRONG_DATA = "error_wrong_data";
     private final static String USER_ALREADY_EXISTS = "error_user_exists";
 
+    private static User activeUser;
+
+    public static User getActiveUser() {
+        return activeUser;
+    }
+
+    public static void setActiveUser(User activeUser) {
+        AuthController.activeUser = activeUser;
+    }
+
     public void enterProgramClicked(ActionEvent actionEvent) {
         if (!txtb_enter_username.getText().isEmpty()) {
             if (!txtb_enter_password.getText().isEmpty()) {
@@ -83,6 +93,7 @@ public class AuthController extends Navigator implements Initializable {
                 if (user != null) {
                     if (user.getPassword() == txtb_enter_password.getText().hashCode()) {
                         System.out.println("User: " + txtb_enter_username.getText() + ", password: " + txtb_enter_password.getText());
+                        setActiveUser(user);
                         stageManager.navigateTo(Main.class.getResource(Navigator.MAIN_VIEW_PATH), "Language tutor", 0, Optional.of(true));
                     }
                     else{
@@ -123,6 +134,7 @@ public class AuthController extends Navigator implements Initializable {
                         user = new User(txtb_reg_username.getText(), txtb_reg_pass1.getText().hashCode());
                         if (new UserDAO().create(user)) {
                             System.out.println("Registering user: " + txtb_reg_username.getText() + ", password: " + txtb_reg_pass1.getText() + ", repeated: " + txtb_reg_pass2.getText());
+                            setActiveUser(user);
                             stageManager.navigateTo(Main.class.getResource(Navigator.MAIN_VIEW_PATH), "Language Tutor", 0, Optional.of(true));
                         }
                         else{

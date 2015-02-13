@@ -13,9 +13,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import tutor.dao.LanguageDAO;
+import tutor.models.Language;
 import tutor.util.StageManager;
 import tutor.Main;
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -64,7 +67,7 @@ public class SettingsController extends Navigator implements Initializable {
     @FXML
     private RadioButton radioButton_translationOnlyDropbox;
     @FXML
-    private ListView<String> listView_languages;
+    private ListView<Language> listView_languages;
     @FXML
     private Button btn_chooseBackupLocalDBPath;
     @FXML
@@ -228,6 +231,13 @@ public class SettingsController extends Navigator implements Initializable {
                 }
             }
         });
+
+        List<Language> currentUserLanguages = new LanguageDAO().readAllLanguages(AuthController.getActiveUser().getId());
+        ObservableList<Language> userLanguages = FXCollections.observableArrayList();
+        for(Language lang : currentUserLanguages){
+            userLanguages.add(lang);
+        }
+        listView_languages.setItems(userLanguages);
     }
 
     public void btn_cancel_clicked(ActionEvent actionEvent) {
