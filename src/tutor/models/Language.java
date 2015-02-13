@@ -57,7 +57,6 @@ public class Language {
 
         Language language = (Language) o;
 
-        if (id != language.id) return false;
         if (lang_name != null ? !lang_name.equals(language.lang_name) : language.lang_name != null) return false;
         if (owner != null ? !owner.equals(language.owner) : language.owner != null) return false;
 

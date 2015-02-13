@@ -51,7 +51,6 @@ public class StageManager {
                 return;
             if (stages.get(layerIndex) == null || stagePaths.get(layerIndex) == null) {
                 addStage(bakeStage(fxmlViewURL, title, layerIndex, isResizable), fxmlViewURL, layerIndex);
-
             }
             stage = stages.get(layerIndex);
             String mainFMXLViewPath = stagePaths.get(layerIndex).toExternalForm();
@@ -69,6 +68,15 @@ public class StageManager {
             stagePaths.put(layerIndex, fxmlViewURL);
         }catch (NullPointerException ex){
             ex.printStackTrace();
+        }
+    }
+
+    public void putStage(URL stagePath,Stage stage, int layer){
+        if (layer > 0 && layer < maxLayer) {
+            closeStage(stages.get(layer));
+            stages.put(layer, stage);
+            stagePaths.put(layer, stagePath);
+            stages.get(layer).show();
         }
     }
 

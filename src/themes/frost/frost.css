@@ -1,7 +1,7 @@
 .validation_label{
   -fx-font-size:20px;
   -fx-text-fill: #FF4A4A;
-  -fx-font-family: "Clibri Light";
+  -fx-font-family: "Calibri Light";
 }
 
 .auth_input{
@@ -307,7 +307,7 @@
   -fx-font-size: 14;
   -fx-border-radius: 0;
   -fx-border-width: 0.4;
-  -fx-padding: 8 10 8 10;
+  -fx-padding: 5 10 5 10;
 }
 
 .custombutton:hover{

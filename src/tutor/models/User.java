@@ -96,4 +96,35 @@ public class User {
     public void setPassword(int password) {
         this.password = password;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (id != user.id) return false;
+        if (password != user.password) return false;
+        if (seed != user.seed) return false;
+        if (Float.compare(user.success_rate, success_rate) != 0) return false;
+        if (dateOfRegistery != null ? !dateOfRegistery.equals(user.dateOfRegistery) : user.dateOfRegistery != null)
+            return false;
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        if (userName != null ? !userName.equals(user.userName) : user.userName != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (userName != null ? userName.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + password;
+        result = 31 * result + (dateOfRegistery != null ? dateOfRegistery.hashCode() : 0);
+        result = 31 * result + (success_rate != +0.0f ? Float.floatToIntBits(success_rate) : 0);
+        result = 31 * result + seed;
+        return result;
+    }
 }

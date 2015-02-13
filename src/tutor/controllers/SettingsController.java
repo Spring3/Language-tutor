@@ -7,7 +7,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -17,8 +20,12 @@ import tutor.dao.LanguageDAO;
 import tutor.models.Language;
 import tutor.util.StageManager;
 import tutor.Main;
+import tutor.util.UserConfigHelper;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -232,12 +239,8 @@ public class SettingsController extends Navigator implements Initializable {
             }
         });
 
-        List<Language> currentUserLanguages = new LanguageDAO().readAllLanguages(AuthController.getActiveUser().getId());
-        ObservableList<Language> userLanguages = FXCollections.observableArrayList();
-        for(Language lang : currentUserLanguages){
-            userLanguages.add(lang);
-        }
-        listView_languages.setItems(userLanguages);
+        //listView_languages
+        Refresh();
     }
 
     public void btn_cancel_clicked(ActionEvent actionEvent) {
@@ -246,6 +249,35 @@ public class SettingsController extends Navigator implements Initializable {
     }
 
     public void btn_addLanguage_clicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getResource(Navigator.ADD_LANGUAGE_VIEW_PATH), "Add new language", 2, Optional.empty());
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource(Navigator.ADD_LANGUAGE_VIEW_PATH));
+        loader.setResources(ResourceBundle.getBundle("locale/lang", Locale.getDefault()));
+        try {
+            Parent parent = loader.load();
+            AddLanguageController controller = loader.getController();
+            controller.setSettingsController(this);
+            Scene scene = new Scene(parent);
+            scene.getStylesheets().add(UserConfigHelper.getInstance().getParameter(UserConfigHelper.SELECTED_THEME));
+            Stage stage = new Stage();
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setTitle("Add new language");
+            stage.setOnHiding(windowEvent -> System.out.println("A stage on layer " + 2 + " was resetted"));
+            final Stage stageDuplicate = stage;
+            stageDuplicate.setOnCloseRequest(windowEvent -> StageManager.getInstance(3).closeStage(stageDuplicate));
+            stageManager.putStage(Main.class.getResource(Navigator.ADD_LANGUAGE_VIEW_PATH), stageDuplicate, 2);
+        }
+        catch (IOException ex){
+            ex.printStackTrace();
+        }
+        //stageManager.navigateTo(Main.class.getResource(Navigator.ADD_LANGUAGE_VIEW_PATH), "Add new language", 2, Optional.empty());
+    }
+
+    public void Refresh(){
+        List<Language> currentUserLanguages = new LanguageDAO().readAllLanguages(AuthController.getActiveUser().getId());
+        ObservableList<Language> userLanguages = FXCollections.observableArrayList();
+        for(Language lang : currentUserLanguages){
+            userLanguages.add(lang);
+        }
+        listView_languages.setItems(userLanguages);
     }
 }
