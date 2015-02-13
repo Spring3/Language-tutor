@@ -2,11 +2,11 @@
 
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="settings_anchorpane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tutor.controllers.AuthController">
    <children>
+      <Label fx:id="validation_label" alignment="CENTER" layoutX="15.0" layoutY="86.0" prefHeight="32.0" prefWidth="571.0" styleClass="validation_label" text="%key.unspecified" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="86.0" />
       <AnchorPane fx:id="pane_register" prefHeight="373.0" prefWidth="600.0" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Button fx:id="btn_showEnterPane" layoutX="212.0" layoutY="318.0" mnemonicParsing="false" onAction="#showEnterPaneClicked" prefHeight="35.0" prefWidth="174.0" styleClass="custombutton" text="%btn_show_enterPanel" AnchorPane.leftAnchor="212.0" AnchorPane.topAnchor="318.0" />
@@ -51,6 +51,7 @@
                </effect>
             </PasswordField>
             <Button fx:id="btn_enter" layoutX="213.0" layoutY="276.0" mnemonicParsing="false" onAction="#enterProgramClicked" prefHeight="35.0" prefWidth="174.0" styleClass="custombutton" text="%btn_enter" AnchorPane.leftAnchor="213.0" AnchorPane.topAnchor="276.0" />
+
          </children>
       </AnchorPane>
    </children>

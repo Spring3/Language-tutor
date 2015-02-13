@@ -8,10 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.LinkedHashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Created by user on 08.02.2015.
@@ -47,13 +44,13 @@ public class StageManager {
      * @param title title for a new scene
      * @param layerIndex is a layer of a stage to be shown on
      */
-    public void navigateTo(@NotNull URL fxmlViewURL, @NotNull String title, @NotNull int layerIndex) {
+    public void navigateTo(@NotNull URL fxmlViewURL, @NotNull String title, @NotNull int layerIndex, Optional<Boolean> isResizable) {
         try {
             Stage stage = null;
             if (layerIndex > maxLayer || layerIndex < 0)
                 return;
             if (stages.get(layerIndex) == null || stagePaths.get(layerIndex) == null) {
-                addStage(bakeStage(fxmlViewURL, title, layerIndex), fxmlViewURL, layerIndex);
+                addStage(bakeStage(fxmlViewURL, title, layerIndex, isResizable), fxmlViewURL, layerIndex);
 
             }
             stage = stages.get(layerIndex);
@@ -64,7 +61,7 @@ public class StageManager {
                 stage.show();
             } else {
                 stage.close();
-                addStage(bakeStage(fxmlViewURL, title, layerIndex), fxmlViewURL, layerIndex);
+                addStage(bakeStage(fxmlViewURL, title, layerIndex, isResizable), fxmlViewURL, layerIndex);
                 stage = stages.get(layerIndex);
                 stage.show();
             }
@@ -82,7 +79,7 @@ public class StageManager {
      * @param layerIndex a layer of a stage to be shown on
      * @return
      */
-    private Stage bakeStage(URL fxmlPath, String title, int layerIndex){
+    private Stage bakeStage(URL fxmlPath, String title, int layerIndex, Optional<Boolean> isResizable){
         Stage stage = null;
         FXMLLoader loader = null;
         Parent parent = null;
@@ -94,6 +91,7 @@ public class StageManager {
             scene = new Scene(parent);
             scene.getStylesheets().add(UserConfigHelper.getInstance().getParameter(UserConfigHelper.SELECTED_THEME));
             stage = new Stage();
+            stage.setResizable(isResizable.isPresent() ? isResizable.get() : false);
             stage.setScene(scene);
             stage.setTitle(title);
             stage.setOnHiding(windowEvent -> System.out.println("A stage on layer " + layerIndex + " was resetted"));

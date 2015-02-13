@@ -16,6 +16,7 @@ import javafx.stage.WindowEvent;
 import tutor.util.StageManager;
 import tutor.Main;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -235,6 +236,6 @@ public class SettingsController extends Navigator implements Initializable {
     }
 
     public void btn_addLanguage_clicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getResource(Navigator.ADD_LANGUAGE_VIEW_PATH), "Add new language", 2);
+        stageManager.navigateTo(Main.class.getResource(Navigator.ADD_LANGUAGE_VIEW_PATH), "Add new language", 2, Optional.empty());
     }
 }

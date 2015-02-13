@@ -31,7 +31,7 @@ public class Main extends Application {
         loader.setResources(ResourceBundle.getBundle("locale/lang", Locale.getDefault()));
         Parent root = loader.load();
         AuthController controller = loader.getController();
-        controller.navigateTo(getClass().getResource(Navigator.AUTHENTICATION_VIEW_PATH),"Language Tutor", 0 );
+        controller.navigateTo(getClass().getResource(Navigator.AUTHENTICATION_VIEW_PATH),"Language Tutor", 0, false);
     }
 
 
