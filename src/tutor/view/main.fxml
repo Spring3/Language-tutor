@@ -9,7 +9,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: dimgrey;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tutor.controllers.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: dimgrey;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tutor.controllers.Controller">
    <top>
       <MenuBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="27.0" prefWidth="600.0" BorderPane.alignment="CENTER">
         <menus>
@@ -37,7 +37,7 @@
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
-              <MenuItem fx:id="mItem_dictionary" onAction="#menuItem_dictionary_clicked" mnemonicParsing="false" text="%menuItem_dictionary">
+              <MenuItem fx:id="mItem_dictionary" mnemonicParsing="false" onAction="#menuItem_dictionary_clicked" text="%menuItem_dictionary">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
@@ -46,7 +46,7 @@
                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                  <MenuItem fx:id="mItem_about" onAction="#menuItem_about_clicked" mnemonicParsing="false" text="%menuItem_about">
+                  <MenuItem fx:id="mItem_about" mnemonicParsing="false" onAction="#menuItem_about_clicked" text="%menuItem_about">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="HOME" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
@@ -122,7 +122,7 @@
                                           </Label>
                                           <Separator layoutY="392.0" prefWidth="200.0" styleClass="taskheaderseparator" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="392.0" />
                                           <Label layoutX="14.0" layoutY="14.0" styleClass="settings_label" text="%lang_toLearn" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
-                                          <ChoiceBox fx:id="choiceBox_lang_to_learn" layoutX="139.0" layoutY="13.0" prefWidth="150.0" styleClass="settings_choiceBox" AnchorPane.leftAnchor="139.0" AnchorPane.topAnchor="13.0" />
+                                          <ChoiceBox fx:id="choiceBox_lang_to_learn" layoutX="139.0" layoutY="11.0" prefHeight="20.0" prefWidth="150.0" styleClass="settings_choiceBox" AnchorPane.leftAnchor="139.0" AnchorPane.topAnchor="11.0" />
                                           <FlowPane hgap="10.0" layoutY="134.0" prefHeight="203.0" prefWidth="598.0" vgap="10.0" AnchorPane.bottomAnchor="182.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="134.0">
                                              <children>
                                                 <AnchorPane prefHeight="144.0" prefWidth="200.0" styleClass="newsItem">

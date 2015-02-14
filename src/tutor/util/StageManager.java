@@ -141,6 +141,10 @@ public class StageManager {
         }
     }
 
+    /**
+     * Closes a stage and all the stages on the upper levels from current.
+     * @param stageToClose a stage to be closed.
+     */
     public void closeStage(Stage stageToClose){
         int foundStageIndex = maxLayer;
         for (int i = 0 ; i < maxLayer; i++){

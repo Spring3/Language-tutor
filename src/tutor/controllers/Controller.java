@@ -1,6 +1,8 @@
 package tutor.controllers;
 
 import com.sun.istack.internal.NotNull;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -12,10 +14,13 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import tutor.Main;
+import tutor.dao.LanguageDAO;
+import tutor.models.Language;
 import tutor.util.StageManager;
 
 import javax.swing.text.html.Option;
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -27,6 +32,7 @@ public class Controller extends Navigator implements Initializable
     public Controller(){
         stageManager = StageManager.getInstance(3);
     }
+
     private StageManager stageManager = null;
     @FXML
     private Label newsItemLabel;
@@ -65,7 +71,7 @@ public class Controller extends Navigator implements Initializable
     @FXML
     private ImageView newsItemImage;
     @FXML
-    private ChoiceBox<String> choiceBox_lang_to_learn;
+    private ChoiceBox<Language> choiceBox_lang_to_learn;
     @FXML
     private ImageView offlineTask_img;
     @FXML
@@ -79,7 +85,10 @@ public class Controller extends Navigator implements Initializable
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
-
+        ObservableList<Language> currentUserLanguages = FXCollections.observableArrayList();
+        List<Language> addedLanguages = new LanguageDAO().readAllLanguages(AuthController.getActiveUser().getId());
+        currentUserLanguages.addAll(addedLanguages);
+        choiceBox_lang_to_learn.setItems(currentUserLanguages);
     }
 
     /**

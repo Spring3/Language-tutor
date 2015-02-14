@@ -116,11 +116,16 @@ public class AuthController extends Navigator implements Initializable {
     }
 
     public void showEnterPaneClicked(ActionEvent actionEvent) {
+        txtb_reg_username.setText("");
+        txtb_reg_pass1.setText("");
+        txtb_reg_pass2.setText("");
         pane_register.setVisible(false);
         pane_enter.setVisible(true);
     }
 
     public void showRegPaneClicked(ActionEvent actionEvent) {
+        txtb_enter_username.setText("");
+        txtb_enter_password.setText("");
         pane_enter.setVisible(false);
         pane_register.setVisible(true);
     }
