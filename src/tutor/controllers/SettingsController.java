@@ -12,16 +12,19 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import tutor.dao.LanguageDAO;
 import tutor.models.Language;
 import tutor.util.StageManager;
 import tutor.Main;
 import tutor.util.UserConfigHelper;
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -156,6 +159,13 @@ public class SettingsController extends Navigator implements Initializable {
     private static final String DIALOGS_LANG_NOT_SELECTED = "dialogs_info_header_lang_not_selected";
     private static final String DIALOGS_CHOOSE_LANG = "dialogs_info_choose_lang";
     private static final String TITLE_ADD_NEW_LANG = "title_add_new_lang";
+    private static final String FILE_CHOOSER_TITLE = "title_f_chooser";
+    private static final String DIALOGS_RADIOBUTTON_HEADER = "dialogs_info_header_radiobutton";
+    private static final String DIALOGS_RADIOBUTTON_TEXT = "dialogs_info_choose_file_structure";
+
+    private File selectedFile;
+    private List<File> themeDirectories;
+    private File selectedThemeFile;
 
     //initialization method
     @Override
@@ -256,7 +266,7 @@ public class SettingsController extends Navigator implements Initializable {
             public void changed(ObservableValue<? extends Language> observable, Language oldValue, Language newValue) {
                 if (newValue != null)
                 {
-
+                //TODO: complete
                 }
                 else{
 
@@ -271,7 +281,32 @@ public class SettingsController extends Navigator implements Initializable {
                     btn_openFile.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
-                            //TODO: FileChooser
+                            //TODO: Add filechooser filters
+                            FileChooser fileChooser = new FileChooser();
+                            fileChooser.setTitle(bundle.getString(FILE_CHOOSER_TITLE));
+                            selectedFile = fileChooser.showOpenDialog(null);
+                            if (selectedFile != null){
+                                textField_localFilePath.setText(selectedFile.getAbsolutePath());
+                                if (radioButtonToggleGroup.getSelectedToggle() != null){
+                                    btn_loadLocalFile.setDisable(false);
+                                    btn_loadLocalFile.setOnAction(new EventHandler<ActionEvent>() {
+                                        @Override
+                                        public void handle(ActionEvent event) {
+                                            //TODO:Handle
+                                            System.out.println("FILE WAS LOADED");
+                                        }
+                                    });
+                                }
+                                else
+                                {
+                                    btn_loadLocalFile.setDisable(true);
+                                    Alert errorAlert = new Alert(Alert.AlertType.INFORMATION);
+                                    errorAlert.setTitle(bundle.getString(DIALOGS_INFO_TITLE));
+                                    errorAlert.setHeaderText(bundle.getString(DIALOGS_RADIOBUTTON_HEADER));
+                                    errorAlert.setContentText(bundle.getString(DIALOGS_RADIOBUTTON_TEXT));
+                                    errorAlert.showAndWait();
+                                }
+                            }
                         }
                     });
                     radioButton_wordAndTranslation.setDisable(false);
@@ -311,6 +346,48 @@ public class SettingsController extends Navigator implements Initializable {
         });
         //listView_languages
         Refresh();
+
+        //Showing all the themes, avaliable.
+        //TODO: Add server connection handling
+        findAllThemes();
+    }
+
+    private void findAllThemes() {
+        URL themesDirectoryURL = Main.class.getResource("../themes");
+        File themesDirectory = null;
+        try {
+            themesDirectory = new File(themesDirectoryURL.toURI());
+        }
+        catch (URISyntaxException exc){
+            exc.printStackTrace();
+        }
+        themeDirectories = new ArrayList<>();
+        ObservableList<String> themesNames = FXCollections.observableArrayList();
+        for (File file : themesDirectory.listFiles()) {
+            if (file.isDirectory()) {
+                themeDirectories.add(file);
+                themesNames.add(file.getName());
+            }
+        }
+        choiceBox_theme.setItems(themesNames);
+        choiceBox_theme.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                for(File directory: themeDirectories){
+                    if (directory.getName().equals(newValue)){
+                        URL themesFileURL = Main.class.getResource("../themes/" + newValue + File.separator + newValue + ".css");
+                        try {
+                            selectedThemeFile = new File(themesFileURL.toURI());
+                            System.out.println(selectedThemeFile.getPath());
+                            //TODO: change theme in config files after Ok or Apply btn clicked.
+                        }
+                        catch (URISyntaxException ex){
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
     }
 
     public void btn_cancel_clicked(ActionEvent actionEvent) {
