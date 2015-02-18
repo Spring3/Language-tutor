@@ -41,7 +41,7 @@
                      </children></AnchorPane>
                </children>
             </StackPane>
-            <StackPane fx:id="pane_data_source" maxWidth="800.0" minHeight="0.0" minWidth="10.0" styleClass="settings_stackpane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <StackPane fx:id="pane_data_source" maxWidth="800.0" minHeight="0.0" minWidth="10.0" styleClass="settings_stackpane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <AnchorPane maxWidth="800.0" minHeight="0.0" minWidth="10.0" StackPane.alignment="CENTER_LEFT">
                      <children>
@@ -50,8 +50,8 @@
                         <Label alignment="CENTER" layoutX="63.0" layoutY="309.0" maxWidth="400.0" prefHeight="22.0" prefWidth="377.0" styleClass="settings_label" text="%label_active_data_sources" AnchorPane.leftAnchor="63.0" AnchorPane.rightAnchor="55.0" AnchorPane.topAnchor="309.0" />
                         <TableView fx:id="tableview_datasources" layoutX="61.0" layoutY="334.0" maxWidth="400.0" prefHeight="221.0" prefWidth="380.0" styleClass="settings_tableview" AnchorPane.leftAnchor="61.0" AnchorPane.rightAnchor="54.0" AnchorPane.topAnchor="334.0">
                            <columns>
-                              <TableColumn prefWidth="103.0" text="%label_settings_type" />
-                              <TableColumn prefWidth="275.0" text="%label_settings_source" />
+                              <TableColumn fx:id="tableView_column_type" prefWidth="103.0" text="%label_settings_type" />
+                              <TableColumn fx:id="tableView_column_source" prefWidth="275.0" text="%label_settings_source" />
                            </columns>
                         </TableView>
                         <StackPane fx:id="stackpanel_localDB" layoutX="36.0" layoutY="72.0" maxWidth="400.0" prefHeight="243.0" prefWidth="422.0" visible="false" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="72.0">

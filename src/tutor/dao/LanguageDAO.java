@@ -180,7 +180,7 @@ public class LanguageDAO implements IDAO<Language> {
         try{
             Connection connection = DbManager.getInstance().getConnection();
             Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM LANGUAGES WHERE id=" + value.getId());
+            statement.executeUpdate("DELETE FROM LANGUAGES WHERE id=" + value.getId() + ";");
             connection.close();
             return true;
         }

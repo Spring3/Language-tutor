@@ -1,7 +1,0 @@
-02-12 02:47:26 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLException: Keine Daten verfügbar
-No data is available [2000-185]
-02-13 13:30:11 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLException: Syntax Fehler in SQL Befehl "INSERT INTO LANGUAGES VALUES(LANG_NAME, USER_ID) VALUES[*]('English',1); "
-Syntax error in SQL statement "INSERT INTO LANGUAGES VALUES(LANG_NAME, USER_ID) VALUES[*]('English',1); "; SQL statement:
-INSERT INTO LANGUAGES VALUES(lang_name, user_id) VALUES('English',1); [42000-185]

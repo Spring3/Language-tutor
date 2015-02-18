@@ -12,16 +12,23 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import tutor.dao.DataSourceDAO;
+import tutor.dao.DataUnitDAO;
 import tutor.dao.LanguageDAO;
+import tutor.models.DataSource;
+import tutor.models.DataUnit;
 import tutor.models.Language;
+import tutor.util.DataSourceType;
+import tutor.util.Service;
 import tutor.util.StageManager;
 import tutor.Main;
 import tutor.util.UserConfigHelper;
-import java.io.File;
-import java.io.IOException;
+
+import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -147,11 +154,15 @@ public class SettingsController extends Navigator implements Initializable {
     @FXML
     private Button btn_connectToDropBox;
     @FXML
-    private TableView<?> tableview_datasources;
+    private TableView<DataSource> tableview_datasources;
     @FXML
     private Button btn_correctLocaleMistake;
     @FXML
     private ChoiceBox<String> choiceBox_data_source_type;
+    @FXML
+    private TableColumn<DataSource, DataSourceType> tableView_column_type;
+    @FXML
+    private TableColumn<DataSource, String> tableView_column_source;
 
     private StageManager stageManager;
     private ResourceBundle bundle;
@@ -166,12 +177,16 @@ public class SettingsController extends Navigator implements Initializable {
     private File selectedFile;
     private List<File> themeDirectories;
     private File selectedThemeFile;
+    private final ObservableList<DataSource> allDataSources = FXCollections.observableArrayList();
+    private Language selectedLanguage;
 
     //initialization method
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //StageManager for operating with stages
         stageManager = StageManager.getInstance(3);
         bundle = resourceBundle;
+
         //Initializing items for listView
         StackPane[] panes = {pane_data_source, pane_lang, pane_other};
         ObservableList<String> items = FXCollections.observableArrayList(resourceBundle.getString("listView_item_data_source"), resourceBundle.getString("listView_item_language"), resourceBundle.getString("listView_item_others"));
@@ -189,6 +204,15 @@ public class SettingsController extends Navigator implements Initializable {
             }
         });
         listView.getSelectionModel().select(0);
+
+        //listView_languages
+        Refresh();
+
+        //Showing all the themes, avaliable.
+        //TODO: Add server connection handling
+        findAllThemes();
+
+        //Initializing activeLocale choicebox
         ObservableList<String> allLocales = FXCollections.observableArrayList();
         allLocales.add(UserConfigHelper.getInstance().getParameter(UserConfigHelper.LANGUAGE));
         choiceBox_activeLocale.setItems(allLocales);
@@ -199,20 +223,35 @@ public class SettingsController extends Navigator implements Initializable {
         radioButton_translationOnly.setToggleGroup(radioButtonToggleGroup);
         radioButton_wordAndTranslation.setToggleGroup(radioButtonToggleGroup);
         radioButton_wordsOnly.setToggleGroup(radioButtonToggleGroup);
-
+        radioButtonToggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            @Override
+            public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+                if (newValue != null) {
+                    if (!textField_localFilePath.getText().isEmpty()) {
+                        btn_loadLocalFile.setDisable(false);
+                        btn_loadLocalFile.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                parseSelectedFile();
+                            }
+                        });
+                    }
+                }
+            }
+        });
         ToggleGroup radioButtonGoogleToggleGroup = new ToggleGroup();
         radioButton_translationOnlyGoogleDocs.setToggleGroup(radioButtonGoogleToggleGroup);
         radioButton_wordAndTranslationGoogleDocs.setToggleGroup(radioButtonGoogleToggleGroup);
         radioButton_wordsOnlyGoogleDocs.setToggleGroup(radioButtonGoogleToggleGroup);
-
         ToggleGroup radioButtonDropboxToggleGroup = new ToggleGroup();
         radioButton_translationOnlyDropbox.setToggleGroup(radioButtonDropboxToggleGroup);
         radioButton_wordAndTranslationDropbox.setToggleGroup(radioButtonDropboxToggleGroup);
         radioButton_wordsOnlyDropbox.setToggleGroup(radioButtonDropboxToggleGroup);
-
         ToggleGroup languagePanelRadioButtonToggleGroup = new ToggleGroup();
         radioButton_localizeAutomatically.setToggleGroup(languagePanelRadioButtonToggleGroup);
         radioButton_localizeManually.setToggleGroup(languagePanelRadioButtonToggleGroup);
+
+
 
         //initializing choiceboxes
         ObservableList<String> dataSource_types = FXCollections.observableArrayList(
@@ -224,10 +263,11 @@ public class SettingsController extends Navigator implements Initializable {
         );
 
         choiceBox_data_source_type.setItems(dataSource_types);
-
+        //On data source choicebox item changed
         choiceBox_data_source_type.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String old_value, String new_value) {
+                //showing appropriate UI components
                 if (old_value != null && !old_value.isEmpty()) {
                      /*if (old_value.equals(resourceBundle.getString("source_type_local_db"))){
                         stackpanel_localDB.setVisible(false);
@@ -246,110 +286,167 @@ public class SettingsController extends Navigator implements Initializable {
                     }
                 }
 
-                if (new_value != null && !new_value.isEmpty()){
+                if (new_value != null && !new_value.isEmpty()) {
                     /*if (new_value.equals(resourceBundle.getString("source_type_local_db"))){
                         stackpanel_localDB.setVisible(true);
-                    }else*/ if (new_value.equals(resourceBundle.getString("source_type_file"))) {
+                    }else*/
+                    if (new_value.equals(resourceBundle.getString("source_type_file"))) {
                         stackpanel_file.setVisible(true);
-                    }else if (new_value.equals(resourceBundle.getString("source_type_google_disk_file"))){
+                    } else if (new_value.equals(resourceBundle.getString("source_type_google_disk_file"))) {
                         stackpanel_googleDrive.setVisible(true);
-                    }else if (new_value.equals(resourceBundle.getString("source_type_dropbox_file"))){
+                    } else if (new_value.equals(resourceBundle.getString("source_type_dropbox_file"))) {
                         stackpanel_dropbox.setVisible(true);
-                    }else if (new_value.equals(resourceBundle.getString("source_type_lingualeo"))){
+                    } else if (new_value.equals(resourceBundle.getString("source_type_lingualeo"))) {
                         stackpanel_lingualeo.setVisible(true);
                     }
                 }
             }
         });
+
+        //if dropbox file language was changed
         chB_dropbox_data_lang.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Language>() {
             @Override
             public void changed(ObservableValue<? extends Language> observable, Language oldValue, Language newValue) {
-                if (newValue != null)
-                {
-                //TODO: complete
-                }
-                else{
+                if (newValue != null) {
+                    //TODO: complete
+                } else {
 
                 }
             }
         });
+
+        //if file data source language was changed
         chB_file_data_lang.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Language>() {
             @Override
             public void changed(ObservableValue<? extends Language> observable, Language oldValue, Language newValue) {
-                if (newValue != null){
+                if (newValue != null) {
+                    selectedLanguage = newValue;
                     btn_openFile.setDisable(false);
-                    btn_openFile.setOnAction(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
-                            //TODO: Add filechooser filters
-                            FileChooser fileChooser = new FileChooser();
-                            fileChooser.setTitle(bundle.getString(FILE_CHOOSER_TITLE));
-                            selectedFile = fileChooser.showOpenDialog(null);
-                            if (selectedFile != null){
-                                textField_localFilePath.setText(selectedFile.getAbsolutePath());
-                                if (radioButtonToggleGroup.getSelectedToggle() != null){
-                                    btn_loadLocalFile.setDisable(false);
-                                    btn_loadLocalFile.setOnAction(new EventHandler<ActionEvent>() {
-                                        @Override
-                                        public void handle(ActionEvent event) {
-                                            //TODO:Handle
-                                            System.out.println("FILE WAS LOADED");
-                                        }
-                                    });
-                                }
-                                else
-                                {
-                                    btn_loadLocalFile.setDisable(true);
-                                    Alert errorAlert = new Alert(Alert.AlertType.INFORMATION);
-                                    errorAlert.setTitle(bundle.getString(DIALOGS_INFO_TITLE));
-                                    errorAlert.setHeaderText(bundle.getString(DIALOGS_RADIOBUTTON_HEADER));
-                                    errorAlert.setContentText(bundle.getString(DIALOGS_RADIOBUTTON_TEXT));
-                                    errorAlert.showAndWait();
-                                }
-                            }
-                        }
-                    });
                     radioButton_wordAndTranslation.setDisable(false);
                     radioButton_wordsOnly.setDisable(false);
                     radioButton_translationOnly.setDisable(false);
-                    textField_localFilePath.setDisable(false);
-                    textField_localFilePath.textProperty().addListener(new ChangeListener<String>() {
-                        @Override
-                        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                            if (!newValue.isEmpty()){
-                                btn_loadLocalFile.setDisable(false);
-                                btn_loadLocalFile.setOnAction(new EventHandler<ActionEvent>() {
-                                    @Override
-                                    public void handle(ActionEvent event) {
-                                        //TODO:Parse opened file
-                                    }
+                    btn_openFile.setOnAction(event -> {
+                        //Choosing a file to open
+                        FileChooser fileChooser = new FileChooser();
+                        fileChooser.setTitle(bundle.getString(FILE_CHOOSER_TITLE));
+                        selectedFile = fileChooser.showOpenDialog(null);
+                        if (selectedFile != null) {
+                            //Writing a selected file's path to the textfield
+                            textField_localFilePath.setText(selectedFile.getAbsolutePath());
+                            //if radiobutton was toggled
+                            if (radioButtonToggleGroup.getSelectedToggle() != null) {
+                                btn_loadLocalFile.setDisable(false); //activate load btn to parse the selected file
+                                btn_loadLocalFile.setOnAction(event1 -> {
+                                    //TODO:Handle
+                                    parseSelectedFile();
                                 });
                             }
-                            else{
-                                btn_loadLocalFile.setDisable(true);
-                            }
+
+                            textField_localFilePath.setDisable(false);
+                            textField_localFilePath.textProperty().addListener(new ChangeListener<String>() {
+                                                                                   @Override
+                                                                                   public void changed(ObservableValue<? extends String> observable, String oldValue, String
+                                                                                           newValue) {
+                                                                                       if (newValue.isEmpty()) {
+                                                                                           btn_loadLocalFile.setDisable(true);
+                                                                                       }
+                                                                                   }
+                                                                               }
+                            );
+                        }
+                        else {
+                            btn_openFile.setDisable(true);
+                            radioButton_wordAndTranslation.setDisable(true);
+                            radioButton_wordAndTranslation.setSelected(false);
+                            radioButton_wordsOnly.setDisable(true);
+                            radioButton_wordsOnly.setSelected(false);
+                            radioButton_translationOnly.setDisable(true);
+                            radioButton_translationOnly.setSelected(false);
+                            textField_localFilePath.setDisable(true);
+                            textField_localFilePath.setText("");
                         }
                     });
                 }
-                else{
-                    btn_openFile.setDisable(true);
-                    radioButton_wordAndTranslation.setDisable(true);
-                    radioButton_wordAndTranslation.setSelected(false);
-                    radioButton_wordsOnly.setDisable(true);
-                    radioButton_wordsOnly.setSelected(false);
-                    radioButton_translationOnly.setDisable(true);
-                    radioButton_translationOnly.setSelected(false);
-                    textField_localFilePath.setDisable(true);
-                    textField_localFilePath.setText("");
-                }
             }
         });
-        //listView_languages
-        Refresh();
 
-        //Showing all the themes, avaliable.
-        //TODO: Add server connection handling
-        findAllThemes();
+        refreshTableView();
+    }
+
+
+    private void refreshTableView(){
+        //initializing tableView
+        tableView_column_type.setCellValueFactory(new PropertyValueFactory<>("Type"));
+        tableView_column_source.setCellValueFactory(new PropertyValueFactory<>("Link"));
+        if (selectedLanguage != null) {
+            allDataSources.addAll(new DataSourceDAO().readAllByLanguage(selectedLanguage));
+            tableview_datasources.setItems(allDataSources);
+        }
+    }
+
+    private void parseSelectedFile(){
+        try {
+            final DataSource finalDataSource;
+            //Opening selected file
+            BufferedReader fileReader = new BufferedReader(new FileReader(selectedFile));
+            //Creating a datasource of type FILE for service OS
+            DataSource currentDataSource = new DataSource(textField_localFilePath.getText(), DataSource.LOCAL_FILE, DataSource.SERVICE_OS, selectedLanguage);
+            List<DataSource> allDataSourcesForSelectedLanguage = new DataSourceDAO().readAllByLanguage(selectedLanguage);
+            //Checking whether there is already such data source
+            boolean isDuplicate = allDataSourcesForSelectedLanguage.stream().anyMatch((a) -> a.equals(currentDataSource));
+
+            //if not
+            if (!isDuplicate) {
+                //saving our new datasource to the database
+                DataSource tempDataSource = null;
+                new DataSourceDAO().create(currentDataSource);
+                allDataSourcesForSelectedLanguage = new DataSourceDAO().readAllByLanguage(selectedLanguage);
+                for (DataSource source : allDataSourcesForSelectedLanguage){
+                    if (source.getLink().equals(currentDataSource.getLink())){
+                        tempDataSource = source;
+                        break;
+                    }
+                }
+                finalDataSource = tempDataSource;
+            } else {
+                //finding our original dataSource from the database
+                finalDataSource = allDataSourcesForSelectedLanguage.stream().filter((src) -> src.equals(currentDataSource)).findFirst().get();
+            }
+
+            if (radioButton_wordsOnly.isSelected()) {
+
+            } else if (radioButton_translationOnly.isSelected()) {
+
+            } else if (radioButton_wordAndTranslation.isSelected()) {
+                //If user clicked "Words - translation" radiobutton, we are separating our word from the translation
+                fileReader.lines().forEach((s) -> new DataUnitDAO()
+                        .create(
+                                new DataUnit(
+                                        s.substring(0, s.indexOf('=')).trim(),
+                                        s.substring(s.indexOf('=')+1, s.length()).trim(),
+                                        selectedLanguage,
+                                        finalDataSource)
+                        ));
+                //TODO: Check the whole file first. In case the data format is wrong, show an appropriate message
+                //Displaying current datasource in tableView
+                allDataSources.add(finalDataSource);
+
+            } else {
+                //if no radiobuttons were clicked
+                btn_loadLocalFile.setDisable(true);
+                Alert errorAlert = new Alert(Alert.AlertType.INFORMATION);
+                errorAlert.setTitle(bundle.getString(DIALOGS_INFO_TITLE));
+                errorAlert.setHeaderText(bundle.getString(DIALOGS_RADIOBUTTON_HEADER));
+                errorAlert.setContentText(bundle.getString(DIALOGS_RADIOBUTTON_TEXT));
+                errorAlert.showAndWait();
+            }
+            if (finalDataSource != null){
+
+
+            }
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void findAllThemes() {
@@ -357,8 +454,7 @@ public class SettingsController extends Navigator implements Initializable {
         File themesDirectory = null;
         try {
             themesDirectory = new File(themesDirectoryURL.toURI());
-        }
-        catch (URISyntaxException exc){
+        } catch (URISyntaxException exc) {
             exc.printStackTrace();
         }
         themeDirectories = new ArrayList<>();
@@ -373,15 +469,14 @@ public class SettingsController extends Navigator implements Initializable {
         choiceBox_theme.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                for(File directory: themeDirectories){
-                    if (directory.getName().equals(newValue)){
+                for (File directory : themeDirectories) {
+                    if (directory.getName().equals(newValue)) {
                         URL themesFileURL = Main.class.getResource("../themes/" + newValue + File.separator + newValue + ".css");
                         try {
                             selectedThemeFile = new File(themesFileURL.toURI());
                             System.out.println(selectedThemeFile.getPath());
                             //TODO: change theme in config files after Ok or Apply btn clicked.
-                        }
-                        catch (URISyntaxException ex){
+                        } catch (URISyntaxException ex) {
                             ex.printStackTrace();
                         }
                     }
@@ -391,7 +486,7 @@ public class SettingsController extends Navigator implements Initializable {
     }
 
     public void btn_cancel_clicked(ActionEvent actionEvent) {
-        Stage currentStage = (Stage)btn_cancel.getScene().getWindow();
+        Stage currentStage = (Stage) btn_cancel.getScene().getWindow();
         stageManager.closeStage(currentStage);
     }
 
@@ -412,13 +507,12 @@ public class SettingsController extends Navigator implements Initializable {
             final Stage stageDuplicate = stage;
             stageDuplicate.setOnCloseRequest(windowEvent -> StageManager.getInstance(3).closeStage(stageDuplicate));
             stageManager.putStage(Main.class.getResource(Navigator.ADD_LANGUAGE_VIEW_PATH), stageDuplicate, 2);
-        }
-        catch (IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
-    public void Refresh(){
+    public void Refresh() {
         List<Language> currentUserLanguages = new LanguageDAO().readAllLanguages(AuthController.getActiveUser().getId());
         ObservableList<Language> userLanguages = FXCollections.observableArrayList();
         userLanguages.addAll(currentUserLanguages);
@@ -435,8 +529,7 @@ public class SettingsController extends Navigator implements Initializable {
             listView_languages.getItems().remove(selectedLang);
             new LanguageDAO().delete(selectedLang);
             System.out.println("Language: " + selectedLang + " for user: " + selectedLang.getOwner().getUserName() + " was deleted");
-        }
-        else{
+        } else {
             Alert errorMessage = new Alert(Alert.AlertType.INFORMATION);
             errorMessage.setTitle(bundle.getString(DIALOGS_INFO_TITLE));
             errorMessage.setHeaderText(bundle.getString(DIALOGS_LANG_NOT_SELECTED));
