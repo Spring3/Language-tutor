@@ -50,7 +50,7 @@
                         <Label alignment="CENTER" layoutX="63.0" layoutY="309.0" maxWidth="400.0" prefHeight="22.0" prefWidth="377.0" styleClass="settings_label" text="%label_active_data_sources" AnchorPane.leftAnchor="63.0" AnchorPane.rightAnchor="55.0" AnchorPane.topAnchor="309.0" />
                         <TableView fx:id="tableview_datasources" layoutX="61.0" layoutY="334.0" maxWidth="400.0" prefHeight="221.0" prefWidth="380.0" styleClass="settings_tableview" AnchorPane.leftAnchor="61.0" AnchorPane.rightAnchor="54.0" AnchorPane.topAnchor="334.0">
                            <columns>
-                              <TableColumn fx:id="tableView_column_type" prefWidth="103.0" text="%label_settings_type" />
+                              <TableColumn fx:id="tableView_column_Language" prefWidth="103.0" text="%label_settings_lang" />
                               <TableColumn fx:id="tableView_column_source" prefWidth="275.0" text="%label_settings_source" />
                            </columns>
                         </TableView>

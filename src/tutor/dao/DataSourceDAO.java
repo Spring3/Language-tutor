@@ -2,6 +2,7 @@ package tutor.dao;
 
 import tutor.models.DataSource;
 import tutor.models.Language;
+import tutor.models.User;
 import tutor.util.DbManager;
 
 import java.sql.*;
@@ -63,10 +64,37 @@ public class DataSourceDAO implements IDAO<DataSource> {
             Connection connection = DbManager.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM DATA_SRC WHERE language_id=?;");
             statement.setInt(1, lang.getId());
+            resultList = readAllBy(statement);
+            connection.close();
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return resultList;
+    }
+
+    public List<DataSource> readAllByOwner(User user){
+        List<DataSource> resultList = null;
+        try{
+            Connection connection = DbManager.getInstance().getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM DATA_SRC WHERE language_id IN (SELECT id FROM LANGUAGES WHERE user_id=?);");
+            statement.setInt(1, user.getId());
+            resultList = readAllBy(statement);
+            connection.close();
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return resultList;
+    }
+
+    private List<DataSource> readAllBy(PreparedStatement statement){
+        List<DataSource> resultList = null;
+        try {
             statement.execute();
             ResultSet resultSet = statement.getResultSet();
             resultList = new ArrayList<>();
-            while(resultSet.next() == true){
+            while (resultSet.next() == true) {
                 DataSource result = new DataSource();
                 result.setId(resultSet.getInt(1));
                 result.setLink(resultSet.getString(2));
@@ -76,7 +104,6 @@ public class DataSourceDAO implements IDAO<DataSource> {
                 resultList.add(result);
             }
             resultSet.close();
-            connection.close();
         }
         catch (SQLException ex){
             ex.printStackTrace();

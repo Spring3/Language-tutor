@@ -23,7 +23,6 @@ import tutor.models.DataSource;
 import tutor.models.DataUnit;
 import tutor.models.Language;
 import tutor.util.DataSourceType;
-import tutor.util.Service;
 import tutor.util.StageManager;
 import tutor.Main;
 import tutor.util.UserConfigHelper;
@@ -158,7 +157,7 @@ public class SettingsController extends Navigator implements Initializable {
     @FXML
     private ChoiceBox<String> choiceBox_data_source_type;
     @FXML
-    private TableColumn<DataSource, DataSourceType> tableView_column_type;
+    private TableColumn<DataSource, Language> tableView_column_Language;
     @FXML
     private TableColumn<DataSource, String> tableView_column_source;
 
@@ -356,14 +355,9 @@ public class SettingsController extends Navigator implements Initializable {
                             );
                         }
                         else {
-                            btn_openFile.setDisable(true);
-                            radioButton_wordAndTranslation.setDisable(true);
                             radioButton_wordAndTranslation.setSelected(false);
-                            radioButton_wordsOnly.setDisable(true);
                             radioButton_wordsOnly.setSelected(false);
-                            radioButton_translationOnly.setDisable(true);
                             radioButton_translationOnly.setSelected(false);
-                            textField_localFilePath.setDisable(true);
                             textField_localFilePath.setText("");
                         }
                     });
@@ -375,14 +369,12 @@ public class SettingsController extends Navigator implements Initializable {
     }
 
 
-    private void refreshTableView(){
+    private void refreshTableView() {
         //initializing tableView
-        tableView_column_type.setCellValueFactory(new PropertyValueFactory<>("Type"));
-        tableView_column_source.setCellValueFactory(new PropertyValueFactory<>("Link"));
-        if (selectedLanguage != null) {
-            allDataSources.addAll(new DataSourceDAO().readAllByLanguage(selectedLanguage));
-            tableview_datasources.setItems(allDataSources);
-        }
+        tableView_column_Language.setCellValueFactory(new PropertyValueFactory<>("language"));
+        tableView_column_source.setCellValueFactory(new PropertyValueFactory<>("link"));
+        allDataSources.addAll(new DataSourceDAO().readAllByOwner(AuthController.getActiveUser()));
+        tableview_datasources.setItems(allDataSources);
     }
 
     private void parseSelectedFile(){
@@ -479,6 +471,9 @@ public class SettingsController extends Navigator implements Initializable {
             }
         }
         choiceBox_theme.setItems(themesNames);
+        String selectedThemeName = UserConfigHelper.getInstance().getParameter(UserConfigHelper.SELECTED_THEME);
+        selectedThemeName = selectedThemeName.substring(selectedThemeName.lastIndexOf("/") +1, selectedThemeName.lastIndexOf(".css"));
+        choiceBox_theme.getSelectionModel().select(selectedThemeName);
         choiceBox_theme.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {

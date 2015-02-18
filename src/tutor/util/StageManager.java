@@ -92,7 +92,7 @@ public class StageManager {
         FXMLLoader loader = null;
         Parent parent = null;
         Scene scene = null;
-        loader = new FXMLLoader(fxmlPath); //changing main stage
+        loader = new FXMLLoader(fxmlPath);
         loader.setResources(ResourceBundle.getBundle("locale/lang", Locale.getDefault()));
         try {
             parent = loader.load();

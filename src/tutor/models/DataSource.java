@@ -1,5 +1,6 @@
 package tutor.models;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import tutor.util.DataSourceType;
 import tutor.util.Service;
@@ -21,9 +22,9 @@ public class DataSource implements DataSourceType, Service {
 
     private int id;
     private SimpleStringProperty link = new SimpleStringProperty();
-    private SimpleStringProperty type = new SimpleStringProperty();
+    private String type;
     private String service;
-    private Language language;
+    private SimpleObjectProperty<Language> language = new SimpleObjectProperty<>();
 
     public int getId() {
         return id;
@@ -42,11 +43,11 @@ public class DataSource implements DataSourceType, Service {
     }
 
     public String getType() {
-        return type.get();
+        return type;
     }
 
     public void setType(String type) {
-        this.type.set(type);
+        this.type = type;
     }
 
     public String getService() {
@@ -58,11 +59,11 @@ public class DataSource implements DataSourceType, Service {
     }
 
     public Language getLanguage() {
-        return language;
+        return language.get();
     }
 
     public void setLanguage(Language language) {
-        this.language = language;
+        this.language.set(language);
     }
 
     @Override
@@ -88,6 +89,11 @@ public class DataSource implements DataSourceType, Service {
         result = 31 * result + (service != null ? service.hashCode() : 0);
         result = 31 * result + (language != null ? language.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return getLink().substring(getLink().lastIndexOf('/') +1, getLink().lastIndexOf('.'));
     }
 //"CREATE TABLE IF NOT EXISTS DATA_SRC(id integer IDENTITY PRIMARY KEY, link varchar(100), type varchar(50), service varchar(50), credentials_id integer, language_id integer);",
 }
