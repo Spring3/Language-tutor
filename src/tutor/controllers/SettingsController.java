@@ -31,10 +31,8 @@ import tutor.util.UserConfigHelper;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
+
 import javafx.scene.control.Alert;
 
 /**
@@ -173,6 +171,9 @@ public class SettingsController extends Navigator implements Initializable {
     private static final String FILE_CHOOSER_TITLE = "title_f_chooser";
     private static final String DIALOGS_RADIOBUTTON_HEADER = "dialogs_info_header_radiobutton";
     private static final String DIALOGS_RADIOBUTTON_TEXT = "dialogs_info_choose_file_structure";
+    private static final String DIALOGS_ERROR_TITLE = "dialogs_error_title";
+    private static final String DIALOGS_ERROR_DATASOURCE_ALREADY_ADDED = "dialogs_error_header_datasource_already_added";
+    private static final String DIALOGS_ERROR_DATASOURCE_MESSAGE = "dialogs_error_datasource_message";
 
     private File selectedFile;
     private List<File> themeDirectories;
@@ -393,13 +394,14 @@ public class SettingsController extends Navigator implements Initializable {
             DataSource currentDataSource = new DataSource(textField_localFilePath.getText(), DataSource.LOCAL_FILE, DataSource.SERVICE_OS, selectedLanguage);
             List<DataSource> allDataSourcesForSelectedLanguage = new DataSourceDAO().readAllByLanguage(selectedLanguage);
             //Checking whether there is already such data source
-            boolean isDuplicate = allDataSourcesForSelectedLanguage.stream().anyMatch((a) -> a.equals(currentDataSource));
+            boolean isDuplicate = allDataSourcesForSelectedLanguage.stream().anyMatch((a) -> a.getLink().equals(currentDataSource.getLink()) && a.getLanguage().equals(currentDataSource.getLanguage()));
 
             //if not
             if (!isDuplicate) {
                 //saving our new datasource to the database
                 DataSource tempDataSource = null;
                 new DataSourceDAO().create(currentDataSource);
+                //replacing existing currentDataSource with the one from database to get id
                 allDataSourcesForSelectedLanguage = new DataSourceDAO().readAllByLanguage(selectedLanguage);
                 for (DataSource source : allDataSourcesForSelectedLanguage){
                     if (source.getLink().equals(currentDataSource.getLink())){
@@ -410,7 +412,18 @@ public class SettingsController extends Navigator implements Initializable {
                 finalDataSource = tempDataSource;
             } else {
                 //finding our original dataSource from the database
-                finalDataSource = allDataSourcesForSelectedLanguage.stream().filter((src) -> src.equals(currentDataSource)).findFirst().get();
+                try {
+                    finalDataSource = allDataSourcesForSelectedLanguage.stream().filter((src) -> src.equals(currentDataSource)).findFirst().get();
+                }
+                catch (NoSuchElementException ex){
+                    System.err.println("Datasource: "  + currentDataSource.getLink() + " had already been added.");
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle(bundle.getString(DIALOGS_ERROR_TITLE));
+                    alert.setHeaderText(bundle.getString(DIALOGS_ERROR_DATASOURCE_ALREADY_ADDED));
+                    alert.setContentText(bundle.getString(DIALOGS_ERROR_DATASOURCE_MESSAGE));
+                    alert.showAndWait();
+                    return;
+                }
             }
 
             if (radioButton_wordsOnly.isSelected()) {
