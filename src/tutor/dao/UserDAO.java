@@ -1,10 +1,8 @@
 package tutor.dao;
 
 import tutor.util.DbManager;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
 
 import tutor.models.User;
 
@@ -16,8 +14,14 @@ public class UserDAO implements IDAO<User> {
     public boolean create(User value) {
         try {
             Connection connection =  DbManager.getInstance().getConnection();
-            connection.createStatement().execute("INSERT INTO USERS(username, email, password, register_date, success_rate, seed) VALUES('"+
-                    value.getUserName() + "','" + value.getEmail() +"','" + value.getPassword() + "" + value.getSeed() + "','" + value.getDateOfRegistery()+ "'," + value.getSuccess_rate() +"," + value.getSeed() + ");");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO USERS(username, email, password, register_date, success_rate, seed) VALUES(?,?,?,?,?,?);");
+            statement.setString(1, value.getUserName());
+            statement.setString(2, value.getEmail());
+            statement.setString(3, value.getPassword() + "" + value.getSeed());
+            statement.setTimestamp(4, value.getDateOfRegistery());
+            statement.setFloat(5, value.getSuccess_rate());
+            statement.setInt(6, value.getSeed());
+            statement.execute();
             System.out.println("User: " + value.getUserName() + " was successfully added");
             connection.close();
             return true;
@@ -33,8 +37,9 @@ public class UserDAO implements IDAO<User> {
         User resultUser = null;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            Statement statement = connection.createStatement();
-            resultUser = readBy(statement, "SELECT * FROM USERS WHERE id='" + id + "';");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM USERS WHERE id=?;");
+            statement.setInt(1, id);
+            resultUser = readBy(statement);
             connection.close();
         }
         catch(SQLException ex){
@@ -47,8 +52,9 @@ public class UserDAO implements IDAO<User> {
         User resultUser = null;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            Statement statement = connection.createStatement();
-            resultUser = readBy(statement, "SELECT * FROM USERS WHERE username='" + userName + "';");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM USERS WHERE username=?;");
+            statement.setString(1, userName);
+            resultUser = readBy(statement);
             connection.close();
         }
         catch(SQLException ex){
@@ -57,10 +63,10 @@ public class UserDAO implements IDAO<User> {
         return resultUser;
     }
 
-    private User readBy(Statement sqlStatement, String query){
+    private User readBy(PreparedStatement sqlStatement){
         User resultUser = null;
         try {
-            sqlStatement.execute(query);
+            sqlStatement.execute();
             ResultSet result = sqlStatement.getResultSet();
             if (result.next() == true)
             {
@@ -73,7 +79,8 @@ public class UserDAO implements IDAO<User> {
                 resultUser.setSuccess_rate(result.getFloat(6));
                 int seed = result.getInt(7);
                 resultUser.setSeed(seed);
-                resultUser.setPassword(Integer.valueOf(password.substring(0, password.lastIndexOf(seed+""))));
+                String passSubString = password.substring(0, password.lastIndexOf(seed+""));
+                resultUser.setPassword(Integer.valueOf(passSubString));
             }
             result.close();
         }
@@ -87,8 +94,15 @@ public class UserDAO implements IDAO<User> {
     public boolean update(User value) {
         try {
             Connection connection = DbManager.getInstance().getConnection();
-            connection.createStatement().executeUpdate("" +
-                    "UPDATE USERS SET id=" + value.getId() + ", username='" + value.getUserName() + "', email='" + value.getEmail() + "', password='" + value.getPassword() + "" + value.getSeed() + "', register_date='" + value.getDateOfRegistery() + "', success_rate=" + value.getSuccess_rate() + ", seed=" + value.getSeed() + ";");
+            PreparedStatement statement = connection.prepareStatement("UPDATE USERS SET id=?, username=?, email=?, password=?, register_date=?, success_rate=?, seed=?;");
+            statement.setInt(1, value.getId());
+            statement.setString(2, value.getUserName());
+            statement.setString(3, value.getEmail());
+            statement.setString(4, value.getPassword() + "" + value.getSeed());
+            statement.setTimestamp(5, value.getDateOfRegistery());
+            statement.setFloat(6, value.getSuccess_rate());
+            statement.setInt(7, value.getSeed());
+            statement.executeUpdate();
             connection.close();
             return true;
         }
@@ -102,7 +116,9 @@ public class UserDAO implements IDAO<User> {
     public boolean delete(User value) {
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            connection.createStatement().executeUpdate("DELETE FROM USERS WHERE id='" + value.getId() + "';");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM USERS WHERE id=?;");
+            statement.setInt(1, value.getId());
+            statement.executeUpdate();
             connection.close();
             return true;
         }

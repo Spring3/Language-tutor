@@ -44,8 +44,9 @@ public class DataUnitDAO implements IDAO<DataUnit> {
         DataUnit result = null;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            Statement statement = connection.createStatement();
-            statement.execute("SELECT * FROM DATA_UNIT WHERE id=" + id + ";");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM DATA_UNIT WHERE id=?;");
+            statement.setInt(1, id);
+            statement.execute();
             ResultSet resultSet = statement.getResultSet();
             if (resultSet.next() == true) {
                 result = new DataUnit();
@@ -68,9 +69,9 @@ public class DataUnitDAO implements IDAO<DataUnit> {
         List<DataUnit> resultList = null;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            Statement statement = connection.createStatement();
-            String sqlQuery = "SELECT * FROM DATA_UNIT WHERE lang_id=" + lang.getId() + ";";
-            statement.execute(sqlQuery);
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM DATA_UNIT WHERE lang_id=?;");
+            statement.setInt(1, lang.getId());
+            statement.execute();
             ResultSet resultSet = statement.getResultSet();
             resultList = new ArrayList<>();
             while(resultSet.next() == true){
@@ -95,8 +96,13 @@ public class DataUnitDAO implements IDAO<DataUnit> {
     public boolean update(DataUnit value) {
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("UPDATE DATA_UNIT SET id=" + value.getId() + ", word='" + value.getWord() + "', word_translation='" + value.getTranslation() + "', lang_id=" + value.getLang().getId() + ", data_src_id=" + value.getDataSrc().getId() + ";");
+            PreparedStatement statement = connection.prepareStatement("UPDATE DATA_UNIT SET id=?, word=?, word_translation=?, lang_id=?, data_src_id=?;");
+            statement.setInt(1, value.getId());
+            statement.setString(2, value.getWord());
+            statement.setString(3, value.getTranslation());
+            statement.setInt(4, value.getLang().getId());
+            statement.setInt(5, value.getDataSrc().getId());
+            statement.executeUpdate();
             connection.close();
             return true;
         }
@@ -111,8 +117,9 @@ public class DataUnitDAO implements IDAO<DataUnit> {
     public boolean delete(DataUnit value) {
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM DATA_UNIT WHERE id=" + value.getId() + ";");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM DATA_UNIT WHERE id=?;");
+            statement.setInt(1, value.getId());
+            statement.executeUpdate();
             connection.close();
             return true;
         }

@@ -3,10 +3,8 @@ package tutor.dao;
 import tutor.models.DataSource;
 import tutor.models.Language;
 import tutor.util.DbManager;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,9 +17,12 @@ public class DataSourceDAO implements IDAO<DataSource> {
     public boolean create(DataSource value) {
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            String sqlQuery = "INSERT INTO DATA_SRC(link, type, service, language_id) VALUES('" + value.getLink() + "', '"  + value.getType() + "', '" + value.getService() + "', " + value.getLanguage().getId() + ");";
-            boolean result = connection.createStatement().execute(sqlQuery);
-            System.out.println("DATA SOURCE: " + value.getLink() + " was created");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO DATA_SRC(link, type, service, language_id) VALUES(?,?,?,?);");
+            statement.setString(1, value.getLink());
+            statement.setString(2, value.getType());
+            statement.setString(3, value.getService());
+            statement.setInt(4, value.getLanguage().getId());
+            boolean result = statement.execute();
             connection.close();
             return result;
         }
@@ -36,8 +37,8 @@ public class DataSourceDAO implements IDAO<DataSource> {
         DataSource result = null;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            Statement statement = connection.createStatement();
-            statement.execute("SELECT * FROM DATA_SRC WHERE id=" + id + ";");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM DATA_SRC WHERE id=?;");
+            statement.setInt(1, id);
             ResultSet resultSet = statement.getResultSet();
             if (resultSet.next() == true){
                 result = new DataSource();
@@ -60,9 +61,9 @@ public class DataSourceDAO implements IDAO<DataSource> {
         List<DataSource> resultList = null;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            Statement statement = connection.createStatement();
-            String sqlQuery = "SELECT * FROM DATA_SRC WHERE language_id=" + lang.getId() + ";";
-            statement.execute(sqlQuery);
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM DATA_SRC WHERE language_id=?;");
+            statement.setInt(1, lang.getId());
+            statement.execute();
             ResultSet resultSet = statement.getResultSet();
             resultList = new ArrayList<>();
             while(resultSet.next() == true){
@@ -87,8 +88,13 @@ public class DataSourceDAO implements IDAO<DataSource> {
     public boolean update(DataSource value) {
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("UPDATE DATA_SRC SET id=" + value.getId() + ", link='" + value.getLink() + "', type='" + value.getType() + "', service='" + value.getService() + "', language_id=" + value.getLanguage().getId() + ";");
+            PreparedStatement statement = connection.prepareStatement("UPDATE DATA_SRC SET id=?, link=?, type=?, service=?, language_id=?;");
+            statement.setInt(1, value.getId());
+            statement.setString(2, value.getLink());
+            statement.setString(3, value.getType());
+            statement.setString(4, value.getService());
+            statement.setInt(5, value.getLanguage().getId());
+            statement.executeUpdate();
             connection.close();
             return true;
         }
@@ -102,8 +108,9 @@ public class DataSourceDAO implements IDAO<DataSource> {
     public boolean delete(DataSource value) {
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM DATA_SRC WHERE id= " + value.getId() + ";");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM DATA_SRC WHERE id=?;");
+            statement.setInt(1, value.getId());
+            statement.executeUpdate();
         }
         catch (SQLException ex){
             ex.printStackTrace();

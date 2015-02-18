@@ -3,10 +3,7 @@ import tutor.models.Language;
 import tutor.models.User;
 import tutor.util.DbManager;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +15,10 @@ public class LanguageDAO implements IDAO<Language> {
     public boolean create(Language value) {
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            String sqlQuery = "INSERT INTO LANGUAGES(lang_name, user_id) VALUES('" + value.getLang_name() + "'," + value.getOwner().getId()+");";
-            boolean result =  connection.createStatement().execute(sqlQuery);
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO LANGUAGES(lang_name, user_id) VALUES(?,?);");
+            preparedStatement.setString(1, value.getLang_name());
+            preparedStatement.setInt(2, value.getOwner().getId());
+            boolean result = preparedStatement.execute();
             System.out.println("New language: " + value.getLang_name() + " for user: " + value.getOwner().getUserName() + " was created");
             connection.close();
             return result;
@@ -37,8 +36,9 @@ public class LanguageDAO implements IDAO<Language> {
         Language result = null;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            Statement statement = connection.createStatement();
-            result = readBy(statement, "SELECT * FROM LANGUAGES WHERE id=" + id + ";");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM LANGUAGES WHERE id=?;");
+            statement.setInt(1, id);
+            result = readBy(statement);
             connection.close();
         }
         catch(SQLException ex){
@@ -51,8 +51,9 @@ public class LanguageDAO implements IDAO<Language> {
         Language result = null;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            Statement statement = connection.createStatement();
-            result = readBy(statement, "SELECT * FROM LANGUAGES WHERE user_id=" + owner_id + ";");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM LANGUAGES WHERE user_id=?;");
+            statement.setInt(1, owner_id);
+            result = readBy(statement);
             connection.close();
         }
         catch(SQLException ex){
@@ -65,8 +66,9 @@ public class LanguageDAO implements IDAO<Language> {
         Language result = null;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            Statement statement = connection.createStatement();
-            result = readBy(statement, "SELECT * FROM LANGUAGES WHERE lang_name='" + lang_name + "';");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM LANGUAGES WHERE lang_name=?;");
+            statement.setString(1, lang_name);
+            result = readBy(statement);
             connection.close();
         }
         catch (SQLException ex){
@@ -79,8 +81,10 @@ public class LanguageDAO implements IDAO<Language> {
         Language result = null;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            Statement statement = connection.createStatement();
-            result = readBy(statement, "SELECT * FROM LANGUAGES WHERE lang_name='" + lang_name + "' AND user_id=" + owner_id + ";");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM LANGUAGES WHERE lang_name=? AND user_id=?;");
+            statement.setString(1, lang_name);
+            statement.setInt(2, owner_id);
+            result = readBy(statement);
             connection.close();
         }
         catch (SQLException ex){
@@ -89,10 +93,10 @@ public class LanguageDAO implements IDAO<Language> {
         return result;
     }
 
-    private Language readBy(Statement sqlStatement, String query){
+    private Language readBy(PreparedStatement sqlStatement){
         Language result = null;
         try {
-            sqlStatement.execute(query);
+            sqlStatement.execute();
             ResultSet resultSet = sqlStatement.getResultSet();
             if (resultSet.next() == true)
             {
@@ -113,9 +117,9 @@ public class LanguageDAO implements IDAO<Language> {
         List<Language> resultList = null;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            Statement statement = connection.createStatement();
-            String sqlQuery = "SELECT * FROM LANGUAGES WHERE lang_name='" + lang_name + "';";
-            resultList = readAllLanguages(statement, sqlQuery);
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM LANGUAGES WHERE lang_name=?;");
+            statement.setString(1, lang_name);
+            resultList = readAllLanguages(statement);
             connection.close();
         }
         catch (SQLException ex){
@@ -128,9 +132,9 @@ public class LanguageDAO implements IDAO<Language> {
         List<Language> resultList = null;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            Statement statement = connection.createStatement();
-            String sqlQuery = "SELECT * FROM LANGUAGES WHERE user_id=" + ownerId + ";";
-            resultList = readAllLanguages(statement, sqlQuery);
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM LANGUAGES WHERE user_id=?;");
+            statement.setInt(1, ownerId);
+            resultList = readAllLanguages(statement);
             connection.close();
         }
         catch (SQLException ex){
@@ -139,17 +143,18 @@ public class LanguageDAO implements IDAO<Language> {
         return resultList;
     }
 
-    private List<Language> readAllLanguages(Statement statement, String sqlQuery ){
+    private List<Language> readAllLanguages(PreparedStatement statement){
         List<Language> resultList = null;
         try {
-            statement.execute(sqlQuery);
+            statement.execute();
             resultList = new ArrayList<>();
             ResultSet resultSet = statement.getResultSet();
             while (resultSet.next() == true) {
                 Language tempLanguage = new Language();
                 tempLanguage.setId(resultSet.getInt(1));
                 tempLanguage.setLang_name(resultSet.getString(2));
-                tempLanguage.setOwner(new UserDAO().read(resultSet.getInt(3)));
+                User owner = new UserDAO().read(resultSet.getInt(3));
+                tempLanguage.setOwner(owner);
                 resultList.add(tempLanguage);
             }
             resultSet.close();
@@ -164,8 +169,11 @@ public class LanguageDAO implements IDAO<Language> {
     public boolean update(Language value) {
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("UPDATE LANGUAGES SET id=" + value.getId() + ", lang_name='" + value.getLang_name() + "', user_id=" + value.getOwner().getId() + ";");
+            PreparedStatement statement = connection.prepareStatement("UPDATE LANGUAGES SET id=?, lang_name=?, user_id=?;");
+            statement.setInt(1, value.getId());
+            statement.setString(2, value.getLang_name());
+            statement.setInt(3, value.getOwner().getId());
+            statement.executeUpdate();
             connection.close();
             return true;
         }
@@ -179,8 +187,9 @@ public class LanguageDAO implements IDAO<Language> {
     public boolean delete(Language value) {
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM LANGUAGES WHERE id=" + value.getId() + ";");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM LANGUAGES WHERE id=?;");
+            statement.setInt(1, value.getId());
+            statement.executeUpdate();
             connection.close();
             return true;
         }

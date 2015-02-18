@@ -139,6 +139,7 @@ public class AuthController extends Navigator implements Initializable {
                         user = new User(txtb_reg_username.getText(), txtb_reg_pass1.getText().hashCode());
                         if (new UserDAO().create(user)) {
                             System.out.println("Registering user: " + txtb_reg_username.getText() + ", password: " + txtb_reg_pass1.getText() + ", repeated: " + txtb_reg_pass2.getText());
+                            user = new UserDAO().readByUserName(user.getUserName());
                             setActiveUser(user);
                             stageManager.navigateTo(Main.class.getResource(Navigator.MAIN_VIEW_PATH), "Language Tutor", 0, Optional.of(true));
                         }
