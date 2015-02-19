@@ -22,16 +22,12 @@ import tutor.dao.LanguageDAO;
 import tutor.models.DataSource;
 import tutor.models.DataUnit;
 import tutor.models.Language;
-import tutor.util.DataSourceType;
 import tutor.util.StageManager;
 import tutor.Main;
 import tutor.util.UserConfigHelper;
-
 import java.io.*;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
-
 import javafx.scene.control.Alert;
 
 /**
@@ -173,8 +169,7 @@ public class SettingsController extends Navigator implements Initializable {
     private static final String DIALOGS_ERROR_TITLE = "dialogs_error_title";
     private static final String DIALOGS_ERROR_DATASOURCE_ALREADY_ADDED = "dialogs_error_header_datasource_already_added";
     private static final String DIALOGS_ERROR_DATASOURCE_MESSAGE = "dialogs_error_datasource_message";
-
-    private File selectedFile;
+    private volatile File selectedFile;
     private List<File> themeDirectories;
     private File selectedThemeFile;
     private final ObservableList<DataSource> allDataSources = FXCollections.observableArrayList();
@@ -211,7 +206,6 @@ public class SettingsController extends Navigator implements Initializable {
         //TODO: Add server connection handling
         findAllThemes();
 
-
         //Initializing activeLocale choicebox
         ObservableList<String> allLocales = FXCollections.observableArrayList();
         allLocales.add(UserConfigHelper.getInstance().getParameter(UserConfigHelper.LANGUAGE));
@@ -227,14 +221,23 @@ public class SettingsController extends Navigator implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
                 if (newValue != null) {
-                    if (!textField_localFilePath.getText().isEmpty()) {
-                        btn_loadLocalFile.setDisable(false);
-                        btn_loadLocalFile.setOnAction(new EventHandler<ActionEvent>() {
-                            @Override
-                            public void handle(ActionEvent event) {
-                                parseSelectedFile();
-                            }
-                        });
+                    if (textField_localFilePath.getText() != null) {
+                        if (!textField_localFilePath.getText().isEmpty()) {
+                            btn_loadLocalFile.setDisable(false);
+                            btn_loadLocalFile.setOnAction(new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent event) {
+                                    Thread thread = new Thread(){
+                                        @Override
+                                        public void run(){
+                                            parseSelectedFile();
+                                        }
+                                    };
+                                    thread.setDaemon(true);
+                                    thread.run();
+                                }
+                            });
+                        }
                     }
                 }
             }
@@ -250,8 +253,6 @@ public class SettingsController extends Navigator implements Initializable {
         ToggleGroup languagePanelRadioButtonToggleGroup = new ToggleGroup();
         radioButton_localizeAutomatically.setToggleGroup(languagePanelRadioButtonToggleGroup);
         radioButton_localizeManually.setToggleGroup(languagePanelRadioButtonToggleGroup);
-
-
 
         //initializing choiceboxes
         ObservableList<String> dataSource_types = FXCollections.observableArrayList(
@@ -324,6 +325,7 @@ public class SettingsController extends Navigator implements Initializable {
                     btn_openFile.setDisable(false);
                     radioButton_wordAndTranslation.setDisable(false);
                     radioButton_wordsOnly.setDisable(false);
+                    textField_localFilePath.setDisable(false);
                     radioButton_translationOnly.setDisable(false);
                     btn_openFile.setOnAction(event -> {
                         //Choosing a file to open
@@ -338,7 +340,15 @@ public class SettingsController extends Navigator implements Initializable {
                                 btn_loadLocalFile.setDisable(false); //activate load btn to parse the selected file
                                 btn_loadLocalFile.setOnAction(event1 -> {
                                     //TODO:Handle
-                                    parseSelectedFile();
+                                    Thread thread = new Thread(){
+                                        @Override
+                                        public void run(){
+                                            parseSelectedFile();
+                                        }
+                                    };
+                                    thread.setDaemon(true);
+                                    thread.run();
+
                                 });
                             }
 
@@ -361,6 +371,12 @@ public class SettingsController extends Navigator implements Initializable {
                             textField_localFilePath.setText("");
                         }
                     });
+                }
+                else{
+                    textField_localFilePath.setText("");
+                    textField_localFilePath.setDisable(true);
+                    radioButtonToggleGroup.selectToggle(null);
+                    btn_loadLocalFile.setDisable(true);
                 }
             }
         });
@@ -419,8 +435,24 @@ public class SettingsController extends Navigator implements Initializable {
             }
 
             if (radioButton_wordsOnly.isSelected()) {
+                fileReader.lines().forEach(line -> new DataUnitDAO()
+                    .create(
+                            new DataUnit(
+                                    line.trim(),
+                                    "",
+                                    selectedLanguage,
+                                    finalDataSource)
+                    ));
 
             } else if (radioButton_translationOnly.isSelected()) {
+                fileReader.lines().forEach(line -> new DataUnitDAO()
+                    .create(
+                            new DataUnit(
+                                    "",
+                                    line.trim(),
+                                    selectedLanguage,
+                                    finalDataSource)
+                    ));
 
             } else if (radioButton_wordAndTranslation.isSelected()) {
                 //If user clicked "Words - translation" radiobutton, we are separating our word from the translation
@@ -428,14 +460,11 @@ public class SettingsController extends Navigator implements Initializable {
                         .create(
                                 new DataUnit(
                                         s.substring(0, s.indexOf('=')).trim(),
-                                        s.substring(s.indexOf('=')+1, s.length()).trim(),
+                                        s.substring(s.indexOf('=') + 1, s.length()).trim(),
                                         selectedLanguage,
                                         finalDataSource)
                         ));
                 //TODO: Check the whole file first. In case the data format is wrong, show an appropriate message
-                //Displaying current datasource in tableView
-                allDataSources.add(finalDataSource);
-
             } else {
                 //if no radiobuttons were clicked
                 btn_loadLocalFile.setDisable(true);
@@ -445,10 +474,8 @@ public class SettingsController extends Navigator implements Initializable {
                 errorAlert.setContentText(bundle.getString(DIALOGS_RADIOBUTTON_TEXT));
                 errorAlert.showAndWait();
             }
-            if (finalDataSource != null){
-
-
-            }
+            //Displaying current datasource in tableView
+            allDataSources.add(finalDataSource);
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         }
