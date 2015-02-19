@@ -204,13 +204,13 @@ public class SettingsController extends Navigator implements Initializable {
             }
         });
         listView.getSelectionModel().select(0);
-
         //listView_languages
         Refresh();
 
         //Showing all the themes, avaliable.
         //TODO: Add server connection handling
         findAllThemes();
+
 
         //Initializing activeLocale choicebox
         ObservableList<String> allLocales = FXCollections.observableArrayList();
@@ -455,42 +455,60 @@ public class SettingsController extends Navigator implements Initializable {
     }
 
     private void findAllThemes() {
-        URL themesDirectoryURL = Main.class.getResource("../themes");
-        File themesDirectory = null;
         try {
-            themesDirectory = new File(themesDirectoryURL.toURI());
-        } catch (URISyntaxException exc) {
-            exc.printStackTrace();
-        }
-        themeDirectories = new ArrayList<>();
-        ObservableList<String> themesNames = FXCollections.observableArrayList();
-        for (File file : themesDirectory.listFiles()) {
-            if (file.isDirectory()) {
-                themeDirectories.add(file);
-                themesNames.add(file.getName());
+            File themesDirectory = null;
+            //try{
+            themesDirectory = new File("themes" + File.separator + "themes"); //dev
+                if(!themesDirectory.getAbsoluteFile().exists()){
+                    themesDirectory = new File("themes" + File.separator); //production
+                }
+            /*}
+            catch (Exception ex){
+
+            } */
+            themeDirectories = new ArrayList<>();
+            ObservableList<String> themesNames = FXCollections.observableArrayList();
+            for (File file : themesDirectory.listFiles()) {
+                if (file.isDirectory()) {
+                    themeDirectories.add(file);
+                    themesNames.add(file.getName());
+                }
             }
-        }
-        choiceBox_theme.setItems(themesNames);
-        String selectedThemeName = UserConfigHelper.getInstance().getParameter(UserConfigHelper.SELECTED_THEME);
-        selectedThemeName = selectedThemeName.substring(selectedThemeName.lastIndexOf("/") +1, selectedThemeName.lastIndexOf(".css"));
-        choiceBox_theme.getSelectionModel().select(selectedThemeName);
-        choiceBox_theme.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                for (File directory : themeDirectories) {
-                    if (directory.getName().equals(newValue)) {
-                        URL themesFileURL = Main.class.getResource("../themes/" + newValue + File.separator + newValue + ".css");
-                        try {
-                            selectedThemeFile = new File(themesFileURL.toURI());
+            choiceBox_theme.setItems(themesNames);
+            String selectedThemeName = UserConfigHelper.getInstance().getParameter(UserConfigHelper.SELECTED_THEME);
+            selectedThemeName = selectedThemeName.substring(selectedThemeName.lastIndexOf("/") + 1, selectedThemeName.lastIndexOf(".css"));
+            choiceBox_theme.getSelectionModel().select(selectedThemeName);
+            choiceBox_theme.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    for (File directory : themeDirectories) {
+                        if (directory.getName().equals(newValue)) {
+                            selectedThemeFile = new File("themes" + File.separator + "themes" + File.separator + newValue + File.separator + newValue + ".css"); //dev mode
+                            if (!selectedThemeFile.getAbsoluteFile().exists()){
+                                selectedThemeFile = new File("themes" + File.separator + newValue + File.separator + newValue + ".css");//production
+
+                            }
                             System.out.println(selectedThemeFile.getPath());
                             //TODO: change theme in config files after Ok or Apply btn clicked.
-                        } catch (URISyntaxException ex) {
-                            ex.printStackTrace();
                         }
                     }
                 }
+            });
+        }
+        catch (Exception ex){
+            try {
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("log.txt"));
+                PrintWriter writer = new PrintWriter(bufferedWriter);
+                ex.printStackTrace(writer);
+                writer.flush();
+                writer.close();
+                bufferedWriter.flush();
+                bufferedWriter.close();
             }
-        });
+            catch (IOException exc){
+
+            }
+        }
     }
 
     public void btn_cancel_clicked(ActionEvent actionEvent) {
