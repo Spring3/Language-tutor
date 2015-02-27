@@ -131,6 +131,10 @@ public class StageManager {
         }
     }
 
+    public Stage getStage(int layer){
+        return stages.get(layer);
+    }
+
     /**
      * Shuts the application down
      */

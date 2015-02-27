@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import tutor.Main;
 import tutor.dao.UserDAO;
 import tutor.models.User;
+import tutor.util.ResourceBundleKeys;
 import tutor.util.StageManager;
 
 import java.net.URL;
@@ -71,11 +72,6 @@ public class AuthController extends Navigator implements Initializable {
 
     private ResourceBundle bundle;
 
-    private final static String USERNAME_EMPTY = "error_username_empty";
-    private final static String PASSWORD_DOES_NOT_MATCH = "error_passw_does_not_match";
-    private final static String WRONG_DATA = "error_wrong_data";
-    private final static String USER_ALREADY_EXISTS = "error_user_exists";
-
     private static User activeUser;
 
     public static User getActiveUser() {
@@ -97,21 +93,21 @@ public class AuthController extends Navigator implements Initializable {
                         stageManager.navigateTo(Main.class.getResource(Navigator.MAIN_VIEW_PATH), "Language tutor", 0, Optional.of(true));
                     }
                     else{
-                        validation_label.setText(bundle.getString(WRONG_DATA));
+                        validation_label.setText(bundle.getString(ResourceBundleKeys.WRONG_DATA));
 
                     }
                 }
                 else{
-                    validation_label.setText(bundle.getString(WRONG_DATA));
+                    validation_label.setText(bundle.getString(ResourceBundleKeys.WRONG_DATA));
                 }
 
             }
             else{
-                validation_label.setText(bundle.getString(WRONG_DATA));
+                validation_label.setText(bundle.getString(ResourceBundleKeys.WRONG_DATA));
             }
         }
         else{
-            validation_label.setText(bundle.getString(USERNAME_EMPTY));
+            validation_label.setText(bundle.getString(ResourceBundleKeys.USERNAME_EMPTY));
         }
     }
 
@@ -144,24 +140,24 @@ public class AuthController extends Navigator implements Initializable {
                             stageManager.navigateTo(Main.class.getResource(Navigator.MAIN_VIEW_PATH), "Language Tutor", 0, Optional.of(true));
                         }
                         else{
-                            validation_label.setText(bundle.getString(WRONG_DATA));
+                            validation_label.setText(bundle.getString(ResourceBundleKeys.WRONG_DATA));
                         }
                     }
                     else{
-                        validation_label.setText(bundle.getString(USER_ALREADY_EXISTS));
+                        validation_label.setText(bundle.getString(ResourceBundleKeys.USER_ALREADY_EXISTS));
                     }
                 }
                 else
                 {
-                    validation_label.setText(bundle.getString(PASSWORD_DOES_NOT_MATCH));
+                    validation_label.setText(bundle.getString(ResourceBundleKeys.PASSWORD_DOES_NOT_MATCH));
                 }
             }
             else{
-                validation_label.setText(bundle.getString(WRONG_DATA));
+                validation_label.setText(bundle.getString(ResourceBundleKeys.WRONG_DATA));
             }
         }
         else{
-            validation_label.setText(bundle.getString(USERNAME_EMPTY));
+            validation_label.setText(bundle.getString(ResourceBundleKeys.USERNAME_EMPTY));
         }
     }
 

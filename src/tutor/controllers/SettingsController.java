@@ -17,14 +17,12 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import tutor.dao.DataSourceDAO;
-import tutor.dao.DataUnitDAO;
 import tutor.dao.LanguageDAO;
 import tutor.models.DataSource;
-import tutor.models.DataUnit;
 import tutor.models.Language;
-import tutor.util.StageManager;
+import tutor.util.*;
 import tutor.Main;
-import tutor.util.UserConfigHelper;
+
 import java.io.*;
 import java.net.URL;
 import java.util.*;
@@ -159,21 +157,16 @@ public class SettingsController extends Navigator implements Initializable {
 
     private StageManager stageManager;
     private ResourceBundle bundle;
-    private static final String DIALOGS_INFO_TITLE = "dialogs_info_title";
-    private static final String DIALOGS_LANG_NOT_SELECTED = "dialogs_info_header_lang_not_selected";
-    private static final String DIALOGS_CHOOSE_LANG = "dialogs_info_choose_lang";
-    private static final String TITLE_ADD_NEW_LANG = "title_add_new_lang";
-    private static final String FILE_CHOOSER_TITLE = "title_f_chooser";
-    private static final String DIALOGS_RADIOBUTTON_HEADER = "dialogs_info_header_radiobutton";
-    private static final String DIALOGS_RADIOBUTTON_TEXT = "dialogs_info_choose_file_structure";
-    private static final String DIALOGS_ERROR_TITLE = "dialogs_error_title";
-    private static final String DIALOGS_ERROR_DATASOURCE_ALREADY_ADDED = "dialogs_error_header_datasource_already_added";
-    private static final String DIALOGS_ERROR_DATASOURCE_MESSAGE = "dialogs_error_datasource_message";
     private volatile File selectedFile;
     private List<File> themeDirectories;
     private File selectedThemeFile;
     private final ObservableList<DataSource> allDataSources = FXCollections.observableArrayList();
     private Language selectedLanguage;
+    private ToggleGroup radioButtonToggleGroup;
+    private ToggleGroup radioButtonGoogleToggleGroup;
+    private ToggleGroup radioButtonDropboxToggleGroup;
+    private ToggleGroup languagePanelRadioButtonToggleGroup;
+    private DataSourceManager dataSourceManager;
 
     //initialization method
     @Override
@@ -213,10 +206,11 @@ public class SettingsController extends Navigator implements Initializable {
         choiceBox_activeLocale.getSelectionModel().select(UserConfigHelper.getInstance().getParameter(UserConfigHelper.LANGUAGE));
 
         //Creating toggleGroup for radiobuttons
-        ToggleGroup radioButtonToggleGroup = new ToggleGroup();
+        radioButtonToggleGroup = new ToggleGroup();
         radioButton_translationOnly.setToggleGroup(radioButtonToggleGroup);
         radioButton_wordAndTranslation.setToggleGroup(radioButtonToggleGroup);
         radioButton_wordsOnly.setToggleGroup(radioButtonToggleGroup);
+
         radioButtonToggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
@@ -242,15 +236,17 @@ public class SettingsController extends Navigator implements Initializable {
                 }
             }
         });
-        ToggleGroup radioButtonGoogleToggleGroup = new ToggleGroup();
+        radioButtonGoogleToggleGroup = new ToggleGroup();
         radioButton_translationOnlyGoogleDocs.setToggleGroup(radioButtonGoogleToggleGroup);
         radioButton_wordAndTranslationGoogleDocs.setToggleGroup(radioButtonGoogleToggleGroup);
         radioButton_wordsOnlyGoogleDocs.setToggleGroup(radioButtonGoogleToggleGroup);
-        ToggleGroup radioButtonDropboxToggleGroup = new ToggleGroup();
+
+        radioButtonDropboxToggleGroup = new ToggleGroup();
         radioButton_translationOnlyDropbox.setToggleGroup(radioButtonDropboxToggleGroup);
         radioButton_wordAndTranslationDropbox.setToggleGroup(radioButtonDropboxToggleGroup);
         radioButton_wordsOnlyDropbox.setToggleGroup(radioButtonDropboxToggleGroup);
-        ToggleGroup languagePanelRadioButtonToggleGroup = new ToggleGroup();
+
+        languagePanelRadioButtonToggleGroup = new ToggleGroup();
         radioButton_localizeAutomatically.setToggleGroup(languagePanelRadioButtonToggleGroup);
         radioButton_localizeManually.setToggleGroup(languagePanelRadioButtonToggleGroup);
 
@@ -330,7 +326,7 @@ public class SettingsController extends Navigator implements Initializable {
                     btn_openFile.setOnAction(event -> {
                         //Choosing a file to open
                         FileChooser fileChooser = new FileChooser();
-                        fileChooser.setTitle(bundle.getString(FILE_CHOOSER_TITLE));
+                        fileChooser.setTitle(bundle.getString(ResourceBundleKeys.FILE_CHOOSER_TITLE));
                         selectedFile = fileChooser.showOpenDialog(null);
                         if (selectedFile != null) {
                             //Writing a selected file's path to the textfield
@@ -381,9 +377,18 @@ public class SettingsController extends Navigator implements Initializable {
             }
         });
 
+
+        chB_googleDrive_data_lang.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Language>(){
+
+            @Override
+            public void changed(ObservableValue<? extends Language> observable, Language oldValue, Language newValue) {
+                if (newValue != null){
+                    stageManager.navigateTo(Main.class.getResource(Navigator.WEBVIEW_VIEW_PATH), "Browser", 2, Optional.of(true));
+                }
+            }
+        });
         refreshTableView();
     }
-
 
     private void refreshTableView() {
         //initializing tableView
@@ -394,91 +399,33 @@ public class SettingsController extends Navigator implements Initializable {
     }
 
     private void parseSelectedFile(){
-        try {
-            final DataSource finalDataSource;
-            //Opening selected file
-            BufferedReader fileReader = new BufferedReader(new FileReader(selectedFile));
-            //Creating a datasource of type FILE for service OS
-            DataSource currentDataSource = new DataSource(textField_localFilePath.getText(), DataSource.LOCAL_FILE, DataSource.SERVICE_OS, selectedLanguage);
-            List<DataSource> allDataSourcesForSelectedLanguage = new DataSourceDAO().readAllByLanguage(selectedLanguage);
-            //Checking whether there is already such data source
-            boolean isDuplicate = allDataSourcesForSelectedLanguage.stream().anyMatch((a) -> a.getLink().equals(currentDataSource.getLink()) && a.getLanguage().equals(currentDataSource.getLanguage()));
-
-            //if not
-            if (!isDuplicate) {
-                //saving our new datasource to the database
-                DataSource tempDataSource = null;
-                new DataSourceDAO().create(currentDataSource);
-                //replacing existing currentDataSource with the one from database to get id
-                allDataSourcesForSelectedLanguage = new DataSourceDAO().readAllByLanguage(selectedLanguage);
-                for (DataSource source : allDataSourcesForSelectedLanguage){
-                    if (source.getLink().equals(currentDataSource.getLink())){
-                        tempDataSource = source;
-                        break;
-                    }
-                }
-                finalDataSource = tempDataSource;
-            } else {
-                //finding our original dataSource from the database
-                try {
-                    finalDataSource = allDataSourcesForSelectedLanguage.stream().filter((src) -> src.equals(currentDataSource)).findFirst().get();
-                }
-                catch (NoSuchElementException ex){
-                    System.err.println("Datasource: "  + currentDataSource.getLink() + " had already been added.");
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle(bundle.getString(DIALOGS_ERROR_TITLE));
-                    alert.setHeaderText(bundle.getString(DIALOGS_ERROR_DATASOURCE_ALREADY_ADDED));
-                    alert.setContentText(bundle.getString(DIALOGS_ERROR_DATASOURCE_MESSAGE));
-                    alert.showAndWait();
-                    return;
-                }
+        DataSource currentDataSource = null;
+        if (radioButtonToggleGroup.getSelectedToggle() != null){
+            dataSourceManager = DataSourceManager.getInstance(bundle);
+            currentDataSource = new DataSource(textField_localFilePath.getText(), DataSource.LOCAL_FILE, DataSource.SERVICE_OS, selectedLanguage);
+            DataSourceManager.ContentType dataSourceContentType = null;
+            if (radioButton_wordAndTranslation.isSelected()){
+                dataSourceContentType = DataSourceManager.ContentType.WORDS_TRANSLATION;
             }
-
-            if (radioButton_wordsOnly.isSelected()) {
-                fileReader.lines().forEach(line -> new DataUnitDAO()
-                    .create(
-                            new DataUnit(
-                                    line.trim(),
-                                    "",
-                                    selectedLanguage,
-                                    finalDataSource)
-                    ));
-
-            } else if (radioButton_translationOnly.isSelected()) {
-                fileReader.lines().forEach(line -> new DataUnitDAO()
-                    .create(
-                            new DataUnit(
-                                    "",
-                                    line.trim(),
-                                    selectedLanguage,
-                                    finalDataSource)
-                    ));
-
-            } else if (radioButton_wordAndTranslation.isSelected()) {
-                //If user clicked "Words - translation" radiobutton, we are separating our word from the translation
-                fileReader.lines().forEach((s) -> new DataUnitDAO()
-                        .create(
-                                new DataUnit(
-                                        s.substring(0, s.indexOf('=')).trim(),
-                                        s.substring(s.indexOf('=') + 1, s.length()).trim(),
-                                        selectedLanguage,
-                                        finalDataSource)
-                        ));
-                //TODO: Check the whole file first. In case the data format is wrong, show an appropriate message
-            } else {
-                //if no radiobuttons were clicked
-                btn_loadLocalFile.setDisable(true);
-                Alert errorAlert = new Alert(Alert.AlertType.INFORMATION);
-                errorAlert.setTitle(bundle.getString(DIALOGS_INFO_TITLE));
-                errorAlert.setHeaderText(bundle.getString(DIALOGS_RADIOBUTTON_HEADER));
-                errorAlert.setContentText(bundle.getString(DIALOGS_RADIOBUTTON_TEXT));
-                errorAlert.showAndWait();
+            else if (radioButton_wordsOnly.isSelected()){
+                dataSourceContentType = DataSourceManager.ContentType.WORDS_ONLY;
             }
-            //Displaying current datasource in tableView
-            allDataSources.add(finalDataSource);
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            else if (radioButton_translationOnly.isSelected()){
+                dataSourceContentType = DataSourceManager.ContentType.TRANSLATION_ONLY;
+            }
+            dataSourceManager.parse(selectedFile, dataSourceContentType, currentDataSource);
         }
+        else {
+            //if no radiobuttons were clicked
+            btn_loadLocalFile.setDisable(true);
+            Alert errorAlert = new Alert(Alert.AlertType.INFORMATION);
+            errorAlert.setTitle(bundle.getString(ResourceBundleKeys.DIALOGS_INFO_TITLE));
+            errorAlert.setHeaderText(bundle.getString(ResourceBundleKeys.DIALOGS_RADIOBUTTON_HEADER));
+            errorAlert.setContentText(bundle.getString(ResourceBundleKeys.DIALOGS_RADIOBUTTON_TEXT));
+            errorAlert.showAndWait();
+        }
+        //Displaying current datasource in tableView
+        allDataSources.add(currentDataSource);
     }
 
     private void findAllThemes() {
@@ -516,7 +463,7 @@ public class SettingsController extends Navigator implements Initializable {
 
                             }
                             System.out.println(selectedThemeFile.getPath());
-                            //TODO: change theme in config files after Ok or Apply btn clicked.
+                            //TODO: change theme in config files after Ok or Apply btn is clicked.
                         }
                     }
                 }
@@ -555,7 +502,7 @@ public class SettingsController extends Navigator implements Initializable {
             Stage stage = new Stage();
             stage.setResizable(false);
             stage.setScene(scene);
-            stage.setTitle(bundle.getString(TITLE_ADD_NEW_LANG));
+            stage.setTitle(bundle.getString(ResourceBundleKeys.TITLE_ADD_NEW_LANG));
             stage.setOnHiding(windowEvent -> System.out.println("A stage on layer " + 2 + " was resetted"));
             final Stage stageDuplicate = stage;
             stageDuplicate.setOnCloseRequest(windowEvent -> StageManager.getInstance(3).closeStage(stageDuplicate));
@@ -584,9 +531,9 @@ public class SettingsController extends Navigator implements Initializable {
             System.out.println("Language: " + selectedLang + " for user: " + selectedLang.getOwner().getUserName() + " was deleted");
         } else {
             Alert errorMessage = new Alert(Alert.AlertType.INFORMATION);
-            errorMessage.setTitle(bundle.getString(DIALOGS_INFO_TITLE));
-            errorMessage.setHeaderText(bundle.getString(DIALOGS_LANG_NOT_SELECTED));
-            errorMessage.setContentText(bundle.getString(DIALOGS_CHOOSE_LANG));
+            errorMessage.setTitle(bundle.getString(ResourceBundleKeys.DIALOGS_INFO_TITLE));
+            errorMessage.setHeaderText(bundle.getString(ResourceBundleKeys.DIALOGS_LANG_NOT_SELECTED));
+            errorMessage.setContentText(bundle.getString(ResourceBundleKeys.DIALOGS_CHOOSE_LANG));
             errorMessage.showAndWait();
         }
     }

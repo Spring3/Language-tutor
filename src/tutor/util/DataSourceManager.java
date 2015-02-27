@@ -1,31 +1,126 @@
 package tutor.util;
 
+import com.sun.istack.internal.NotNull;
+import javafx.scene.control.Alert;
+import tutor.dao.DataSourceDAO;
+import tutor.dao.DataUnitDAO;
+import tutor.models.DataSource;
+import tutor.models.DataUnit;
+import tutor.models.Language;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.ResourceBundle;
 
 /**
  * Created by user on 17.02.2015.
  */
 public class DataSourceManager {
 
-    private DataSourceManager(){
-
+    private DataSourceManager(ResourceBundle bundle){
+        this.bundle = bundle;
     }
 
     private static DataSourceManager instance;
+    private ResourceBundle bundle;
 
-    public DataSourceManager getInstance(){
+    public static enum ContentType {
+        UNKNOWN,
+        WORDS_TRANSLATION,
+        WORDS_ONLY,
+        TRANSLATION_ONLY
+    }
+
+    public static DataSourceManager getInstance(ResourceBundle bundle){
         if (instance == null){
             synchronized (DataSourceManager.class){
                 if (instance == null){
-                    instance = new DataSourceManager();
+                    instance = new DataSourceManager(bundle);
                 }
             }
         }
         return instance;
     }
 
+    public void parse(File dataFile, ContentType contentType, @NotNull DataSource dataSource){
+        Language dataLanguage =  dataSource.getLanguage();
+        try {
+            final DataSource finalDataSource;
+            //Opening selected file
+            BufferedReader fileReader = new BufferedReader(new FileReader(dataFile));
+            //Creating a datasource of type FILE for service OS
 
-    public void process(File dataFile){
+            List<DataSource> allDataSourcesForSelectedLanguage = new DataSourceDAO().readAllByLanguage(dataLanguage);
+            //Checking whether there is already such data source
+            boolean isDuplicate = allDataSourcesForSelectedLanguage.stream().anyMatch((a) -> a.getLink().equals(dataSource.getLink()) && a.getLanguage().equals(dataSource.getLanguage()));
 
+            //if not
+            if (!isDuplicate) {
+                //saving our new datasource to the database
+                DataSource tempDataSource = null;
+                new DataSourceDAO().create(dataSource);
+                //replacing existing currentDataSource with the one from database to get id
+                allDataSourcesForSelectedLanguage = new DataSourceDAO().readAllByLanguage(dataLanguage);
+                for (DataSource source : allDataSourcesForSelectedLanguage){
+                    if (source.getLink().equals(dataSource.getLink())){
+                        tempDataSource = source;
+                        break;
+                    }
+                }
+                finalDataSource = tempDataSource;
+            } else {
+                //finding our original dataSource from the database
+                try {
+                    finalDataSource = allDataSourcesForSelectedLanguage.stream().filter((src) -> src.equals(dataSource)).findFirst().get();
+                }
+                catch (NoSuchElementException ex){
+                    System.err.println("Datasource: "  + dataSource.getLink() + " had already been added.");
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle(bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_TITLE));
+                    alert.setHeaderText(bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_DATASOURCE_ALREADY_ADDED));
+                    alert.setContentText(bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_DATASOURCE_MESSAGE));
+                    alert.showAndWait();
+                    return;
+                }
+            }
+
+            if (contentType == ContentType.WORDS_ONLY) {
+                fileReader.lines().forEach(line -> new DataUnitDAO()
+                        .create(
+                                new DataUnit(
+                                        line.trim(),
+                                        "",
+                                        dataLanguage,
+                                        finalDataSource)
+                        ));
+
+            } else if (contentType == ContentType.TRANSLATION_ONLY) {
+                fileReader.lines().forEach(line -> new DataUnitDAO()
+                        .create(
+                                new DataUnit(
+                                        "",
+                                        line.trim(),
+                                        dataLanguage,
+                                        finalDataSource)
+                        ));
+
+            } else if (contentType == ContentType.WORDS_TRANSLATION) {
+                //If user clicked "Words - translation" radiobutton, we are separating our word from the translation
+                fileReader.lines().forEach((s) -> new DataUnitDAO()
+                        .create(
+                                new DataUnit(
+                                        s.substring(0, s.indexOf('=')).trim(),
+                                        s.substring(s.indexOf('=') + 1, s.length()).trim(),
+                                        dataLanguage,
+                                        finalDataSource)
+                        ));
+                //TODO: Check the whole file first. In case the data format is wrong, show an appropriate message
+            }
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
     }
 }

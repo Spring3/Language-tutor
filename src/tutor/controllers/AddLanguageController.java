@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import tutor.dao.LanguageDAO;
 import tutor.models.Language;
+import tutor.util.ResourceBundleKeys;
 import tutor.util.StageManager;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -37,19 +38,16 @@ public class AddLanguageController extends Navigator implements Initializable {
 
     private ResourceBundle bundle;
 
-    private static final String ERROR_LANG_ALREADY_ADDED = "error_lang_exists";
-    private static final String DEFAULT = "key.unspecified";
-
     public void addLanguageClicked(ActionEvent actionEvent) {
         Language lang = new Language(textField_language.getText(), AuthController.getActiveUser());
         Language tempLang = new LanguageDAO().readBy(lang.getLang_name(), lang.getOwner().getId());
         if (tempLang != null) {
             if (tempLang.equals(lang)) {
-                validation_label.setText(bundle.getString(ERROR_LANG_ALREADY_ADDED));
+                validation_label.setText(bundle.getString(ResourceBundleKeys.ERROR_LANG_ALREADY_ADDED));
                 return;
             }
         }
-        validation_label.setText(bundle.getString(DEFAULT));
+        validation_label.setText(bundle.getString(ResourceBundleKeys.DEFAULT));
         new LanguageDAO().create(lang);
         System.out.println("Language: " + lang.getLang_name() + " for user: " + lang.getOwner().getUserName() + " was created.");
         Stage currentStage = (Stage) textField_language.getScene().getWindow();
