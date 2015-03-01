@@ -67,15 +67,27 @@ public class DataSource implements DataSourceType, Service {
     }
 
     @Override
+    public String toString() {
+        if (getType() == DataSourceType.LOCAL_FILE) {
+            return getLink().substring(getLink().lastIndexOf('/') + 1, getLink().lastIndexOf('.'));
+        }
+        else if (getType() == DataSourceType.GDRIVE_WORKSHEET || getType() == DataSourceType.GDRIVE_SPREADSHEET){
+            return getLink();
+        }
+        return getLink();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         DataSource that = (DataSource) o;
+
         if (language != null ? !language.equals(that.language) : that.language != null) return false;
         if (link != null ? !link.equals(that.link) : that.link != null) return false;
-        if (service != that.service && !service.equals(that.getService())) return false;
-        if (type != that.type && !type.equals(that.getType())) return false;
+        if (service != null ? !service.equals(that.service) : that.service != null) return false;
+        if (type != null ? !type.equals(that.type) : that.type != null) return false;
 
         return true;
     }
@@ -89,10 +101,4 @@ public class DataSource implements DataSourceType, Service {
         result = 31 * result + (language != null ? language.hashCode() : 0);
         return result;
     }
-
-    @Override
-    public String toString() {
-        return getLink().substring(getLink().lastIndexOf('/') +1, getLink().lastIndexOf('.'));
-    }
-//"CREATE TABLE IF NOT EXISTS DATA_SRC(id integer IDENTITY PRIMARY KEY, link varchar(100), type varchar(50), service varchar(50), credentials_id integer, language_id integer);",
 }

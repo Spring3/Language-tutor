@@ -17,9 +17,11 @@ import tutor.dao.DataSourceDAO;
 import tutor.models.DataSource;
 import tutor.models.Language;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by user on 26.02.2015.
@@ -79,12 +81,9 @@ public class GDriveManager {
                 isDoc = true;
             }
             final DataSource srcForEqualCheck = dataSource;
-            boolean hasDuplicates = new DataSourceDAO().readAllByOwner(AuthController.getActiveUser()).stream().anyMatch((src) -> src.equals(srcForEqualCheck));
-            if (hasDuplicates) {
-                dataSource = new DataSourceDAO().readAllByOwner(AuthController.getActiveUser()).stream().filter((src) -> src.getLanguage().equals(srcForEqualCheck.getLanguage()) && src.getType().equals(srcForEqualCheck.getType()) && src.getLink().equals(srcForEqualCheck.getLink()) && src.getService().equals(srcForEqualCheck.getService())).findFirst().get();
-            } else {
+            boolean hasDuplicates = new DataSourceDAO().readAllByOwner(AuthController.getActiveUser()).stream().anyMatch((src) -> src.getLink().equals(srcForEqualCheck.getLink()) && src.getLanguage().equals(srcForEqualCheck.getLanguage()));
+            if (!hasDuplicates){
                 new DataSourceDAO().create(dataSource);
-                dataSource = new DataSourceDAO().readAllByOwner(AuthController.getActiveUser()).stream().filter((src) -> src.getLanguage().equals(srcForEqualCheck.getLanguage()) && src.getType().equals(srcForEqualCheck.getType()) && src.getLink().equals(srcForEqualCheck.getLink()) && src.getService().equals(srcForEqualCheck.getService())).findFirst().get();
             }
             String downloadURL;
             if (isDoc){

@@ -53,7 +53,7 @@ public class DataSourceManager {
 
             List<DataSource> allDataSourcesForSelectedLanguage = new DataSourceDAO().readAllByLanguage(dataLanguage);
             //Checking whether there is already such data source
-            boolean isDuplicate = allDataSourcesForSelectedLanguage.stream().anyMatch((a) -> a.getLink().equals(dataSource.getLink()) && a.getLanguage().equals(dataSource.getLanguage()));
+            boolean isDuplicate = allDataSourcesForSelectedLanguage.stream().anyMatch((a) -> a.equals(dataSource));
 
             //if not
             if (!isDuplicate) {
@@ -69,23 +69,16 @@ public class DataSourceManager {
                     }
                 }
                 finalDataSource = tempDataSource;
+                parseWordFile(fileReader, contentType, dataLanguage, finalDataSource);
             } else {
-                //finding our original dataSource from the database
-                try {
-                    finalDataSource = allDataSourcesForSelectedLanguage.stream().filter((src) -> src.equals(dataSource)).findFirst().get();
-                }
-                catch (NoSuchElementException ex){
-                    System.err.println("Datasource: "  + dataSource.getLink() + " had already been added.");
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle(bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_TITLE));
-                    alert.setHeaderText(bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_DATASOURCE_ALREADY_ADDED));
-                    alert.setContentText(bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_DATASOURCE_MESSAGE));
-                    alert.showAndWait();
-                    return;
-                }
-            }
+                System.err.println("Datasource: "  + dataSource.getLink() + " had already been added.");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_TITLE));
+                alert.setHeaderText(bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_DATASOURCE_ALREADY_ADDED));
+                alert.setContentText(bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_DATASOURCE_MESSAGE));
+                alert.showAndWait();
 
-            parseWordFile(fileReader, contentType, dataLanguage, finalDataSource);
+            }
             //TODO: Check the whole file first. In case the data format is wrong, show an appropriate message
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();

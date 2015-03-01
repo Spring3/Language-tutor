@@ -420,9 +420,9 @@ public class SettingsController extends Navigator implements Initializable {
                                     else{
                                         btn_openGoogleDocFile.setDisable(true);
                                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                        alert.setTitle(ResourceBundleKeys.DIALOGS_INFO_TITLE);
-                                        alert.setHeaderText(ResourceBundleKeys.DIALOGS_INFO_NO_RIGHTS_HEADER);
-                                        alert.setContentText(ResourceBundleKeys.DIALOGS_INFO_NO_RIGHTS_CONTENT);
+                                        alert.setTitle(bundle.getString(ResourceBundleKeys.DIALOGS_INFO_TITLE));
+                                        alert.setHeaderText(bundle.getString(ResourceBundleKeys.DIALOGS_INFO_NO_RIGHTS_HEADER));
+                                        alert.setContentText(bundle.getString(ResourceBundleKeys.DIALOGS_INFO_NO_RIGHTS_CONTENT));
                                         alert.showAndWait();
 
                                     }

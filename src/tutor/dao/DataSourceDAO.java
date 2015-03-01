@@ -23,9 +23,9 @@ public class DataSourceDAO implements IDAO<DataSource> {
             statement.setString(2, value.getType());
             statement.setString(3, value.getService());
             statement.setInt(4, value.getLanguage().getId());
-            boolean result = statement.execute();
+            statement.execute();
             connection.close();
-            return result;
+            return true;
         }
         catch (SQLException ex){
             ex.printStackTrace();
