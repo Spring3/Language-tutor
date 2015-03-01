@@ -10,6 +10,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import tutor.util.GDriveManager;
 import tutor.util.StageManager;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -28,7 +29,7 @@ public class WebViewController extends Navigator implements Initializable {
     private static String codeString;
 
     public String getCode(){
-        return codeString.substring(codeString.indexOf("="), codeString.length() -1);
+        return codeString.substring(codeString.indexOf("=4/") +1, codeString.length() -1);
     }
 
     private StageManager stageManager;
@@ -44,12 +45,15 @@ public class WebViewController extends Navigator implements Initializable {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 try {
                     codeString = newValue;
-                    GDriveManager.getInstance().setCode(getCode());
                     webEngine.getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
                         @Override
                         public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newValue) {
-                            if (newValue == Worker.State.SUCCEEDED && getCode() != null && !getCode().isEmpty()) {
-                                stageManager.closeStage((Stage) browser.getScene().getWindow());
+                            if (newValue == Worker.State.SUCCEEDED || newValue == Worker.State.FAILED) {
+                                if (codeString.contains("oauth2callback?code")) {
+                                    System.out.println(getCode());
+                                    GDriveManager.getInstance().setCode(getCode());
+                                    stageManager.closeStage((Stage) browser.getScene().getWindow());
+                                }
                             }
                         }
                     });
@@ -59,6 +63,5 @@ public class WebViewController extends Navigator implements Initializable {
                 }
             }
         });
-
     }
 }

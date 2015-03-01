@@ -14,7 +14,7 @@
 .customLabel, .auth_input, .historyHeader, .historyDetailsHeader, .historyLabel, .historyResultHeader, .bigButton,
 .news_textarea, .settings_tableview, .settings_tableview .cell, .settings_tableview .label, .settings_choiceBox .label,
 .settings_checkbox, .taskheader, .settings_rbutton, .settings_button, .settings_input, .settings_label, .settings_header_label,
-.settingslistview, .settingslistview .list-cell:even, .settingslistview .list-cell:odd, .tf_input, .textArea{
+.settingslistview, .settingslistview .list-cell:even, .settingslistview .list-cell:odd, .tf_input, .textArea, .settings_button_additional{
   -fx-text-fill: #92BEDA;
 }
 
@@ -93,7 +93,7 @@
 }
 
 .settings_tableview .column-resize-line, .auth_input, .settings_choiceBox, .settings_button,
-.settings_tableview .column-overlay, .settings_tableview, .settings_checkbox>.box, .settings_input{
+.settings_tableview .column-overlay, .settings_tableview, .settings_checkbox>.box, .settings_input, .settings_button_additional{
   -fx-background-color: #1D3B58;
 }
 
@@ -124,12 +124,24 @@
   -fx-font-size:14px;
 }
 
-.settings_button{
+.settings_button, .settings_button_additional{
   -fx-border-radius: 0;
   -fx-border-width:0;
 }
 
-.settings_button:hover{
+.settings_button_additional{
+  -fx-font-size:20px;
+}
+
+.settong_update_img{
+  -fx-image: url("../../../resources/common/update.png");
+}
+
+.settong_delete_img{
+  -fx-image: url("../../../resources/common/delete.png");
+}
+
+.settings_button:hover, .settings_button_additional:hover{
   -fx-background-color: #B7D8FA;
 }
 

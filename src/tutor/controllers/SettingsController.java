@@ -335,7 +335,6 @@ public class SettingsController extends Navigator implements Initializable {
                             if (radioButtonToggleGroup.getSelectedToggle() != null) {
                                 btn_loadLocalFile.setDisable(false); //activate load btn to parse the selected file
                                 btn_loadLocalFile.setOnAction(event1 -> {
-                                    //TODO:Handle
                                     Thread thread = new Thread(){
                                         @Override
                                         public void run(){
@@ -381,10 +380,68 @@ public class SettingsController extends Navigator implements Initializable {
         chB_googleDrive_data_lang.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Language>(){
 
             @Override
-            public void changed(ObservableValue<? extends Language> observable, Language oldValue, Language newValue) {
-                if (newValue != null){
-                    stageManager.navigateTo(Main.class.getResource(Navigator.WEBVIEW_VIEW_PATH), "Browser", 2, Optional.of(true));
+            public void changed(ObservableValue<? extends Language> observable, Language oldValue, Language newLangValue) {
+                if (newLangValue != null){
+                    selectedLanguage = newLangValue;
+                    textField_googleDocsFIleURL.setDisable(false);
+                    textField_googleDocsFIleURL.textProperty().addListener(new ChangeListener<String>() {
+                        @Override
+                        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                            if (newValue != null){
+                                if (!newValue.isEmpty()){
+                                    GDriveManager gDriveManager = GDriveManager.getInstance();
+                                    if (gDriveManager.gotCode()) {
+                                        btn_openGoogleDocFile.setDisable(false);
+                                        btn_openGoogleDocFile.setOnAction(new EventHandler<ActionEvent>() {
+                                            @Override
+                                            public void handle(ActionEvent event) {
+                                                if (!textField_googleDocsFIleURL.getText().isEmpty() && gDriveManager.gotCode()){
+                                                    InputStream fileInputStream = gDriveManager.getFileInputStream(textField_googleDocsFIleURL.getText(), newLangValue);
+                                                    DataSource fileDataSource = new DataSourceDAO().readAllByOwner(AuthController.getActiveUser()).stream().filter((src) -> src.getLink().equals(textField_googleDocsFIleURL.getText()) && src.getLanguage().equals(newLangValue)).findFirst().get();
+                                                    DataSourceManager.ContentType selectedContentType = null;
+                                                    if (radioButton_wordAndTranslationGoogleDocs.isSelected()) {
+                                                        selectedContentType = DataSourceManager.ContentType.WORDS_TRANSLATION;
+                                                    }
+                                                    else if (radioButton_wordsOnlyGoogleDocs.isSelected()){
+                                                        selectedContentType = DataSourceManager.ContentType.WORDS_ONLY;
+                                                    }
+                                                    else{
+                                                        selectedContentType = DataSourceManager.ContentType.TRANSLATION_ONLY;
+                                                    }
+                                                    if(dataSourceManager == null){
+                                                        dataSourceManager = DataSourceManager.getInstance(bundle);
+                                                    }
+                                                    dataSourceManager.parse(fileInputStream, selectedContentType, fileDataSource);
+                                                }
+                                            }
+                                        });
+
+                                    }
+                                    else{
+                                        btn_openGoogleDocFile.setDisable(true);
+                                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                        alert.setTitle(ResourceBundleKeys.DIALOGS_INFO_TITLE);
+                                        alert.setHeaderText(ResourceBundleKeys.DIALOGS_INFO_NO_RIGHTS_HEADER);
+                                        alert.setContentText(ResourceBundleKeys.DIALOGS_INFO_NO_RIGHTS_CONTENT);
+                                        alert.showAndWait();
+
+                                    }
+                                }
+                                else{
+                                    btn_openGoogleDocFile.setDisable(true);
+                                }
+                            }
+                        }
+                    });
+
+
+                } else{
+                    textField_googleDocsFIleURL.setDisable(true);
+
                 }
+                radioButton_translationOnlyGoogleDocs.setSelected(false);
+                radioButton_wordsOnlyGoogleDocs.setSelected(false);
+                radioButton_wordAndTranslationGoogleDocs.setSelected(false);
             }
         });
         refreshTableView();
@@ -536,5 +593,10 @@ public class SettingsController extends Navigator implements Initializable {
             errorMessage.setContentText(bundle.getString(ResourceBundleKeys.DIALOGS_CHOOSE_LANG));
             errorMessage.showAndWait();
         }
+    }
+
+    public void connectToGDrive(ActionEvent actionEvent) {
+        stageManager.navigateTo(Main.class.getResource(Navigator.WEBVIEW_VIEW_PATH), "Browser", 2, Optional.of(true));
+
     }
 }

@@ -12,6 +12,8 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
+import tutor.controllers.AuthController;
+import tutor.dao.DataSourceDAO;
 import tutor.models.DataSource;
 import tutor.models.Language;
 
@@ -30,7 +32,7 @@ public class GDriveManager {
     private static String REDIRECT_URI = "https://www.example.com/oauth2callback";
 
     private static GDriveManager instance;
-    private String code;
+    private static String code;
     private static GoogleAuthorizationCodeFlow flow;
 
     private GDriveManager(){
@@ -48,33 +50,61 @@ public class GDriveManager {
         return instance;
     }
 
-    public void parseFile(String fileURL, Language dataLanguage){
-        Thread thread = new Thread(){
-            @Override
-            public void run(){
-                try {
-                    GoogleTokenResponse response = flow.newTokenRequest(code).setRedirectUri(REDIRECT_URI).execute();
-                    GoogleCredential credential = new GoogleCredential().setFromTokenResponse(response);
-                    Drive gDrive = new Drive.Builder(new NetHttpTransport(), new JacksonFactory(), credential).build();
-                    String fileId = fileURL.substring(fileURL.indexOf("="), fileURL.indexOf("&"));
-                    File file = gDrive.files().get(fileId).execute();
-                    DataSource dataSource = null;
-                    if (".xlsx".equals(file.getFileExtension()))
-                        dataSource = new DataSource(fileURL, DataSourceType.GDRIVE_SPREADSHEET, Service.SERVICE_GDRIVE, dataLanguage);
-                    else if (".docx".equals(file.getFileExtension()))
-                        dataSource = new DataSource(fileURL, DataSourceType.GDRIVE_WORKSHEET, Service.SERVICE_GDRIVE, dataLanguage);
-                    //TODO: check if such dataSource already exists
-                    if (null != file.getDownloadUrl() && file.getDownloadUrl().length() > 0){
-                        HttpResponse httpResponse = gDrive.getRequestFactory().buildGetRequest(new GenericUrl(file.getDownloadUrl())).execute();
-                        InputStream inputStream = httpResponse.getContent();
-                    }
-                }
-                catch (IOException ex){
-                    ex.printStackTrace();
+    public boolean gotCode(){
+        return code != null && !("".equals(code));
+    }
+
+    public InputStream getFileInputStream(String fileURL, Language dataLanguage) {
+        InputStream inputStream = null;
+        boolean isDoc = false;
+        try {
+            GoogleTokenResponse response = flow.newTokenRequest(code).setRedirectUri(REDIRECT_URI).execute();
+            GoogleCredential credential = new GoogleCredential().setFromTokenResponse(response);
+            Drive gDrive = new Drive.Builder(new NetHttpTransport(), new JacksonFactory(), credential).build();
+            String fileId = null;
+            try {
+                fileId = fileURL.substring(fileURL.indexOf("=") + 1, fileURL.indexOf("&"));
+            }
+            catch (StringIndexOutOfBoundsException ex){
+                fileId = fileURL.substring(fileURL.indexOf("d/") +2, fileURL.indexOf("/edit"));
+            }
+            File file = gDrive.files().get(fileId).execute();
+            DataSource dataSource = null;
+            if ("application/vnd.google-apps.spreadsheet".equals(file.getMimeType())) {
+                dataSource = new DataSource(fileURL, DataSourceType.GDRIVE_SPREADSHEET, Service.SERVICE_GDRIVE, dataLanguage);
+                isDoc = false;
+            }
+            else if ("application/vnd.google-apps.document".equals(file.getMimeType())) {
+                dataSource = new DataSource(fileURL, DataSourceType.GDRIVE_WORKSHEET, Service.SERVICE_GDRIVE, dataLanguage);
+                isDoc = true;
+            }
+            final DataSource srcForEqualCheck = dataSource;
+            boolean hasDuplicates = new DataSourceDAO().readAllByOwner(AuthController.getActiveUser()).stream().anyMatch((src) -> src.equals(srcForEqualCheck));
+            if (hasDuplicates) {
+                dataSource = new DataSourceDAO().readAllByOwner(AuthController.getActiveUser()).stream().filter((src) -> src.getLanguage().equals(srcForEqualCheck.getLanguage()) && src.getType().equals(srcForEqualCheck.getType()) && src.getLink().equals(srcForEqualCheck.getLink()) && src.getService().equals(srcForEqualCheck.getService())).findFirst().get();
+            } else {
+                new DataSourceDAO().create(dataSource);
+                dataSource = new DataSourceDAO().readAllByOwner(AuthController.getActiveUser()).stream().filter((src) -> src.getLanguage().equals(srcForEqualCheck.getLanguage()) && src.getType().equals(srcForEqualCheck.getType()) && src.getLink().equals(srcForEqualCheck.getLink()) && src.getService().equals(srcForEqualCheck.getService())).findFirst().get();
+            }
+            String downloadURL;
+            if (isDoc){
+                downloadURL = file.getExportLinks().get("text/plain");
+            }
+            else
+            {
+                downloadURL = file.getExportLinks().get("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            }
+            if (downloadURL != null) {
+                if (downloadURL.length() > 0) {
+                    HttpResponse httpResponse = gDrive.getRequestFactory().buildGetRequest(new GenericUrl(downloadURL)).execute();
+                    inputStream = httpResponse.getContent();
                 }
             }
-        };
-        thread.run();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return inputStream;
     }
 
     public void setCode(String code){

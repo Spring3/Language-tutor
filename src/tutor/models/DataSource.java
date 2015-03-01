@@ -74,9 +74,8 @@ public class DataSource implements DataSourceType, Service {
         DataSource that = (DataSource) o;
         if (language != null ? !language.equals(that.language) : that.language != null) return false;
         if (link != null ? !link.equals(that.link) : that.link != null) return false;
-        if (id != that.id) return false;
-        if (service != that.service) return false;
-        if (type != that.type) return false;
+        if (service != that.service && !service.equals(that.getService())) return false;
+        if (type != that.type && !type.equals(that.getType())) return false;
 
         return true;
     }

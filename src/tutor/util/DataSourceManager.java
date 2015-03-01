@@ -7,10 +7,8 @@ import tutor.dao.DataUnitDAO;
 import tutor.models.DataSource;
 import tutor.models.DataUnit;
 import tutor.models.Language;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+
+import java.io.*;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
@@ -87,40 +85,56 @@ public class DataSourceManager {
                 }
             }
 
-            if (contentType == ContentType.WORDS_ONLY) {
-                fileReader.lines().forEach(line -> new DataUnitDAO()
-                        .create(
-                                new DataUnit(
-                                        line.trim(),
-                                        "",
-                                        dataLanguage,
-                                        finalDataSource)
-                        ));
-
-            } else if (contentType == ContentType.TRANSLATION_ONLY) {
-                fileReader.lines().forEach(line -> new DataUnitDAO()
-                        .create(
-                                new DataUnit(
-                                        "",
-                                        line.trim(),
-                                        dataLanguage,
-                                        finalDataSource)
-                        ));
-
-            } else if (contentType == ContentType.WORDS_TRANSLATION) {
-                //If user clicked "Words - translation" radiobutton, we are separating our word from the translation
-                fileReader.lines().forEach((s) -> new DataUnitDAO()
-                        .create(
-                                new DataUnit(
-                                        s.substring(0, s.indexOf('=')).trim(),
-                                        s.substring(s.indexOf('=') + 1, s.length()).trim(),
-                                        dataLanguage,
-                                        finalDataSource)
-                        ));
-                //TODO: Check the whole file first. In case the data format is wrong, show an appropriate message
-            }
+            parseWordFile(fileReader, contentType, dataLanguage, finalDataSource);
+            //TODO: Check the whole file first. In case the data format is wrong, show an appropriate message
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         }
     }
+
+    public void parse(InputStream stream, ContentType contentType, @NotNull DataSource dataSource){
+        Language language = dataSource.getLanguage();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+
+        if (!dataSource.getType().equals(DataSourceType.GDRIVE_SPREADSHEET) && !dataSource.getType().equals(DataSourceType.GDRIVE_SPREADSHEET) && !dataSource.getType().equals(DataSourceType.LOCAL_DB)){
+            parseWordFile(reader, contentType, language, dataSource);
+        }
+
+    }
+
+    private void parseWordFile(BufferedReader fileReader, ContentType contentType, Language dataLanguage, DataSource finalDataSource){
+        if (contentType == ContentType.WORDS_ONLY) {
+            fileReader.lines().forEach(line -> new DataUnitDAO()
+                    .create(
+                            new DataUnit(
+                                    line.trim(),
+                                    "",
+                                    dataLanguage,
+                                    finalDataSource)
+                    ));
+
+        } else if (contentType == ContentType.TRANSLATION_ONLY) {
+            fileReader.lines().forEach(line -> new DataUnitDAO()
+                    .create(
+                            new DataUnit(
+                                    "",
+                                    line.trim(),
+                                    dataLanguage,
+                                    finalDataSource)
+                    ));
+
+        } else if (contentType == ContentType.WORDS_TRANSLATION) {
+            fileReader.lines().forEach((s) -> new DataUnitDAO()
+                    .create(
+                            new DataUnit(
+                                    s.substring(0, s.indexOf('=')).trim(),
+                                    s.substring(s.indexOf('=') + 1, s.length()).trim(),
+                                    dataLanguage,
+                                    finalDataSource)
+                    ));
+
+        }
+    }
+
+
 }

@@ -20,4 +20,6 @@ public interface ResourceBundleKeys {
     static final String DIALOGS_ERROR_TITLE = "dialogs_error_title";
     static final String DIALOGS_ERROR_DATASOURCE_ALREADY_ADDED = "dialogs_error_header_datasource_already_added";
     static final String DIALOGS_ERROR_DATASOURCE_MESSAGE = "dialogs_error_datasource_message";
+    static final String DIALOGS_INFO_NO_RIGHTS_HEADER = "dialogs_info_no_rights_header";
+    static final String DIALOGS_INFO_NO_RIGHTS_CONTENT = "dialogs_info_no_rights_content";
 }
