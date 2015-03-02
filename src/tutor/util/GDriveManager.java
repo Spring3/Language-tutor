@@ -12,6 +12,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
+import javafx.scene.control.Alert;
 import tutor.controllers.AuthController;
 import tutor.dao.DataSourceDAO;
 import tutor.models.DataSource;
@@ -21,7 +22,7 @@ import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
-import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * Created by user on 26.02.2015.
@@ -36,16 +37,17 @@ public class GDriveManager {
     private static GDriveManager instance;
     private static String code;
     private static GoogleAuthorizationCodeFlow flow;
+    private ResourceBundle bundle;
 
-    private GDriveManager(){
-
+    private GDriveManager(ResourceBundle bundle){
+        this.bundle = bundle;
     }
 
-    public static GDriveManager getInstance(){
+    public static GDriveManager getInstance(ResourceBundle bundle){
         if (instance == null){
             synchronized (GDriveManager.class){
                 if (instance == null){
-                    instance = new GDriveManager();
+                    instance = new GDriveManager(bundle);
                 }
             }
         }
@@ -84,6 +86,14 @@ public class GDriveManager {
             boolean hasDuplicates = new DataSourceDAO().readAllByOwner(AuthController.getActiveUser()).stream().anyMatch((src) -> src.getLink().equals(srcForEqualCheck.getLink()) && src.getLanguage().equals(srcForEqualCheck.getLanguage()));
             if (!hasDuplicates){
                 new DataSourceDAO().create(dataSource);
+            }
+            else{
+                System.err.println("Datasource: " + dataSource.getLink() + " had already been added.");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_TITLE));
+                alert.setHeaderText(bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_DATASOURCE_ALREADY_ADDED));
+                alert.setContentText(bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_DATASOURCE_MESSAGE));
+                alert.showAndWait();
             }
             String downloadURL;
             if (isDoc){

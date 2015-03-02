@@ -38,7 +38,7 @@ public class WebViewController extends Navigator implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         stageManager = StageManager.getInstance(3);
         webEngine = browser.getEngine();
-        gDriveManager = GDriveManager.getInstance();
+        gDriveManager = GDriveManager.getInstance(resources);
         webEngine.load(gDriveManager.getFlowURL());
         webEngine.locationProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -51,7 +51,7 @@ public class WebViewController extends Navigator implements Initializable {
                             if (newValue == Worker.State.SUCCEEDED || newValue == Worker.State.FAILED) {
                                 if (codeString.contains("oauth2callback?code")) {
                                     System.out.println(getCode());
-                                    GDriveManager.getInstance().setCode(getCode());
+                                    GDriveManager.getInstance(resources).setCode(getCode());
                                     stageManager.closeStage((Stage) browser.getScene().getWindow());
                                 }
                             }

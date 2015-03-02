@@ -166,7 +166,6 @@ public class SettingsController extends Navigator implements Initializable {
     private ToggleGroup radioButtonGoogleToggleGroup;
     private ToggleGroup radioButtonDropboxToggleGroup;
     private ToggleGroup languagePanelRadioButtonToggleGroup;
-    private DataSourceManager dataSourceManager;
 
     //initialization method
     @Override
@@ -389,7 +388,7 @@ public class SettingsController extends Navigator implements Initializable {
                         public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                             if (newValue != null){
                                 if (!newValue.isEmpty()){
-                                    GDriveManager gDriveManager = GDriveManager.getInstance();
+                                    GDriveManager gDriveManager = GDriveManager.getInstance(bundle);
                                     if (gDriveManager.gotCode()) {
                                         btn_openGoogleDocFile.setDisable(false);
                                         btn_openGoogleDocFile.setOnAction(new EventHandler<ActionEvent>() {
@@ -398,20 +397,17 @@ public class SettingsController extends Navigator implements Initializable {
                                                 if (!textField_googleDocsFIleURL.getText().isEmpty() && gDriveManager.gotCode()){
                                                     InputStream fileInputStream = gDriveManager.getFileInputStream(textField_googleDocsFIleURL.getText(), newLangValue);
                                                     DataSource fileDataSource = new DataSourceDAO().readAllByOwner(AuthController.getActiveUser()).stream().filter((src) -> src.getLink().equals(textField_googleDocsFIleURL.getText()) && src.getLanguage().equals(newLangValue)).findFirst().get();
-                                                    DataSourceManager.ContentType selectedContentType = null;
+                                                    ContentType selectedContentType = null;
                                                     if (radioButton_wordAndTranslationGoogleDocs.isSelected()) {
-                                                        selectedContentType = DataSourceManager.ContentType.WORDS_TRANSLATION;
+                                                        selectedContentType = ContentType.WORDS_TRANSLATION;
                                                     }
                                                     else if (radioButton_wordsOnlyGoogleDocs.isSelected()){
-                                                        selectedContentType = DataSourceManager.ContentType.WORDS_ONLY;
+                                                        selectedContentType = ContentType.WORDS_ONLY;
                                                     }
                                                     else{
-                                                        selectedContentType = DataSourceManager.ContentType.TRANSLATION_ONLY;
+                                                        selectedContentType = ContentType.TRANSLATION_ONLY;
                                                     }
-                                                    if(dataSourceManager == null){
-                                                        dataSourceManager = DataSourceManager.getInstance(bundle);
-                                                    }
-                                                    dataSourceManager.parse(fileInputStream, selectedContentType, fileDataSource);
+                                                    new GDriveParser(bundle).parse(fileInputStream, selectedContentType, fileDataSource);
                                                 }
                                             }
                                         });
@@ -458,19 +454,18 @@ public class SettingsController extends Navigator implements Initializable {
     private void parseSelectedFile(){
         DataSource currentDataSource = null;
         if (radioButtonToggleGroup.getSelectedToggle() != null){
-            dataSourceManager = DataSourceManager.getInstance(bundle);
             currentDataSource = new DataSource(textField_localFilePath.getText(), DataSource.LOCAL_FILE, DataSource.SERVICE_OS, selectedLanguage);
-            DataSourceManager.ContentType dataSourceContentType = null;
+            ContentType dataSourceContentType = null;
             if (radioButton_wordAndTranslation.isSelected()){
-                dataSourceContentType = DataSourceManager.ContentType.WORDS_TRANSLATION;
+                dataSourceContentType = ContentType.WORDS_TRANSLATION;
             }
             else if (radioButton_wordsOnly.isSelected()){
-                dataSourceContentType = DataSourceManager.ContentType.WORDS_ONLY;
+                dataSourceContentType = ContentType.WORDS_ONLY;
             }
             else if (radioButton_translationOnly.isSelected()){
-                dataSourceContentType = DataSourceManager.ContentType.TRANSLATION_ONLY;
+                dataSourceContentType = ContentType.TRANSLATION_ONLY;
             }
-            dataSourceManager.parse(selectedFile, dataSourceContentType, currentDataSource);
+            new PlainFileParser(bundle).parse(selectedFile, dataSourceContentType, currentDataSource);
         }
         else {
             //if no radiobuttons were clicked
