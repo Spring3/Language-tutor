@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -30,9 +31,9 @@ public abstract class AbstractParser implements FileParser{
     public DataSource createDataSource(ContentType contentType, DataSource dataSource) {
         Language dataLanguage = dataSource.getLanguage();
 
-        List<DataSource> allDataSourcesForSelectedLanguage = new DataSourceDAO().readAllByLanguage(dataLanguage);
+        List<DataSource> allDataSourcesForSelectedLanguage;
         //Checking whether there is already such data source
-        boolean isDuplicate = allDataSourcesForSelectedLanguage.stream().anyMatch((a) -> a.equals(dataSource));
+        boolean isDuplicate = isDataSourceDuplicated(dataSource);
         DataSource result = null;
         //if not
         if (!isDuplicate) {
@@ -58,39 +59,31 @@ public abstract class AbstractParser implements FileParser{
         return result;
     }
 
+    private boolean isDataSourceDuplicated(DataSource src ){
+        return new DataSourceDAO().readAllByLanguage(src.getLanguage()).stream().filter((a) -> a.getLink().equals(src.getLink()) && a.getLanguage().equals(src.getLanguage())).findFirst().isPresent();
+    }
+
     void doParsing(InputStream inputStream, ContentType contentType, Language dataLanguage, DataSource finalDataSource){
-        BufferedReader fileReader = new BufferedReader(new InputStreamReader(inputStream));
+        try {
+            BufferedReader fileReader = new BufferedReader(new InputStreamReader(inputStream));
 
-        if (contentType == ContentType.WORDS_ONLY) {
-            fileReader.lines().forEach(line -> new DataUnitDAO()
-                    .create(
-                            new DataUnit(
-                                    line.trim(),
-                                    "",
-                                    dataLanguage,
-                                    finalDataSource)
-                    ));
+            List<DataUnit> dataUnits = new ArrayList<>();
+            DataUnitDAO dao = new DataUnitDAO();
+            if (contentType == ContentType.WORDS_ONLY) {
+                fileReader.lines().forEach(line -> dataUnits.add(new DataUnit(line.trim(), "", dataLanguage, finalDataSource)));
+                dataUnits.parallelStream().filter(dataUnit -> !dao.contains(finalDataSource, dataUnit)).forEach(dao::create);
 
-        } else if (contentType == ContentType.TRANSLATION_ONLY) {
-            fileReader.lines().forEach(line -> new DataUnitDAO()
-                    .create(
-                            new DataUnit(
-                                    "",
-                                    line.trim(),
-                                    dataLanguage,
-                                    finalDataSource)
-                    ));
+            } else if (contentType == ContentType.TRANSLATION_ONLY) {
+                fileReader.lines().forEach(line -> dataUnits.add(new DataUnit("", line.trim(), dataLanguage, finalDataSource)));
+                dataUnits.parallelStream().filter(dataUnit -> !dao.contains(finalDataSource, dataUnit)).forEach(dao::create);
 
-        } else if (contentType == ContentType.WORDS_TRANSLATION) {
-            fileReader.lines().forEach((s) -> new DataUnitDAO()
-                    .create(
-                            new DataUnit(
-                                    s.substring(0, s.indexOf('=')).trim(),
-                                    s.substring(s.indexOf('=') + 1, s.length()).trim(),
-                                    dataLanguage,
-                                    finalDataSource)
-                    ));
-
+            } else if (contentType == ContentType.WORDS_TRANSLATION) {
+                fileReader.lines().forEach((s) -> dataUnits.add(new DataUnit(s.substring(0, s.indexOf('=')).trim(), s.substring(s.indexOf('=') + 1, s.length()).trim(), dataLanguage, finalDataSource)));
+                dataUnits.parallelStream().filter(dataUnit -> !dao.contains(finalDataSource, dataUnit)).forEach(dao::create);
+            }
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
         }
     }
 }

@@ -61,4 +61,30 @@ public class DataUnit {
         this.lang = lang;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DataUnit dataUnit = (DataUnit) o;
+        if (dataUnit.getId() != 0)
+            if (id != dataUnit.id) return false;
+        if (dataSrc != null ? !dataSrc.equals(dataUnit.dataSrc) : dataUnit.dataSrc != null) return false;
+        if (lang != null ? !lang.equals(dataUnit.lang) : dataUnit.lang != null) return false;
+        if (translation != null ? !translation.equals(dataUnit.translation) : dataUnit.translation != null)
+            return false;
+        if (word != null ? !word.equals(dataUnit.word) : dataUnit.word != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (word != null ? word.hashCode() : 0);
+        result = 31 * result + (translation != null ? translation.hashCode() : 0);
+        result = 31 * result + (lang != null ? lang.hashCode() : 0);
+        result = 31 * result + (dataSrc != null ? dataSrc.hashCode() : 0);
+        return result;
+    }
 }

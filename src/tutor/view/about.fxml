@@ -27,7 +27,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </Button>
-            <Button alignment="CENTER" layoutX="316.0" layoutY="319.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="73.0" styleClass="settings_button" text="%btn_donate_text" textAlignment="CENTER" AnchorPane.leftAnchor="316.0" AnchorPane.topAnchor="319.0">
+            <Button alignment="CENTER" layoutX="316.0" layoutY="318.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="73.0" styleClass="settings_button" text="%btn_donate_text" textAlignment="CENTER" AnchorPane.leftAnchor="316.0" AnchorPane.topAnchor="318.0">
                <font>
                   <Font name="Calibri Light Italic" size="14.0" />
                </font>

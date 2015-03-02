@@ -22,4 +22,6 @@ public interface ResourceBundleKeys {
     static final String DIALOGS_ERROR_DATASOURCE_MESSAGE = "dialogs_error_datasource_message";
     static final String DIALOGS_INFO_NO_RIGHTS_HEADER = "dialogs_info_no_rights_header";
     static final String DIALOGS_INFO_NO_RIGHTS_CONTENT = "dialogs_info_no_rights_content";
+    static final String DIALOGS_INFO_NO_SRC_URL_HEADER = "dialogs_info_no_src_url_header";
+    static final String DIALOGS_INFO_NO_SRC_URL_CONTENT = "dialogs_info_no_src_url_content";
 }

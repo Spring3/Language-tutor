@@ -1,5 +1,6 @@
 package tutor.dao;
 
+import tutor.models.DataSource;
 import tutor.models.DataUnit;
 import tutor.models.Language;
 import tutor.util.DbManager;
@@ -90,6 +91,23 @@ public class DataUnitDAO implements IDAO<DataUnit> {
             ex.printStackTrace();
         }
         return resultList;
+    }
+
+    public boolean contains(DataSource src, DataUnit value){
+        boolean result = false;
+        try{
+            Connection connection = DbManager.getInstance().getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM DATA_UNIT WHERE data_src_id = ? AND word LIKE ? AND word_translation LIKE ?");
+            statement.setInt(1, src.getId());
+            statement.setString(2, value.getWord());
+            statement.setString(3, value.getTranslation());
+            ResultSet resultSet = statement.executeQuery();
+            result = resultSet.next();
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return result;
     }
 
     @Override

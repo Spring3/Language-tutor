@@ -29,7 +29,7 @@
          <children>
             <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" styleClass="footer" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Button id="btn_send" mnemonicParsing="false" styleClass="custombutton" text="%btn_send" />
+                  <Button id="btn_send" defaultButton="true" mnemonicParsing="false" styleClass="custombutton" text="%btn_send" />
                </children>
             </FlowPane>
          </children>

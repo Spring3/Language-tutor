@@ -22,7 +22,7 @@
          <children>
             <ChoiceBox fx:id="choiceBox_feedbackType" layoutX="42.0" layoutY="4.0" prefHeight="24.0" prefWidth="150.0" styleClass="settings_choiceBox" AnchorPane.leftAnchor="42.0" AnchorPane.topAnchor="4.0" />
             <Label layoutY="5.0" styleClass="settings_label" text="%label_type" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
-            <Button fx:id="btn_sendFeedback" disable="true" layoutX="396.0" layoutY="1.0" mnemonicParsing="false" styleClass="settings_button" text="%btn_send" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="1.0" />
+            <Button fx:id="btn_sendFeedback" defaultButton="true" disable="true" layoutX="415.0" layoutY="4.0" mnemonicParsing="false" styleClass="settings_button" text="%btn_send" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="4.0" />
          </children>
          <effect>
             <DropShadow height="0.0" radius="0.75" width="5.0">

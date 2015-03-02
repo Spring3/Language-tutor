@@ -77,8 +77,6 @@ public class SettingsController extends Navigator implements Initializable {
     @FXML
     private Button btn_chooseBackupLocalDBPath;
     @FXML
-    private Button btn_connectoToGoogleDocs;
-    @FXML
     private Button btn_openLocalDB;
     @FXML
     private StackPane stackpanel_googleDrive;
@@ -239,6 +237,14 @@ public class SettingsController extends Navigator implements Initializable {
         radioButton_translationOnlyGoogleDocs.setToggleGroup(radioButtonGoogleToggleGroup);
         radioButton_wordAndTranslationGoogleDocs.setToggleGroup(radioButtonGoogleToggleGroup);
         radioButton_wordsOnlyGoogleDocs.setToggleGroup(radioButtonGoogleToggleGroup);
+        radioButtonGoogleToggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            @Override
+            public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+                if (newValue != null && !textField_googleDocsFIleURL.getText().isEmpty()){
+                    btn_openGoogleDocFile.setDisable(false);
+                }
+            }
+        });
 
         radioButtonDropboxToggleGroup = new ToggleGroup();
         radioButton_translationOnlyDropbox.setToggleGroup(radioButtonDropboxToggleGroup);
@@ -387,41 +393,39 @@ public class SettingsController extends Navigator implements Initializable {
                         @Override
                         public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                             if (newValue != null){
-                                if (!newValue.isEmpty()){
+                                if (!newValue.isEmpty()) {
                                     GDriveManager gDriveManager = GDriveManager.getInstance(bundle);
-                                    if (gDriveManager.gotCode()) {
-                                        btn_openGoogleDocFile.setDisable(false);
-                                        btn_openGoogleDocFile.setOnAction(new EventHandler<ActionEvent>() {
-                                            @Override
-                                            public void handle(ActionEvent event) {
-                                                if (!textField_googleDocsFIleURL.getText().isEmpty() && gDriveManager.gotCode()){
+                                    btn_openGoogleDocFile.setDisable(false);
+                                    btn_openGoogleDocFile.setOnAction(new EventHandler<ActionEvent>() {
+                                        @Override
+                                        public void handle(ActionEvent event) {
+                                            if (gDriveManager.gotCode()) {
+                                                if (!textField_googleDocsFIleURL.getText().isEmpty()) {
                                                     InputStream fileInputStream = gDriveManager.getFileInputStream(textField_googleDocsFIleURL.getText(), newLangValue);
                                                     DataSource fileDataSource = new DataSourceDAO().readAllByOwner(AuthController.getActiveUser()).stream().filter((src) -> src.getLink().equals(textField_googleDocsFIleURL.getText()) && src.getLanguage().equals(newLangValue)).findFirst().get();
-                                                    ContentType selectedContentType = null;
+                                                    refreshTableView();
+                                                    ContentType selectedContentType;
                                                     if (radioButton_wordAndTranslationGoogleDocs.isSelected()) {
                                                         selectedContentType = ContentType.WORDS_TRANSLATION;
-                                                    }
-                                                    else if (radioButton_wordsOnlyGoogleDocs.isSelected()){
+                                                    } else if (radioButton_wordsOnlyGoogleDocs.isSelected()) {
                                                         selectedContentType = ContentType.WORDS_ONLY;
-                                                    }
-                                                    else{
+                                                    } else {
                                                         selectedContentType = ContentType.TRANSLATION_ONLY;
                                                     }
                                                     new GDriveParser(bundle).parse(fileInputStream, selectedContentType, fileDataSource);
+
+                                                } else {
+                                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                                    alert.setTitle(bundle.getString(ResourceBundleKeys.DIALOGS_INFO_TITLE));
+                                                    alert.setHeaderText(bundle.getString(ResourceBundleKeys.DIALOGS_INFO_NO_SRC_URL_HEADER));
+                                                    alert.setContentText(bundle.getString(ResourceBundleKeys.DIALOGS_INFO_NO_SRC_URL_CONTENT));
+                                                    alert.show();
                                                 }
+                                            } else {
+                                                stageManager.navigateTo(Main.class.getResource(Navigator.WEBVIEW_VIEW_PATH), "Browser", 2, Optional.of(true));
                                             }
-                                        });
-
-                                    }
-                                    else{
-                                        btn_openGoogleDocFile.setDisable(true);
-                                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                        alert.setTitle(bundle.getString(ResourceBundleKeys.DIALOGS_INFO_TITLE));
-                                        alert.setHeaderText(bundle.getString(ResourceBundleKeys.DIALOGS_INFO_NO_RIGHTS_HEADER));
-                                        alert.setContentText(bundle.getString(ResourceBundleKeys.DIALOGS_INFO_NO_RIGHTS_CONTENT));
-                                        alert.showAndWait();
-
-                                    }
+                                        }
+                                    });
                                 }
                                 else{
                                     btn_openGoogleDocFile.setDisable(true);
@@ -447,8 +451,11 @@ public class SettingsController extends Navigator implements Initializable {
         //initializing tableView
         tableView_column_Language.setCellValueFactory(new PropertyValueFactory<>("language"));
         tableView_column_source.setCellValueFactory(new PropertyValueFactory<>("link"));
+        allDataSources.clear();
         allDataSources.addAll(new DataSourceDAO().readAllByOwner(AuthController.getActiveUser()));
-        tableview_datasources.setItems(allDataSources);
+        if (!allDataSources.isEmpty()) {
+            tableview_datasources.setItems(allDataSources);
+        }
     }
 
     private void parseSelectedFile(){
@@ -483,15 +490,12 @@ public class SettingsController extends Navigator implements Initializable {
     private void findAllThemes() {
         try {
             File themesDirectory = null;
-            //try{
-            themesDirectory = new File("themes" + File.separator + "themes"); //dev
-                if(!themesDirectory.getAbsoluteFile().exists()){
-                    themesDirectory = new File("themes" + File.separator); //production
-                }
-            /*}
-            catch (Exception ex){
 
-            } */
+            themesDirectory = new File("themes" + File.separator + "themes"); //dev
+            if (!themesDirectory.getAbsoluteFile().exists()) {
+                themesDirectory = new File("themes" + File.separator); //production
+            }
+
             themeDirectories = new ArrayList<>();
             ObservableList<String> themesNames = FXCollections.observableArrayList();
             for (File file : themesDirectory.listFiles()) {
@@ -510,7 +514,7 @@ public class SettingsController extends Navigator implements Initializable {
                     for (File directory : themeDirectories) {
                         if (directory.getName().equals(newValue)) {
                             selectedThemeFile = new File("themes" + File.separator + "themes" + File.separator + newValue + File.separator + newValue + ".css"); //dev mode
-                            if (!selectedThemeFile.getAbsoluteFile().exists()){
+                            if (!selectedThemeFile.getAbsoluteFile().exists()) {
                                 selectedThemeFile = new File("themes" + File.separator + newValue + File.separator + newValue + ".css");//production
 
                             }
@@ -590,8 +594,4 @@ public class SettingsController extends Navigator implements Initializable {
         }
     }
 
-    public void connectToGDrive(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getResource(Navigator.WEBVIEW_VIEW_PATH), "Browser", 2, Optional.of(true));
-
-    }
 }

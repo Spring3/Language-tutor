@@ -17,8 +17,6 @@ import tutor.controllers.AuthController;
 import tutor.dao.DataSourceDAO;
 import tutor.models.DataSource;
 import tutor.models.Language;
-
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -37,6 +35,7 @@ public class GDriveManager {
     private static GDriveManager instance;
     private static String code;
     private static GoogleAuthorizationCodeFlow flow;
+    private static GoogleTokenResponse response;
     private ResourceBundle bundle;
 
     private GDriveManager(ResourceBundle bundle){
@@ -62,10 +61,11 @@ public class GDriveManager {
         InputStream inputStream = null;
         boolean isDoc = false;
         try {
-            GoogleTokenResponse response = flow.newTokenRequest(code).setRedirectUri(REDIRECT_URI).execute();
+            if (response == null)
+                response= flow.newTokenRequest(code).setRedirectUri(REDIRECT_URI).execute();
             GoogleCredential credential = new GoogleCredential().setFromTokenResponse(response);
             Drive gDrive = new Drive.Builder(new NetHttpTransport(), new JacksonFactory(), credential).build();
-            String fileId = null;
+            String fileId;
             try {
                 fileId = fileURL.substring(fileURL.indexOf("=") + 1, fileURL.indexOf("&"));
             }
@@ -83,17 +83,9 @@ public class GDriveManager {
                 isDoc = true;
             }
             final DataSource srcForEqualCheck = dataSource;
-            boolean hasDuplicates = new DataSourceDAO().readAllByOwner(AuthController.getActiveUser()).stream().anyMatch((src) -> src.getLink().equals(srcForEqualCheck.getLink()) && src.getLanguage().equals(srcForEqualCheck.getLanguage()));
+            boolean hasDuplicates = new DataSourceDAO().readAllByOwner(AuthController.getActiveUser()).stream().filter((src) -> src.getLink().equals(srcForEqualCheck.getLink()) && src.getLanguage().equals(srcForEqualCheck.getLanguage())).findFirst().isPresent();
             if (!hasDuplicates){
                 new DataSourceDAO().create(dataSource);
-            }
-            else{
-                System.err.println("Datasource: " + dataSource.getLink() + " had already been added.");
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle(bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_TITLE));
-                alert.setHeaderText(bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_DATASOURCE_ALREADY_ADDED));
-                alert.setContentText(bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_DATASOURCE_MESSAGE));
-                alert.showAndWait();
             }
             String downloadURL;
             if (isDoc){
