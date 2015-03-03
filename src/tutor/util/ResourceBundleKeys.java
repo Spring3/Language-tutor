@@ -24,4 +24,6 @@ public interface ResourceBundleKeys {
     static final String DIALOGS_INFO_NO_RIGHTS_CONTENT = "dialogs_info_no_rights_content";
     static final String DIALOGS_INFO_NO_SRC_URL_HEADER = "dialogs_info_no_src_url_header";
     static final String DIALOGS_INFO_NO_SRC_URL_CONTENT = "dialogs_info_no_src_url_content";
+    static final String SHORT_NAME = "short_name";
+    static final String SHORT_PASS = "short_pass";
 }

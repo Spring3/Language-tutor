@@ -61,8 +61,10 @@ public class GDriveManager {
         InputStream inputStream = null;
         boolean isDoc = false;
         try {
-            if (response == null)
-                response= flow.newTokenRequest(code).setRedirectUri(REDIRECT_URI).execute();
+            if (response == null) {
+                response = flow.newTokenRequest(code).setRedirectUri(REDIRECT_URI).execute();
+
+            }
             GoogleCredential credential = new GoogleCredential().setFromTokenResponse(response);
             Drive gDrive = new Drive.Builder(new NetHttpTransport(), new JacksonFactory(), credential).build();
             String fileId;

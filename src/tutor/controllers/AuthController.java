@@ -128,32 +128,37 @@ public class AuthController extends Navigator implements Initializable {
 
     public void registerClicked(ActionEvent actionEvent) {
         if (!txtb_reg_username.getText().isEmpty()){
-            if (!txtb_reg_pass1.getText().isEmpty() && !txtb_reg_pass2.getText().isEmpty()) {
-                if (txtb_reg_pass1.getText().equals(txtb_reg_pass2.getText())) {
-                    User user = new UserDAO().readByUserName(txtb_reg_username.getText());
-                    if (user == null) {
-                        user = new User(txtb_reg_username.getText(), txtb_reg_pass1.getText().hashCode());
-                        if (new UserDAO().create(user)) {
-                            System.out.println("Registering user: " + txtb_reg_username.getText() + ", password: " + txtb_reg_pass1.getText() + ", repeated: " + txtb_reg_pass2.getText());
-                            user = new UserDAO().readByUserName(user.getUserName());
-                            setActiveUser(user);
-                            stageManager.navigateTo(Main.class.getResource(Navigator.MAIN_VIEW_PATH), "Language Tutor", 0, Optional.of(true));
-                        }
-                        else{
-                            validation_label.setText(bundle.getString(ResourceBundleKeys.WRONG_DATA));
+            if (txtb_reg_username.getText().length() >= 5) {
+                if (!txtb_reg_pass1.getText().isEmpty() && !txtb_reg_pass2.getText().isEmpty()) {
+                    if (txtb_reg_pass1.getText().length() >= 5 || txtb_reg_pass2.getText().length() >= 5) {
+                        if (txtb_reg_pass1.getText().equals(txtb_reg_pass2.getText())) {
+                            User user = new UserDAO().readByUserName(txtb_reg_username.getText());
+                            if (user == null) {
+                                user = new User(txtb_reg_username.getText(), txtb_reg_pass1.getText().hashCode());
+                                if (new UserDAO().create(user)) {
+                                    System.out.println("Registering user: " + txtb_reg_username.getText() + ", password: " + txtb_reg_pass1.getText() + ", repeated: " + txtb_reg_pass2.getText());
+                                    user = new UserDAO().readByUserName(user.getUserName());
+                                    setActiveUser(user);
+                                    stageManager.navigateTo(Main.class.getResource(Navigator.MAIN_VIEW_PATH), "Language Tutor", 0, Optional.of(true));
+                                } else {
+                                    validation_label.setText(bundle.getString(ResourceBundleKeys.WRONG_DATA));
+                                }
+                            } else {
+                                validation_label.setText(bundle.getString(ResourceBundleKeys.USER_ALREADY_EXISTS));
+                            }
+                        } else {
+                            validation_label.setText(bundle.getString(ResourceBundleKeys.PASSWORD_DOES_NOT_MATCH));
                         }
                     }
                     else{
-                        validation_label.setText(bundle.getString(ResourceBundleKeys.USER_ALREADY_EXISTS));
+                        validation_label.setText(bundle.getString(ResourceBundleKeys.SHORT_PASS));
                     }
-                }
-                else
-                {
-                    validation_label.setText(bundle.getString(ResourceBundleKeys.PASSWORD_DOES_NOT_MATCH));
+                } else {
+                    validation_label.setText(bundle.getString(ResourceBundleKeys.WRONG_DATA));
                 }
             }
             else{
-                validation_label.setText(bundle.getString(ResourceBundleKeys.WRONG_DATA));
+                validation_label.setText(bundle.getString(ResourceBundleKeys.SHORT_NAME));
             }
         }
         else{
