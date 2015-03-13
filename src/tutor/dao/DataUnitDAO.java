@@ -97,8 +97,8 @@ public class DataUnitDAO implements IDAO<DataUnit> {
         boolean result = false;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM DATA_UNIT WHERE data_src_id = ? AND word LIKE ? AND word_translation LIKE ?");
-            statement.setInt(1, src.getId());
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM DATA_UNIT WHERE data_src_id IN (SELECT id FROM DATA_SRC WHERE language_id = ?) AND word = ? AND word_translation = ?");
+            statement.setInt(1, src.getLanguage().getId());
             statement.setString(2, value.getWord());
             statement.setString(3, value.getTranslation());
             ResultSet resultSet = statement.executeQuery();
@@ -109,6 +109,7 @@ public class DataUnitDAO implements IDAO<DataUnit> {
         }
         return result;
     }
+    // "CREATE TABLE IF NOT EXISTS DATA_SRC(id integer IDENTITY PRIMARY KEY, link varchar(100), type varchar(20), service varchar(20), language_id integer);",
 
     @Override
     public boolean update(DataUnit value) {

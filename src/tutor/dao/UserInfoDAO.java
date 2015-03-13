@@ -3,13 +3,10 @@ package tutor.dao;
 import tutor.models.User;
 import tutor.models.UserInfo;
 import tutor.util.DbManager;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by user on 03.03.2015.

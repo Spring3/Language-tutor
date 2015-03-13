@@ -459,6 +459,7 @@ public class SettingsController extends Navigator implements Initializable {
     }
 
     private void parseSelectedFile(){
+        boolean isDataSourceDuplicated = false;
         DataSource currentDataSource = null;
         if (radioButtonToggleGroup.getSelectedToggle() != null){
             currentDataSource = new DataSource(textField_localFilePath.getText(), DataSource.LOCAL_FILE, DataSource.SERVICE_OS, selectedLanguage);
@@ -472,7 +473,10 @@ public class SettingsController extends Navigator implements Initializable {
             else if (radioButton_translationOnly.isSelected()){
                 dataSourceContentType = ContentType.TRANSLATION_ONLY;
             }
-            new PlainFileParser(bundle).parse(selectedFile, dataSourceContentType, currentDataSource);
+            isDataSourceDuplicated = new DataSourceDAO().contains(currentDataSource);
+            if (!isDataSourceDuplicated) {
+                new PlainFileParser(bundle).parse(selectedFile, dataSourceContentType, currentDataSource);
+            }
         }
         else {
             //if no radiobuttons were clicked
@@ -484,7 +488,8 @@ public class SettingsController extends Navigator implements Initializable {
             errorAlert.showAndWait();
         }
         //Displaying current datasource in tableView
-        allDataSources.add(currentDataSource);
+        if (!isDataSourceDuplicated)
+            allDataSources.add(currentDataSource);
     }
 
     private void findAllThemes() {

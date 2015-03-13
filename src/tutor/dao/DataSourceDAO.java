@@ -111,6 +111,24 @@ public class DataSourceDAO implements IDAO<DataSource> {
         return resultList;
     }
 
+    public boolean contains(DataSource value) {
+        Connection connection = DbManager.getInstance().getConnection();
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM DATA_SRC WHERE link=? AND type=? AND service=? AND language_id=?;");
+            statement.setString(1, value.getLink());
+            statement.setString(2, value.getType());
+            statement.setString(3, value.getService());
+            statement.setInt(4, value.getLanguage().getId());
+            statement.execute();
+            return statement.getResultSet().next();
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+
     @Override
     public boolean update(DataSource value) {
         try{

@@ -33,7 +33,7 @@ public abstract class AbstractParser implements FileParser{
 
         List<DataSource> allDataSourcesForSelectedLanguage;
         //Checking whether there is already such data source
-        boolean isDuplicate = isDataSourceDuplicated(dataSource);
+        boolean isDuplicate = new DataSourceDAO().contains(dataSource);
         DataSource result = null;
         //if not
         if (!isDuplicate) {
@@ -57,10 +57,6 @@ public abstract class AbstractParser implements FileParser{
         }
         //TODO: Check the whole file first. In case the data format is wrong, show an appropriate message
         return result;
-    }
-
-    private boolean isDataSourceDuplicated(DataSource src ){
-        return new DataSourceDAO().readAllByLanguage(src.getLanguage()).stream().filter((a) -> a.getLink().equals(src.getLink()) && a.getLanguage().equals(src.getLanguage())).findFirst().isPresent();
     }
 
     void doParsing(InputStream inputStream, ContentType contentType, Language dataLanguage, DataSource finalDataSource){

@@ -19,7 +19,9 @@ import tutor.models.DataSource;
 import tutor.models.Language;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -63,7 +65,6 @@ public class GDriveManager {
         try {
             if (response == null) {
                 response = flow.newTokenRequest(code).setRedirectUri(REDIRECT_URI).execute();
-
             }
             GoogleCredential credential = new GoogleCredential().setFromTokenResponse(response);
             Drive gDrive = new Drive.Builder(new NetHttpTransport(), new JacksonFactory(), credential).build();

@@ -1,5 +1,6 @@
 package tutor.util;
 
+import tutor.dao.DataSourceDAO;
 import tutor.models.DataSource;
 import tutor.models.Language;
 import java.io.File;
@@ -25,10 +26,9 @@ public class GDriveParser extends AbstractParser implements FileParser {
         Language language = dataSource.getLanguage();
 
         //No need to create datasource as is will be created in GDriveManager.getFileInputStream() method.
-        if (dataSource.getType().equals(DataSourceType.GDRIVE_WORKSHEET)){
+        if (dataSource.getType().equals(DataSourceType.GDRIVE_WORKSHEET)) {
             doParsing(stream, contentType, language, dataSource);
-        }
-        else if (dataSource.getType().equals(DataSourceType.GDRIVE_SPREADSHEET)){
+        } else if (dataSource.getType().equals(DataSourceType.GDRIVE_SPREADSHEET)) {
             parseSpreadsheet(stream, contentType, language, dataSource);
         }
     }
