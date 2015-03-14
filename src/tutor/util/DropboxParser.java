@@ -1,6 +1,6 @@
 package tutor.util;
 
-import tutor.models.DataSource;
+import tutor.models.Language;
 
 import java.io.File;
 import java.io.InputStream;
@@ -16,12 +16,12 @@ public class DropboxParser extends AbstractParser implements FileParser {
     }
 
     @Override
-    public void parse(File file, ContentType contentType, DataSource dataSource) {
+    public void parse(File file, ContentType contentType, Language lang) {
 
     }
 
     @Override
-    public void parse(InputStream stream, ContentType contentType, DataSource dataSource) {
+    public void parse(InputStream stream, ContentType contentType, Language lang) {
 
     }
 

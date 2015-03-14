@@ -1,6 +1,5 @@
 package tutor.controllers;
 
-import com.sun.istack.internal.NotNull;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,8 +16,6 @@ import tutor.Main;
 import tutor.dao.LanguageDAO;
 import tutor.models.Language;
 import tutor.util.StageManager;
-
-import javax.swing.text.html.Option;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -86,7 +83,7 @@ public class Controller extends Navigator implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb){
         ObservableList<Language> currentUserLanguages = FXCollections.observableArrayList();
-        List<Language> addedLanguages = new LanguageDAO().readAllLanguages(AuthController.getActiveUser().getId());
+        List<Language> addedLanguages = new LanguageDAO().readAllLanguagesByUser(AuthController.getActiveUser().getId());
         currentUserLanguages.addAll(addedLanguages);
         choiceBox_lang_to_learn.setItems(currentUserLanguages);
     }

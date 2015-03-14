@@ -12,13 +12,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import tutor.dao.DataSourceDAO;
 import tutor.dao.LanguageDAO;
-import tutor.models.DataSource;
 import tutor.models.Language;
 import tutor.util.*;
 import tutor.Main;
@@ -143,22 +140,15 @@ public class SettingsController extends Navigator implements Initializable {
     @FXML
     private Button btn_connectToDropBox;
     @FXML
-    private TableView<DataSource> tableview_datasources;
-    @FXML
     private Button btn_correctLocaleMistake;
     @FXML
     private ChoiceBox<String> choiceBox_data_source_type;
-    @FXML
-    private TableColumn<DataSource, Language> tableView_column_Language;
-    @FXML
-    private TableColumn<DataSource, String> tableView_column_source;
 
     private StageManager stageManager;
     private ResourceBundle bundle;
     private volatile File selectedFile;
     private List<File> themeDirectories;
     private File selectedThemeFile;
-    private final ObservableList<DataSource> allDataSources = FXCollections.observableArrayList();
     private Language selectedLanguage;
     private ToggleGroup radioButtonToggleGroup;
     private ToggleGroup radioButtonGoogleToggleGroup;
@@ -401,9 +391,7 @@ public class SettingsController extends Navigator implements Initializable {
                                         public void handle(ActionEvent event) {
                                             if (gDriveManager.gotCode()) {
                                                 if (!textField_googleDocsFIleURL.getText().isEmpty()) {
-                                                    InputStream fileInputStream = gDriveManager.getFileInputStream(textField_googleDocsFIleURL.getText(), newLangValue);
-                                                    DataSource fileDataSource = new DataSourceDAO().readAllByOwner(AuthController.getActiveUser()).stream().filter((src) -> src.getLink().equals(textField_googleDocsFIleURL.getText()) && src.getLanguage().equals(newLangValue)).findFirst().get();
-                                                    refreshTableView();
+                                                    InputStream fileInputStream = gDriveManager.getFileInputStream(textField_googleDocsFIleURL.getText());
                                                     ContentType selectedContentType;
                                                     if (radioButton_wordAndTranslationGoogleDocs.isSelected()) {
                                                         selectedContentType = ContentType.WORDS_TRANSLATION;
@@ -412,7 +400,7 @@ public class SettingsController extends Navigator implements Initializable {
                                                     } else {
                                                         selectedContentType = ContentType.TRANSLATION_ONLY;
                                                     }
-                                                    new GDriveParser(bundle).parse(fileInputStream, selectedContentType, fileDataSource);
+                                                    new GDriveParser(bundle, gDriveManager.getDataSourceType()).parse(fileInputStream, selectedContentType, newLangValue);
 
                                                 } else {
                                                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -444,25 +432,11 @@ public class SettingsController extends Navigator implements Initializable {
                 radioButton_wordAndTranslationGoogleDocs.setSelected(false);
             }
         });
-        refreshTableView();
-    }
-
-    private void refreshTableView() {
-        //initializing tableView
-        tableView_column_Language.setCellValueFactory(new PropertyValueFactory<>("language"));
-        tableView_column_source.setCellValueFactory(new PropertyValueFactory<>("link"));
-        allDataSources.clear();
-        allDataSources.addAll(new DataSourceDAO().readAllByOwner(AuthController.getActiveUser()));
-        if (!allDataSources.isEmpty()) {
-            tableview_datasources.setItems(allDataSources);
-        }
     }
 
     private void parseSelectedFile(){
         boolean isDataSourceDuplicated = false;
-        DataSource currentDataSource = null;
         if (radioButtonToggleGroup.getSelectedToggle() != null){
-            currentDataSource = new DataSource(textField_localFilePath.getText(), DataSource.LOCAL_FILE, DataSource.SERVICE_OS, selectedLanguage);
             ContentType dataSourceContentType = null;
             if (radioButton_wordAndTranslation.isSelected()){
                 dataSourceContentType = ContentType.WORDS_TRANSLATION;
@@ -473,9 +447,8 @@ public class SettingsController extends Navigator implements Initializable {
             else if (radioButton_translationOnly.isSelected()){
                 dataSourceContentType = ContentType.TRANSLATION_ONLY;
             }
-            isDataSourceDuplicated = new DataSourceDAO().contains(currentDataSource);
             if (!isDataSourceDuplicated) {
-                new PlainFileParser(bundle).parse(selectedFile, dataSourceContentType, currentDataSource);
+                new PlainFileParser(bundle).parse(selectedFile, dataSourceContentType, selectedLanguage);
             }
         }
         else {
@@ -487,9 +460,6 @@ public class SettingsController extends Navigator implements Initializable {
             errorAlert.setContentText(bundle.getString(ResourceBundleKeys.DIALOGS_RADIOBUTTON_TEXT));
             errorAlert.showAndWait();
         }
-        //Displaying current datasource in tableView
-        if (!isDataSourceDuplicated)
-            allDataSources.add(currentDataSource);
     }
 
     private void findAllThemes() {
@@ -574,7 +544,7 @@ public class SettingsController extends Navigator implements Initializable {
     }
 
     public void Refresh() {
-        List<Language> currentUserLanguages = new LanguageDAO().readAllLanguages(AuthController.getActiveUser().getId());
+        List<Language> currentUserLanguages = new LanguageDAO().readAllLanguagesByUser(AuthController.getActiveUser().getId());
         ObservableList<Language> userLanguages = FXCollections.observableArrayList();
         userLanguages.addAll(currentUserLanguages);
         listView_languages.setItems(userLanguages);
@@ -589,7 +559,7 @@ public class SettingsController extends Navigator implements Initializable {
         if (selectedLang != null) {
             listView_languages.getItems().remove(selectedLang);
             new LanguageDAO().delete(selectedLang);
-            System.out.println("Language: " + selectedLang + " for user: " + selectedLang.getOwner().getUserName() + " was deleted");
+            System.out.println("Language: " + selectedLang + " was deleted");
         } else {
             Alert errorMessage = new Alert(Alert.AlertType.INFORMATION);
             errorMessage.setTitle(bundle.getString(ResourceBundleKeys.DIALOGS_INFO_TITLE));

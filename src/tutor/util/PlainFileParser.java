@@ -1,9 +1,5 @@
 package tutor.util;
 
-import tutor.dao.DataSourceDAO;
-import tutor.dao.DataUnitDAO;
-import tutor.models.DataSource;
-import tutor.models.DataUnit;
 import tutor.models.Language;
 
 import java.io.*;
@@ -19,9 +15,9 @@ public class PlainFileParser extends AbstractParser implements FileParser {
     }
 
     @Override
-    public void parse(File file, ContentType contentType, DataSource dataSource) {
+    public void parse(File file, ContentType contentType, Language lang) {
         try {
-            doParsing(new FileInputStream(file), contentType, dataSource.getLanguage(), createDataSource(contentType, dataSource));
+            doParsing(new FileInputStream(file), contentType, lang);
         }
         catch (FileNotFoundException ex){
             ex.printStackTrace();
@@ -29,7 +25,7 @@ public class PlainFileParser extends AbstractParser implements FileParser {
     }
 
     @Override
-    public void parse(InputStream stream, ContentType contentType, DataSource dataSource) {
-        doParsing(stream, contentType, dataSource.getLanguage(), createDataSource(contentType, dataSource));
+    public void parse(InputStream stream, ContentType contentType, Language lang) {
+        doParsing(stream, contentType, lang);
     }
 }

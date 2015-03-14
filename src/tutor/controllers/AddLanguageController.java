@@ -39,8 +39,8 @@ public class AddLanguageController extends Navigator implements Initializable {
     private ResourceBundle bundle;
 
     public void addLanguageClicked(ActionEvent actionEvent) {
-        Language lang = new Language(textField_language.getText(), AuthController.getActiveUser());
-        Language tempLang = new LanguageDAO().readBy(lang.getLang_name(), lang.getOwner().getId());
+        Language lang = new Language(textField_language.getText());
+        Language tempLang = new LanguageDAO().readBy(lang.getLang_name());
         if (tempLang != null) {
             if (tempLang.equals(lang)) {
                 validation_label.setText(bundle.getString(ResourceBundleKeys.ERROR_LANG_ALREADY_ADDED));
@@ -49,7 +49,7 @@ public class AddLanguageController extends Navigator implements Initializable {
         }
         validation_label.setText(bundle.getString(ResourceBundleKeys.DEFAULT));
         new LanguageDAO().create(lang);
-        System.out.println("Language: " + lang.getLang_name() + " for user: " + lang.getOwner().getUserName() + " was created.");
+        System.out.println("Language: " + lang.getLang_name() + " was created.");
         Stage currentStage = (Stage) textField_language.getScene().getWindow();
         settingsController.Refresh();
         stageManager.closeStage(currentStage);

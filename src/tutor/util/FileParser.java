@@ -1,6 +1,6 @@
 package tutor.util;
 
-import tutor.models.DataSource;
+import tutor.models.Language;
 
 import java.io.File;
 import java.io.InputStream;
@@ -9,7 +9,6 @@ import java.io.InputStream;
  * Created by user on 02.03.2015.
  */
 public interface FileParser {
-    public void parse(File file, ContentType contentType, DataSource dataSource);
-    public void parse(InputStream stream, ContentType contentType, DataSource dataSource);
-    DataSource createDataSource(ContentType contentType, DataSource dataSource);
+    public void parse(File file, ContentType contentType, Language lang);
+    public void parse(InputStream stream, ContentType contentType, Language lang);
 }

@@ -42,22 +42,11 @@
                      </children></AnchorPane>
                </children>
             </StackPane>
-            <StackPane fx:id="pane_data_source" maxWidth="800.0" minHeight="0.0" minWidth="10.0" styleClass="settings_stackpane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <StackPane fx:id="pane_data_source" maxWidth="800.0" minHeight="0.0" minWidth="10.0" styleClass="settings_stackpane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <AnchorPane maxWidth="800.0" minHeight="0.0" minWidth="10.0" StackPane.alignment="CENTER_LEFT">
                      <children>
                         <Label alignment="TOP_CENTER" layoutX="35.0" layoutY="5.0" maxWidth="400.0" prefHeight="18.0" prefWidth="330.0" styleClass="settings_header_label" text="%data_source_settings_label" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="5.0" />
-                        <Button fx:id="btn_removeDataSource" alignment="CENTER" contentDisplay="CENTER" layoutX="445.0" layoutY="334.0" minHeight="41.0" minWidth="38.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="38.0" styleClass="settings_button_additional" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="334.0">
-                           <graphic>
-                              <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" styleClass="settong_delete_img" />
-                           </graphic></Button>
-                        <Label alignment="CENTER" layoutX="63.0" layoutY="309.0" maxWidth="400.0" prefHeight="22.0" prefWidth="377.0" styleClass="settings_label" text="%label_active_data_sources" AnchorPane.leftAnchor="63.0" AnchorPane.rightAnchor="55.0" AnchorPane.topAnchor="309.0" />
-                        <TableView fx:id="tableview_datasources" layoutX="61.0" layoutY="334.0" maxWidth="400.0" prefHeight="221.0" prefWidth="380.0" styleClass="settings_tableview" AnchorPane.leftAnchor="61.0" AnchorPane.rightAnchor="54.0" AnchorPane.topAnchor="334.0">
-                           <columns>
-                              <TableColumn fx:id="tableView_column_Language" prefWidth="103.0" text="%label_settings_lang" />
-                              <TableColumn fx:id="tableView_column_source" prefWidth="275.0" text="%label_settings_source" />
-                           </columns>
-                        </TableView>
                         <StackPane fx:id="stackpanel_localDB" layoutX="36.0" layoutY="72.0" maxWidth="400.0" prefHeight="243.0" prefWidth="422.0" visible="false" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="72.0">
                            <children>
                               <AnchorPane maxWidth="400.0" prefHeight="200.0" prefWidth="200.0">
@@ -98,7 +87,7 @@
                            <children>
                               <AnchorPane maxWidth="400.0" prefHeight="61.0" prefWidth="400.0">
                                  <children>
-                                    <Button fx:id="btn_openGoogleDocFile" disable="true" layoutX="239.0" layoutY="117.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="72.0" styleClass="settings_button" text="%btn_open" AnchorPane.rightAnchor="85.0" AnchorPane.topAnchor="120.0" />
+                                    <Button fx:id="btn_openGoogleDocFile" disable="true" layoutX="314.0" layoutY="122.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="72.0" styleClass="settings_button" text="%btn_open" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="120.0" />
                                     <RadioButton fx:id="radioButton_wordAndTranslationGoogleDocs" layoutX="256.0" layoutY="88.0" mnemonicParsing="false" styleClass="settings_rbutton" text="%rb_word_translation" AnchorPane.leftAnchor="48.0" AnchorPane.topAnchor="95.0" />
                                     <RadioButton fx:id="radioButton_wordsOnlyGoogleDocs" layoutX="149.0" layoutY="88.0" mnemonicParsing="false" styleClass="settings_rbutton" text="%rb_words_only" AnchorPane.leftAnchor="175.0" AnchorPane.topAnchor="95.0" />
                                     <RadioButton fx:id="radioButton_translationOnlyGoogleDocs" layoutX="254.0" layoutY="88.0" mnemonicParsing="false" styleClass="settings_rbutton" text="%rb_translation_only" AnchorPane.leftAnchor="271.0" AnchorPane.topAnchor="95.0" />
@@ -140,14 +129,6 @@
                         </StackPane>
                         <Label layoutX="52.0" layoutY="50.0" styleClass="settings_label" text="%data_source_choose_type_label" AnchorPane.leftAnchor="52.0" AnchorPane.topAnchor="50.0" />
                         <ChoiceBox fx:id="choiceBox_data_source_type" layoutX="236.0" layoutY="48.0" maxWidth="-Infinity" prefHeight="25.0" prefWidth="207.0" styleClass="settings_choiceBox" AnchorPane.leftAnchor="236.0" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="48.0" />
-                        <Button fx:id="btn_updateDataSource" alignment="CENTER" contentDisplay="CENTER" layoutX="445.0" layoutY="387.0" maxHeight="41.0" maxWidth="38.0" minHeight="41.0" minWidth="38.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="38.0" styleClass="settings_button_additional" textAlignment="CENTER" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="387.0">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" styleClass="settong_update_img" />
-                           </graphic>
-                        </Button>
                      </children>
                      <StackPane.margin>
                         <Insets left="5.0" />
@@ -155,7 +136,7 @@
                   </AnchorPane>
                </children>
             </StackPane>
-            <StackPane fx:id="pane_other" alignment="TOP_LEFT" maxWidth="800.0" minHeight="0.0" minWidth="500.0" styleClass="settings_stackpane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <StackPane fx:id="pane_other" alignment="TOP_LEFT" maxWidth="800.0" minHeight="0.0" minWidth="500.0" styleClass="settings_stackpane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <AnchorPane maxWidth="800.0" minHeight="0.0" minWidth="500.0">
                      <children>

@@ -12,16 +12,12 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
-import javafx.scene.control.Alert;
-import tutor.controllers.AuthController;
-import tutor.dao.DataSourceDAO;
-import tutor.models.DataSource;
 import tutor.models.Language;
+
+import javax.activation.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -31,14 +27,13 @@ public class GDriveManager {
 
     private static String CLIENT_ID="250336174195-rfp97d44k25g3mda6gjutis6fm67klfn.apps.googleusercontent.com";
     private static String CLIENT_SECRET="rFlo6WHJWB17loAxxbwx9oIh";
-
     private static String REDIRECT_URI = "https://www.example.com/oauth2callback";
-
     private static GDriveManager instance;
     private static String code;
     private static GoogleAuthorizationCodeFlow flow;
     private static GoogleTokenResponse response;
     private ResourceBundle bundle;
+    private DataSourceType dataSourceType;
 
     private GDriveManager(ResourceBundle bundle){
         this.bundle = bundle;
@@ -55,11 +50,15 @@ public class GDriveManager {
         return instance;
     }
 
+    public DataSourceType getDataSourceType(){
+        return dataSourceType;
+    }
+
     public boolean gotCode(){
         return code != null && !("".equals(code));
     }
 
-    public InputStream getFileInputStream(String fileURL, Language dataLanguage) {
+    public InputStream getFileInputStream(String fileURL) {
         InputStream inputStream = null;
         boolean isDoc = false;
         try {
@@ -76,19 +75,13 @@ public class GDriveManager {
                 fileId = fileURL.substring(fileURL.indexOf("d/") +2, fileURL.indexOf("/edit"));
             }
             File file = gDrive.files().get(fileId).execute();
-            DataSource dataSource = null;
             if ("application/vnd.google-apps.spreadsheet".equals(file.getMimeType())) {
-                dataSource = new DataSource(fileURL, DataSourceType.GDRIVE_SPREADSHEET, Service.SERVICE_GDRIVE, dataLanguage);
+                dataSourceType = DataSourceType.GDRIVE_SPREADSHEET;
                 isDoc = false;
             }
             else if ("application/vnd.google-apps.document".equals(file.getMimeType())) {
-                dataSource = new DataSource(fileURL, DataSourceType.GDRIVE_WORKSHEET, Service.SERVICE_GDRIVE, dataLanguage);
+                dataSourceType = DataSourceType.GDRIVE_WORKSHEET;
                 isDoc = true;
-            }
-            final DataSource srcForEqualCheck = dataSource;
-            boolean hasDuplicates = new DataSourceDAO().readAllByOwner(AuthController.getActiveUser()).stream().filter((src) -> src.getLink().equals(srcForEqualCheck.getLink()) && src.getLanguage().equals(srcForEqualCheck.getLanguage())).findFirst().isPresent();
-            if (!hasDuplicates){
-                new DataSourceDAO().create(dataSource);
             }
             String downloadURL;
             if (isDoc){

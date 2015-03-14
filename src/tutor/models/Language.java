@@ -9,22 +9,17 @@ public class Language {
 
     }
 
-    public Language (String name, User owner){
+    public Language (String name){
         setLang_name(name);
-        setOwner(owner);
     }
 
-    public Language(int id, String name, User user){
+    public Language(int id, String name){
         setId(id);
         setLang_name(name);
-        setOwner(user);
     }
 
     private int id;
-
     private String lang_name;
-
-    private User owner;
 
     public int getId(){
         return id;
@@ -42,14 +37,6 @@ public class Language {
         this.lang_name = lang_name;
     }
 
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,8 +45,6 @@ public class Language {
         Language language = (Language) o;
 
         if (lang_name != null ? !lang_name.equals(language.lang_name) : language.lang_name != null) return false;
-        if (owner != null ? !owner.equals(language.owner) : language.owner != null) return false;
-
         return true;
     }
 
@@ -67,7 +52,6 @@ public class Language {
     public int hashCode() {
         int result = id;
         result = 31 * result + (lang_name != null ? lang_name.hashCode() : 0);
-        result = 31 * result + (owner != null ? owner.hashCode() : 0);
         return result;
     }
 
