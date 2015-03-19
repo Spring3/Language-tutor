@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="google-api-services-drive-v2-rev161-1.19.1-javadoc">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/google-api-services-drive-v2-rev161-1.19.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/google-api-services-gmail-v1-rev23-1.19.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/google-api-services-plus-v1-rev210-1.19.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/libs/google-api-services-drive-v2-rev161-1.19.1-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/google-api-services-gmail-v1-rev23-1.19.1-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/google-api-services-plus-v1-rev210-1.19.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>
