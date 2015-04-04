@@ -40,7 +40,7 @@ public class AddLanguageController implements Initializable {
 
     public void addLanguageClicked(ActionEvent actionEvent) {
         Language lang = new Language(textField_language.getText());
-        Language tempLang = new LanguageDAO().readBy(lang.getLang_name());
+        Language tempLang = LanguageDAO.getInstance().readBy(lang.getLang_name());
         if (tempLang != null) {
             if (tempLang.equals(lang)) {
                 validation_label.setText(bundle.getString(ResourceBundleKeys.ERROR_LANG_ALREADY_ADDED));
@@ -48,7 +48,7 @@ public class AddLanguageController implements Initializable {
             }
         }
         validation_label.setText(bundle.getString(ResourceBundleKeys.DEFAULT));
-        new LanguageDAO().create(lang);
+        LanguageDAO.getInstance().create(lang);
         System.out.println("Language: " + lang.getLang_name() + " was created.");
         Stage currentStage = (Stage) textField_language.getScene().getWindow();
         settingsController.Refresh();

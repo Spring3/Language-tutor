@@ -15,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import tutor.Main;
 import tutor.dao.LanguageDAO;
 import tutor.models.Language;
+import tutor.util.DbManager;
 import tutor.util.StageManager;
 import java.net.URL;
 import java.util.List;
@@ -83,7 +84,7 @@ public class Controller implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb){
         ObservableList<Language> currentUserLanguages = FXCollections.observableArrayList();
-        List<Language> addedLanguages = new LanguageDAO().readAllLanguagesByUser(AuthController.getActiveUser().getId());
+        List<Language> addedLanguages = LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId());
         currentUserLanguages.addAll(addedLanguages);
         choiceBox_lang_to_learn.setItems(currentUserLanguages);
     }
@@ -104,6 +105,7 @@ public class Controller implements Initializable
     @FXML
     public void Shutdown(ActionEvent actionEvent) {
         stageManager.Shutdown();
+        DbManager.getInstance().shutdown();
     }
 
     public void newsItemClicked(Event event) {

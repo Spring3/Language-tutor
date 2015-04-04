@@ -14,8 +14,19 @@ import java.util.List;
  */
 public class WordDAO implements IDAO<Word> {
 
-    public WordDAO(){
+    private static WordDAO instance;
 
+    private WordDAO(){
+
+    }
+
+    public static WordDAO getInstance(){
+        if (instance == null){
+            synchronized (WordDAO.class){
+                instance = new WordDAO();
+            }
+        }
+        return instance;
     }
 
     @Override
@@ -98,7 +109,7 @@ public class WordDAO implements IDAO<Word> {
                 result.setId(resultSet.getInt(1));
                 result.setWord(resultSet.getString(2));
                 result.setTranslation(resultSet.getString(3));
-                result.setLang(new LanguageDAO().read(resultSet.getInt(4)));
+                result.setLang(LanguageDAO.getInstance().read(resultSet.getInt(4)));
             }
             resultSet.close();
         }
@@ -122,7 +133,7 @@ public class WordDAO implements IDAO<Word> {
                 result.setId(resultSet.getInt(1));
                 result.setWord(resultSet.getString(2));
                 result.setTranslation(resultSet.getString(3));
-                result.setLang(new LanguageDAO().read(resultSet.getInt(4)));
+                result.setLang(LanguageDAO.getInstance().read(resultSet.getInt(4)));
                 resultList.add(result);
             }
             resultSet.close();

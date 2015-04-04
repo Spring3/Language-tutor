@@ -10,6 +10,22 @@ import tutor.models.User;
  * Created by user on 12.02.2015.
  */
 public class UserDAO implements IDAO<User> {
+
+    private static UserDAO instance;
+
+    private UserDAO(){
+
+    }
+
+    public static UserDAO getInstance(){
+        if (instance == null){
+            synchronized (UserDAO.class){
+                instance = new UserDAO();
+            }
+        }
+        return instance;
+    }
+
     @Override
     public boolean create(User value) {
         try {

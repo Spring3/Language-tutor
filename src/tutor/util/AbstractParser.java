@@ -29,7 +29,7 @@ public abstract class AbstractParser implements FileParser{
             BufferedReader fileReader = new BufferedReader(new InputStreamReader(inputStream));
 
             List<Word> words = new ArrayList<>();
-            WordDAO dao = new WordDAO();
+            WordDAO dao = WordDAO.getInstance();
             if (contentType == ContentType.WORDS_ONLY) {
                 fileReader.lines().forEach(line -> words.add(new Word(line.trim(), "", dataLanguage)));
                 words.parallelStream().filter(dataUnit -> !dao.contains(dataUnit)).forEach(dao::create);

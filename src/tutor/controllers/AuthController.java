@@ -85,7 +85,7 @@ public class AuthController implements Initializable {
     public void enterProgramClicked(ActionEvent actionEvent) {
         if (!txtb_enter_username.getText().isEmpty()) {
             if (!txtb_enter_password.getText().isEmpty()) {
-                User user = new UserDAO().readByUserName(txtb_enter_username.getText());
+                User user = UserDAO.getInstance().readByUserName(txtb_enter_username.getText());
                 if (user != null) {
                     if (user.getPassword() == txtb_enter_password.getText().hashCode()) {
                         System.out.println("User: " + txtb_enter_username.getText() + ", password: " + txtb_enter_password.getText());
@@ -132,12 +132,12 @@ public class AuthController implements Initializable {
                 if (!txtb_reg_pass1.getText().isEmpty() && !txtb_reg_pass2.getText().isEmpty()) {
                     if (txtb_reg_pass1.getText().length() >= 5 || txtb_reg_pass2.getText().length() >= 5) {
                         if (txtb_reg_pass1.getText().equals(txtb_reg_pass2.getText())) {
-                            User user = new UserDAO().readByUserName(txtb_reg_username.getText());
+                            User user = UserDAO.getInstance().readByUserName(txtb_reg_username.getText());
                             if (user == null) {
                                 user = new User(txtb_reg_username.getText(), txtb_reg_pass1.getText().hashCode());
-                                if (new UserDAO().create(user)) {
+                                if (UserDAO.getInstance().create(user)) {
                                     System.out.println("Registering user: " + txtb_reg_username.getText() + ", password: " + txtb_reg_pass1.getText() + ", repeated: " + txtb_reg_pass2.getText());
-                                    user = new UserDAO().readByUserName(user.getUserName());
+                                    user = UserDAO.getInstance().readByUserName(user.getUserName());
                                     setActiveUser(user);
                                     stageManager.navigateTo(Main.class.getResource(Navigator.MAIN_VIEW_PATH), "Language Tutor", 0, Optional.of(true));
                                 } else {

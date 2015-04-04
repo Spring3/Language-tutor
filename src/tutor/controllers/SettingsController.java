@@ -1,11 +1,8 @@
 package tutor.controllers;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -368,22 +365,21 @@ public class SettingsController implements Initializable {
         if (gDriveManager.gotCode()) {
             if (!textField_googleDocsFIleURL.getText().isEmpty()) {
                 InputStream fileInputStream = gDriveManager.getFileInputStream(textField_googleDocsFIleURL.getText());
-                ContentType selectedContentType;
+                ContentType selectedContentType = null;
                 if (radioButton_wordAndTranslationGoogleDocs.isSelected()) {
                     selectedContentType = ContentType.WORDS_TRANSLATION;
                 } else if (radioButton_wordsOnlyGoogleDocs.isSelected()) {
                     selectedContentType = ContentType.WORDS_ONLY;
-                } else {
+                } else if (radioButton_translationOnlyGoogleDocs.isSelected()) {
                     selectedContentType = ContentType.TRANSLATION_ONLY;
+                }
+                else{
+
                 }
                 new GDriveParser(bundle, gDriveManager.getDataSourceType()).parse(fileInputStream, selectedContentType, newLangValue);
 
             } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle(bundle.getString(ResourceBundleKeys.DIALOGS_INFO_TITLE));
-                alert.setHeaderText(bundle.getString(ResourceBundleKeys.DIALOGS_INFO_NO_SRC_URL_HEADER));
-                alert.setContentText(bundle.getString(ResourceBundleKeys.DIALOGS_INFO_NO_SRC_URL_CONTENT));
-                alert.show();
+                AlertThrower.throwAlert(Alert.AlertType.ERROR, bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_TITLE), bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_HEADER_NO_CONTENT_TYPE), bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_CONTENT_NO_CONTENT_TYPE));
             }
         } else {
             stageManager.navigateTo(Main.class.getResource(Navigator.WEBVIEW_VIEW_PATH), "Browser", 2, Optional.of(true));
@@ -596,7 +592,7 @@ public class SettingsController implements Initializable {
      * Loads all languages for current user and puts them into listboxes and choiceboxes
      */
     public void Refresh() {
-        List<Language> currentUserLanguages = new LanguageDAO().readAllLanguagesByUser(AuthController.getActiveUser().getId());
+        List<Language> currentUserLanguages = LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId());
         ObservableList<Language> userLanguages = FXCollections.observableArrayList();
         userLanguages.addAll(currentUserLanguages);
         listView_languages.setItems(userLanguages);
@@ -610,14 +606,10 @@ public class SettingsController implements Initializable {
         Language selectedLang = listView_languages.getSelectionModel().getSelectedItem();
         if (selectedLang != null) {
             listView_languages.getItems().remove(selectedLang);
-            new LanguageDAO().delete(selectedLang);
+            LanguageDAO.getInstance().delete(selectedLang);
             System.out.println("Language: " + selectedLang + " was deleted");
         } else {
-            Alert errorMessage = new Alert(Alert.AlertType.INFORMATION);
-            errorMessage.setTitle(bundle.getString(ResourceBundleKeys.DIALOGS_INFO_TITLE));
-            errorMessage.setHeaderText(bundle.getString(ResourceBundleKeys.DIALOGS_LANG_NOT_SELECTED));
-            errorMessage.setContentText(bundle.getString(ResourceBundleKeys.DIALOGS_CHOOSE_LANG));
-            errorMessage.showAndWait();
+            AlertThrower.throwAlert(Alert.AlertType.INFORMATION, bundle.getString(ResourceBundleKeys.DIALOGS_INFO_TITLE), bundle.getString(ResourceBundleKeys.DIALOGS_LANG_NOT_SELECTED), bundle.getString(ResourceBundleKeys.DIALOGS_CHOOSE_LANG));
         }
     }
 

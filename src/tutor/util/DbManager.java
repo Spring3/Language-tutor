@@ -1,5 +1,7 @@
 package tutor.util;
 
+import org.h2.jdbcx.JdbcConnectionPool;
+
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,10 +13,17 @@ import java.sql.Statement;
 public class DbManager {
 
     private static DbManager instance;
+    private JdbcConnectionPool connectionPool;
 
     private DbManager(){
+        connectionPool = JdbcConnectionPool.create("jdbc:h2:file:./data/langTutor;MV_STORE=FALSE;MVCC=FALSE", "langtutor", "hearthstone");
+        connectionPool.setMaxConnections(10);
     }
 
+    /**
+     * Singletone method for retrieving DbManager class instance
+     * @return single instance of this class
+     */
     public static DbManager getInstance(){
         if (instance == null){
             synchronized (DbManager.class){
@@ -26,9 +35,12 @@ public class DbManager {
         return instance;
     }
 
+    /**
+     * @return a connection instance
+     */
     public Connection getConnection() {
         try {
-            return DriverManager.getConnection("jdbc:h2:file:./data/langTutor;MV_STORE=FALSE;MVCC=FALSE", "langtutor", "hearthstone");
+            return connectionPool.getConnection();
         }
         catch (SQLException ex){
             ex.printStackTrace();
@@ -36,6 +48,10 @@ public class DbManager {
         return null;
     }
 
+    /**
+     * Checks database connection
+     * @return true if connection was successful
+     */
     public boolean checkConnection(){
         if (!new File("./data/langTutor.h2.db").exists())
             initializeDb();
@@ -60,6 +76,9 @@ public class DbManager {
         return false;
     }
 
+    /**
+     * Creates and initializes database with default tables and rows
+     */
     public void initializeDb(){
         String[] initQueries = new String[]{
                 "CREATE TABLE IF NOT EXISTS USERS(id integer IDENTITY PRIMARY KEY , username varchar(40), email varchar(40), password varchar(100), register_date timestamp, success_rate decimal(5,2), seed int);",
@@ -83,5 +102,12 @@ public class DbManager {
         }
         System.out.println("Db initialized");
 
+    }
+
+    /**
+     * Shuts down all the connection to the database
+     */
+    public void shutdown(){
+        connectionPool.dispose();
     }
 }

@@ -12,6 +12,24 @@ import java.util.List;
  * Created by user on 13.02.2015.
  */
 public class LanguageDAO implements IDAO<Language> {
+
+    private static LanguageDAO instance;
+
+    private LanguageDAO(){
+
+    }
+
+    public static LanguageDAO getInstance(){
+        if (instance == null){
+            synchronized (LanguageDAO.class){
+                if (instance == null){
+                    instance = new LanguageDAO();
+                }
+            }
+        }
+        return instance;
+    }
+
     @Override
     public boolean create(Language value) {
         try{

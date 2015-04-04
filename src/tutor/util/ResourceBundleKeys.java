@@ -23,12 +23,10 @@ public final class ResourceBundleKeys {
     public static final String DIALOGS_RADIOBUTTON_HEADER = "dialogs_info_header_radiobutton";
     public static final String DIALOGS_RADIOBUTTON_TEXT = "dialogs_info_choose_file_structure";
     public static final String DIALOGS_ERROR_TITLE = "dialogs_error_title";
-    public static final String DIALOGS_ERROR_DATASOURCE_ALREADY_ADDED = "dialogs_error_header_datasource_already_added";
-    public static final String DIALOGS_ERROR_DATASOURCE_MESSAGE = "dialogs_error_datasource_message";
-    public static final String DIALOGS_INFO_NO_RIGHTS_HEADER = "dialogs_info_no_rights_header";
-    public static final String DIALOGS_INFO_NO_RIGHTS_CONTENT = "dialogs_info_no_rights_content";
     public static final String DIALOGS_INFO_NO_SRC_URL_HEADER = "dialogs_info_no_src_url_header";
     public static final String DIALOGS_INFO_NO_SRC_URL_CONTENT = "dialogs_info_no_src_url_content";
     public static final String SHORT_NAME = "short_name";
     public static final String SHORT_PASS = "short_pass";
+    public static final String DIALOGS_ERROR_HEADER_NO_CONTENT_TYPE = "dialogs_error_header_no_content_type";
+    public static final String DIALOGS_ERROR_CONTENT_NO_CONTENT_TYPE = "dialogs_error_content_no_content_type";
 }
