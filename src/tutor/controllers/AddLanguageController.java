@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 /**
  * Created by user on 13.02.2015.
  */
-public class AddLanguageController extends Navigator implements Initializable {
+public class AddLanguageController implements Initializable {
     public AddLanguageController(){
         stageManager = StageManager.getInstance(3);
     }

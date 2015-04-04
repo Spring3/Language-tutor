@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 /**
  * Created by user on 26.02.2015.
  */
-public class WebViewController extends Navigator implements Initializable {
+public class WebViewController implements Initializable {
 
     @FXML
     private WebView browser;
@@ -40,27 +40,21 @@ public class WebViewController extends Navigator implements Initializable {
         webEngine = browser.getEngine();
         gDriveManager = GDriveManager.getInstance(resources);
         webEngine.load(gDriveManager.getFlowURL());
-        webEngine.locationProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                try {
-                    codeString = newValue;
-                    webEngine.getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
-                        @Override
-                        public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newValue) {
-                            if (newValue == Worker.State.SUCCEEDED || newValue == Worker.State.FAILED) {
-                                if (codeString.contains("oauth2callback?code")) {
-                                    System.out.println(getCode());
-                                    GDriveManager.getInstance(resources).setCode(getCode());
-                                    stageManager.closeStage((Stage) browser.getScene().getWindow());
-                                }
-                            }
+        webEngine.locationProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                codeString = newValue;
+                webEngine.getLoadWorker().stateProperty().addListener((observable1, oldValue1, newValue1) -> {
+                    if (newValue1 == Worker.State.SUCCEEDED || newValue1 == Worker.State.FAILED) {
+                        if (codeString.contains("oauth2callback?code")) {
+                            System.out.println(getCode());
+                            GDriveManager.getInstance(resources).setCode(getCode());
+                            stageManager.closeStage((Stage) browser.getScene().getWindow());
                         }
-                    });
-                }
-                catch (Exception ex){
+                    }
+                });
+            }
+            catch (Exception ex){
 
-                }
             }
         });
     }

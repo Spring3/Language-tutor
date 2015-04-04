@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 /**
  * Main controller for the main.fxml view.
  */
-public class Controller extends Navigator implements Initializable
+public class Controller implements Initializable
 {
     public Controller(){
         stageManager = StageManager.getInstance(3);
@@ -95,11 +95,11 @@ public class Controller extends Navigator implements Initializable
      */
     @FXML
     public void InvitationMenuItemClicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getResource(INVITATION_VIEW_PATH), "Invite a friend voa email", 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getResource(Navigator.INVITATION_VIEW_PATH), "Invite a friend voa email", 1, Optional.empty());
     }
     @FXML
     public void EditSettingsClick(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getResource(EDIT_SETTINGS_PATH), "Settings", 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getResource(Navigator.EDIT_SETTINGS_PATH), "Settings", 1, Optional.empty());
     }
     @FXML
     public void Shutdown(ActionEvent actionEvent) {
@@ -107,34 +107,34 @@ public class Controller extends Navigator implements Initializable
     }
 
     public void newsItemClicked(Event event) {
-        stageManager.navigateTo(Main.class.getResource(NEWS_ITEM_VIEW_PATH), newsItemLabel.getText(), 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getResource(Navigator.NEWS_ITEM_VIEW_PATH), newsItemLabel.getText(), 1, Optional.empty());
     }
 
     public void offlineTaskClicked(Event event) {
-        stageManager.navigateTo(Main.class.getResource(OFFLINE_TASK_VIEW_PATH), offlineTask_header.getText(), 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getResource(Navigator.OFFLINE_TASK_VIEW_PATH), offlineTask_header.getText(), 1, Optional.empty());
     }
 
     public void onlineTaskClicked(Event event) {
-        stageManager.navigateTo(Main.class.getResource(ONLINE_TASK_VIEW_PATH), onlineTask_header.getText(), 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getResource(Navigator.ONLINE_TASK_VIEW_PATH), onlineTask_header.getText(), 1, Optional.empty());
     }
 
     public void historyItemClicked(Event event) {
-        stageManager.navigateTo(Main.class.getResource(HISTORY_ITEM_VIEW_PATH), history_header.getText(), 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getResource(Navigator.HISTORY_ITEM_VIEW_PATH), history_header.getText(), 1, Optional.empty());
     }
 
     public void sendFeedbackClicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getResource(SEND_FEEDBACK_VIEW_PATH), "Feedback", 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getResource(Navigator.SEND_FEEDBACK_VIEW_PATH), "Feedback", 1, Optional.empty());
     }
 
     public void statisticsClicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getResource(USER_RATE_VIEW_PATH), "Statistics", 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getResource(Navigator.USER_RATE_VIEW_PATH), "Statistics", 1, Optional.empty());
     }
 
     public void menuItem_about_clicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getResource(ABOUT_VIEW_PATH), "About", 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getResource(Navigator.ABOUT_VIEW_PATH), "About", 1, Optional.empty());
     }
 
     public void menuItem_dictionary_clicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getResource(DICTIONARY_VIEW_PATH), "Dictionary", 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getResource(Navigator.DICTIONARY_VIEW_PATH), "Dictionary", 1, Optional.empty());
     }
 }

@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 /**
  * Created by user on 11.02.2015.
  */
-public class AuthController extends Navigator implements Initializable {
+public class AuthController implements Initializable {
 
     public AuthController(){
         stageManager = StageManager.getInstance(3);

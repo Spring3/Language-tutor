@@ -9,6 +9,6 @@ import java.io.InputStream;
  * Created by user on 02.03.2015.
  */
 public interface FileParser {
-    public void parse(File file, ContentType contentType, Language lang);
-    public void parse(InputStream stream, ContentType contentType, Language lang);
+    void parse(File file, ContentType contentType, Language lang);
+    void parse(InputStream stream, ContentType contentType, Language lang);
 }

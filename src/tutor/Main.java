@@ -29,7 +29,7 @@ public class Main extends Application {
         Locale.setDefault(new Locale(UserConfigHelper.getInstance().getParameter(UserConfigHelper.LANGUAGE)));
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Navigator.AUTHENTICATION_VIEW_PATH));
         loader.setResources(ResourceBundle.getBundle("locale/lang", Locale.getDefault()));
-        Parent root = loader.load();
+        loader.load();
         AuthController controller = loader.getController();
         controller.navigateTo(getClass().getResource(Navigator.AUTHENTICATION_VIEW_PATH),"Language Tutor", 0, false);
     }
