@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
 public class Controller implements Initializable
 {
     public Controller(){
-        stageManager = StageManager.getInstance(3);
+        stageManager = StageManager.getInstance();
     }
 
     private StageManager stageManager = null;

@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
  */
 public class AddLanguageController implements Initializable {
     public AddLanguageController(){
-        stageManager = StageManager.getInstance(3);
+        stageManager = StageManager.getInstance();
     }
 
     @Override

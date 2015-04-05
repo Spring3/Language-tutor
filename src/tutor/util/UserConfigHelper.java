@@ -60,7 +60,8 @@ public class UserConfigHelper extends ConfigKeys{
      * @return
      */
     public String getParameter(String key){
-       return getInstance().userConfigFile.get(key).toString();
+        Object result = getInstance().userConfigFile.get(key);
+        return result == null ? null : result.toString();
     }
 
     private void loadDefaultSettings(){

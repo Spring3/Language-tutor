@@ -20,20 +20,20 @@ public class StageManager {
 
     private Map<Integer,URL> stagePaths;      //Integer = stage layer, URL = stage's fxml view path
     private Map<Integer,Stage> stages;
-    private int maxLayer;                   //max layer
+    private static final int MAX_LAYERS = 3;                   //max layer count
     private static StageManager instance;
 
-    private StageManager(int layersCount){
-        maxLayer = layersCount;
-        stagePaths = new LinkedHashMap<>(layersCount);
-        stages = new LinkedHashMap<>(layersCount);
+    private StageManager(){
+        stagePaths = new LinkedHashMap<>(MAX_LAYERS);
+        stages = new LinkedHashMap<>(MAX_LAYERS);
     }
 
-    public static StageManager getInstance(int layersCount) {
+
+    public static StageManager getInstance() {
         if (instance == null) {
             synchronized (StageManager.class) {
                 if (instance == null)
-                    instance = new StageManager(layersCount);
+                    instance = new StageManager();
             }
         }
         return instance;
@@ -48,7 +48,7 @@ public class StageManager {
     public void navigateTo(@NotNull URL fxmlViewURL, @NotNull String title, @NotNull int layerIndex, Optional<Boolean> isResizable) {
         try {
             Stage stage = null;
-            if (layerIndex > maxLayer || layerIndex < 0)
+            if (layerIndex > MAX_LAYERS || layerIndex < 0)
                 return;
             if (stages.get(layerIndex) == null || stagePaths.get(layerIndex) == null) {
                 addStage(bakeStage(fxmlViewURL, title, layerIndex, isResizable), fxmlViewURL, layerIndex);
@@ -73,7 +73,7 @@ public class StageManager {
     }
 
     public void putStage(URL stagePath,Stage stage, int layer){
-        if (layer > 0 && layer < maxLayer) {
+        if (layer > 0 && layer < MAX_LAYERS) {
             closeStage(stages.get(layer));
             stages.put(layer, stage);
             stagePaths.put(layer, stagePath);
@@ -139,7 +139,7 @@ public class StageManager {
      * Shuts the application down
      */
     public void Shutdown(){
-        for (int i = 0; i < maxLayer; i ++){
+        for (int i = 0; i < MAX_LAYERS; i ++){
             if (stages.get(i) != null){
                 stages.get(i).close();
             }
@@ -151,8 +151,8 @@ public class StageManager {
      * @param stageToClose a stage to be closed.
      */
     public void closeStage(Stage stageToClose){
-        int foundStageIndex = maxLayer;
-        for (int i = 0 ; i < maxLayer; i++){
+        int foundStageIndex = MAX_LAYERS;
+        for (int i = 0 ; i < MAX_LAYERS; i++){
             if (stages.get(i) != null){
                 if (stages.get(i) == stageToClose){
                     stages.get(i).close();
@@ -163,7 +163,7 @@ public class StageManager {
                 }
             }
         }
-        for (int i = foundStageIndex + 1; i < maxLayer; i ++){
+        for (int i = foundStageIndex + 1; i < MAX_LAYERS; i ++){
             if (stages.get(i) != null) {
                 stages.get(i).close();
                 stages.put(i, null);

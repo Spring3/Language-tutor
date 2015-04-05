@@ -1,7 +1,5 @@
 package tutor.controllers;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,7 +8,6 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import tutor.util.GDriveManager;
 import tutor.util.StageManager;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -36,7 +33,7 @@ public class WebViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        stageManager = StageManager.getInstance(3);
+        stageManager = StageManager.getInstance();
         webEngine = browser.getEngine();
         gDriveManager = GDriveManager.getInstance(resources);
         webEngine.load(gDriveManager.getFlowURL());

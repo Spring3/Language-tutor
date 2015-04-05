@@ -321,9 +321,9 @@ public class SettingsController implements Initializable {
                     if (radioButtonToggleGroup.getSelectedToggle() != null) {
                         btn_loadLocalFile.setDisable(false); //activate load btn to parse the selected file
                         btn_loadLocalFile.setOnAction(event1 -> {
-                            Thread thread = new Thread(){
+                            Thread thread = new Thread() {
                                 @Override
-                                public void run(){
+                                public void run() {
                                     new PlainFileParser(bundle).parse(selectedFile, getPlainFileContentType(), selectedLanguage);
                                 }
                             };
@@ -339,8 +339,7 @@ public class SettingsController implements Initializable {
                                 }
                             }
                     );
-                }
-                else {
+                } else {
                     radioButton_wordAndTranslation.setSelected(false);
                     radioButton_wordsOnly.setSelected(false);
                     radioButton_translationOnly.setSelected(false);
@@ -361,29 +360,25 @@ public class SettingsController implements Initializable {
      * @param gDriveManager a manager, responsible for all the transactions between google drive and this program
      * @param newLangValue a language of a selected file's content
      */
-    private void btnOpenGoogleFileClickEventHandler(GDriveManager gDriveManager, Language newLangValue){
-        if (gDriveManager.gotCode()) {
-            if (!textField_googleDocsFIleURL.getText().isEmpty()) {
-                InputStream fileInputStream = gDriveManager.getFileInputStream(textField_googleDocsFIleURL.getText());
-                ContentType selectedContentType = null;
-                if (radioButton_wordAndTranslationGoogleDocs.isSelected()) {
-                    selectedContentType = ContentType.WORDS_TRANSLATION;
-                } else if (radioButton_wordsOnlyGoogleDocs.isSelected()) {
-                    selectedContentType = ContentType.WORDS_ONLY;
-                } else if (radioButton_translationOnlyGoogleDocs.isSelected()) {
-                    selectedContentType = ContentType.TRANSLATION_ONLY;
-                }
-                else{
-
-                }
-                new GDriveParser(bundle, gDriveManager.getDataSourceType()).parse(fileInputStream, selectedContentType, newLangValue);
-
+    private void btnOpenGoogleFileClickEventHandler(GDriveManager gDriveManager, Language newLangValue) {
+        if (!textField_googleDocsFIleURL.getText().isEmpty()) {
+            InputStream fileInputStream = gDriveManager.getFileInputStream(textField_googleDocsFIleURL.getText());
+            ContentType selectedContentType = null;
+            if (radioButton_wordAndTranslationGoogleDocs.isSelected()) {
+                selectedContentType = ContentType.WORDS_TRANSLATION;
+            } else if (radioButton_wordsOnlyGoogleDocs.isSelected()) {
+                selectedContentType = ContentType.WORDS_ONLY;
+            } else if (radioButton_translationOnlyGoogleDocs.isSelected()) {
+                selectedContentType = ContentType.TRANSLATION_ONLY;
             } else {
                 AlertThrower.throwAlert(Alert.AlertType.ERROR, bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_TITLE), bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_HEADER_NO_CONTENT_TYPE), bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_CONTENT_NO_CONTENT_TYPE));
             }
+            new GDriveParser(bundle, gDriveManager.getDataSourceType()).parse(fileInputStream, selectedContentType, newLangValue);
+
         } else {
-            stageManager.navigateTo(Main.class.getResource(Navigator.WEBVIEW_VIEW_PATH), "Browser", 2, Optional.of(true));
+            AlertThrower.throwAlert(Alert.AlertType.ERROR, bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_TITLE), bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_HEADER_NO_CONTENT_TYPE), bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_CONTENT_NO_CONTENT_TYPE));
         }
+
     }
 
     /**
@@ -459,7 +454,7 @@ public class SettingsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //StageManager for operating with stages
-        stageManager = StageManager.getInstance(3);
+        stageManager = StageManager.getInstance();
         bundle = resourceBundle;
 
         initializeListView();
@@ -581,7 +576,7 @@ public class SettingsController implements Initializable {
             stage.setTitle(bundle.getString(ResourceBundleKeys.TITLE_ADD_NEW_LANG));
             stage.setOnHiding(windowEvent -> System.out.println("A stage on layer " + 2 + " was resetted"));
             final Stage stageDuplicate = stage;
-            stageDuplicate.setOnCloseRequest(windowEvent -> StageManager.getInstance(3).closeStage(stageDuplicate));
+            stageDuplicate.setOnCloseRequest(windowEvent -> StageManager.getInstance().closeStage(stageDuplicate));
             stageManager.putStage(Main.class.getResource(Navigator.ADD_LANGUAGE_VIEW_PATH), stageDuplicate, 2);
         } catch (IOException ex) {
             ex.printStackTrace();

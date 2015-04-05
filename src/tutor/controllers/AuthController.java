@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 public class AuthController implements Initializable {
 
     public AuthController(){
-        stageManager = StageManager.getInstance(3);
+        stageManager = StageManager.getInstance();
     }
 
     @Override

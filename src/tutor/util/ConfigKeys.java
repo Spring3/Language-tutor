@@ -6,4 +6,5 @@ package tutor.util;
 public abstract class ConfigKeys {
     public static final String THEME_FROST = "THEME_FROST";
     public static final String LANGUAGE = "LANGUAGE";
+    public static final String REFRESH_TOKEN = "REFRESH_TOKEN";
 }
