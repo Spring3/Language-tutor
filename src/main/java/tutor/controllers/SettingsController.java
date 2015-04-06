@@ -143,9 +143,8 @@ public class SettingsController implements Initializable {
 
     private StageManager stageManager;
     private ResourceBundle bundle;
-    private volatile File selectedFile;
-    private List<File> themeDirectories;
-    private File selectedThemeFile;
+    private volatile File selectedFile;;
+    private URL selectedThemePath;
     private Language selectedLanguage;
     private ToggleGroup radioButtonToggleGroup;
     private ToggleGroup radioButtonGoogleToggleGroup;
@@ -164,7 +163,7 @@ public class SettingsController implements Initializable {
         //listView_languages
         Refresh();
         //TODO: repair this method
-        //findAllThemes();  this method throws NullPointerException
+        findAllThemes();  //this method throws NullPointerException
         loadActiveLocale();
         initToggleGroups();
         initializeChoiceBoxes();
@@ -504,33 +503,17 @@ public class SettingsController implements Initializable {
      * Searches for all the themes available locally and displays them in listboxes and choiceboxes
      */
     private void findAllThemes() {
-        try {
-            File themesDirectory = new File("themes" + File.separator + "themes"); //for development mode
-            themeDirectories = new ArrayList<>();
+        ObservableList<String> themesNames = FXCollections.observableArrayList();
+        themesNames.add("frost");
+        themesNames.add("flat");
 
-            if (!themesDirectory.getAbsoluteFile().exists()) {
-                themesDirectory = new File("themes" + File.separator); //production
-            }
-
-            ObservableList<String> themesNames = FXCollections.observableArrayList();
-            for (File file : themesDirectory.listFiles()) {
-                if (file.isDirectory()) {
-                    themeDirectories.add(file);
-                    themesNames.add(file.getName());
-                }
-            }
-
-            choiceBox_theme.setItems(themesNames);
-            String selectedThemeName = UserConfigHelper.getInstance().getParameter(UserConfigHelper.SELECTED_THEME);
-            selectedThemeName = selectedThemeName.substring(selectedThemeName.lastIndexOf("/") + 1, selectedThemeName.lastIndexOf(".css"));
-            choiceBox_theme.getSelectionModel().select(selectedThemeName);
-            choiceBox_theme.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                themeChangedEventHandler(newValue);
-            });
-        }
-        catch (Exception ex){
-            ex.printStackTrace();
-        }
+        choiceBox_theme.setItems(themesNames);
+        String selectedThemeName = UserConfigHelper.getInstance().getParameter(UserConfigHelper.SELECTED_THEME);
+        selectedThemeName = selectedThemeName.substring(selectedThemeName.lastIndexOf("/") + 1, selectedThemeName.lastIndexOf(".css"));
+        choiceBox_theme.getSelectionModel().select(selectedThemeName);
+        choiceBox_theme.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            themeChangedEventHandler(newValue);
+        });
     }
 
     /**
@@ -538,22 +521,7 @@ public class SettingsController implements Initializable {
      * @param newValue stands for a newValue, selected from a choicebox.
      */
     private void themeChangedEventHandler(String newValue){
-        themeDirectories.stream().filter(directory -> directory.getName().equals(newValue)).forEach(directory -> {
-
-            StringBuffer themesFilePathBuffer = new StringBuffer();
-            themesFilePathBuffer.append("themes").append(File.separator).append("themes").append(File.separator).append(newValue).append(File.separator).append(newValue).append(".css");
-
-            selectedThemeFile = new File(themesFilePathBuffer.toString()); //dev mode
-            if (!selectedThemeFile.getAbsoluteFile().exists()) {
-
-                themesFilePathBuffer.append("themes").append(File.separator).append(newValue).append(File.separator).append(newValue).append(".css");
-                selectedThemeFile = new File(themesFilePathBuffer.toString());//production
-
-            }
-            System.out.println(selectedThemeFile.getPath());
-            //TODO: change theme in config files after Ok or Apply btn is clicked.
-
-        });
+        selectedThemePath = Main.class.getClassLoader().getResource(newValue.toLowerCase() + ".css");
     }
 
 
