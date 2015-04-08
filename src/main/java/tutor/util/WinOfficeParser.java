@@ -9,11 +9,13 @@ import java.util.ResourceBundle;
 /**
  * Created by user on 02.03.2015.
  */
-public class WinOfficeParser extends AbstractParser implements FileParser {
+public class WinOfficeParser implements FileParser {
 
     public WinOfficeParser(ResourceBundle bundle){
-        super.bundle = bundle;
+        this.bundle = bundle;
     }
+
+    private ResourceBundle bundle;
 
     @Override
     public void parse(File file, ContentType contentType, Language lang) {

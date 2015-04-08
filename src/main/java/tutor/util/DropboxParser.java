@@ -9,12 +9,13 @@ import java.util.ResourceBundle;
 /**
  * Created by user on 02.03.2015.
  */
-public class DropboxParser extends AbstractParser implements FileParser {
+public class DropboxParser implements FileParser {
 
     public DropboxParser(ResourceBundle bundle){
-        super.bundle = bundle;
+        this.bundle = bundle;
     }
 
+    private ResourceBundle bundle;
     @Override
     public void parse(File file, ContentType contentType, Language lang) {
 

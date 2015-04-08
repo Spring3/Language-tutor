@@ -379,7 +379,7 @@ public class SettingsController implements Initializable {
      */
     private void btnOpenGoogleFileClickEventHandler(GDriveManager gDriveManager, Language newLangValue) {
         if (!textField_googleDocsFIleURL.getText().isEmpty()) {
-            InputStream fileInputStream = gDriveManager.getFileInputStream(textField_googleDocsFIleURL.getText());
+            gDriveManager.analyzeFile(textField_googleDocsFIleURL.getText());
             ContentType selectedContentType = null;
             if (radioButton_wordAndTranslationGoogleDocs.isSelected()) {
                 selectedContentType = ContentType.WORDS_TRANSLATION;
@@ -390,7 +390,7 @@ public class SettingsController implements Initializable {
             } else {
                 AlertThrower.throwAlert(Alert.AlertType.ERROR, bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_TITLE), bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_HEADER_NO_CONTENT_TYPE), bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_CONTENT_NO_CONTENT_TYPE));
             }
-            new GDriveParser(bundle, gDriveManager.getDataSourceType()).parse(fileInputStream, selectedContentType, newLangValue);
+            new GDriveParser(bundle).parse(gDriveManager, selectedContentType, newLangValue);
 
         } else {
             AlertThrower.throwAlert(Alert.AlertType.ERROR, bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_TITLE), bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_HEADER_NO_CONTENT_TYPE), bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_CONTENT_NO_CONTENT_TYPE));

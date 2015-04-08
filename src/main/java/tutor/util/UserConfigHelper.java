@@ -17,25 +17,27 @@ public class UserConfigHelper extends ConfigKeys{
 
     public static UserConfigHelper getInstance(){
         if (instance == null){
-            boolean isPropertyFileNew = false;
-            instance = new UserConfigHelper();
-            instance.userConfigFile = new Properties();
-            try {
-                File userConfigFile = new File(CONFIG_FILE_PATH);
-                if (!userConfigFile.exists()){
-                    userConfigFile.createNewFile();
-                    isPropertyFileNew = true;
+            synchronized (UserConfigHelper.class) {
+                if (instance == null) {
+                    boolean isPropertyFileNew = false;
+                    instance = new UserConfigHelper();
+                    instance.userConfigFile = new Properties();
+                    try {
+                        File userConfigFile = new File(CONFIG_FILE_PATH);
+                        if (!userConfigFile.exists()) {
+                            userConfigFile.createNewFile();
+                            isPropertyFileNew = true;
+                        }
+                        instance.userConfigFile.load(new FileInputStream(CONFIG_FILE_PATH));
+                        if (isPropertyFileNew) {
+                            instance.loadDefaultSettings();
+                        }
+                    } catch (FileNotFoundException ex) {
+                        ex.printStackTrace();
+                    } catch (IOException ioex) {
+                        ioex.printStackTrace();
+                    }
                 }
-                instance.userConfigFile.load(new FileInputStream(CONFIG_FILE_PATH));
-                if (isPropertyFileNew){
-                    instance.loadDefaultSettings();
-                }
-            }
-            catch (FileNotFoundException ex){
-                ex.printStackTrace();
-            }
-            catch (IOException ioex){
-                ioex.printStackTrace();
             }
         }
         return instance;
@@ -46,9 +48,9 @@ public class UserConfigHelper extends ConfigKeys{
      * @return
      */
     public void setParameter(String key, String value){
-        getInstance().userConfigFile.setProperty(key,value);
+        userConfigFile.setProperty(key,value);
         try{
-            getInstance().userConfigFile.store(new FileOutputStream(CONFIG_FILE_PATH), null);
+            userConfigFile.store(new FileOutputStream(CONFIG_FILE_PATH), null);
         }
         catch (IOException ex){
             ex.printStackTrace();

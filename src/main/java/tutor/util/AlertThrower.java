@@ -7,12 +7,25 @@ import javafx.scene.control.Alert;
  */
 public final class AlertThrower {
 
+    private static AlertThrower instance = null;
+
     private AlertThrower(){
 
     }
 
 
-    public static void throwAlert(Alert.AlertType alertType, String alertTitle, String alertContent, String alertMessage){
+    public AlertThrower getInstance(){
+        if (instance == null){
+            synchronized (AlertThrower.class){
+                if (instance == null){
+                    instance = new AlertThrower();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public void throwAlert(Alert.AlertType alertType, String alertTitle, String alertContent, String alertMessage){
         Alert alert = new Alert(alertType);
         alert.setTitle(alertTitle);
         alert.setHeaderText(alertContent);
