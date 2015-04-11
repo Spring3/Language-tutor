@@ -1,7 +1,6 @@
 package tutor.dao;
 import tutor.controllers.AuthController;
 import tutor.models.Language;
-import tutor.models.User;
 import tutor.util.DbManager;
 
 import java.sql.*;
@@ -105,7 +104,7 @@ public class LanguageDAO implements IDAO<Language> {
         List<Language> resultList = null;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT id, lang_name FROM LANGUAGES as langs INNER JOIN USER_LANG as ulang ON ulang.user_id =? WHERE langs.id = ulang.lang_id GROUP BY langs.id;");
+            PreparedStatement statement = connection.prepareStatement("SELECT langs.id, langs.lang_name FROM LANGUAGES as langs INNER JOIN USER_LANG as ulang ON ulang.user_id =? WHERE langs.id = ulang.lang_id GROUP BY langs.id;");
             statement.setInt(1, userId);
             resultList = readAllLanguages(statement);
             connection.close();

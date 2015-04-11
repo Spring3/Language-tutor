@@ -388,12 +388,20 @@ public class SettingsController implements Initializable {
             } else if (radioButton_translationOnlyGoogleDocs.isSelected()) {
                 selectedContentType = ContentType.TRANSLATION_ONLY;
             } else {
-                AlertThrower.throwAlert(Alert.AlertType.ERROR, bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_TITLE), bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_HEADER_NO_CONTENT_TYPE), bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_CONTENT_NO_CONTENT_TYPE));
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_TITLE));
+                alert.setHeaderText(bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_HEADER_NO_CONTENT_TYPE));
+                alert.setContentText(bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_CONTENT_NO_CONTENT_TYPE));
+                alert.show();
             }
             new GDriveParser(bundle).parse(gDriveManager, selectedContentType, newLangValue);
 
         } else {
-            AlertThrower.throwAlert(Alert.AlertType.ERROR, bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_TITLE), bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_HEADER_NO_CONTENT_TYPE), bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_CONTENT_NO_CONTENT_TYPE));
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_TITLE));
+            alert.setHeaderText(ResourceBundleKeys.DIALOGS_ERROR_HEADER_NO_CONTENT_TYPE);
+            alert.setContentText(bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_CONTENT_NO_CONTENT_TYPE));
+            alert.show();
         }
 
     }
@@ -573,7 +581,11 @@ public class SettingsController implements Initializable {
             LanguageDAO.getInstance().delete(selectedLang);
             System.out.println("Language: " + selectedLang + " was deleted");
         } else {
-            AlertThrower.throwAlert(Alert.AlertType.INFORMATION, bundle.getString(ResourceBundleKeys.DIALOGS_INFO_TITLE), bundle.getString(ResourceBundleKeys.DIALOGS_LANG_NOT_SELECTED), bundle.getString(ResourceBundleKeys.DIALOGS_CHOOSE_LANG));
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle(bundle.getString(ResourceBundleKeys.DIALOGS_INFO_TITLE));
+            alert.setHeaderText(bundle.getString(ResourceBundleKeys.DIALOGS_LANG_NOT_SELECTED));
+            alert.setContentText(bundle.getString(ResourceBundleKeys.DIALOGS_CHOOSE_LANG));
+            alert.show();
         }
     }
 

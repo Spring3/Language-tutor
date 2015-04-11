@@ -1,5 +1,7 @@
 package tutor.models;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * Created by user on 17.02.2015.
  */
@@ -56,23 +58,19 @@ public class Word {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Word word = (Word) o;
-        if (word.getId() != 0)
-            if (id != word.id) return false;
-        if (lang != null ? !lang.equals(word.lang) : word.lang != null) return false;
-        if (translation != null ? !translation.equals(word.translation) : word.translation != null)
-            return false;
-        if (this.word != null ? !this.word.equals(word.word) : word.word != null) return false;
+        Word word1 = (Word) o;
 
-        return true;
+        if (!word.equals(word1.word)) return false;
+        if (translation != null ? !translation.equals(word1.translation) : word1.translation != null) return false;
+        return lang.equals(word1.lang);
+
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (word != null ? word.hashCode() : 0);
+        int result = word.hashCode();
         result = 31 * result + (translation != null ? translation.hashCode() : 0);
-        result = 31 * result + (lang != null ? lang.hashCode() : 0);
+        result = 31 * result + lang.hashCode();
         return result;
     }
 }

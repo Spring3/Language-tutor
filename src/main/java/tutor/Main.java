@@ -7,7 +7,6 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import tutor.controllers.AuthController;
 import tutor.controllers.Navigator;
-import tutor.util.AlertThrower;
 import tutor.util.DbManager;
 import tutor.util.UserConfigHelper;
 

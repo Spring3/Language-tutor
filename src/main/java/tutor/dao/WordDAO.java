@@ -33,19 +33,22 @@ public class WordDAO implements IDAO<Word> {
     public boolean create(Word value) {
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO WORD(word, word_translation, lang_id) VALUES(?,?,?)");
-            statement.setString(1, value.getWord());
-            statement.setString(2, value.getTranslation());
-            statement.setInt(3, value.getLang().getId());
-            statement.execute();
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO USER_WORD(user_id, word_id) VALUES(?,?);");
-            preparedStatement.setInt(1, AuthController.getActiveUser().getId());
-            preparedStatement.setInt(2, getLastAdded().getId());
-            statement.execute();
-            System.out.println("DataUnit: " + value.getWord() + " was created.");
+            if (!contains(value)) {
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO WORD(word, word_translation, lang_id) VALUES(?,?,?);");
+                statement.setString(1, value.getWord());
+                statement.setString(2, value.getTranslation());
+                statement.setInt(3, value.getLang().getId());
+                statement.execute();
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO USER_WORD(user_id, word_id) VALUES(?,?);");
+                preparedStatement.setInt(1, AuthController.getActiveUser().getId());
+                preparedStatement.setInt(2, getLastAdded().getId());
+                preparedStatement.execute();
+                System.out.println("DataUnit: " + value.getWord() + " was created.");
 
+                connection.close();
+                return true;
+            }
             connection.close();
-            return true;
         }
         catch (SQLException ex){
             ex.printStackTrace();
@@ -67,13 +70,13 @@ public class WordDAO implements IDAO<Word> {
         return result;
     }
 
-    public Word readByContentForActiveUser(String word_content){
+    public Word readByContentForActiveUser(String word){
         Word result = null;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT id, word, word_translation, lang_id FROM WORD as w INNER JOIN USER_WORD as uw ON user_id =? WHERE w.word = ? GROUP BY w.id");
+            PreparedStatement statement = connection.prepareStatement("SELECT w.id, word, word_translation, lang_id FROM WORD as w INNER JOIN USER_WORD as uw ON uw.user_id =? WHERE w.word = ? GROUP BY w.id;");
             statement.setInt(1, AuthController.getActiveUser().getId());
-            statement.setString(2, word_content);
+            statement.setString(2, word);
             result = readBy(statement);
             connection.close();
         }
@@ -149,11 +152,13 @@ public class WordDAO implements IDAO<Word> {
         boolean result = false;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM WORD WHERE lang_id = ? AND word = ? AND word_translation = ?");
-            statement.setInt(1, value.getLang().getId());
+            PreparedStatement statement = connection.prepareStatement("SELECT w.id, w.word, w.word_translation, w.lang_id FROM WORD as w INNER JOIN USER_WORD as uw ON uw.word_id=w.id WHERE uw.user_id=? AND w.word=? AND w.word_translation=? AND w.lang_id=? GROUP BY w.id;");
+            statement.setInt(1, AuthController.getActiveUser().getId());
             statement.setString(2, value.getWord());
             statement.setString(3, value.getTranslation());
-            ResultSet resultSet = statement.executeQuery();
+            statement.setInt(4, value.getLang().getId());
+            statement.execute();
+            ResultSet resultSet = statement.getResultSet();
             result = resultSet.next();
             resultSet.close();
             connection.close();

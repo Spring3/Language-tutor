@@ -2,7 +2,9 @@ package tutor.util;
 
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpResponse;
+import tutor.dao.WordDAO;
 import tutor.models.Language;
+import tutor.models.Word;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -22,11 +24,11 @@ public class GDriveParser extends GDriveFileParser{
         if (manager.getDataSourceType().equals(DataSourceType.GDRIVE_WORKSHEET)) {
             new PlainFileParser(bundle).doParsing(manager.getFileInputStream(), contentType, lang);
         } else if (manager.getDataSourceType().equals(DataSourceType.GDRIVE_SPREADSHEET)) {
-            parseSpreadsheet(manager, contentType, lang);
+            parseSpreadsheet(manager, lang);
         }
     }
 
-    private void parseSpreadsheet(GDriveManager manager, ContentType contentType, Language dataLanguage){
+    private void parseSpreadsheet(GDriveManager manager, Language dataLanguage){
         String downloadURL = manager.getFile().getExportLinks().get("text/csv");
         File downloadedCSVFile = new File("temp/" + manager.getFileId() + ".csv");
         File tempDir = new File("temp");
@@ -42,40 +44,32 @@ public class GDriveParser extends GDriveFileParser{
         }
         InputStream csvFileInputStream = null;
         try {
-            HttpResponse response = manager.getDrive().getRequestFactory().buildGetRequest(new GenericUrl(downloadURL+"&charset=utf-8")).execute();
+            HttpResponse response = manager.getDrive().getRequestFactory().buildGetRequest(new GenericUrl(downloadURL)).execute();
             csvFileInputStream = response.getContent();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        BufferedReader reader = null;
-        BufferedWriter writer = null;
-        try {
-            reader = new BufferedReader(new InputStreamReader(csvFileInputStream, StandardCharsets.UTF_8));
-            writer = new BufferedWriter(new FileWriter(downloadedCSVFile, false));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        BufferedReader reader = new BufferedReader(new InputStreamReader(csvFileInputStream));
 
-        String s = null;
+        String[] parsedDocLine = null;
         try {
-            while ((s = reader.readLine()) != null) {
-                writer.write(s);
-                writer.newLine();
+            while ((parsedDocLine = reader.readLine().split(",")) != null) {
+                try {
+                    Word word = new Word(parsedDocLine[0], parsedDocLine[1], dataLanguage);
+                    WordDAO.getInstance().create(word);
+                }
+                catch (ArrayIndexOutOfBoundsException ex){
+                    Word word = new Word(parsedDocLine[0], "", dataLanguage);
+                    WordDAO.getInstance().create(word);
+                }
             }
         }
         catch (IOException ex){
             ex.printStackTrace();
         }
-
-        if (writer != null)
-            try {
-                writer.flush();
-                writer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        catch (NullPointerException ex){
+            //End of spreadsheet file
+        }
         if (reader != null) {
             try {
                 reader.close();
