@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <AnchorPane maxWidth="800.0" minHeight="0.0" minWidth="10.0" styleClass="settings_stackpane" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="btn_openFile" disable="true" layoutX="299.0" layoutY="156.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="72.0" styleClass="settings_button" text="%btn_open" AnchorPane.rightAnchor="129.0" AnchorPane.topAnchor="156.0" />
+                  <Button fx:id="btn_loadFile" disable="true" layoutX="376.0" layoutY="156.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" styleClass="settings_button" text="%btn_load" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="156.0" />
+                  <StackPane fx:id="stackpanel_file" layoutX="48.0" layoutY="72.0" maxWidth="405.0" prefHeight="95.0" prefWidth="405.0" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="52.0">
+                     <children>
+                        <AnchorPane maxWidth="400.0" prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="-1.0" layoutY="53.0" prefHeight="18.0" prefWidth="110.0" styleClass="settings_label" text="%file_label" textAlignment="RIGHT" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="63.0" />
+                              <TextField fx:id="textField_filePath" disable="true" layoutX="121.0" layoutY="59.0" maxWidth="400.0" prefHeight="30.0" prefWidth="283.0" styleClass="settings_input" AnchorPane.leftAnchor="121.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="59.0" />
+                              <Label layoutY="16.0" prefHeight="22.0" prefWidth="108.0" styleClass="settings_label" text="%data_language_label" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="15.0" />
+                              <ChoiceBox fx:id="chB_file_data_lang" layoutX="119.0" layoutY="14.0" maxWidth="400.0" prefHeight="30.0" prefWidth="277.0" styleClass="settings_choiceBox" AnchorPane.leftAnchor="121.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="13.0" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </StackPane>
+                  <StackPane fx:id="stackpanel_lingualeo" layoutX="48.0" layoutY="73.0" maxWidth="405.0" prefHeight="52.0" prefWidth="405.0" visible="false" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="52.0">
+                     <children>
+                        <AnchorPane maxWidth="400.0" prefHeight="104.0" prefWidth="400.0">
+                           <children>
+                              <TextField fx:id="textField_lingualeoProfileURL" layoutX="120.0" layoutY="11.0" maxWidth="400.0" prefHeight="30.0" prefWidth="295.0" styleClass="settings_input" AnchorPane.leftAnchor="121.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="13.0" />
+                              <Label alignment="CENTER_RIGHT" layoutY="17.0" prefHeight="18.0" prefWidth="88.0" styleClass="settings_label" text="%profile_url_label" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="15.0" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </StackPane>
+                  <Label layoutX="52.0" layoutY="50.0" styleClass="settings_label" text="%data_source_choose_type_label" AnchorPane.leftAnchor="52.0" AnchorPane.topAnchor="20.0" />
+                  <ChoiceBox fx:id="choiceBox_data_source_type" layoutX="236.0" layoutY="48.0" maxWidth="-Infinity" prefHeight="25.0" prefWidth="207.0" styleClass="settings_choiceBox" AnchorPane.leftAnchor="236.0" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="15.0" />
+               </children>
+            </AnchorPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
