@@ -18,12 +18,7 @@ public class WinOfficeParser implements FileParser {
     private ResourceBundle bundle;
 
     @Override
-    public void parse(File file, ContentType contentType, Language lang) {
-
-    }
-
-    @Override
-    public void parse(InputStream stream, ContentType contentType, Language lang) {
+    public void parse(File file, Language lang) {
 
     }
 }

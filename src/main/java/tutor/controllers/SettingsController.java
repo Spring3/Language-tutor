@@ -239,7 +239,7 @@ public class SettingsController implements Initializable {
                             Thread thread = new Thread() {
                                 @Override
                                 public void run() {
-                                    new PlainFileParser(bundle).parse(selectedFile, getPlainFileContentType(), selectedLanguage);
+                                    new PlainFileParser(bundle).parse(selectedFile, selectedLanguage);
                                 }
                             };
                             thread.run();
@@ -341,7 +341,7 @@ public class SettingsController implements Initializable {
                             Thread thread = new Thread() {
                                 @Override
                                 public void run() {
-                                    new PlainFileParser(bundle).parse(selectedFile, getPlainFileContentType(), selectedLanguage);
+                                    new PlainFileParser(bundle).parse(selectedFile, selectedLanguage);
                                 }
                             };
                             thread.run();
@@ -380,21 +380,7 @@ public class SettingsController implements Initializable {
     private void btnOpenGoogleFileClickEventHandler(GDriveManager gDriveManager, Language newLangValue) {
         if (!textField_googleDocsFIleURL.getText().isEmpty()) {
             gDriveManager.analyzeFile(textField_googleDocsFIleURL.getText());
-            ContentType selectedContentType = null;
-            if (radioButton_wordAndTranslationGoogleDocs.isSelected()) {
-                selectedContentType = ContentType.WORDS_TRANSLATION;
-            } else if (radioButton_wordsOnlyGoogleDocs.isSelected()) {
-                selectedContentType = ContentType.WORDS_ONLY;
-            } else if (radioButton_translationOnlyGoogleDocs.isSelected()) {
-                selectedContentType = ContentType.TRANSLATION_ONLY;
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle(bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_TITLE));
-                alert.setHeaderText(bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_HEADER_NO_CONTENT_TYPE));
-                alert.setContentText(bundle.getString(ResourceBundleKeys.DIALOGS_ERROR_CONTENT_NO_CONTENT_TYPE));
-                alert.show();
-            }
-            new GDriveParser(bundle).parse(gDriveManager, selectedContentType, newLangValue);
+            new GDriveParser(bundle).parse(gDriveManager, newLangValue);
 
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -473,38 +459,6 @@ public class SettingsController implements Initializable {
         chB_googleDrive_data_lang.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newLangValue) -> {
             googleDriveDataLanguageChangedEventHandler(newLangValue);
         });
-    }
-
-    /**
-     * Gets a selected file content type
-     * @return a content type based on the type of a selected radiobutton
-     */
-    private ContentType getPlainFileContentType(){
-        ContentType dataSourceContentType = null;
-        if (radioButtonToggleGroup.getSelectedToggle() != null){
-
-            if (radioButton_wordAndTranslation.isSelected()){
-                dataSourceContentType = ContentType.WORDS_TRANSLATION;
-            }
-            else if (radioButton_wordsOnly.isSelected()){
-                dataSourceContentType = ContentType.WORDS_ONLY;
-            }
-            else if (radioButton_translationOnly.isSelected()){
-                dataSourceContentType = ContentType.TRANSLATION_ONLY;
-            }
-            else{
-                dataSourceContentType = ContentType.UNKNOWN;
-            }
-        }
-        else{
-            btn_loadLocalFile.setDisable(true);
-            Alert errorAlert = new Alert(Alert.AlertType.INFORMATION);
-            errorAlert.setTitle(bundle.getString(ResourceBundleKeys.DIALOGS_INFO_TITLE));
-            errorAlert.setHeaderText(bundle.getString(ResourceBundleKeys.DIALOGS_RADIOBUTTON_HEADER));
-            errorAlert.setContentText(bundle.getString(ResourceBundleKeys.DIALOGS_RADIOBUTTON_TEXT));
-            errorAlert.showAndWait();
-        }
-        return dataSourceContentType;
     }
 
     /**

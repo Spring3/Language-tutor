@@ -17,17 +17,13 @@ public class PlainFileParser implements FileParser {
     private ResourceBundle bundle;
 
     @Override
-    public void parse(File file, ContentType contentType, Language lang) {
+    public void parse(File file, Language lang) {
         try {
-            doParsing(new FileInputStream(file), contentType, lang);
+            doParsing(new FileInputStream(file), lang);
         }
         catch (FileNotFoundException ex){
             ex.printStackTrace();
         }
     }
 
-    @Override
-    public void parse(InputStream stream, ContentType contentType, Language lang) {
-        doParsing(stream, contentType, lang);
-    }
 }

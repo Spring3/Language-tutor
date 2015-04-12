@@ -7,5 +7,5 @@ import tutor.models.Language;
  */
 public abstract class GDriveFileParser{
 
-    abstract void parse(GDriveManager manager, ContentType contentType, Language lang);
+    abstract void parse(GDriveManager manager, Language lang);
 }

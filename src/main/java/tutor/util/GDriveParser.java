@@ -20,9 +20,9 @@ public class GDriveParser extends GDriveFileParser{
     }
     private ResourceBundle bundle;
 
-    public void parse(GDriveManager manager, ContentType contentType, Language lang) {
+    public void parse(GDriveManager manager, Language lang) {
         if (manager.getDataSourceType().equals(DataSourceType.GDRIVE_WORKSHEET)) {
-            new PlainFileParser(bundle).doParsing(manager.getFileInputStream(), contentType, lang);
+            new PlainFileParser(bundle).doParsing(manager.getFileInputStream(), lang);
         } else if (manager.getDataSourceType().equals(DataSourceType.GDRIVE_SPREADSHEET)) {
             parseSpreadsheet(manager, lang);
         }
@@ -30,18 +30,6 @@ public class GDriveParser extends GDriveFileParser{
 
     private void parseSpreadsheet(GDriveManager manager, Language dataLanguage){
         String downloadURL = manager.getFile().getExportLinks().get("text/csv");
-        File downloadedCSVFile = new File("temp/" + manager.getFileId() + ".csv");
-        File tempDir = new File("temp");
-        if (!tempDir.exists() && ! tempDir.isDirectory()){
-            tempDir.mkdir();
-        }
-        if (!downloadedCSVFile.exists()){
-            try {
-                downloadedCSVFile.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
         InputStream csvFileInputStream = null;
         try {
             HttpResponse response = manager.getDrive().getRequestFactory().buildGetRequest(new GenericUrl(downloadURL)).execute();
