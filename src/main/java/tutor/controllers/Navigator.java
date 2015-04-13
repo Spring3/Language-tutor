@@ -13,7 +13,6 @@ public final class Navigator {
 
     public static final String INVITATION_VIEW_PATH = "view/invitation.fxml";
     public static final String MAIN_VIEW_PATH = "view/main.fxml";
-    public static final String EDIT_SETTINGS_PATH = "view/setting.fxml";
     public static final String NEWS_ITEM_VIEW_PATH = "view/news.fxml";
     public static final String OFFLINE_TASK_VIEW_PATH = "view/details.fxml";
     public static final String ONLINE_TASK_VIEW_PATH = "view/details.fxml";
@@ -22,7 +21,10 @@ public final class Navigator {
     public static final String DICTIONARY_VIEW_PATH = "view/dictionary.fxml";
     public static final String USER_RATE_VIEW_PATH = "view/userRate.fxml";
     public static final String ABOUT_VIEW_PATH = "view/about.fxml";
-    public static final String ADD_LANGUAGE_VIEW_PATH = "view/addLanguage.fxml";
     public static final String AUTHENTICATION_VIEW_PATH = "view/auth.fxml";
     public static final String WEBVIEW_VIEW_PATH = "view/webView.fxml";
+    public static final String FILE_IMPORT_VIEW_PATH = "view/fileImport.fxml";
+    public static final String LANGUAGE_SETTINGS_VIEW_PATH = "view/languageSettings.fxml";
+    public static final String THEME_SETTINGS_VIEW_PATH = "view/themeSettings.fxml";
+    public static final String LOCALE_VIEW_PATH = "view/localeSettings.fxml";
 }

@@ -46,8 +46,20 @@ public class Controller implements Initializable
     private ImageView onlineTask_img;
     @FXML
     private Button btn_send_feedback;
+    /*
+      <MenuItem fx:id="mItem_lang" mnemonicParsing="false" text="Language" />
+                  <MenuItem fx:id="mItem_importFile" mnemonicParsing="false" text="Import File" />
+                  <MenuItem fx:id="mItem_locale" mnemonicParsing="false" text="Locale" />
+                  <MenuItem fx:id="mItem_theme" mnemonicParsing="false" text="Theme" />
+     */
     @FXML
-    private MenuItem mItem_Settings;
+    private MenuItem mItem_lang;
+    @FXML
+    private MenuItem mItem_importFile;
+    @FXML
+    private MenuItem mItem_locale;
+    @FXML
+    private MenuItem mItem_theme;
     @FXML
     private ImageView social_fb;
     @FXML
@@ -99,10 +111,6 @@ public class Controller implements Initializable
         stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.INVITATION_VIEW_PATH), "Invite a friend voa email", 1, Optional.empty());
     }
     @FXML
-    public void EditSettingsClick(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.EDIT_SETTINGS_PATH), "Settings", 1, Optional.empty());
-    }
-    @FXML
     public void Shutdown(ActionEvent actionEvent) {
         stageManager.Shutdown();
         DbManager.getInstance().shutdown();
@@ -138,5 +146,21 @@ public class Controller implements Initializable
 
     public void menuItem_dictionary_clicked(ActionEvent actionEvent) {
         stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.DICTIONARY_VIEW_PATH), "Dictionary", 1, Optional.empty());
+    }
+
+    public void editLangClicked(ActionEvent actionEvent) {
+        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.LANGUAGE_SETTINGS_VIEW_PATH), "Language Settings", 1, Optional.empty());
+    }
+
+    public void importFileClicked(ActionEvent actionEvent) {
+        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.FILE_IMPORT_VIEW_PATH), "Import file", 1, Optional.empty());
+    }
+
+    public void localeClicked(ActionEvent actionEvent) {
+        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.LOCALE_VIEW_PATH), "Locale Settings", 1, Optional.empty());
+    }
+
+    public void themeClicked(ActionEvent actionEvent) {
+        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.THEME_SETTINGS_VIEW_PATH), "Theme Settings", 1, Optional.empty());
     }
 }

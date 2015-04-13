@@ -26,7 +26,7 @@ public class AddLanguageController implements Initializable {
         bundle = resourceBundle;
     }
 
-    private SettingsController settingsController;
+    private LanguageSettingsController settingsController;
 
     private StageManager stageManager;
 
@@ -55,7 +55,7 @@ public class AddLanguageController implements Initializable {
         stageManager.closeStage(currentStage);
     }
 
-    public void setSettingsController (SettingsController controller){
+    public void setSettingsController (LanguageSettingsController controller){
         settingsController = controller;
     }
 }

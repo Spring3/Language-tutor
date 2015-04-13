@@ -15,15 +15,8 @@
         <menus>
             <Menu mnemonicParsing="false" styleClass="topmenubutton" text="%menuItem_tasks">
               <items>
-                <MenuItem fx:id="mItem_newTask" mnemonicParsing="false" styleClass="menubutton" text="%menuItem_newTask">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator></MenuItem>
-                  <MenuItem fx:id="mItem_InviteFriend" mnemonicParsing="false" onAction="#InvitationMenuItemClicked" text="%menuItem_inviteFriend">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="I" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator>
-                  </MenuItem>
+                <MenuItem fx:id="mItem_newTask" mnemonicParsing="false" styleClass="menubutton" text="%menuItem_newTask" />
+                  <MenuItem fx:id="mItem_InviteFriend" mnemonicParsing="false" onAction="#InvitationMenuItemClicked" text="%menuItem_inviteFriend" />
                   <MenuItem fx:id="mItem_exit" mnemonicParsing="false" onAction="#Shutdown" text="%menuItem_exit">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
@@ -33,30 +26,24 @@
             </Menu>
           <Menu mnemonicParsing="false" styleClass="topmenubutton" text="%menuItem_settings">
             <items>
-              <MenuItem fx:id="mItem_Settings" mnemonicParsing="false" onAction="#EditSettingsClick" text="%menuItem_edit">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator></MenuItem>
-              <MenuItem fx:id="mItem_dictionary" mnemonicParsing="false" onAction="#menuItem_dictionary_clicked" text="%menuItem_dictionary">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator></MenuItem>
-                  <MenuItem fx:id="mItem_statistics" mnemonicParsing="false" onAction="#statisticsClicked" text="%menuItem_statistics">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator>
-                  </MenuItem>
-                  <MenuItem fx:id="mItem_about" mnemonicParsing="false" onAction="#menuItem_about_clicked" text="%menuItem_about">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="HOME" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator></MenuItem>
-                  <MenuItem fx:id="mItem_check4Updates" mnemonicParsing="false" text="%menuItem_check4Updates">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="U" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator>
-                  </MenuItem>
+                  <MenuItem fx:id="mItem_lang" onAction="#editLangClicked" mnemonicParsing="false" text="Language" />
+                  <MenuItem fx:id="mItem_importFile" onAction="#importFileClicked" mnemonicParsing="false" text="Import File" />
+                  <MenuItem fx:id="mItem_locale" onAction="#localeClicked" mnemonicParsing="false" text="Locale" />
+                  <MenuItem fx:id="mItem_theme" onAction="#themeClicked" mnemonicParsing="false" text="Theme" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Progress">
+              <items>
+              <MenuItem fx:id="mItem_dictionary" mnemonicParsing="false" onAction="#menuItem_dictionary_clicked" text="%menuItem_dictionary" />
+                  <MenuItem fx:id="mItem_statistics" mnemonicParsing="false" onAction="#statisticsClicked" text="%menuItem_statistics" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+              <items>
+                  <MenuItem fx:id="mItem_about" mnemonicParsing="false" onAction="#menuItem_about_clicked" text="%menuItem_about" />
+                  <MenuItem fx:id="mItem_check4Updates" mnemonicParsing="false" text="%menuItem_check4Updates" />
+              </items>
+            </Menu>
         </menus>
       </MenuBar>
    </top>

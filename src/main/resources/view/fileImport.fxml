@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
 <?import java.lang.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tutor.controllers.FileImportViewController">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
             <AnchorPane maxWidth="800.0" minHeight="0.0" minWidth="10.0" styleClass="settings_stackpane" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="btn_openFile" disable="true" layoutX="299.0" layoutY="156.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="72.0" styleClass="settings_button" text="%btn_open" AnchorPane.rightAnchor="129.0" AnchorPane.topAnchor="156.0" />
-                  <Button fx:id="btn_loadFile" disable="true" layoutX="376.0" layoutY="156.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" styleClass="settings_button" text="%btn_load" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="156.0" />
-                  <StackPane fx:id="stackpanel_file" layoutX="48.0" layoutY="72.0" maxWidth="405.0" prefHeight="95.0" prefWidth="405.0" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="52.0">
+                  <Button fx:id="btn_openFile" disable="true" layoutX="376.0" layoutY="156.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="72.0" styleClass="settings_button" text="%btn_open" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="156.0" />
+                  <StackPane fx:id="stackpanel" layoutX="48.0" layoutY="72.0" maxWidth="405.0" prefHeight="95.0" prefWidth="405.0" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="52.0">
                      <children>
                         <AnchorPane maxWidth="400.0" prefHeight="200.0" prefWidth="200.0">
                            <children>
