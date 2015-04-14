@@ -4,25 +4,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
-import tutor.Main;
 import tutor.dao.LanguageDAO;
 import tutor.models.Language;
 import tutor.util.ResourceBundleKeys;
 import tutor.util.StageManager;
-import tutor.util.UserConfigHelper;
-
-import java.io.IOException;
 import java.net.URL;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
@@ -37,42 +29,22 @@ public class LanguageSettingsController implements Initializable {
     @FXML
     private Button btn_apply;
 
-    private LanguageSettingsController settingsController;
-    private StageManager stageManager;
     private ResourceBundle bundle;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         bundle = resources;
-        stageManager = StageManager.getInstance();
+        ObservableList<Language> allLanguages = FXCollections.observableList(LanguageDAO.getInstance().readAllLanguages());
+        listView_allLanguages.setItems(allLanguages);
+        ObservableList<Language> userLanguages = FXCollections.observableArrayList(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId()));
+        listView_languages.setItems(userLanguages);
     }
 
     public void btn_addLanguage_clicked(ActionEvent actionEvent) {
-        FXMLLoader loader = new FXMLLoader(Main.class.getClassLoader().getResource(Navigator.LANGUAGE_SETTINGS_VIEW_PATH));
-        loader.setResources(ResourceBundle.getBundle("locale/lang", Locale.getDefault()));
-        try {
-            Parent parent = loader.load();
-            LanguageSettingsController controller = loader.getController();
-            controller.setSettingsController(this);
-            Scene scene = new Scene(parent);
-            scene.getStylesheets().add(UserConfigHelper.getInstance().getParameter(UserConfigHelper.SELECTED_THEME));
-            Stage stage = new Stage();
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.setTitle(bundle.getString(ResourceBundleKeys.TITLE_ADD_NEW_LANG));
-            stage.setOnHiding(windowEvent -> System.out.println("A stage on layer " + 2 + " was resetted"));
-            final Stage stageDuplicate = stage;
-            stageDuplicate.setOnCloseRequest(windowEvent -> StageManager.getInstance().closeStage(stageDuplicate));
-            stageManager.putStage(Main.class.getClassLoader().getResource(Navigator.LANGUAGE_SETTINGS_VIEW_PATH), stageDuplicate, 2);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        Language selectedLanguage = listView_allLanguages.getSelectionModel().getSelectedItem();
+        LanguageDAO.getInstance().assignLangToCurrentUser(selectedLanguage);
+        Refresh();
     }
-
-    public void setSettingsController (LanguageSettingsController controller){
-        settingsController = controller;
-    }
-
 
     /**
      * Loads all languages for current user and puts them into listboxes and choiceboxes
@@ -88,7 +60,7 @@ public class LanguageSettingsController implements Initializable {
         Language selectedLang = listView_languages.getSelectionModel().getSelectedItem();
         if (selectedLang != null) {
             listView_languages.getItems().remove(selectedLang);
-            LanguageDAO.getInstance().delete(selectedLang);
+            LanguageDAO.getInstance().unAssignLangFromCurrentUser(selectedLang);
             System.out.println("Language: " + selectedLang + " was deleted");
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -97,5 +69,10 @@ public class LanguageSettingsController implements Initializable {
             alert.setContentText(bundle.getString(ResourceBundleKeys.DIALOGS_CHOOSE_LANG));
             alert.show();
         }
+    }
+
+    public void btnApplyClicked(ActionEvent actionEvent) {
+        StageManager stageManager = StageManager.getInstance();
+        stageManager.closeStage(stageManager.getStage(1));
     }
 }

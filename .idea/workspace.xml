@@ -76,7 +76,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/FileImportViewController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="166" column="5" selection-start-line="166" selection-start-column="5" selection-end-line="166" selection-end-column="5" />
+              <caret line="98" column="24" selection-start-line="98" selection-start-column="24" selection-end-line="98" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -97,12 +97,68 @@
       <file leaf-file-name="LanguageSettingsController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/LanguageSettingsController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6703601">
-              <caret line="64" column="92" selection-start-line="64" selection-start-column="92" selection-end-line="64" selection-end-column="92" />
+            <state vertical-scroll-proportion="0.27895597">
+              <caret line="56" column="69" selection-start-line="56" selection-start-column="5" selection-end-line="56" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2719#2720#0" expanded="true" />
-                <element signature="e#2766#2767#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DbManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/tutor/util/DbManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+              <folding>
+                <marker date="1429031223434" expanded="true" signature="1689:1719" placeholder="select * fro..USERS..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserDAO.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/tutor/dao/UserDAO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+              <folding>
+                <marker date="1428183833750" expanded="true" signature="683:782" placeholder="INSERT INTO ..." />
+                <marker date="1428183833750" expanded="true" signature="1691:1721" placeholder="SELECT * FRO..USERS..." />
+                <marker date="1428183833750" expanded="true" signature="2201:2237" placeholder="SELECT * FRO..USERS..." />
+                <marker date="1428183833750" expanded="true" signature="3769:3864" placeholder="UPDATE USERS..." />
+                <marker date="1428183833750" expanded="true" signature="4712:4740" placeholder="DELETE FROM ..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LanguageDAO.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/tutor/dao/LanguageDAO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="81" column="21" selection-start-line="81" selection-start-column="21" selection-end-line="81" selection-end-column="21" />
+              <folding>
+                <marker date="1429032508435" expanded="true" signature="902:944" placeholder="INSERT INTO ..." />
+                <marker date="1429032508435" expanded="true" signature="1658:1709" placeholder="INSERT INTO ..." />
+                <marker date="1429032508435" expanded="true" signature="2393:2420" placeholder="DELETE FROM ..." />
+                <marker date="1429032508435" expanded="true" signature="2393:2436" placeholder="DELETE FROM ..." />
+                <marker date="1429032508435" expanded="true" signature="2393:2448" placeholder="DELETE FROM ..." />
+                <marker date="1429032508435" expanded="true" signature="2997:3031" placeholder="SELECT * FRO..LANGUAGES..." />
+                <marker date="1429032508435" expanded="true" signature="3500:3541" placeholder="SELECT * FRO..LANGUAGES..." />
+                <marker date="1429032508435" expanded="true" signature="4624:4779" placeholder="SELECT langs..LANGUAGES..." />
+                <marker date="1429032508435" expanded="true" signature="5252:5277" placeholder="SELECT lang...." />
+                <marker date="1429032508435" expanded="true" signature="5252:5297" placeholder="SELECT lang...LANGUAGES..." />
+                <marker date="1429032508435" expanded="true" signature="5252:5305" placeholder="SELECT lang...LANGUAGES..." />
+                <marker date="1429032508435" expanded="true" signature="5252:5326" placeholder="SELECT lang...LANGUAGES..." />
+                <marker date="1429032508435" expanded="true" signature="5252:5354" placeholder="SELECT lang...LANGUAGES..." />
+                <marker date="1429032508435" expanded="true" signature="5252:5384" placeholder="SELECT lang...LANGUAGES..." />
+                <marker date="1429032508435" expanded="true" signature="5252:5407" placeholder="SELECT lang...LANGUAGES..." />
+                <marker date="1429032508435" expanded="true" signature="6040:6063" placeholder="SELECT * FRO..LANGUAGES..." />
+                <marker date="1429032508435" expanded="true" signature="7215:7253" placeholder="UPDATE LANGU..." />
+                <marker date="1429032508435" expanded="true" signature="7802:7857" placeholder="DELETE FROM ..." />
+                <marker date="1429032508435" expanded="true" signature="8117:8149" placeholder="DELETE FROM ..." />
               </folding>
             </state>
           </provider>
@@ -110,14 +166,14 @@
       </file>
       <file leaf-file-name="languageSettings.fxml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/view/languageSettings.fxml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.413793">
-              <caret line="28" column="115" selection-start-line="28" selection-start-column="92" selection-end-line="28" selection-end-column="115" />
-              <folding />
-            </state>
-          </provider>
           <provider editor-type-id="JavaFX-Scene-Builder">
             <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-8.379311">
+              <caret line="21" column="70" selection-start-line="21" selection-start-column="70" selection-end-line="21" selection-end-column="70" />
+              <folding />
+            </state>
           </provider>
         </entry>
       </file>
@@ -146,41 +202,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ThemeViewController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/ThemeViewController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="17" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="fileImport.fxml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/view/fileImport.fxml">
+          <provider editor-type-id="JavaFX-Scene-Builder">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.310345">
+            <state vertical-scroll-proportion="0.0">
               <caret line="29" column="77" selection-start-line="29" selection-start-column="48" selection-end-line="29" selection-end-column="77" />
               <folding />
             </state>
-          </provider>
-          <provider editor-type-id="JavaFX-Scene-Builder">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="themeSettings.fxml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/view/themeSettings.fxml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.034483">
-              <caret line="12" column="51" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="51" />
-              <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="JavaFX-Scene-Builder">
-            <state />
           </provider>
         </entry>
       </file>
@@ -233,9 +264,7 @@
         <option value="$PROJECT_DIR$/src/main/java/tutor/util/AlertThrower.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/Main.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/models/Word.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tutor/dao/LanguageDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/dao/WordDAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tutor/util/DbManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/util/DataSourceType.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/util/DropboxParser.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/util/FileParser.java" />
@@ -246,7 +275,6 @@
         <option value="$PROJECT_DIR$/src/main/resources/view/main.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/Navigator.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/Controller.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/view/languageSettings.fxml" />
         <option value="$PROJECT_DIR$/src/main/resources/view/localeSettings.fxml" />
         <option value="$PROJECT_DIR$/src/main/resources/view/themeSettings.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/ThemeViewController.java" />
@@ -256,6 +284,9 @@
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/AddLanguageController.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/SettingsController.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/FileImportViewController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tutor/util/DbManager.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/view/languageSettings.fxml" />
+        <option value="$PROJECT_DIR$/src/main/java/tutor/dao/LanguageDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/LanguageSettingsController.java" />
       </list>
     </option>
@@ -311,8 +342,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-4" />
     <option name="y" value="-4" />
-    <option name="width" value="1374" />
-    <option name="height" value="736" />
+    <option name="width" value="1928" />
+    <option name="height" value="1048" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -1024,11 +1055,12 @@
       <workItem from="1428792972993" duration="101000" />
       <workItem from="1428864267460" duration="3275000" />
       <workItem from="1428916369939" duration="9135000" />
+      <workItem from="1429026082431" duration="5827000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="523282000" />
+    <option name="totallyTimeSpent" value="529109000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1051,7 +1083,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="-4" width="1374" height="736" extended-state="6" />
+    <frame x="-4" y="-4" width="1928" height="1048" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1062,10 +1094,10 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.07186082" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38740158" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32312566" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22327965" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22291666" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1114,6 +1146,17 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/view/themeSettings.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="51" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_25/javafx-src.zip!/javafx/scene/Scene.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6057234">
@@ -1216,22 +1259,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/dao/LanguageDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/dao/UserDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/tutor/dao/WordDAO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1243,7 +1270,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1273,7 +1299,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="63" selection-start-line="8" selection-start-column="63" selection-end-line="8" selection-end-column="63" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1281,14 +1306,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="28" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/util/DbManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="86" column="54" selection-start-line="86" selection-start-column="54" selection-end-line="86" selection-end-column="54" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1310,7 +1327,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="9" column="47" selection-start-line="9" selection-start-column="47" selection-end-line="9" selection-end-column="47" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1398,9 +1414,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="20" column="33" selection-start-line="20" selection-start-column="33" selection-end-line="20" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1408,7 +1421,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="37" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1429,14 +1441,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/view/main.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.62069">
           <caret line="31" column="63" selection-start-line="31" selection-start-column="63" selection-end-line="31" selection-end-column="63" />
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/Controller.java">
@@ -1456,25 +1468,25 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/view/localeSettings.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.1034484">
           <caret line="7" column="65" selection-start-line="7" selection-start-column="65" selection-end-line="7" selection-end-column="65" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/view/themeSettings.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/view/themeSettings.fxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.034483">
+        <state vertical-scroll-proportion="0.0">
           <caret line="12" column="51" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="51" />
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/ThemeViewController.java">
@@ -1498,14 +1510,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/view/fileImport.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.310345">
+        <state vertical-scroll-proportion="0.0">
           <caret line="29" column="77" selection-start-line="29" selection-start-column="48" selection-end-line="29" selection-end-column="77" />
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/locale/lang_en.properties">
@@ -1514,27 +1526,6 @@
           <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="86" selection-end-column="33" />
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/FileImportViewController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="166" column="5" selection-start-line="166" selection-start-column="5" selection-end-line="166" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/view/languageSettings.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.413793">
-          <caret line="28" column="115" selection-start-line="28" selection-start-column="92" selection-end-line="28" selection-end-column="115" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/AddLanguageController.java">
@@ -1548,14 +1539,85 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/LanguageSettingsController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/FileImportViewController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6703601">
-          <caret line="64" column="92" selection-start-line="64" selection-start-column="92" selection-end-line="64" selection-end-column="92" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="98" column="24" selection-start-line="98" selection-start-column="24" selection-end-line="98" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2719#2720#0" expanded="true" />
-            <element signature="e#2766#2767#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/dao/UserDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding>
+            <marker date="1428183833750" expanded="true" signature="683:782" placeholder="INSERT INTO ..." />
+            <marker date="1428183833750" expanded="true" signature="1691:1721" placeholder="SELECT * FRO..USERS..." />
+            <marker date="1428183833750" expanded="true" signature="2201:2237" placeholder="SELECT * FRO..USERS..." />
+            <marker date="1428183833750" expanded="true" signature="3769:3864" placeholder="UPDATE USERS..." />
+            <marker date="1428183833750" expanded="true" signature="4712:4740" placeholder="DELETE FROM ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/util/DbManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+          <folding>
+            <marker date="1429031223434" expanded="true" signature="1689:1719" placeholder="select * fro..USERS..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/view/languageSettings.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.379311">
+          <caret line="21" column="70" selection-start-line="21" selection-start-column="70" selection-end-line="21" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/dao/LanguageDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="81" column="21" selection-start-line="81" selection-start-column="21" selection-end-line="81" selection-end-column="21" />
+          <folding>
+            <marker date="1429032508435" expanded="true" signature="902:944" placeholder="INSERT INTO ..." />
+            <marker date="1429032508435" expanded="true" signature="1658:1709" placeholder="INSERT INTO ..." />
+            <marker date="1429032508435" expanded="true" signature="2393:2420" placeholder="DELETE FROM ..." />
+            <marker date="1429032508435" expanded="true" signature="2393:2436" placeholder="DELETE FROM ..." />
+            <marker date="1429032508435" expanded="true" signature="2393:2448" placeholder="DELETE FROM ..." />
+            <marker date="1429032508435" expanded="true" signature="2997:3031" placeholder="SELECT * FRO..LANGUAGES..." />
+            <marker date="1429032508435" expanded="true" signature="3500:3541" placeholder="SELECT * FRO..LANGUAGES..." />
+            <marker date="1429032508435" expanded="true" signature="4624:4779" placeholder="SELECT langs..LANGUAGES..." />
+            <marker date="1429032508435" expanded="true" signature="5252:5277" placeholder="SELECT lang...." />
+            <marker date="1429032508435" expanded="true" signature="5252:5297" placeholder="SELECT lang...LANGUAGES..." />
+            <marker date="1429032508435" expanded="true" signature="5252:5305" placeholder="SELECT lang...LANGUAGES..." />
+            <marker date="1429032508435" expanded="true" signature="5252:5326" placeholder="SELECT lang...LANGUAGES..." />
+            <marker date="1429032508435" expanded="true" signature="5252:5354" placeholder="SELECT lang...LANGUAGES..." />
+            <marker date="1429032508435" expanded="true" signature="5252:5384" placeholder="SELECT lang...LANGUAGES..." />
+            <marker date="1429032508435" expanded="true" signature="5252:5407" placeholder="SELECT lang...LANGUAGES..." />
+            <marker date="1429032508435" expanded="true" signature="6040:6063" placeholder="SELECT * FRO..LANGUAGES..." />
+            <marker date="1429032508435" expanded="true" signature="7215:7253" placeholder="UPDATE LANGU..." />
+            <marker date="1429032508435" expanded="true" signature="7802:7857" placeholder="DELETE FROM ..." />
+            <marker date="1429032508435" expanded="true" signature="8117:8149" placeholder="DELETE FROM ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/LanguageSettingsController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27895597">
+          <caret line="56" column="69" selection-start-line="56" selection-start-column="5" selection-end-line="56" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

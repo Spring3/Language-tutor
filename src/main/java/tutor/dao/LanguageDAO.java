@@ -1,6 +1,7 @@
 package tutor.dao;
 import tutor.controllers.AuthController;
 import tutor.models.Language;
+import tutor.models.User;
 import tutor.util.DbManager;
 
 import java.sql.*;
@@ -36,13 +37,44 @@ public class LanguageDAO implements IDAO<Language> {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO LANGUAGES(lang_name) VALUES(?);");
             preparedStatement.setString(1, value.getLang_name());
             preparedStatement.execute();
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO USER_LANG(user_id, lang_id) VALUES(?,?)");
-            statement.setInt(1, AuthController.getActiveUser().getId());
-            statement.setInt(2, readBy(value.getLang_name()).getId());
-            statement.execute();
             System.out.println("New language: " + value.getLang_name() + " was created");
+            assignLangToCurrentUser(value);
             connection.close();
             return true;
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean assignLangToCurrentUser(Language lang){
+        try{
+            if (!contains(AuthController.getActiveUser(), lang)) {
+                Connection connection = DbManager.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO USER_LANG(user_id, lang_id) VALUES(?,?)");
+                statement.setInt(1, AuthController.getActiveUser().getId());
+                statement.setInt(2, readBy(lang.getLang_name()).getId());
+                statement.execute();
+                connection.close();
+                return true;
+            }
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean unAssignLangFromCurrentUser(Language lang){
+        try{
+            if (contains(AuthController.getActiveUser(), lang)){
+                Connection connection = DbManager.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement("DELETE FROM USER_LANG WHERE user_id = ? AND lang_id = ?;");
+                statement.setInt(1, AuthController.getActiveUser().getId());
+                statement.setInt(2, lang.getId());
+                return statement.execute();
+            }
         }
         catch (SQLException ex){
             ex.printStackTrace();
@@ -113,6 +145,23 @@ public class LanguageDAO implements IDAO<Language> {
             ex.printStackTrace();
         }
         return resultList;
+    }
+
+    public boolean contains(User user, Language language){
+        try{
+            Connection connection = DbManager.getInstance().getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT lang.id, lang.lang_name FROM LANGUAGES as lang INNER JOIN USER_LANG as ulang ON ulang.user_id=? WHERE ulang.lang_id = lang.id AND lang.lang_name = ?;");
+            statement.setInt(1, user.getId());
+            statement.setString(2, language.getLang_name());
+            statement.execute();
+            boolean result  = statement.getResultSet().next();
+            connection.close();
+            return result;
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return false;
     }
 
     public List<Language> readAllLanguages(){
