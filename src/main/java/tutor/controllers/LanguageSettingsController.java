@@ -8,7 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.stage.Stage;
+import javafx.scene.control.TextField;
 import tutor.dao.LanguageDAO;
 import tutor.models.Language;
 import tutor.util.ResourceBundleKeys;
@@ -16,6 +16,7 @@ import tutor.util.StageManager;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 /**
  * Created by user on 13.04.2015.
@@ -28,6 +29,8 @@ public class LanguageSettingsController implements Initializable {
     private ListView<Language> listView_languages;
     @FXML
     private Button btn_apply;
+    @FXML
+    private TextField tf_search;
 
     private ResourceBundle bundle;
 
@@ -38,6 +41,21 @@ public class LanguageSettingsController implements Initializable {
         listView_allLanguages.setItems(allLanguages);
         ObservableList<Language> userLanguages = FXCollections.observableArrayList(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId()));
         listView_languages.setItems(userLanguages);
+
+        tf_search.textProperty().addListener((observable, oldValue, newValue) ->
+        {
+            if (newValue.isEmpty()){
+                ObservableList<Language> allLanguageslist = FXCollections.observableList(LanguageDAO.getInstance().readAllLanguages());
+                listView_allLanguages.setItems(allLanguageslist);
+            }
+            else
+            {
+                ObservableList<Language> filteredLanguages = FXCollections.observableArrayList(LanguageDAO.getInstance().readAllLanguages().parallelStream()
+                        .filter((lang) -> lang.getLang_name().toLowerCase().startsWith(newValue.toLowerCase()))
+                        .collect(Collectors.toList()));
+                listView_allLanguages.setItems(filteredLanguages);
+            }
+        });
     }
 
     public void btn_addLanguage_clicked(ActionEvent actionEvent) {

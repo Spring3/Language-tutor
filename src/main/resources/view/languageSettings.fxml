@@ -20,7 +20,7 @@
                   </ListView>
                   <Button layoutX="355.0" layoutY="182.0" mnemonicParsing="false" onAction="#btn_deleteLanguage_clicked" prefHeight="30.0" prefWidth="31.0" styleClass="settings_button" text="-" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="282.0" />
                   <Button fx:id="btn_apply" onAction="#btnApplyClicked" defaultButton="true" layoutX="184.0" layoutY="356.0" mnemonicParsing="false" styleClass="settings_button" text="%btn_apply" AnchorPane.leftAnchor="184.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="456.0" />
-                  <TextField alignment="CENTER" layoutX="14.0" layoutY="36.0" prefHeight="25.0" prefWidth="368.0" promptText="Search" styleClass="auth_input" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="36.0" />
+                  <TextField fx:id="tf_search" alignment="CENTER" layoutX="14.0" layoutY="36.0" prefHeight="25.0" prefWidth="368.0" promptText="Search" styleClass="auth_input" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="36.0" />
                   <ListView fx:id="listView_allLanguages" layoutX="-5.0" layoutY="80.0" maxWidth="680.0" prefHeight="170.0" prefWidth="421.0" styleClass="settingslistview" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="80.0">
                      <effect>
                         <DropShadow color="#1b2940" height="5.0" radius="2.0" width="5.0" />
