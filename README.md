@@ -8,3 +8,6 @@
 <br>
 <h4>Still in development. No stable version available</h4>
 <h4>No alpha/beta version available</h4>
+<br>
+<p><b>25.04.2015</b></p>
+<p><b>Development is frozen for and indefinite period.</b></p>
