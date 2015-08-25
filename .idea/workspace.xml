@@ -85,8 +85,8 @@
       <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.29955947">
-              <caret line="8" column="105" selection-start-line="8" selection-start-column="58" selection-end-line="8" selection-end-column="58" />
+            <state vertical-scroll-proportion="0.3370044">
+              <caret line="9" column="40" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -210,7 +210,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/tutor/util/StageManager.java" />
         <option value="$PROJECT_DIR$/src/tutor/controllers/AddLanguageController.java" />
         <option value="$PROJECT_DIR$/src/tutor/controllers/AuthController.java" />
         <option value="$PROJECT_DIR$/src/tutor/controllers/Controller.java" />
@@ -261,6 +260,7 @@
         <option value="$PROJECT_DIR$/src/main/java/tutor/util/ConfigKeys.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/util/DataSourceType.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/FileImportViewController.java" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -1033,12 +1033,12 @@
       <workItem from="1429285312942" duration="1907000" />
       <workItem from="1429390518620" duration="632000" />
       <workItem from="1429438620896" duration="62000" />
-      <workItem from="1440526539127" duration="2235000" />
+      <workItem from="1440526539127" duration="2326000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="534935000" />
+    <option name="totallyTimeSpent" value="535026000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1510,8 +1510,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29955947">
-          <caret line="8" column="105" selection-start-line="8" selection-start-column="58" selection-end-line="8" selection-end-column="58" />
+        <state vertical-scroll-proportion="0.3370044">
+          <caret line="9" column="40" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
           <folding />
         </state>
       </provider>
