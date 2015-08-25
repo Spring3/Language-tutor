@@ -1,15 +1,14 @@
 package tutor.controllers;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import tutor.Main;
@@ -92,13 +91,19 @@ public class Controller implements Initializable
     private MenuItem mItem_about;
     @FXML
     private MenuItem mItem_statistics;
+    @FXML
+    private ScrollPane scrollPane;
+    @FXML
+    private AnchorPane taskPane;
+    @FXML
+    private Tab workbench;
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
-        ObservableList<Language> currentUserLanguages = FXCollections.observableArrayList();
-        List<Language> addedLanguages = LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId());
-        currentUserLanguages.addAll(addedLanguages);
+        ObservableList<Language> currentUserLanguages = FXCollections.observableArrayList(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId()));
         choiceBox_lang_to_learn.setItems(currentUserLanguages);
+        choiceBox_lang_to_learn.setValue(choiceBox_lang_to_learn.getItems().get(0));
+        scrollPane.setFitToWidth(true);
     }
 
     /**

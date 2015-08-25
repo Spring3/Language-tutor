@@ -26,10 +26,10 @@
             </Menu>
           <Menu mnemonicParsing="false" styleClass="topmenubutton" text="%menuItem_settings">
             <items>
-                  <MenuItem fx:id="mItem_lang" onAction="#editLangClicked" mnemonicParsing="false" text="Language" />
-                  <MenuItem fx:id="mItem_importFile" onAction="#importFileClicked" mnemonicParsing="false" text="Import File" />
-                  <MenuItem fx:id="mItem_locale" onAction="#localeClicked" mnemonicParsing="false" text="Locale" />
-                  <MenuItem fx:id="mItem_theme" onAction="#themeClicked" mnemonicParsing="false" text="Theme" />
+                  <MenuItem fx:id="mItem_lang" mnemonicParsing="false" onAction="#editLangClicked" text="Language" />
+                  <MenuItem fx:id="mItem_importFile" mnemonicParsing="false" onAction="#importFileClicked" text="Import File" />
+                  <MenuItem fx:id="mItem_locale" mnemonicParsing="false" onAction="#localeClicked" text="Locale" />
+                  <MenuItem fx:id="mItem_theme" mnemonicParsing="false" onAction="#themeClicked" text="Theme" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Progress">
@@ -51,131 +51,92 @@
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-              <tabs>
-                <Tab styleClass="tabbutton" text="%whats_new_tab_text">
-                     <content>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="tabpanel">
-                           <children>
-                              <Label alignment="CENTER" styleClass="logoShadow" text="Language Tutor" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <font>
-                                    <Font name="Gabriola" size="48.0" />
-                                 </font>
-                                 <effect>
-                                    <InnerShadow color="#0f2836" />
-                                 </effect>
-                              </Label>
-                              <FlowPane hgap="10.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="284.0" prefWidth="600.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <AnchorPane fx:id="newsItem" prefHeight="144.0" prefWidth="200.0" styleClass="newsItem">
-                                       <children>
-                                          <ImageView id="img_highRes" fx:id="newsItemImage" fitHeight="150.0" fitWidth="200.0" layoutY="-3.0" onMouseClicked="#newsItemClicked" styleClass="newsImage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                          <Label alignment="CENTER" layoutX="1.0" layoutY="122.0" prefHeight="28.0" prefWidth="200.0" styleClass="blurredLabel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="116.0" />
-                                          <Label fx:id="newsItemLabel" alignment="CENTER" layoutX="3.0" layoutY="124.0" prefHeight="35.0" prefWidth="199.0" styleClass="settings_label" text="Hello world!" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                 </children>
-                                 <padding>
-                                    <Insets left="10.0" right="10.0" top="10.0" />
-                                 </padding>
-                              </FlowPane>
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </Tab>
-                  <Tab styleClass="tabbutton" text="%workbench_tab_text">
-                     <content>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <ScrollPane prefHeight="200.0" prefWidth="200.0" styleClass="scrollpane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <content>
-                                    <AnchorPane prefHeight="302.0" prefWidth="600.0" styleClass="tabpanel">
-                                       <children>
-                                          <Label alignment="TOP_LEFT" contentDisplay="CENTER" layoutY="82.0" prefHeight="61.0" prefWidth="264.0" styleClass="taskheader" text="%offline_tasks_header" textFill="#575656" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="82.0">
-                                             <font>
-                                                <Font name="Kartika" size="36.0" />
-                                             </font>
-                                             <padding>
-                                                <Insets left="10.0" top="-8.0" />
-                                             </padding>
-                                          </Label>
-                                          <Separator layoutY="122.0" maxWidth="1.7976931348623157E308" prefWidth="200.0" styleClass="taskheaderseparator" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="122.0" />
-                                          <Label layoutY="335.0" prefHeight="71.0" prefWidth="317.0" styleClass="taskheader" text="%online_tasks_header" textFill="#575656" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="335.0">
-                                             <font>
-                                                <Font name="Calibri Light" size="36.0" />
-                                             </font>
-                                             <padding>
-                                                <Insets left="10.0" top="-7.0" />
-                                             </padding>
-                                          </Label>
-                                          <Separator layoutY="392.0" prefWidth="200.0" styleClass="taskheaderseparator" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="392.0" />
-                                          <Label layoutX="14.0" layoutY="14.0" styleClass="settings_label" text="%lang_toLearn" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
-                                          <ChoiceBox fx:id="choiceBox_lang_to_learn" layoutX="139.0" layoutY="11.0" prefHeight="20.0" prefWidth="150.0" styleClass="settings_choiceBox" AnchorPane.leftAnchor="139.0" AnchorPane.topAnchor="11.0" />
-                                          <FlowPane hgap="10.0" layoutY="134.0" prefHeight="203.0" prefWidth="598.0" vgap="10.0" AnchorPane.bottomAnchor="182.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="134.0">
-                                             <children>
+                <tabs>
+                    <Tab styleClass="tabbutton" text="%whats_new_tab_text">
+                         <content>
+                            <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="tabpanel">
+                               <children>
+                                  <Label alignment="CENTER" styleClass="logoShadow" text="Language Tutor" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                     <font>
+                                        <Font name="Gabriola" size="48.0" />
+                                     </font>
+                                     <effect>
+                                        <InnerShadow color="#0f2836" />
+                                     </effect>
+                                  </Label>
+                                  <FlowPane hgap="10.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="284.0" prefWidth="600.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                     <children>
+                                        <AnchorPane fx:id="newsItem" prefHeight="144.0" prefWidth="200.0" styleClass="newsItem">
+                                           <children>
+                                              <ImageView id="img_highRes" fx:id="newsItemImage" fitHeight="150.0" fitWidth="200.0" layoutY="-3.0" onMouseClicked="#newsItemClicked" styleClass="newsImage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                              <Label alignment="CENTER" layoutX="1.0" layoutY="122.0" prefHeight="28.0" prefWidth="200.0" styleClass="blurredLabel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="116.0" />
+                                              <Label fx:id="newsItemLabel" alignment="CENTER" layoutX="3.0" layoutY="124.0" prefHeight="35.0" prefWidth="199.0" styleClass="settings_label" text="Hello world!" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                                           </children>
+                                        </AnchorPane>
+                                     </children>
+                                     <padding>
+                                        <Insets left="10.0" right="10.0" top="10.0" />
+                                     </padding>
+                                  </FlowPane>
+                               </children>
+                            </AnchorPane>
+                         </content>
+                    </Tab>
+                    <Tab fx:id="workbench" styleClass="tabbutton" text="%workbench_tab_text">
+                         <content>
+                            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                               <children>
+                                  <ScrollPane fx:id="scrollPane" prefHeight="200.0" prefWidth="200.0" styleClass="scrollpane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                     <content>
+                                        <AnchorPane fx:id="taskPane" prefHeight="477.0" prefWidth="797.0" styleClass="tabpanel">
+                                           <children>
+                                              <Label alignment="TOP_LEFT" contentDisplay="CENTER" layoutY="82.0" prefHeight="61.0" prefWidth="264.0" styleClass="taskheader" text="%offline_tasks_header" textFill="#575656" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="82.0">
+                                                 <font>
+                                                    <Font name="Kartika" size="36.0" />
+                                                 </font>
+                                                 <padding>
+                                                    <Insets left="10.0" top="-8.0" />
+                                                 </padding>
+                                              </Label>
+                                              <Separator layoutY="122.0" maxWidth="1.7976931348623157E308" prefWidth="200.0" styleClass="taskheaderseparator" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="122.0" />
+                                              <Label layoutX="14.0" layoutY="14.0" styleClass="settings_label" text="%lang_toLearn" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
+                                              <ChoiceBox fx:id="choiceBox_lang_to_learn" layoutX="139.0" layoutY="11.0" prefHeight="20.0" prefWidth="150.0" styleClass="settings_choiceBox" AnchorPane.leftAnchor="139.0" AnchorPane.topAnchor="11.0" />
+                                              <FlowPane hgap="10.0" layoutY="127.0" prefHeight="350.0" prefWidth="783.0" vgap="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="127.0">
+                                                 <children>
+                                                    <AnchorPane prefHeight="144.0" prefWidth="200.0" styleClass="newsItem">
+                                                       <children>
+                                                          <ImageView id="img_highRes" fx:id="offlineTask_img" fitHeight="150.0" fitWidth="200.0" layoutY="-3.0" onMouseClicked="#offlineTaskClicked" styleClass="newsImage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                          <Label alignment="CENTER" layoutX="1.0" layoutY="122.0" prefHeight="28.0" prefWidth="200.0" styleClass="blurredLabel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="116.0" />
+                                                          <Label fx:id="offlineTask_header" alignment="CENTER" layoutX="3.0" layoutY="124.0" prefHeight="35.0" prefWidth="199.0" styleClass="settings_label" text="Hello world!" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                                                       </children>
+                                                    </AnchorPane>
                                                 <AnchorPane prefHeight="144.0" prefWidth="200.0" styleClass="newsItem">
                                                    <children>
-                                                      <ImageView id="img_highRes" fx:id="offlineTask_img" fitHeight="150.0" fitWidth="200.0" layoutY="-3.0" onMouseClicked="#offlineTaskClicked" styleClass="newsImage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                      <ImageView id="img_highRes" fx:id="offlineTask_img1" fitHeight="150.0" fitWidth="200.0" layoutY="-3.0" onMouseClicked="#offlineTaskClicked" styleClass="newsImage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                       <Label alignment="CENTER" layoutX="1.0" layoutY="122.0" prefHeight="28.0" prefWidth="200.0" styleClass="blurredLabel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="116.0" />
-                                                      <Label fx:id="offlineTask_header" alignment="CENTER" layoutX="3.0" layoutY="124.0" prefHeight="35.0" prefWidth="199.0" styleClass="settings_label" text="Hello world!" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                                                      <Label fx:id="offlineTask_header1" alignment="CENTER" layoutX="3.0" layoutY="124.0" prefHeight="35.0" prefWidth="199.0" styleClass="settings_label" text="Hello world!" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                                                    </children>
                                                 </AnchorPane>
-                                             </children>
-                                             <padding>
-                                                <Insets left="10.0" right="10.0" top="10.0" />
-                                             </padding>
-                                          </FlowPane>
-                                          <FlowPane hgap="10.0" layoutY="134.0" prefHeight="203.0" prefWidth="598.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="397.0">
-                                             <children>
                                                 <AnchorPane prefHeight="144.0" prefWidth="200.0" styleClass="newsItem">
                                                    <children>
-                                                      <ImageView id="img_highRes" fx:id="onlineTask_img" fitHeight="150.0" fitWidth="200.0" layoutY="-3.0" onMouseClicked="#onlineTaskClicked" styleClass="newsImage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                      <ImageView id="img_highRes" fx:id="offlineTask_img2" fitHeight="150.0" fitWidth="200.0" layoutY="-3.0" onMouseClicked="#offlineTaskClicked" styleClass="newsImage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                       <Label alignment="CENTER" layoutX="1.0" layoutY="122.0" prefHeight="28.0" prefWidth="200.0" styleClass="blurredLabel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="116.0" />
-                                                      <Label fx:id="onlineTask_header" alignment="CENTER" layoutX="3.0" layoutY="124.0" prefHeight="35.0" prefWidth="199.0" styleClass="settings_label" text="Hello world!" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                                                      <Label fx:id="offlineTask_header2" alignment="CENTER" layoutX="3.0" layoutY="124.0" prefHeight="35.0" prefWidth="199.0" styleClass="settings_label" text="Hello world!" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                                                    </children>
                                                 </AnchorPane>
-                                             </children>
-                                             <padding>
-                                                <Insets left="10.0" right="10.0" top="10.0" />
-                                             </padding>
-                                          </FlowPane>
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </ScrollPane>
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </Tab>
-                <Tab styleClass="tabbutton" text="%history_tab_text">
-                     <content>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="tabpanel">
-                           <children>
-                              <Label alignment="CENTER" styleClass="logoShadow" text="Language Tutor" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <effect>
-                                    <InnerShadow color="#0f2836" />
-                                 </effect>
-                                 <font>
-                                    <Font name="Gabriola" size="48.0" />
-                                 </font>
-                              </Label>
-                              <FlowPane hgap="10.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <AnchorPane prefHeight="144.0" prefWidth="200.0" styleClass="newsItem">
-                                       <children>
-                                          <ImageView id="img_highRes" fx:id="history_img" fitHeight="150.0" fitWidth="200.0" layoutY="-3.0" onMouseClicked="#historyItemClicked" styleClass="newsImage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                          <Label alignment="CENTER" layoutX="1.0" layoutY="122.0" prefHeight="28.0" prefWidth="200.0" styleClass="blurredLabel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="116.0" />
-                                          <Label fx:id="history_header" alignment="CENTER" layoutX="3.0" layoutY="124.0" prefHeight="35.0" prefWidth="199.0" styleClass="settings_label" text="Hello world!" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                 </children>
-                                 <padding>
-                                    <Insets left="10.0" right="10.0" top="10.0" />
-                                 </padding>
-                              </FlowPane>
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </Tab>
+                                                 </children>
+                                                 <padding>
+                                                    <Insets left="10.0" right="10.0" top="10.0" />
+                                                 </padding>
+                                              </FlowPane>
+                                           </children>
+                                        </AnchorPane>
+                                     </content>
+                                  </ScrollPane>
+                               </children>
+                            </AnchorPane>
+                         </content>
+                    </Tab>
               </tabs>
             </TabPane>
          </children>

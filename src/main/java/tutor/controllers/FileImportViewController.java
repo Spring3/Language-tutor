@@ -53,9 +53,7 @@ public class FileImportViewController implements Initializable{
      * Loads choice boxes with the default data
      */
     private void initializeChoiceBoxes(){
-        ObservableList<Language> selectedLanguages = FXCollections.observableArrayList();
-        List<Language> currentUsersSelectedLanguages = LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId());
-        currentUsersSelectedLanguages.forEach(lang -> { selectedLanguages.add(lang); });
+        ObservableList<Language> selectedLanguages = FXCollections.observableArrayList(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId()));
         chB_file_data_lang.setItems(selectedLanguages);
         chB_file_data_lang.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             fileLanguageSelectionChangedEventHandler(newValue);

@@ -9,6 +9,7 @@ import tutor.Main;
 import tutor.util.UserConfigHelper;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -23,9 +24,10 @@ public class ThemeViewController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ObservableList<String> themesNames = FXCollections.observableArrayList();
-        themesNames.add("frost");
-        themesNames.add("flat");
+        ObservableList<String> themesNames = FXCollections.observableArrayList(new ArrayList<String>(){{
+            add("frost");
+            add("flat");
+        }});
 
         choiceBox_theme.setItems(themesNames);
         String selectedThemeName = UserConfigHelper.getInstance().getParameter(UserConfigHelper.SELECTED_THEME);

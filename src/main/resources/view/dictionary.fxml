@@ -5,26 +5,26 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tutor.controllers.DictionaryViewController">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="settings_anchorpane" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="25.0" layoutY="15.0" styleClass="settings_label" text="%label_language" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="15.0" />
+            <Label layoutX="25.0" layoutY="15.0" styleClass="settings_label" text="%label_language" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="16.0" />
             <ChoiceBox fx:id="chb_language" layoutX="107.0" layoutY="14.0" prefHeight="25.0" prefWidth="205.0" styleClass="settings_choiceBox" AnchorPane.leftAnchor="107.0" AnchorPane.topAnchor="14.0" />
-            <Pagination fx:id="paginator" layoutX="13.0" layoutY="76.0" prefHeight="279.0" prefWidth="572.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="13.0" AnchorPane.topAnchor="76.0" />
-            <TableView fx:id="tblView_wordTranslation" editable="true" layoutX="11.0" layoutY="75.0" prefHeight="224.0" prefWidth="577.0" styleClass="settings_tableview" AnchorPane.bottomAnchor="101.0" AnchorPane.leftAnchor="11.0" AnchorPane.topAnchor="75.0">
+            <Pagination fx:id="paginator" layoutX="14.0" layoutY="83.0" prefHeight="279.0" prefWidth="572.0" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="83.0" />
+            <TableView fx:id="tblView_wordTranslation" editable="true" layoutX="12.0" layoutY="87.0" prefHeight="224.0" prefWidth="577.0" styleClass="settings_tableview" AnchorPane.bottomAnchor="89.0" AnchorPane.leftAnchor="12.0" AnchorPane.topAnchor="87.0">
               <columns>
                 <TableColumn prefWidth="277.0" text="%prompt_label_word" />
                 <TableColumn prefWidth="297.0" text="%prompt_label_translation" />
               </columns>
             </TableView>
-            <Button fx:id="btn_apply" defaultButton="true" layoutX="266.0" layoutY="354.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" styleClass="custombutton" text="%btn_apply" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="266.0" />
-            <Label layoutX="429.0" layoutY="16.0" styleClass="settings_label" text="%label_show_by" AnchorPane.leftAnchor="429.0" AnchorPane.topAnchor="16.0" />
-            <ChoiceBox fx:id="chb_wordsAmount" layoutX="499.0" layoutY="9.0" prefHeight="30.0" prefWidth="87.0" styleClass="settings_choiceBox" AnchorPane.leftAnchor="499.0" AnchorPane.topAnchor="9.0" />
-            <Label layoutX="25.0" layoutY="50.0" styleClass="settings_label" text="%label_new_word" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="50.0" />
-            <TextField alignment="CENTER" layoutX="107.0" layoutY="48.0" prefHeight="25.0" prefWidth="204.0" promptText="%prompt_label_word" styleClass="settings_input" />
-            <TextField alignment="CENTER" layoutX="330.0" layoutY="48.0" prefHeight="25.0" prefWidth="198.0" promptText="%prompt_label_translation" styleClass="settings_input" />
-            <Button layoutX="538.0" layoutY="43.0" mnemonicParsing="false" styleClass="settings_button" text="%btn_add" />
+            <Button fx:id="btn_apply" defaultButton="true" layoutX="266.0" layoutY="354.0" mnemonicParsing="false" onAction="#apply" prefHeight="25.0" prefWidth="69.0" styleClass="custombutton" text="%btn_apply" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="266.0" />
+            <Label layoutX="429.0" layoutY="16.0" styleClass="settings_label" text="%label_sort_by" AnchorPane.leftAnchor="429.0" AnchorPane.topAnchor="16.0" />
+            <ChoiceBox fx:id="chb_sort" layoutX="499.0" layoutY="9.0" prefHeight="30.0" prefWidth="87.0" styleClass="settings_choiceBox" AnchorPane.leftAnchor="499.0" AnchorPane.topAnchor="14.0" />
+            <Label layoutX="25.0" layoutY="59.0" styleClass="settings_label" text="%label_new_word" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="59.0" />
+            <TextField fx:id="txtb_word" alignment="CENTER" layoutX="107.0" layoutY="57.0" prefHeight="25.0" prefWidth="204.0" promptText="%prompt_label_word" styleClass="settings_input" />
+            <TextField fx:id="txtb_translation" alignment="CENTER" layoutX="330.0" layoutY="57.0" prefHeight="25.0" prefWidth="198.0" promptText="%prompt_label_translation" styleClass="settings_input" />
+            <Button fx:id="btn_add" layoutX="538.0" layoutY="53.0" mnemonicParsing="false" onAction="#addWord" styleClass="custombutton" text="%btn_add" />
          </children>
       </AnchorPane>
    </center>

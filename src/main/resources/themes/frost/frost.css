@@ -441,3 +441,18 @@
 .scroll-bar:horizontal:focused {
  -fx-background-color: transparent,rgb(96,96,96),rgb(96,96,96);
 }
+
+.pagination{
+    -fx-base:#11263A;
+}
+.pagination .toggle-button , .mypage .button{
+    -fx-background-radius:15px;
+    -fx-padding: 0px;
+    -fx-border-color: transparent;
+}
+.pagination .button{
+
+}
+.pagination .label {
+    -fx-text-fill:white;
+}
