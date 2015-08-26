@@ -31,8 +31,6 @@ public class DictionaryViewController implements Initializable{
     @FXML
     public Button btn_apply;
     @FXML
-    public ChoiceBox<String> chb_sort;
-    @FXML
     public TextField txtb_word;
     @FXML
     public TextField txtb_translation;
@@ -67,15 +65,6 @@ public class DictionaryViewController implements Initializable{
             chb_language.setValue(chb_language.getItems().get(0));
         }
         catch (IndexOutOfBoundsException ex){}
-
-        ObservableList<String> sortStrategies = FXCollections.observableList(new ArrayList<String>(){{
-            add("A-Z");
-            add("Z-A");
-            add("New");
-            add("Old");
-        }});
-        chb_sort.setItems(sortStrategies);
-        chb_sort.setValue(chb_sort.getItems().get(2));
 
     }
 

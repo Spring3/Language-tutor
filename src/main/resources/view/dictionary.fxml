@@ -19,8 +19,6 @@
               </columns>
             </TableView>
             <Button fx:id="btn_apply" defaultButton="true" layoutX="266.0" layoutY="354.0" mnemonicParsing="false" onAction="#apply" prefHeight="25.0" prefWidth="69.0" styleClass="custombutton" text="%btn_apply" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="266.0" />
-            <Label layoutX="429.0" layoutY="16.0" styleClass="settings_label" text="%label_sort_by" AnchorPane.leftAnchor="429.0" AnchorPane.topAnchor="16.0" />
-            <ChoiceBox fx:id="chb_sort" layoutX="499.0" layoutY="9.0" prefHeight="30.0" prefWidth="87.0" styleClass="settings_choiceBox" AnchorPane.leftAnchor="499.0" AnchorPane.topAnchor="14.0" />
             <Label layoutX="25.0" layoutY="59.0" styleClass="settings_label" text="%label_new_word" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="59.0" />
             <TextField fx:id="txtb_word" alignment="CENTER" layoutX="107.0" layoutY="57.0" prefHeight="25.0" prefWidth="204.0" promptText="%prompt_label_word" styleClass="settings_input" />
             <TextField fx:id="txtb_translation" alignment="CENTER" layoutX="330.0" layoutY="57.0" prefHeight="25.0" prefWidth="198.0" promptText="%prompt_label_translation" styleClass="settings_input" />
