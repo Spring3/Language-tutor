@@ -74,8 +74,11 @@ public class DictionaryViewController implements Initializable{
     }
 
     public void addWord(ActionEvent actionEvent) {
-        if (!txtb_word.getText().isEmpty() && !txtb_translation.getText().isEmpty() && chb_language.getSelectionModel().getSelectedItem() != null)
+        if (!txtb_word.getText().isEmpty() && !txtb_translation.getText().isEmpty() && chb_language.getSelectionModel().getSelectedItem() != null){
             WordDAO.getInstance().create(new Word(txtb_word.getText(), txtb_translation.getText(), chb_language.getSelectionModel().getSelectedItem()));
+            tblView_wordTranslation.getItems().clear();
+            loadWordsFor(chb_language.getSelectionModel().getSelectedItem());
+        }
     }
 
     public void apply(ActionEvent actionEvent) {

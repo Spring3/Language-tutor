@@ -152,7 +152,7 @@ public class WordDAO implements IDAO<Word> {
         List<Word> resultList = null;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT w.id, w.word, w.word_translation, w.lang_id FROM WORD as w INNER JOIN USER_WORD ON user_id=? WHERE w.lang_id=? GROUP BY w.id; ");
+            PreparedStatement statement = connection.prepareStatement("SELECT w.id, w.word, w.word_translation, w.lang_id FROM WORD as w INNER JOIN USER_WORD ON user_id=? WHERE w.lang_id=? GROUP BY w.id ORDER BY w.id DESC; ");
             statement.setInt(1, AuthController.getActiveUser().getId());
             statement.setInt(2, lang.getId());
             statement.execute();
