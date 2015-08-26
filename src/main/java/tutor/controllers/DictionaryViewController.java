@@ -6,10 +6,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import tutor.dao.LanguageDAO;
 import tutor.dao.WordDAO;
 import tutor.models.Language;
 import tutor.models.Word;
+import tutor.util.PaginatorManager;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -41,6 +43,7 @@ public class DictionaryViewController implements Initializable{
     @FXML
     public TableColumn<Word, String> table_translation;
 
+    private PaginatorManager paginatorManager;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -57,7 +60,7 @@ public class DictionaryViewController implements Initializable{
         ObservableList<Language> languages = FXCollections.observableList(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId()));
         chb_language.setItems(languages);
         chb_language.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.equals(oldValue)){
+            if (!newValue.equals(oldValue)) {
                 loadWordsFor(newValue);
             }
         });
@@ -71,6 +74,18 @@ public class DictionaryViewController implements Initializable{
     private void loadWordsFor(Language lang){
         ObservableList<Word> words = FXCollections.observableArrayList(WordDAO.getInstance().readAllByLangForActiveUser(lang));
         tblView_wordTranslation.setItems(words);
+        paginatorManager = new PaginatorManager(words.size());
+        paginator.setPageCount(paginatorManager.getTotalPages());
+        paginator.setCurrentPageIndex(paginatorManager.getCurrentPage() - 1);
+        paginator.setPageFactory(param -> {
+            ObservableList<Word> addedWords = FXCollections.observableArrayList(WordDAO.getInstance().readAllByLangForActiveUser(lang));
+            tblView_wordTranslation.getItems().clear();
+            paginatorManager.goToPage(param);
+            tblView_wordTranslation.setItems(FXCollections.observableArrayList(addedWords.subList(paginatorManager.getStartIndexForNextPageElements(), paginatorManager.getLastIndexForNextPageElements())));
+            return new VBox();
+        });
+
+
     }
 
     public void addWord(ActionEvent actionEvent) {
