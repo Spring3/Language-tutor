@@ -43,8 +43,6 @@ public class Controller implements Initializable
     private MenuItem mItem_check4Updates;
     @FXML
     private ImageView onlineTask_img;
-    @FXML
-    private Button btn_send_feedback;
     /*
       <MenuItem fx:id="mItem_lang" mnemonicParsing="false" text="Language" />
                   <MenuItem fx:id="mItem_importFile" mnemonicParsing="false" text="Import File" />
@@ -60,19 +58,9 @@ public class Controller implements Initializable
     @FXML
     private MenuItem mItem_theme;
     @FXML
-    private ImageView social_fb;
-    @FXML
-    private ImageView social_gplus;
-    @FXML
     private MenuItem mItem_dictionary;
     @FXML
     private Label history_header;
-    @FXML
-    private ImageView social_twitter;
-    @FXML
-    private Button btn_donate;
-    @FXML
-    private ImageView social_vk;
     @FXML
     private AnchorPane newsItem;
     @FXML
@@ -129,10 +117,6 @@ public class Controller implements Initializable
 
     public void historyItemClicked(Event event) {
         stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.HISTORY_ITEM_VIEW_PATH), history_header.getText(), 1, Optional.empty());
-    }
-
-    public void sendFeedbackClicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.SEND_FEEDBACK_VIEW_PATH), "Feedback", 1, Optional.empty());
     }
 
     public void statisticsClicked(ActionEvent actionEvent) {
