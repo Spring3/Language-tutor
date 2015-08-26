@@ -16,7 +16,7 @@
             <Menu mnemonicParsing="false" styleClass="topmenubutton" text="%menuItem_tasks">
               <items>
                 <MenuItem fx:id="mItem_newTask" mnemonicParsing="false" styleClass="menubutton" text="%menuItem_newTask" />
-                  <MenuItem fx:id="mItem_InviteFriend" mnemonicParsing="false" onAction="#InvitationMenuItemClicked" text="%menuItem_inviteFriend" />
+                  <MenuItem fx:id="mItem_logout" mnemonicParsing="false" onAction="#LogOut" text="%menuItem_logout" />
                   <MenuItem fx:id="mItem_exit" mnemonicParsing="false" onAction="#Shutdown" text="%menuItem_exit">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />

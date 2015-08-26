@@ -109,15 +109,6 @@ public class Controller implements Initializable
         scrollPane.setFitToWidth(true);
     }
 
-    /**
-     * Event handler for "Invite friend" menu item.
-     * Opens a new stage.
-     * @param actionEvent
-     */
-    @FXML
-    public void InvitationMenuItemClicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.INVITATION_VIEW_PATH), "Invite a friend voa email", 1, Optional.empty());
-    }
     @FXML
     public void Shutdown(ActionEvent actionEvent) {
         stageManager.Shutdown();
@@ -170,5 +161,10 @@ public class Controller implements Initializable
 
     public void themeClicked(ActionEvent actionEvent) {
         stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.THEME_SETTINGS_VIEW_PATH), "Theme Settings", 1, Optional.empty());
+    }
+
+    public void LogOut(ActionEvent actionEvent) {
+        AuthController.setActiveUser(null);
+        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.AUTHENTICATION_VIEW_PATH), "Language Tutor", 0, Optional.empty());
     }
 }
