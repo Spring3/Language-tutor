@@ -1,24 +1,26 @@
 package tutor.models;
 
-import java.nio.charset.StandardCharsets;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
  * Created by user on 17.02.2015.
  */
 public class Word {
     public Word(){
-
+        this.word = new SimpleStringProperty();
+        this.translation = new SimpleStringProperty();
     }
 
     public Word(String word, String translation, Language lang){
-        setWord(word);
-        setTranslation(translation);
+        this.word = new SimpleStringProperty(word);
+        this.translation = new SimpleStringProperty(translation);
         setLang(lang);
     }
 
     private int id;
-    private String word;
-    private String translation;
+    private StringProperty word;
+    private StringProperty translation;
     private Language lang;
 
     public int getId(){
@@ -29,20 +31,20 @@ public class Word {
         this.id = id;
     }
 
-    public String getWord() {
+    public StringProperty getWord() {
         return word;
     }
 
     public void setWord(String word) {
-        this.word = word;
+        this.word.set(word);
     }
 
-    public String getTranslation() {
+    public StringProperty getTranslation() {
         return translation;
     }
 
     public void setTranslation(String translation) {
-        this.translation = translation;
+        this.translation.set(translation);
     }
 
     public Language getLang() {

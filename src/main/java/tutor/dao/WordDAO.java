@@ -35,8 +35,8 @@ public class WordDAO implements IDAO<Word> {
             Connection connection = DbManager.getInstance().getConnection();
             if (!contains(value)) {
                 PreparedStatement statement = connection.prepareStatement("INSERT INTO WORD(word, word_translation, lang_id) VALUES(?,?,?);");
-                statement.setString(1, value.getWord());
-                statement.setString(2, value.getTranslation());
+                statement.setString(1, value.getWord().getValue());
+                statement.setString(2, value.getTranslation().getValue());
                 statement.setInt(3, value.getLang().getId());
                 statement.execute();
                 PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO USER_WORD(user_id, word_id) VALUES(?,?);");
@@ -131,7 +131,34 @@ public class WordDAO implements IDAO<Word> {
             statement.execute();
             ResultSet resultSet = statement.getResultSet();
             resultList = new ArrayList<>();
-            while(resultSet.next() == true){
+            while(resultSet.next()){
+                Word result = new Word();
+                result.setId(resultSet.getInt(1));
+                result.setWord(resultSet.getString(2));
+                result.setTranslation(resultSet.getString(3));
+                result.setLang(LanguageDAO.getInstance().read(resultSet.getInt(4)));
+                resultList.add(result);
+            }
+            resultSet.close();
+            connection.close();
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return resultList;
+    }
+
+    public List<Word> readAllByLangForActiveUser(Language lang){
+        List<Word> resultList = null;
+        try{
+            Connection connection = DbManager.getInstance().getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT w.id, w.word, w.word_translation, w.lang_id FROM WORD as w INNER JOIN USER_WORD ON user_id=? WHERE w.lang_id=? GROUP BY w.id; ");
+            statement.setInt(1, AuthController.getActiveUser().getId());
+            statement.setInt(2, lang.getId());
+            statement.execute();
+            ResultSet resultSet = statement.getResultSet();
+            resultList = new ArrayList<>();
+            while(resultSet.next()){
                 Word result = new Word();
                 result.setId(resultSet.getInt(1));
                 result.setWord(resultSet.getString(2));
@@ -154,8 +181,8 @@ public class WordDAO implements IDAO<Word> {
             Connection connection = DbManager.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement("SELECT w.id, w.word, w.word_translation, w.lang_id FROM WORD as w INNER JOIN USER_WORD as uw ON uw.word_id=w.id WHERE uw.user_id=? AND w.word=? AND w.word_translation=? AND w.lang_id=? GROUP BY w.id;");
             statement.setInt(1, AuthController.getActiveUser().getId());
-            statement.setString(2, value.getWord());
-            statement.setString(3, value.getTranslation());
+            statement.setString(2, value.getWord().get());
+            statement.setString(3, value.getTranslation().get());
             statement.setInt(4, value.getLang().getId());
             statement.execute();
             ResultSet resultSet = statement.getResultSet();
@@ -176,8 +203,8 @@ public class WordDAO implements IDAO<Word> {
             Connection connection = DbManager.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement("UPDATE WORD SET id=?, word=?, word_translation=?, lang_id=?;");
             statement.setInt(1, value.getId());
-            statement.setString(2, value.getWord());
-            statement.setString(3, value.getTranslation());
+            statement.setString(2, value.getWord().get());
+            statement.setString(3, value.getTranslation().get());
             statement.setInt(4, value.getLang().getId());
             statement.executeUpdate();
             connection.close();

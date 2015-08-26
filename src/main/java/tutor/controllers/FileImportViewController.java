@@ -88,7 +88,7 @@ public class FileImportViewController implements Initializable{
         if (selectedFile != null) {
             //Writing a selected file's path to the textfield
             textField_filePath.setText(selectedFile.getAbsolutePath());
-            new PlainFileParser(bundle).parse(selectedFile, selectedLanguage);
+            new BasicParser().parse(selectedFile, selectedLanguage);
 
             textField_filePath.setDisable(false);
             textField_filePath.textProperty().addListener((observable1, oldValue1, newValue1) -> {

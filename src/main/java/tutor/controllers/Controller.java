@@ -102,7 +102,10 @@ public class Controller implements Initializable
     public void initialize(URL url, ResourceBundle rb){
         ObservableList<Language> currentUserLanguages = FXCollections.observableArrayList(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId()));
         choiceBox_lang_to_learn.setItems(currentUserLanguages);
-        choiceBox_lang_to_learn.setValue(choiceBox_lang_to_learn.getItems().get(0));
+        try {
+            choiceBox_lang_to_learn.setValue(choiceBox_lang_to_learn.getItems().get(0));
+        }
+        catch (IndexOutOfBoundsException ex){}
         scrollPane.setFitToWidth(true);
     }
 

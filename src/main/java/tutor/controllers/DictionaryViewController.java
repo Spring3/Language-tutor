@@ -27,7 +27,7 @@ public class DictionaryViewController implements Initializable{
     @FXML
     public Pagination paginator;
     @FXML
-    public TableView tblView_wordTranslation;
+    public TableView<Word> tblView_wordTranslation;
     @FXML
     public Button btn_apply;
     @FXML
@@ -38,6 +38,10 @@ public class DictionaryViewController implements Initializable{
     public TextField txtb_translation;
     @FXML
     public Button btn_add;
+    @FXML
+    public TableColumn<Word, String> table_word;
+    @FXML
+    public TableColumn<Word, String> table_translation;
 
 
     @Override
@@ -49,9 +53,20 @@ public class DictionaryViewController implements Initializable{
     private ResourceBundle bundle;
 
     private void initializeUI(){
+        table_word.setCellValueFactory(param -> param.getValue().getWord());
+        table_translation.setCellValueFactory(param -> param.getValue().getTranslation());
+
         ObservableList<Language> languages = FXCollections.observableList(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId()));
         chb_language.setItems(languages);
-        chb_language.setValue(chb_language.getItems().get(0));
+        chb_language.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.equals(oldValue)){
+                loadWordsFor(newValue);
+            }
+        });
+        try {
+            chb_language.setValue(chb_language.getItems().get(0));
+        }
+        catch (IndexOutOfBoundsException ex){}
 
         ObservableList<String> sortStrategies = FXCollections.observableList(new ArrayList<String>(){{
             add("A-Z");
@@ -62,6 +77,11 @@ public class DictionaryViewController implements Initializable{
         chb_sort.setItems(sortStrategies);
         chb_sort.setValue(chb_sort.getItems().get(2));
 
+    }
+
+    private void loadWordsFor(Language lang){
+        ObservableList<Word> words = FXCollections.observableArrayList(WordDAO.getInstance().readAllByLangForActiveUser(lang));
+        tblView_wordTranslation.setItems(words);
     }
 
     public void addWord(ActionEvent actionEvent) {
