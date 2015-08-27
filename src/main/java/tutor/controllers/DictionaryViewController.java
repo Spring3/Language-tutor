@@ -73,7 +73,6 @@ public class DictionaryViewController implements Initializable{
 
     private void loadWordsFor(Language lang){
         ObservableList<Word> words = FXCollections.observableArrayList(WordDAO.getInstance().readAllByLangForActiveUser(lang));
-        tblView_wordTranslation.setItems(words);
         paginatorManager = new PaginatorManager(words.size());
         paginator.setPageCount(paginatorManager.getTotalPages());
         paginator.setCurrentPageIndex(paginatorManager.getCurrentPage() - 1);

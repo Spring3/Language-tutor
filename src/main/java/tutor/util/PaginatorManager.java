@@ -27,7 +27,7 @@ public class PaginatorManager {
     }
 
     public int getLastIndexForNextPageElements(){
-        return itemsCount < 10 * getItemsPerPage() ? itemsCount : lastIndexForNextPageElements;
+        return itemsCount < 10 * getCurrentPage() ? itemsCount : lastIndexForNextPageElements;
     }
 
     public int getCurrentPage(){

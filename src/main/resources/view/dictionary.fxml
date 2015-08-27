@@ -15,8 +15,8 @@
             <Pagination fx:id="paginator" layoutX="14.0" layoutY="83.0" prefHeight="279.0" prefWidth="572.0" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="83.0" />
             <TableView fx:id="tblView_wordTranslation" editable="true" layoutX="12.0" layoutY="87.0" prefHeight="224.0" prefWidth="577.0" styleClass="settings_tableview" AnchorPane.bottomAnchor="89.0" AnchorPane.leftAnchor="12.0" AnchorPane.topAnchor="87.0">
               <columns>
-                <TableColumn fx:id="table_word" prefWidth="277.0" text="%prompt_label_word" />
-                <TableColumn fx:id="table_translation" prefWidth="297.0" text="%prompt_label_translation" />
+                <TableColumn fx:id="table_word" prefWidth="277.0" sortable="false" text="%prompt_label_word" />
+                <TableColumn fx:id="table_translation" prefWidth="297.0" sortable="false" text="%prompt_label_translation" />
               </columns>
             </TableView>
             <Button fx:id="btn_apply" defaultButton="true" layoutX="266.0" layoutY="354.0" mnemonicParsing="false" onAction="#apply" prefHeight="25.0" prefWidth="69.0" styleClass="custombutton" text="%btn_apply" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="266.0" />
