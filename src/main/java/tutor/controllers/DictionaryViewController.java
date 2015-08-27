@@ -133,8 +133,4 @@ public class DictionaryViewController implements Initializable{
 
 
     }
-
-    public void apply(ActionEvent actionEvent) {
-
-    }
 }

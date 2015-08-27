@@ -11,8 +11,7 @@
    <center>
       <AnchorPane prefHeight="239.0" prefWidth="600.0" styleClass="settings_anchorpane" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="img_taskImage" fitHeight="323.0" fitWidth="226.0" layoutX="7.0" layoutY="6.0" pickOnBounds="true" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="367.0" AnchorPane.topAnchor="6.0" />
-            <TextArea fx:id="ta_taskDescription" editable="false" layoutX="239.0" layoutY="-1.0" prefHeight="342.0" prefWidth="361.0" styleClass="news_textarea" wrapText="true" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="239.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <TextArea fx:id="ta_taskDescription" editable="false" layoutX="239.0" layoutY="-1.0" prefHeight="342.0" prefWidth="361.0" styleClass="news_textarea" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
    </center>
@@ -40,4 +39,12 @@
    <effect>
       <DropShadow />
    </effect>
+   <left>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="settings_anchorpane" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="img_taskImage" fitHeight="323.0" fitWidth="226.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <TextField fx:id="tf_taskDescriptionHeader" alignment="CENTER" editable="false" style="-fx-font-size: 20; -fx-background-color: transparent;" styleClass="header_textField" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+   </left>
 </BorderPane>

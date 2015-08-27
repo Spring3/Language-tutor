@@ -10,17 +10,16 @@
    <center>
       <AnchorPane prefHeight="538.0" prefWidth="617.0" styleClass="settings_anchorpane" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="14.0" layoutY="21.0" styleClass="settings_label" text="%label_language" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="21.0" />
-            <ChoiceBox fx:id="chb_language" layoutX="104.0" layoutY="17.0" prefHeight="25.0" prefWidth="205.0" styleClass="settings_choiceBox" AnchorPane.leftAnchor="104.0" AnchorPane.topAnchor="17.0" />
-            <Pagination fx:id="paginator" layoutX="14.0" layoutY="83.0" prefHeight="456.0" prefWidth="591.0" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="83.0" />
-            <TableView fx:id="tblView_wordTranslation" editable="true" layoutX="12.0" layoutY="59.0" prefHeight="429.0" prefWidth="593.0" styleClass="settings_tableview" AnchorPane.bottomAnchor="89.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="59.0">
+            <Label layoutX="14.0" layoutY="24.0" styleClass="settings_label" text="%label_language" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="24.0" />
+            <ChoiceBox fx:id="chb_language" layoutX="104.0" layoutY="20.0" prefHeight="25.0" prefWidth="205.0" styleClass="settings_choiceBox" AnchorPane.leftAnchor="104.0" AnchorPane.topAnchor="20.0" />
+            <Pagination fx:id="paginator" layoutX="12.0" layoutY="97.0" prefHeight="456.0" prefWidth="591.0" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="97.0" />
+            <TableView fx:id="tblView_wordTranslation" editable="true" layoutX="12.0" layoutY="73.0" prefHeight="429.0" prefWidth="593.0" styleClass="settings_tableview" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="73.0">
               <columns>
                 <TableColumn fx:id="table_word" maxWidth="250.0" prefWidth="250.0" sortable="false" text="%prompt_label_word" />
                 <TableColumn fx:id="table_translation" maxWidth="250.0" prefWidth="250.0" sortable="false" text="%prompt_label_translation" />
                   <TableColumn fx:id="table_remove" editable="false" maxWidth="75.0" prefWidth="75.0" resizable="false" sortable="false" text="%label_delete" />
               </columns>
             </TableView>
-            <Button fx:id="btn_apply" defaultButton="true" layoutX="275.0" layoutY="542.0" mnemonicParsing="false" onAction="#apply" prefHeight="25.0" prefWidth="69.0" styleClass="custombutton" text="%btn_apply" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="275.0" />
          </children>
       </AnchorPane>
    </center>
