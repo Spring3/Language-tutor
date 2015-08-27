@@ -110,14 +110,14 @@ public class UserDAO implements IDAO<User> {
     public boolean update(User value) {
         try {
             Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("UPDATE USERS SET id=?, username=?, email=?, password=?, register_date=?, success_rate=?, seed=?;");
-            statement.setInt(1, value.getId());
-            statement.setString(2, value.getUserName());
-            statement.setString(3, value.getEmail());
-            statement.setString(4, value.getPassword() + "" + value.getSeed());
-            statement.setTimestamp(5, value.getDateOfRegistery());
-            statement.setFloat(6, value.getSuccess_rate());
-            statement.setInt(7, value.getSeed());
+            PreparedStatement statement = connection.prepareStatement("UPDATE USERS SET username=?, email=?, password=?, register_date=?, success_rate=?, seed=? WHERE id=?;");
+            statement.setString(1, value.getUserName());
+            statement.setString(2, value.getEmail());
+            statement.setString(3, value.getPassword() + "" + value.getSeed());
+            statement.setTimestamp(4, value.getDateOfRegistery());
+            statement.setFloat(5, value.getSuccess_rate());
+            statement.setInt(6, value.getSeed());
+            statement.setInt(7, value.getId());
             statement.executeUpdate();
             connection.close();
             return true;

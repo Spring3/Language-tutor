@@ -72,108 +72,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="DictionaryViewController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DictionaryViewController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/DictionaryViewController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="72" column="46" selection-start-line="72" selection-start-column="46" selection-end-line="72" selection-end-column="46" />
+            <state vertical-scroll-proportion="-1.4751773">
+              <caret line="82" column="93" selection-start-line="82" selection-start-column="93" selection-end-line="82" selection-end-column="93" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Word.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/tutor/models/Word.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="51" selection-start-line="15" selection-start-column="51" selection-end-line="15" selection-end-column="51" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserDAO.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/tutor/dao/UserDAO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WordDAO.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/tutor/dao/WordDAO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.44523808">
-              <caret line="203" column="87" selection-start-line="203" selection-start-column="87" selection-end-line="203" selection-end-column="87" />
-              <folding>
-                <marker date="1440699635785" expanded="true" signature="842:905" placeholder="INSERT INTO ..." />
-                <marker date="1440699635785" expanded="true" signature="1235:1286" placeholder="INSERT INTO ..." />
-                <marker date="1440699635785" expanded="true" signature="2026:2069" placeholder="SELECT * FRO..WORD..." />
-                <marker date="1440699635785" expanded="true" signature="2508:2642" placeholder="SELECT w.id,..WORD..." />
-                <marker date="1440699635785" expanded="true" signature="3189:3218" placeholder="SELECT * FRO..WORD..." />
-                <marker date="1440699635785" expanded="true" signature="4392:4426" placeholder="SELECT * FRO..WORD..." />
-                <marker date="1440699635785" expanded="true" signature="5451:5601" placeholder="SELECT w.id,..WORD..." />
-                <marker date="1440699635785" expanded="true" signature="6670:6868" placeholder="SELECT w.id,..WORD..." />
-                <marker date="1440699635785" expanded="true" signature="7815:7876" placeholder="UPDATE WORD ..." />
-                <marker date="1440699635785" expanded="true" signature="7815:7879" placeholder="UPDATE WORD ..." />
-                <marker date="1440699635785" expanded="true" signature="8551:8602" placeholder="DELETE FROM ..." />
-                <marker date="1440699635785" expanded="true" signature="8862:8889" placeholder="DELETE FROM ..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.fxml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/view/main.fxml">
-          <provider editor-type-id="JavaFX-Scene-Builder">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="88" selection-start-line="0" selection-start-column="38" selection-end-line="0" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="details.fxml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/view/details.fxml">
-          <provider editor-type-id="JavaFX-Scene-Builder">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="auth.fxml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/view/auth.fxml">
-          <provider editor-type-id="JavaFX-Scene-Builder">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PaginatorManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/tutor/util/PaginatorManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="29" column="49" selection-start-line="29" selection-start-column="49" selection-end-line="29" selection-end-column="49" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -200,7 +106,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/tutor/util/GDriveManager.java" />
         <option value="$PROJECT_DIR$/src/main/resources/view/about.fxml" />
         <option value="$PROJECT_DIR$/themes/themes/flat/flat.css" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/AuthController.java" />
@@ -228,7 +133,6 @@
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/AddLanguageController.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/SettingsController.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/util/DbManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tutor/dao/LanguageDAO.java" />
         <option value="$PROJECT_DIR$/src/main/resources/view/languageSettings.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/LanguageSettingsController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/view/fileImport.fxml" />
@@ -244,13 +148,15 @@
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/FileImportViewController.java" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/main/resources/view/main.fxml" />
-        <option value="$PROJECT_DIR$/src/main/resources/locale/lang_en.properties" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/Navigator.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/Controller.java" />
         <option value="$PROJECT_DIR$/src/main/resources/view/dictionary.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/util/PaginatorManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/DictionaryViewController.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/dao/WordDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tutor/dao/UserDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tutor/dao/LanguageDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/DictionaryViewController.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/locale/lang_en.properties" />
       </list>
     </option>
   </component>
@@ -1061,12 +967,12 @@
       <workItem from="1429438620896" duration="62000" />
       <workItem from="1440526539127" duration="9723000" />
       <workItem from="1440606972025" duration="18161000" />
-      <workItem from="1440695237116" duration="3808000" />
+      <workItem from="1440695237116" duration="9075000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="564392000" />
+    <option name="totallyTimeSpent" value="569659000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1096,15 +1002,15 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24815206" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3360522" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3284055" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32789558" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.32916668" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" x="433" y="299" width="636" height="280" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.07186082" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26916802" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26427406" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3245083" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32299545" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1143,7 +1049,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="158" />
+      <option name="time" value="162" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1175,6 +1081,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="42" column="46" selection-start-line="42" selection-start-column="46" selection-end-line="42" selection-end-column="46" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1303,6 +1210,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1345,6 +1253,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="87" column="25" selection-start-line="83" selection-start-column="12" selection-end-line="87" selection-end-column="25" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1371,14 +1280,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/locale/lang_en.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/tutor/util/StageManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1399,13 +1300,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/dao/LanguageDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="55" column="68" selection-start-line="55" selection-start-column="68" selection-end-line="55" selection-end-column="68" />
           <folding />
         </state>
       </provider>
@@ -1450,7 +1344,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="63" column="31" selection-start-line="63" selection-start-column="31" selection-end-line="63" selection-end-column="31" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1536,7 +1430,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="325" column="0" selection-start-line="325" selection-start-column="0" selection-end-line="325" selection-end-column="0" />
           <folding>
-            <element signature="e#11421#11422#0" expanded="true" />
+            <element signature="e#11421#11422#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1546,16 +1440,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="29" column="49" selection-start-line="29" selection-start-column="49" selection-end-line="29" selection-end-column="49" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/DictionaryViewController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="72" column="46" selection-start-line="72" selection-start-column="46" selection-end-line="72" selection-end-column="46" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1572,28 +1456,72 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/tutor/dao/UserDAO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-          <folding />
+          <caret line="112" column="175" selection-start-line="112" selection-start-column="175" selection-end-line="112" selection-end-column="175" />
+          <folding>
+            <marker date="1440699734865" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
+            <marker date="1440699734865" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..USERS..." />
+            <marker date="1440699734865" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..USERS..." />
+            <marker date="1440699734865" expanded="true" signature="-1:-1" placeholder="UPDATE USERS..." />
+            <marker date="1440699734865" expanded="true" signature="-1:-1" placeholder="DELETE FROM ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/dao/LanguageDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="225" column="57" selection-start-line="225" selection-start-column="46" selection-end-line="225" selection-end-column="46" />
+          <folding>
+            <marker date="1440699760288" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
+            <marker date="1440699760288" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
+            <marker date="1440699760288" expanded="true" signature="-1:-1" placeholder="DELETE FROM ..." />
+            <marker date="1440699760288" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..LANGUAGES..." />
+            <marker date="1440699760288" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..LANGUAGES..." />
+            <marker date="1440699760288" expanded="true" signature="-1:-1" placeholder="SELECT langs..LANGUAGES..." />
+            <marker date="1440699760288" expanded="true" signature="-1:-1" placeholder="SELECT lang...LANGUAGES..." />
+            <marker date="1440699760288" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..LANGUAGES..." />
+            <marker date="1440699760288" expanded="true" signature="-1:-1" placeholder="UPDATE LANGU..." />
+            <marker date="1440699760288" expanded="true" signature="-1:-1" placeholder="UPDATE LANGU..." />
+            <marker date="1440699760288" expanded="true" signature="-1:-1" placeholder="DELETE FROM ..." />
+            <marker date="1440699760288" expanded="true" signature="-1:-1" placeholder="DELETE FROM ..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/tutor/dao/WordDAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44523808">
-          <caret line="203" column="87" selection-start-line="203" selection-start-column="87" selection-end-line="203" selection-end-column="87" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="225" column="42" selection-start-line="225" selection-start-column="42" selection-end-line="225" selection-end-column="42" />
           <folding>
-            <marker date="1440699635785" expanded="true" signature="842:905" placeholder="INSERT INTO ..." />
-            <marker date="1440699635785" expanded="true" signature="1235:1286" placeholder="INSERT INTO ..." />
-            <marker date="1440699635785" expanded="true" signature="2026:2069" placeholder="SELECT * FRO..WORD..." />
-            <marker date="1440699635785" expanded="true" signature="2508:2642" placeholder="SELECT w.id,..WORD..." />
-            <marker date="1440699635785" expanded="true" signature="3189:3218" placeholder="SELECT * FRO..WORD..." />
-            <marker date="1440699635785" expanded="true" signature="4392:4426" placeholder="SELECT * FRO..WORD..." />
-            <marker date="1440699635785" expanded="true" signature="5451:5601" placeholder="SELECT w.id,..WORD..." />
-            <marker date="1440699635785" expanded="true" signature="6670:6868" placeholder="SELECT w.id,..WORD..." />
-            <marker date="1440699635785" expanded="true" signature="7815:7876" placeholder="UPDATE WORD ..." />
-            <marker date="1440699635785" expanded="true" signature="7815:7879" placeholder="UPDATE WORD ..." />
-            <marker date="1440699635785" expanded="true" signature="8551:8602" placeholder="DELETE FROM ..." />
-            <marker date="1440699635785" expanded="true" signature="8862:8889" placeholder="DELETE FROM ..." />
+            <marker date="1440699635785" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
+            <marker date="1440699635785" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
+            <marker date="1440699635785" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..WORD..." />
+            <marker date="1440699635785" expanded="true" signature="-1:-1" placeholder="SELECT w.id,..WORD..." />
+            <marker date="1440699635785" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..WORD..." />
+            <marker date="1440699635785" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..WORD..." />
+            <marker date="1440699635785" expanded="true" signature="-1:-1" placeholder="SELECT w.id,..WORD..." />
+            <marker date="1440699635785" expanded="true" signature="-1:-1" placeholder="SELECT w.id,..WORD..." />
+            <marker date="1440699635785" expanded="true" signature="-1:-1" placeholder="UPDATE WORD ..." />
+            <marker date="1440699635785" expanded="true" signature="-1:-1" placeholder="DELETE FROM ..." />
+            <marker date="1440699635785" expanded="true" signature="-1:-1" placeholder="DELETE FROM ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/locale/lang_en.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5609137">
+          <caret line="58" column="55" selection-start-line="58" selection-start-column="26" selection-end-line="58" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/DictionaryViewController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.4751773">
+          <caret line="82" column="93" selection-start-line="82" selection-start-column="93" selection-end-line="82" selection-end-column="93" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

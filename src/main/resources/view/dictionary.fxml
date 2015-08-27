@@ -6,30 +6,21 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="487.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tutor.controllers.DictionaryViewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="577.0" prefWidth="617.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tutor.controllers.DictionaryViewController">
    <center>
-      <AnchorPane prefHeight="418.0" prefWidth="600.0" styleClass="settings_anchorpane" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="538.0" prefWidth="617.0" styleClass="settings_anchorpane" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="25.0" layoutY="12.0" styleClass="settings_label" text="%label_language" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="12.0" />
-            <ChoiceBox fx:id="chb_language" layoutX="107.0" layoutY="10.0" prefHeight="25.0" prefWidth="205.0" styleClass="settings_choiceBox" AnchorPane.leftAnchor="107.0" AnchorPane.topAnchor="10.0" />
-            <Pagination fx:id="paginator" layoutX="14.0" layoutY="83.0" prefHeight="279.0" prefWidth="572.0" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="83.0" />
-            <TableView fx:id="tblView_wordTranslation" editable="true" layoutX="12.0" layoutY="87.0" prefHeight="224.0" prefWidth="577.0" styleClass="settings_tableview" AnchorPane.bottomAnchor="89.0" AnchorPane.leftAnchor="12.0" AnchorPane.topAnchor="87.0">
+            <Label layoutX="14.0" layoutY="21.0" styleClass="settings_label" text="%label_language" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="21.0" />
+            <ChoiceBox fx:id="chb_language" layoutX="104.0" layoutY="17.0" prefHeight="25.0" prefWidth="205.0" styleClass="settings_choiceBox" AnchorPane.leftAnchor="104.0" AnchorPane.topAnchor="17.0" />
+            <Pagination fx:id="paginator" layoutX="14.0" layoutY="83.0" prefHeight="456.0" prefWidth="591.0" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="83.0" />
+            <TableView fx:id="tblView_wordTranslation" editable="true" layoutX="12.0" layoutY="59.0" prefHeight="429.0" prefWidth="593.0" styleClass="settings_tableview" AnchorPane.bottomAnchor="89.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="59.0">
               <columns>
-                <TableColumn fx:id="table_word" prefWidth="277.0" sortable="false" text="%prompt_label_word" />
-                <TableColumn fx:id="table_translation" prefWidth="297.0" sortable="false" text="%prompt_label_translation" />
+                <TableColumn fx:id="table_word" maxWidth="250.0" prefWidth="250.0" sortable="false" text="%prompt_label_word" />
+                <TableColumn fx:id="table_translation" maxWidth="250.0" prefWidth="250.0" sortable="false" text="%prompt_label_translation" />
+                  <TableColumn fx:id="table_remove" editable="false" maxWidth="75.0" prefWidth="75.0" resizable="false" sortable="false" text="%label_delete" />
               </columns>
             </TableView>
-            <Button fx:id="btn_apply" defaultButton="true" layoutX="266.0" layoutY="354.0" mnemonicParsing="false" onAction="#apply" prefHeight="25.0" prefWidth="69.0" styleClass="custombutton" text="%btn_apply" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="266.0" />
-            <Label layoutX="25.0" layoutY="57.0" styleClass="settings_label" text="%label_new_word" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="57.0" />
-            <TextField fx:id="txtb_word" alignment="CENTER" layoutX="107.0" layoutY="52.0" prefHeight="25.0" prefWidth="204.0" promptText="%prompt_label_word" styleClass="settings_input">
-               <font>
-                  <Font size="15.0" />
-               </font></TextField>
-            <TextField fx:id="txtb_translation" alignment="CENTER" layoutX="330.0" layoutY="52.0" prefHeight="25.0" prefWidth="198.0" promptText="%prompt_label_translation" styleClass="settings_input">
-               <font>
-                  <Font size="15.0" />
-               </font></TextField>
-            <Button fx:id="btn_add" layoutX="538.0" layoutY="53.0" mnemonicParsing="false" onAction="#addWord" styleClass="custombutton" text="%btn_add" />
+            <Button fx:id="btn_apply" defaultButton="true" layoutX="275.0" layoutY="542.0" mnemonicParsing="false" onAction="#apply" prefHeight="25.0" prefWidth="69.0" styleClass="custombutton" text="%btn_apply" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="275.0" />
          </children>
       </AnchorPane>
    </center>

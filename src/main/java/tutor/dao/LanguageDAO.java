@@ -203,9 +203,9 @@ public class LanguageDAO implements IDAO<Language> {
     public boolean update(Language value) {
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("UPDATE LANGUAGES SET id=?, lang_name=?;");
-            statement.setInt(1, value.getId());
-            statement.setString(2, value.getLang_name());
+            PreparedStatement statement = connection.prepareStatement("UPDATE LANGUAGES SET lang_name=? WHERE id=?;");
+            statement.setString(1, value.getLang_name());
+            statement.setInt(2, value.getId());
             statement.executeUpdate();
             connection.close();
             return true;

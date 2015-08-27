@@ -1,5 +1,6 @@
 package tutor.controllers;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 import tutor.dao.LanguageDAO;
 import tutor.dao.WordDAO;
 import tutor.models.Language;
@@ -34,15 +36,11 @@ public class DictionaryViewController implements Initializable{
     @FXML
     public Button btn_apply;
     @FXML
-    public TextField txtb_word;
-    @FXML
-    public TextField txtb_translation;
-    @FXML
-    public Button btn_add;
-    @FXML
     public TableColumn<Word, String> table_word;
     @FXML
     public TableColumn<Word, String> table_translation;
+    @FXML
+    public TableColumn<Word, Button> table_remove;
 
     private PaginatorManager paginatorManager;
 
@@ -59,11 +57,32 @@ public class DictionaryViewController implements Initializable{
         table_translation.setCellValueFactory(param -> param.getValue().getTranslation());
         table_word.setCellFactory(TextFieldTableCell.forTableColumn());
         table_translation.setCellFactory(TextFieldTableCell.forTableColumn());
+        table_remove.setCellValueFactory(param -> {
+            Button button = new Button("x");
+            button.getStyleClass().add("custombutton");
+            button.setOnAction(event -> {
+                if (WordDAO.getInstance().contains(param.getValue())) {
+                    WordDAO.getInstance().delete(WordDAO.getInstance().readByContentForActiveUser(param.getValue().getWord().get()));
+                    loadWordsFor(chb_language.getSelectionModel().getSelectedItem());
+                }
+            });
+            return new ReadOnlyObjectWrapper<Button>(button);
+        });
+
         table_word.setOnEditCommit(event ->
                 {
                     Word editedWord = event.getTableView().getItems().get(event.getTablePosition().getRow());
                     editedWord.setWord(event.getNewValue());
-                    WordDAO.getInstance().update(editedWord);
+
+                    if (WordDAO.getInstance().contains(editedWord)){
+                        WordDAO.getInstance().update(editedWord);
+                    }
+                    else{
+                        if (!editedWord.getTranslation().get().isEmpty() && !editedWord.getWord().get().isEmpty()) {
+                            WordDAO.getInstance().create(editedWord);
+                            loadWordsFor(chb_language.getSelectionModel().getSelectedItem());
+                        }
+                    }
                 }
         );
 
@@ -71,7 +90,15 @@ public class DictionaryViewController implements Initializable{
                 {
                     Word editedWord = event.getTableView().getItems().get(event.getTablePosition().getRow());
                     editedWord.setTranslation(event.getNewValue());
-                    WordDAO.getInstance().update(editedWord);
+                    if (WordDAO.getInstance().contains(editedWord)) {
+                        WordDAO.getInstance().update(editedWord);
+                    } else {
+                        if (!editedWord.getTranslation().get().isEmpty() && !editedWord.getWord().get().isEmpty()) {
+                            WordDAO.getInstance().create(editedWord);
+                            loadWordsFor(chb_language.getSelectionModel().getSelectedItem());
+                        }
+                    }
+
                 }
         );
 
@@ -99,18 +126,12 @@ public class DictionaryViewController implements Initializable{
             tblView_wordTranslation.getItems().clear();
             paginatorManager.goToPage(param);
             tblView_wordTranslation.setItems(FXCollections.observableArrayList(addedWords.subList(paginatorManager.getStartIndexForNextPageElements(), paginatorManager.getLastIndexForNextPageElements())));
+            if (paginatorManager.getCurrentPage() == 1 && tblView_wordTranslation.getItems().get(0).getId() != 0)
+                tblView_wordTranslation.getItems().add(0, new Word("", "", lang));
             return new VBox();
         });
 
 
-    }
-
-    public void addWord(ActionEvent actionEvent) {
-        if (!txtb_word.getText().isEmpty() && !txtb_translation.getText().isEmpty() && chb_language.getSelectionModel().getSelectedItem() != null){
-            WordDAO.getInstance().create(new Word(txtb_word.getText(), txtb_translation.getText(), chb_language.getSelectionModel().getSelectedItem()));
-            tblView_wordTranslation.getItems().clear();
-            loadWordsFor(chb_language.getSelectionModel().getSelectedItem());
-        }
     }
 
     public void apply(ActionEvent actionEvent) {
