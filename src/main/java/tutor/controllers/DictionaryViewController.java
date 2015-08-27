@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
 import tutor.dao.LanguageDAO;
 import tutor.dao.WordDAO;
@@ -56,6 +57,23 @@ public class DictionaryViewController implements Initializable{
     private void initializeUI(){
         table_word.setCellValueFactory(param -> param.getValue().getWord());
         table_translation.setCellValueFactory(param -> param.getValue().getTranslation());
+        table_word.setCellFactory(TextFieldTableCell.forTableColumn());
+        table_translation.setCellFactory(TextFieldTableCell.forTableColumn());
+        table_word.setOnEditCommit(event ->
+                {
+                    Word editedWord = event.getTableView().getItems().get(event.getTablePosition().getRow());
+                    editedWord.setWord(event.getNewValue());
+                    WordDAO.getInstance().update(editedWord);
+                }
+        );
+
+        table_translation.setOnEditCommit(event ->
+                {
+                    Word editedWord = event.getTableView().getItems().get(event.getTablePosition().getRow());
+                    editedWord.setTranslation(event.getNewValue());
+                    WordDAO.getInstance().update(editedWord);
+                }
+        );
 
         ObservableList<Language> languages = FXCollections.observableList(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId()));
         chb_language.setItems(languages);

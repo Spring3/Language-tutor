@@ -201,11 +201,11 @@ public class WordDAO implements IDAO<Word> {
     public boolean update(Word value) {
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("UPDATE WORD SET id=?, word=?, word_translation=?, lang_id=?;");
-            statement.setInt(1, value.getId());
-            statement.setString(2, value.getWord().get());
-            statement.setString(3, value.getTranslation().get());
-            statement.setInt(4, value.getLang().getId());
+            PreparedStatement statement = connection.prepareStatement("UPDATE WORD SET word=?, word_translation=?, lang_id=? WHERE id=?;");
+            statement.setString(1, value.getWord().get());
+            statement.setString(2, value.getTranslation().get());
+            statement.setInt(3, value.getLang().getId());
+            statement.setInt(4, value.getId());
             statement.executeUpdate();
             connection.close();
             return true;
