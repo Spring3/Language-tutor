@@ -56,9 +56,21 @@ public class LanguageSettingsController implements Initializable {
                 listView_allLanguages.setItems(filteredLanguages);
             }
         });
+
+        listView_allLanguages.setOnMouseClicked(value ->{
+            if (value.getClickCount() == 2){
+                saveLanguage();
+            }
+        });
+
+        listView_languages.setOnMouseClicked(value ->{
+            if (value.getClickCount() == 2){
+                deleteLanguage();
+            }
+        });
     }
 
-    public void btn_addLanguage_clicked(ActionEvent actionEvent) {
+    private void saveLanguage(){
         Language selectedLanguage = listView_allLanguages.getSelectionModel().getSelectedItem();
         LanguageDAO.getInstance().assignLangToCurrentUser(selectedLanguage);
         Refresh();
@@ -74,7 +86,7 @@ public class LanguageSettingsController implements Initializable {
         listView_languages.setItems(userLanguages);
     }
 
-    public void btn_deleteLanguage_clicked(ActionEvent actionEvent) {
+    private void deleteLanguage(){
         Language selectedLang = listView_languages.getSelectionModel().getSelectedItem();
         if (selectedLang != null) {
             listView_languages.getItems().remove(selectedLang);

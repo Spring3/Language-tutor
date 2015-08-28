@@ -72,15 +72,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="DictionaryViewController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DictionaryViewController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/DictionaryViewController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4853273">
+            <state vertical-scroll-proportion="0.0">
               <caret line="78" column="91" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#initializeTableViewColumns#0;class#DictionaryViewController#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LanguageSettingsController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/LanguageSettingsController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.3476298">
+              <caret line="67" column="33" selection-start-line="67" selection-start-column="33" selection-end-line="67" selection-end-column="33" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -147,19 +157,6 @@
             <state vertical-scroll-proportion="0.0">
               <caret line="142" column="0" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/tutor/models/User.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="23" column="40" selection-start-line="23" selection-start-column="40" selection-end-line="23" selection-end-column="40" />
-              <folding>
-                <element signature="e#2350#2351#0" expanded="true" />
-                <element signature="e#2392#2393#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -240,7 +237,6 @@
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/AddLanguageController.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/SettingsController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/view/languageSettings.fxml" />
-        <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/LanguageSettingsController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/view/fileImport.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/util/ConfigKeys.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/util/DataSourceType.java" />
@@ -266,6 +262,7 @@
         <option value="$PROJECT_DIR$/src/main/java/tutor/util/BasicParser.java" />
         <option value="$PROJECT_DIR$/src/main/resources/locale/lang_en.properties" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/DictionaryViewController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/LanguageSettingsController.java" />
       </list>
     </option>
   </component>
@@ -1077,12 +1074,12 @@
       <workItem from="1440526539127" duration="9723000" />
       <workItem from="1440606972025" duration="18161000" />
       <workItem from="1440695237116" duration="11432000" />
-      <workItem from="1440760949020" duration="20282000" />
+      <workItem from="1440760949020" duration="20923000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="592298000" />
+    <option name="totallyTimeSpent" value="592939000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1105,7 +1102,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1322,14 +1319,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="41" column="18" selection-start-line="41" selection-start-column="18" selection-end-line="41" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/LanguageSettingsController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="87" column="25" selection-start-line="83" selection-start-column="12" selection-end-line="87" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1640,12 +1629,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/DictionaryViewController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4853273">
+        <state vertical-scroll-proportion="0.0">
           <caret line="78" column="91" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#initializeTableViewColumns#0;class#DictionaryViewController#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/LanguageSettingsController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3476298">
+          <caret line="67" column="33" selection-start-line="67" selection-start-column="33" selection-end-line="67" selection-end-column="33" />
+          <folding />
         </state>
       </provider>
     </entry>
