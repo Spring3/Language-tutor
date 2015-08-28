@@ -15,12 +15,13 @@ public class User {
 
     }
 
-    public User(String userName, int password){
+    public User(String userName, int password, Language nativeLanguage){
        setUserName(userName);
         setPassword(password);
         setSuccess_rate(0f);
         setDateOfRegistery(Timestamp.valueOf(LocalDateTime.now()));
         setSeed(new Random().nextInt(Integer.MAX_VALUE));
+        setNativeLanguage(nativeLanguage);
     }
 
     public User(int id, String username, String email, int password, Timestamp dateOfRegistery, float success_rate, int seed) {

@@ -39,7 +39,7 @@ public class PaginatorManager {
     }
 
     public int getTotalPages(){
-        return totalPages;
+        return totalPages == 0 ? 1 : totalPages;
     }
 
     public void setTotalPages(int totalPages){
