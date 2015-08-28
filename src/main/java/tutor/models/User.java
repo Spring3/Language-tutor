@@ -40,6 +40,7 @@ public class User {
     private Timestamp dateOfRegistery;
     private float success_rate;
     private int seed;
+    private Language nativeLanguage;
 
     public int getSeed() {
         return seed;
@@ -95,6 +96,14 @@ public class User {
 
     public void setPassword(int password) {
         this.password = password;
+    }
+
+    public Language getNativeLanguage(){
+        return nativeLanguage;
+    }
+
+    public void setNativeLanguage(Language lang){
+        this.nativeLanguage = lang;
     }
 
 

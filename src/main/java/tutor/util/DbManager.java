@@ -81,11 +81,11 @@ public class DbManager {
      */
     public void initializeDb(){
         String[] initQueries = new String[]{
-                "CREATE TABLE IF NOT EXISTS USERS(id integer IDENTITY PRIMARY KEY , username varchar(40), email varchar(40), password varchar(100), register_date timestamp, success_rate decimal(5,2), seed int);",
                 "CREATE TABLE IF NOT EXISTS LANGUAGES(id integer IDENTITY PRIMARY KEY, lang_name varchar(40));",
-                "CREATE TABLE IF NOT EXISTS WORD(id integer IDENTITY PRIMARY KEY, word varchar(100), word_translation varchar(100), lang_id integer);",
-                "CREATE TABLE IF NOT EXISTS USER_WORD(user_id integer, word_id integer);",
-                "CREATE TABLE IF NOT EXISTS USER_LANG(user_id integer, lang_id integer);",
+                "CREATE TABLE IF NOT EXISTS USERS(id integer IDENTITY PRIMARY KEY , username varchar(40), email varchar(40), password varchar(100), register_date timestamp, success_rate decimal(5,2), seed int, lang_id integer, FOREIGN KEY (lang_id) REFERENCES LANGUAGES(id);",
+                "CREATE TABLE IF NOT EXISTS WORD(id integer IDENTITY PRIMARY KEY, article varchar(10), word varchar(100), word_translation varchar(100), lang_id integer, translation_id integer, FOREIGN KEY (lang_id) REFERENCES LANGUAGES(id), FOREIGN KEY (translation_id) REFERENCES LANGUAGES(id));",
+                "CREATE TABLE IF NOT EXISTS USER_WORD(user_id integer, word_id integer, FOREIGN KEY (user_id) REFERENCES USERS(id), FOREIGN KEY(user_id) REFERENCES WORD(id);",
+                "CREATE TABLE IF NOT EXISTS USER_LANG(user_id integer, lang_id integer, FOREIGN KEY (user_id) REFERENCES USERS(id), FOREIGN KEY(lang_id) REFERENCES LANGUAGES(id));",
                 "INSERT INTO LANGUAGES (lang_name) VALUES ('Afrikaans');",
                 "INSERT INTO LANGUAGES (lang_name) VALUES ('Albanian');",
                 "INSERT INTO LANGUAGES (lang_name) VALUES ('Arabic');",

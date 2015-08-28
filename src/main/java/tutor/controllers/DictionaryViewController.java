@@ -116,18 +116,18 @@ public class DictionaryViewController implements Initializable{
 
     }
 
-    private void loadWordsFor(Language lang){
-        ObservableList<Word> words = FXCollections.observableArrayList(WordDAO.getInstance().readAllByLangForActiveUser(lang));
+    private void loadWordsFor(Language wordLang){
+        ObservableList<Word> words = FXCollections.observableArrayList(WordDAO.getInstance().readAllByLangForActiveUser(wordLang));
         paginatorManager = new PaginatorManager(words.size());
         paginator.setPageCount(paginatorManager.getTotalPages());
         paginator.setCurrentPageIndex(paginatorManager.getCurrentPage() - 1);
         paginator.setPageFactory(param -> {
-            ObservableList<Word> addedWords = FXCollections.observableArrayList(WordDAO.getInstance().readAllByLangForActiveUser(lang));
+            ObservableList<Word> addedWords = FXCollections.observableArrayList(WordDAO.getInstance().readAllByLangForActiveUser(wordLang));
             tblView_wordTranslation.getItems().clear();
             paginatorManager.goToPage(param);
             tblView_wordTranslation.setItems(FXCollections.observableArrayList(addedWords.subList(paginatorManager.getStartIndexForNextPageElements(), paginatorManager.getLastIndexForNextPageElements())));
             if (paginatorManager.getCurrentPage() == 1 && tblView_wordTranslation.getItems().get(0).getId() != 0)
-                tblView_wordTranslation.getItems().add(0, new Word("", "", lang));
+                tblView_wordTranslation.getItems().add(0, new Word("", "", wordLang, AuthController.getActiveUser().getNativeLanguage()));
             return new VBox();
         });
 

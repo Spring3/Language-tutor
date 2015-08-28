@@ -41,6 +41,7 @@ public class FileImportViewController implements Initializable{
     private ResourceBundle bundle;
     private StageManager stageManager;
     private Language selectedLanguage;
+    private Language selectedTranslationLanguage;
     private File selectedFile;
 
 
@@ -97,7 +98,7 @@ public class FileImportViewController implements Initializable{
         if (selectedFile != null) {
             //Writing a selected file's path to the textfield
             textField_filePath.setText(selectedFile.getAbsolutePath());
-            new BasicParser().parse(selectedFile, selectedLanguage);
+            new BasicParser().parse(selectedFile, selectedLanguage, selectedTranslationLanguage);
 
             textField_filePath.setDisable(false);
             textField_filePath.textProperty().addListener((observable1, oldValue1, newValue1) -> {

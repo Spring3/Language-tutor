@@ -29,8 +29,8 @@ public class Word {
     private StringProperty article;
     private StringProperty word;
     private StringProperty translation;
-    private Language word_lang;
-    private Language translation_lang;
+    private Language wordLang;
+    private Language translationLang;
 
     @Override
     public boolean equals(Object o) {
@@ -42,8 +42,8 @@ public class Word {
         if (getArticle() != null ? !getArticle().equals(word1.getArticle()) : word1.getArticle() != null) return false;
         if (!getWord().equals(word1.getWord())) return false;
         if (!getTranslation().equals(word1.getTranslation())) return false;
-        if (!word_lang.equals(word1.word_lang)) return false;
-        return translation_lang.equals(word1.translation_lang);
+        if (!wordLang.equals(word1.wordLang)) return false;
+        return translationLang.equals(word1.translationLang);
 
     }
 
@@ -52,8 +52,8 @@ public class Word {
         int result = getArticle() != null ? getArticle().hashCode() : 0;
         result = 31 * result + getWord().hashCode();
         result = 31 * result + getTranslation().hashCode();
-        result = 31 * result + word_lang.hashCode();
-        result = 31 * result + translation_lang.hashCode();
+        result = 31 * result + wordLang.hashCode();
+        result = 31 * result + translationLang.hashCode();
         return result;
     }
 
@@ -90,19 +90,19 @@ public class Word {
     }
 
     public Language getWordLang() {
-        return word_lang;
+        return wordLang;
     }
 
     public void setWordLang(Language lang) {
-        this.word_lang = lang;
+        this.wordLang = lang;
     }
 
     public Language getTranslationLang(){
-        return translation_lang;
+        return translationLang;
     }
 
-    public void setTranslation_lang(Language lang) {
-        this.translation_lang = lang;
+    public void setTranslationLang(Language lang) {
+        this.translationLang = lang;
     }
 
 }

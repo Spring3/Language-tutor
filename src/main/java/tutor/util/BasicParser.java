@@ -12,7 +12,7 @@ public class BasicParser implements FileParser {
 
     }
 
-    public void parse(File file, Language lang){
-        FileParser.super.parse(file, lang);
+    public void parse(File file, Language lang, Language translationLang){
+        FileParser.super.parse(file, lang, translationLang);
     }
 }
