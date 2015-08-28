@@ -17,12 +17,15 @@ public class Word {
         this.word = new SimpleStringProperty(word);
         this.translation = new SimpleStringProperty(translation);
         setWordLang(word_lang);
+        setTranslationLang(translation_lang);
     }
 
     public Word(String article, String word, String translation, Language word_lang, Language translation_lang){
         this.article = new SimpleStringProperty(article);
         this.word = new SimpleStringProperty(word);
         this.translation = new SimpleStringProperty(translation);
+        setWordLang(word_lang);
+        setTranslationLang(translation_lang);
     }
 
     private int id;

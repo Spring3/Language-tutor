@@ -15,12 +15,13 @@
             <Pagination fx:id="paginator" layoutX="12.0" layoutY="97.0" prefHeight="456.0" prefWidth="591.0" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="97.0" />
             <TableView fx:id="tblView_wordTranslation" editable="true" layoutX="12.0" layoutY="73.0" prefHeight="429.0" prefWidth="593.0" styleClass="settings_tableview" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="73.0">
               <columns>
-                  <TableColumn prefWidth="75.0" sortable="false" text="%label_article" visible="false" />
+                  <TableColumn fx:id="table_articles" prefWidth="75.0" sortable="false" text="%label_article" visible="false" />
                 <TableColumn fx:id="table_word" maxWidth="250.0" prefWidth="250.0" sortable="false" text="%prompt_label_word" />
                 <TableColumn fx:id="table_translation" maxWidth="250.0" prefWidth="250.0" sortable="false" text="%prompt_label_translation" />
                   <TableColumn fx:id="table_remove" editable="false" maxWidth="75.0" prefWidth="75.0" resizable="false" sortable="false" text="%label_delete" />
               </columns>
             </TableView>
+            <CheckBox fx:id="check_articles" layoutX="351.0" layoutY="27.0" mnemonicParsing="false" styleClass="settings_checkbox" text="%label_articles?" />
          </children>
       </AnchorPane>
    </center>

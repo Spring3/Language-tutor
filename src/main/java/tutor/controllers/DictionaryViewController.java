@@ -3,13 +3,11 @@ package tutor.controllers;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 import tutor.dao.LanguageDAO;
 import tutor.dao.WordDAO;
 import tutor.models.Language;
@@ -17,8 +15,6 @@ import tutor.models.Word;
 import tutor.util.PaginatorManager;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -28,19 +24,23 @@ import java.util.ResourceBundle;
 public class DictionaryViewController implements Initializable{
 
     @FXML
-    public ChoiceBox<Language> chb_language;
+    private ChoiceBox<Language> chb_language;
     @FXML
-    public Pagination paginator;
+    private Pagination paginator;
     @FXML
-    public TableView<Word> tblView_wordTranslation;
+    private TableView<Word> tblView_wordTranslation;
     @FXML
-    public Button btn_apply;
+    private Button btn_apply;
     @FXML
-    public TableColumn<Word, String> table_word;
+    private TableColumn<Word, String> table_word;
     @FXML
-    public TableColumn<Word, String> table_translation;
+    private TableColumn<Word, String> table_translation;
     @FXML
-    public TableColumn<Word, Button> table_remove;
+    private TableColumn<Word, Button> table_remove;
+    @FXML
+    private TableColumn<Word, String> table_articles;
+    @FXML
+    private CheckBox check_articles;
 
     private PaginatorManager paginatorManager;
 
@@ -55,8 +55,31 @@ public class DictionaryViewController implements Initializable{
     private void initializeUI(){
         table_word.setCellValueFactory(param -> param.getValue().getWord());
         table_translation.setCellValueFactory(param -> param.getValue().getTranslation());
+        table_articles.setCellValueFactory(param -> param.getValue().getArticle());
         table_word.setCellFactory(TextFieldTableCell.forTableColumn());
         table_translation.setCellFactory(TextFieldTableCell.forTableColumn());
+        table_articles.setCellFactory(TextFieldTableCell.forTableColumn());;
+        initializeTableViewColumns();
+
+        check_articles.selectedProperty().addListener((observable1, oldValue1, newValue1) -> {
+            table_articles.setVisible(newValue1);
+        });
+
+        ObservableList<Language> languages = FXCollections.observableList(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId()));
+        chb_language.setItems(languages);
+        chb_language.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.equals(oldValue)) {
+                loadWordsFor(newValue);
+            }
+        });
+        try {
+            chb_language.setValue(chb_language.getItems().get(0));
+        }
+        catch (IndexOutOfBoundsException ex){}
+
+    }
+
+    private void initializeTableViewColumns(){
         table_remove.setCellValueFactory(param -> {
             Button button = new Button("x");
             button.getStyleClass().add("custombutton");
@@ -101,19 +124,6 @@ public class DictionaryViewController implements Initializable{
 
                 }
         );
-
-        ObservableList<Language> languages = FXCollections.observableList(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId()));
-        chb_language.setItems(languages);
-        chb_language.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.equals(oldValue)) {
-                loadWordsFor(newValue);
-            }
-        });
-        try {
-            chb_language.setValue(chb_language.getItems().get(0));
-        }
-        catch (IndexOutOfBoundsException ex){}
-
     }
 
     private void loadWordsFor(Language wordLang){
@@ -125,12 +135,13 @@ public class DictionaryViewController implements Initializable{
             ObservableList<Word> addedWords = FXCollections.observableArrayList(WordDAO.getInstance().readAllByLangForActiveUser(wordLang));
             tblView_wordTranslation.getItems().clear();
             paginatorManager.goToPage(param);
-            tblView_wordTranslation.setItems(FXCollections.observableArrayList(addedWords.subList(paginatorManager.getStartIndexForNextPageElements(), paginatorManager.getLastIndexForNextPageElements())));
-            if (addedWords.size() > 0 && paginatorManager.getCurrentPage() == 1 && tblView_wordTranslation.getItems().get(0).getId() != 0)
+            try {
+                tblView_wordTranslation.setItems(FXCollections.observableArrayList(addedWords.subList(paginatorManager.getStartIndexForNextPageElements(), paginatorManager.getLastIndexForNextPageElements())));
+            }
+            catch (IndexOutOfBoundsException ex){}
+            if (addedWords.size() > 0 && paginatorManager.getCurrentPage() == 1 && tblView_wordTranslation.getItems().size() > 0 &&tblView_wordTranslation.getItems().get(0).getId() != 0)
                 tblView_wordTranslation.getItems().add(0, new Word("", "", wordLang, AuthController.getActiveUser().getNativeLanguage()));
             return new VBox();
         });
-
-
     }
 }
