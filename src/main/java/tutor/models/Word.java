@@ -8,20 +8,54 @@ import javafx.beans.property.StringProperty;
  */
 public class Word {
     public Word(){
+        this.article = new SimpleStringProperty();
         this.word = new SimpleStringProperty();
         this.translation = new SimpleStringProperty();
     }
 
-    public Word(String word, String translation, Language lang){
+    public Word(String word, String translation, Language word_lang, Language translation_lang){
         this.word = new SimpleStringProperty(word);
         this.translation = new SimpleStringProperty(translation);
-        setLang(lang);
+        setWordLang(word_lang);
+    }
+
+    public Word(String article, String word, String translation, Language word_lang, Language translation_lang){
+        this.article = new SimpleStringProperty(article);
+        this.word = new SimpleStringProperty(word);
+        this.translation = new SimpleStringProperty(translation);
     }
 
     private int id;
+    private StringProperty article;
     private StringProperty word;
     private StringProperty translation;
-    private Language lang;
+    private Language word_lang;
+    private Language translation_lang;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Word word1 = (Word) o;
+
+        if (getArticle() != null ? !getArticle().equals(word1.getArticle()) : word1.getArticle() != null) return false;
+        if (!getWord().equals(word1.getWord())) return false;
+        if (!getTranslation().equals(word1.getTranslation())) return false;
+        if (!word_lang.equals(word1.word_lang)) return false;
+        return translation_lang.equals(word1.translation_lang);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getArticle() != null ? getArticle().hashCode() : 0;
+        result = 31 * result + getWord().hashCode();
+        result = 31 * result + getTranslation().hashCode();
+        result = 31 * result + word_lang.hashCode();
+        result = 31 * result + translation_lang.hashCode();
+        return result;
+    }
 
     public int getId(){
         return id;
@@ -47,32 +81,28 @@ public class Word {
         this.translation.set(translation);
     }
 
-    public Language getLang() {
-        return lang;
+    public StringProperty getArticle(){
+        return article;
     }
 
-    public void setLang(Language lang) {
-        this.lang = lang;
+    public void setArticle(String article){
+        this.article.set(article);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Word word1 = (Word) o;
-
-        if (!word.equals(word1.word)) return false;
-        if (translation != null ? !translation.equals(word1.translation) : word1.translation != null) return false;
-        return lang.equals(word1.lang);
-
+    public Language getWordLang() {
+        return word_lang;
     }
 
-    @Override
-    public int hashCode() {
-        int result = word.hashCode();
-        result = 31 * result + (translation != null ? translation.hashCode() : 0);
-        result = 31 * result + lang.hashCode();
-        return result;
+    public void setWordLang(Language lang) {
+        this.word_lang = lang;
     }
+
+    public Language getTranslationLang(){
+        return translation_lang;
+    }
+
+    public void setTranslation_lang(Language lang) {
+        this.translation_lang = lang;
+    }
+
 }

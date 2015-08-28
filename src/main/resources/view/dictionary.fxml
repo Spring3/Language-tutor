@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="577.0" prefWidth="617.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tutor.controllers.DictionaryViewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="577.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tutor.controllers.DictionaryViewController">
    <center>
       <AnchorPane prefHeight="538.0" prefWidth="617.0" styleClass="settings_anchorpane" BorderPane.alignment="CENTER">
          <children>
@@ -15,6 +15,7 @@
             <Pagination fx:id="paginator" layoutX="12.0" layoutY="97.0" prefHeight="456.0" prefWidth="591.0" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="97.0" />
             <TableView fx:id="tblView_wordTranslation" editable="true" layoutX="12.0" layoutY="73.0" prefHeight="429.0" prefWidth="593.0" styleClass="settings_tableview" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="73.0">
               <columns>
+                  <TableColumn prefWidth="75.0" sortable="false" text="%label_article" visible="false" />
                 <TableColumn fx:id="table_word" maxWidth="250.0" prefWidth="250.0" sortable="false" text="%prompt_label_word" />
                 <TableColumn fx:id="table_translation" maxWidth="250.0" prefWidth="250.0" sortable="false" text="%prompt_label_translation" />
                   <TableColumn fx:id="table_remove" editable="false" maxWidth="75.0" prefWidth="75.0" resizable="false" sortable="false" text="%label_delete" />
