@@ -22,4 +22,12 @@ public final class ResourceBundleKeys {
     public static final String SHORT_NAME = "short_name";
     public static final String SHORT_PASS = "short_pass";
     public static final String DIALOGS_INFO_LANG_NOT_SELECTED = "dialogs_info_lang_not_selected";
+    public static final String LABEL_DICTATION = "label_dictation";
+    public static final String LABEL_STATISTICS = "menuItem_statistics";
+    public static final String LABEL_ABOUT = "menuItem_about";
+    public static final String LABEL_DICTIONARY = "menuItem_dictionary";
+    public static final String LABEL_LANGUAGE_SETTINGS = "lang_settings_header";
+    public static final String LABEL_IMPORT = "btn_import";
+    public static final String LABEL_LOCALE = "menuItem_locale";
+    public static final String LABEL_THEME = "menuItem_theme";
 }

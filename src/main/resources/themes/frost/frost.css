@@ -203,11 +203,11 @@
 //MAIN VIEW
 .newsItem {
   -fx-border-color: #375486;
-  -fx-opacity: 0.6;
+  -fx-opacity: 0.8;
 }
 
 .newsItem:hover:pressed {
-  -fx-opacity: 0.8;
+  -fx-opacity: 0.9;
 }
 
 .newsItem:hover{
@@ -221,10 +221,6 @@
 
 #img_smallRes{
   -fx-image: url("icons/twitter-icon.png");
-}
-
-#img_highRes{
-  -fx-image: url("icons/Screenshot_3.png");
 }
 
 #img_tall{

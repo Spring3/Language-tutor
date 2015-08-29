@@ -9,13 +9,19 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import sun.plugin.javascript.navig.Anchor;
 import tutor.Main;
 import tutor.dao.LanguageDAO;
 import tutor.models.Language;
 import tutor.util.DbManager;
+import tutor.util.ResourceBundleKeys;
 import tutor.util.StageManager;
+
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -60,19 +66,9 @@ public class Controller implements Initializable
     @FXML
     private MenuItem mItem_dictionary;
     @FXML
-    private Label history_header;
-    @FXML
-    private AnchorPane newsItem;
-    @FXML
-    private ImageView history_img;
-    @FXML
     private ImageView newsItemImage;
     @FXML
     private ChoiceBox<Language> choiceBox_lang_to_learn;
-    @FXML
-    private ImageView offlineTask_img;
-    @FXML
-    private Label offlineTask_header;
     @FXML
     private MenuItem mItem_newTask;
     @FXML
@@ -85,9 +81,15 @@ public class Controller implements Initializable
     private AnchorPane taskPane;
     @FXML
     private Tab workbench;
+    @FXML
+    private ImageView task_dictation_img;
+    @FXML
+    private Label task_dictation_header;
+    private ResourceBundle bundle;
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
+        bundle = rb;
         ObservableList<Language> currentUserLanguages = FXCollections.observableArrayList(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId()));
         choiceBox_lang_to_learn.setItems(currentUserLanguages);
         try {
@@ -95,6 +97,8 @@ public class Controller implements Initializable
         }
         catch (IndexOutOfBoundsException ex){}
         scrollPane.setFitToWidth(true);
+        task_dictation_img.setImage(new Image(Main.class.getClassLoader().getResource("tasks/dictation/dictation-image.jpg").toExternalForm(), true));
+
     }
 
     @FXML
@@ -107,48 +111,40 @@ public class Controller implements Initializable
         stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.NEWS_ITEM_VIEW_PATH), newsItemLabel.getText(), 1, Optional.empty());
     }
 
-    public void offlineTaskClicked(Event event) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.OFFLINE_TASK_VIEW_PATH), offlineTask_header.getText(), 1, Optional.empty());
-    }
-
-    public void onlineTaskClicked(Event event) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.ONLINE_TASK_VIEW_PATH), onlineTask_header.getText(), 1, Optional.empty());
-    }
-
-    public void historyItemClicked(Event event) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.HISTORY_ITEM_VIEW_PATH), history_header.getText(), 1, Optional.empty());
-    }
-
     public void statisticsClicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.USER_RATE_VIEW_PATH), "Statistics", 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.USER_RATE_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_STATISTICS), 1, Optional.empty());
     }
 
     public void menuItem_about_clicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.ABOUT_VIEW_PATH), "About", 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.ABOUT_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_ABOUT), 1, Optional.empty());
     }
 
     public void menuItem_dictionary_clicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.DICTIONARY_VIEW_PATH), "Dictionary", 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.DICTIONARY_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_DICTIONARY), 1, Optional.empty());
     }
 
     public void editLangClicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.LANGUAGE_SETTINGS_VIEW_PATH), "Language Settings", 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.LANGUAGE_SETTINGS_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_LANGUAGE_SETTINGS), 1, Optional.empty());
     }
 
     public void importFileClicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.FILE_IMPORT_VIEW_PATH), "Import file", 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.FILE_IMPORT_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_IMPORT), 1, Optional.empty());
     }
 
     public void localeClicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.LOCALE_VIEW_PATH), "Locale Settings", 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.LOCALE_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_LOCALE), 1, Optional.empty());
     }
 
     public void themeClicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.THEME_SETTINGS_VIEW_PATH), "Theme Settings", 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.THEME_SETTINGS_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_THEME), 1, Optional.empty());
     }
 
     public void LogOut(ActionEvent actionEvent) {
         AuthController.setActiveUser(null);
         stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.AUTHENTICATION_VIEW_PATH), "Language Tutor", 0, Optional.empty());
+    }
+
+    public void dictationTaskClicked(Event event) {
+        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.TASKVIEW_DICTATION_PATH), bundle.getString(ResourceBundleKeys.LABEL_DICTATION), 1, Optional.empty());
     }
 }

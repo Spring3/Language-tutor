@@ -26,19 +26,19 @@
             </Menu>
           <Menu mnemonicParsing="false" styleClass="topmenubutton" text="%menuItem_settings">
             <items>
-                  <MenuItem fx:id="mItem_lang" mnemonicParsing="false" onAction="#editLangClicked" text="Language" />
-                  <MenuItem fx:id="mItem_importFile" mnemonicParsing="false" onAction="#importFileClicked" text="Import File" />
-                  <MenuItem fx:id="mItem_locale" mnemonicParsing="false" onAction="#localeClicked" text="Locale" />
-                  <MenuItem fx:id="mItem_theme" mnemonicParsing="false" onAction="#themeClicked" text="Theme" />
+                  <MenuItem fx:id="mItem_lang" mnemonicParsing="false" onAction="#editLangClicked" text="%label_settings_lang" />
+                  <MenuItem fx:id="mItem_importFile" mnemonicParsing="false" onAction="#importFileClicked" text="%btn_import" />
+                  <MenuItem fx:id="mItem_locale" mnemonicParsing="false" onAction="#localeClicked" text="%menuItem_locale" />
+                  <MenuItem fx:id="mItem_theme" mnemonicParsing="false" onAction="#themeClicked" text="%menuItem_theme" />
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="Progress">
+            <Menu mnemonicParsing="false" text="%menuItem_progress">
               <items>
               <MenuItem fx:id="mItem_dictionary" mnemonicParsing="false" onAction="#menuItem_dictionary_clicked" text="%menuItem_dictionary" />
                   <MenuItem fx:id="mItem_statistics" mnemonicParsing="false" onAction="#statisticsClicked" text="%menuItem_statistics" />
               </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Help">
+            <Menu mnemonicParsing="false" text="%menuItem_help">
               <items>
                   <MenuItem fx:id="mItem_about" mnemonicParsing="false" onAction="#menuItem_about_clicked" text="%menuItem_about" />
                   <MenuItem fx:id="mItem_check4Updates" mnemonicParsing="false" text="%menuItem_check4Updates" />
@@ -105,23 +105,26 @@
                                                  <children>
                                                     <AnchorPane prefHeight="144.0" prefWidth="200.0" styleClass="newsItem">
                                                        <children>
-                                                          <ImageView id="img_highRes" fx:id="offlineTask_img" fitHeight="150.0" fitWidth="200.0" layoutY="-3.0" onMouseClicked="#offlineTaskClicked" styleClass="newsImage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                          <ImageView id="img_highRes" fx:id="task_dictation_img" fitHeight="150.0" fitWidth="200.0" layoutY="-3.0" onMouseClicked="#dictationTaskClicked" styleClass="newsImage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <image>
+                                                            <Image url="@../tasks/dictation/dictation-image.jpg" />
+                                                         </image></ImageView>
                                                           <Label alignment="CENTER" layoutX="1.0" layoutY="122.0" prefHeight="28.0" prefWidth="200.0" styleClass="blurredLabel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="116.0" />
-                                                          <Label fx:id="offlineTask_header" alignment="CENTER" layoutX="3.0" layoutY="124.0" prefHeight="35.0" prefWidth="199.0" styleClass="settings_label" text="Hello world!" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                                                          <Label fx:id="task_dictation_header" alignment="CENTER" layoutX="3.0" layoutY="124.0" prefHeight="35.0" prefWidth="199.0" styleClass="settings_label" text="%label_dictation" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                                                        </children>
                                                     </AnchorPane>
                                                 <AnchorPane prefHeight="144.0" prefWidth="200.0" styleClass="newsItem">
                                                    <children>
-                                                      <ImageView id="img_highRes" fx:id="offlineTask_img1" fitHeight="150.0" fitWidth="200.0" layoutY="-3.0" onMouseClicked="#offlineTaskClicked" styleClass="newsImage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                      <ImageView id="img_highRes" fx:id="offlineTask_img1" fitHeight="150.0" fitWidth="200.0" layoutY="-3.0" styleClass="newsImage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                       <Label alignment="CENTER" layoutX="1.0" layoutY="122.0" prefHeight="28.0" prefWidth="200.0" styleClass="blurredLabel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="116.0" />
-                                                      <Label fx:id="offlineTask_header1" alignment="CENTER" layoutX="3.0" layoutY="124.0" prefHeight="35.0" prefWidth="199.0" styleClass="settings_label" text="Hello world!" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                                                      <Label fx:id="task_header1" alignment="CENTER" layoutX="3.0" layoutY="124.0" prefHeight="35.0" prefWidth="199.0" styleClass="settings_label" text="Hello world!" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                                                    </children>
                                                 </AnchorPane>
                                                 <AnchorPane prefHeight="144.0" prefWidth="200.0" styleClass="newsItem">
                                                    <children>
-                                                      <ImageView id="img_highRes" fx:id="offlineTask_img2" fitHeight="150.0" fitWidth="200.0" layoutY="-3.0" onMouseClicked="#offlineTaskClicked" styleClass="newsImage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                      <ImageView id="img_highRes" fx:id="offlineTask_img2" fitHeight="150.0" fitWidth="200.0" layoutY="-3.0" styleClass="newsImage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                       <Label alignment="CENTER" layoutX="1.0" layoutY="122.0" prefHeight="28.0" prefWidth="200.0" styleClass="blurredLabel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="116.0" />
-                                                      <Label fx:id="offlineTask_header2" alignment="CENTER" layoutX="3.0" layoutY="124.0" prefHeight="35.0" prefWidth="199.0" styleClass="settings_label" text="Hello world!" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                                                      <Label fx:id="task_header2" alignment="CENTER" layoutX="3.0" layoutY="124.0" prefHeight="35.0" prefWidth="199.0" styleClass="settings_label" text="Hello world!" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                                                    </children>
                                                 </AnchorPane>
                                                  </children>
