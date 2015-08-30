@@ -86,16 +86,21 @@ public class Controller implements Initializable
     @FXML
     private Label task_dictation_header;
     private ResourceBundle bundle;
+    public static Language selectedLanguage;
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
         bundle = rb;
         ObservableList<Language> currentUserLanguages = FXCollections.observableArrayList(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId()));
         choiceBox_lang_to_learn.setItems(currentUserLanguages);
+        choiceBox_lang_to_learn.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            selectedLanguage = newValue;
+        });
         try {
             choiceBox_lang_to_learn.setValue(choiceBox_lang_to_learn.getItems().get(0));
         }
         catch (IndexOutOfBoundsException ex){}
+
         scrollPane.setFitToWidth(true);
         task_dictation_img.setImage(new Image(Main.class.getClassLoader().getResource("tasks/dictation/dictation-image.jpg").toExternalForm(), true));
 
