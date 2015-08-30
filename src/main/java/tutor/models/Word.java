@@ -108,4 +108,8 @@ public class Word {
         this.translationLang = lang;
     }
 
+    @Override
+    public String toString() {
+        return getArticle().get() + " " + getWord().get();
+    }
 }

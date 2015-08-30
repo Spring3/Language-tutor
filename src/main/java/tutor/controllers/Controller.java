@@ -113,43 +113,43 @@ public class Controller implements Initializable
     }
 
     public void newsItemClicked(Event event) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.NEWS_ITEM_VIEW_PATH), newsItemLabel.getText(), 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.NEWS_ITEM_VIEW_PATH), newsItemLabel.getText(), 1, Optional.empty(), false);
     }
 
     public void statisticsClicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.USER_RATE_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_STATISTICS), 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.USER_RATE_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_STATISTICS), 1, Optional.empty(), false);
     }
 
     public void menuItem_about_clicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.ABOUT_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_ABOUT), 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.ABOUT_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_ABOUT), 1, Optional.empty(), false);
     }
 
     public void menuItem_dictionary_clicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.DICTIONARY_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_DICTIONARY), 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.DICTIONARY_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_DICTIONARY), 1, Optional.empty(), false);
     }
 
     public void editLangClicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.LANGUAGE_SETTINGS_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_LANGUAGE_SETTINGS), 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.LANGUAGE_SETTINGS_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_LANGUAGE_SETTINGS), 1, Optional.empty(), false);
     }
 
     public void importFileClicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.FILE_IMPORT_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_IMPORT), 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.FILE_IMPORT_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_IMPORT), 1, Optional.empty(), false);
     }
 
     public void localeClicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.LOCALE_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_LOCALE), 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.LOCALE_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_LOCALE), 1, Optional.empty(), false);
     }
 
     public void themeClicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.THEME_SETTINGS_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_THEME), 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.THEME_SETTINGS_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_THEME), 1, Optional.empty(), false);
     }
 
     public void LogOut(ActionEvent actionEvent) {
         AuthController.setActiveUser(null);
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.AUTHENTICATION_VIEW_PATH), "Language Tutor", 0, Optional.empty());
+        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.AUTHENTICATION_VIEW_PATH), "Language Tutor", 0, Optional.empty(), false);
     }
 
     public void dictationTaskClicked(Event event) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.TASKVIEW_DICTATION_PATH), bundle.getString(ResourceBundleKeys.LABEL_DICTATION), 1, Optional.empty());
+        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.TASKVIEW_DICTATION_PATH), bundle.getString(ResourceBundleKeys.LABEL_DICTATION), 1, Optional.empty(), false);
     }
 }

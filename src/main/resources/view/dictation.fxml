@@ -7,7 +7,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:controller="tutor.controllers.DictationViewController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="467.0" prefWidth="647.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="467.0" prefWidth="647.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tutor.controllers.DictationViewController">
    <center>
       <AnchorPane prefHeight="239.0" prefWidth="600.0" styleClass="settings_anchorpane" BorderPane.alignment="CENTER">
          <children>
@@ -54,7 +54,12 @@
    <bottom>
       <FlowPane alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="600.0" styleClass="footer" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btn_startTask" onAction="#btnStartClicked" defaultButton="true" mnemonicParsing="false" styleClass="bigButton" text="%btn_start">
+            <Button fx:id="btn_repeatWords" defaultButton="true" mnemonicParsing="false" onAction="#btnRepeatClicked" styleClass="bigButton" text="%btn_repeat">
+               <FlowPane.margin>
+                  <Insets right="10.0" />
+               </FlowPane.margin>
+            </Button>
+            <Button fx:id="btn_startTask" defaultButton="true" mnemonicParsing="false" onAction="#btnStartClicked" styleClass="bigButton" text="%btn_start">
                <FlowPane.margin>
                   <Insets right="10.0" />
                </FlowPane.margin>

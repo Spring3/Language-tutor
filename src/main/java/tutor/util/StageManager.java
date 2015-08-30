@@ -1,9 +1,12 @@
 package tutor.util;
 
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import tutor.controllers.RepeatWordsViewController;
+import tutor.models.Word;
 
 import java.io.IOException;
 import java.net.URL;
@@ -18,12 +21,14 @@ public class StageManager {
 
     private Map<Integer,URL> stagePaths;      //Integer = stage layer, URL = stage's fxml view path
     private Map<Integer,Stage> stages;
+    private Map<Integer, Initializable> controllers;
     private static final int MAX_LAYERS = 3;                   //max layer count
     private static StageManager instance;
 
     private StageManager(){
         stagePaths = new LinkedHashMap<>(MAX_LAYERS);
         stages = new LinkedHashMap<>(MAX_LAYERS);
+        controllers = new LinkedHashMap<>(MAX_LAYERS);
     }
 
 
@@ -43,11 +48,11 @@ public class StageManager {
      * @param title title for a new scene
      * @param layerIndex is a layer of a stage to be shown on
      */
-    public void navigateTo(URL fxmlViewURL, String title, int layerIndex, Optional<Boolean> isResizable) {
-        navigateTo(fxmlViewURL, title, layerIndex, isResizable, false);
+    public void navigateTo(URL fxmlViewURL, String title, int layerIndex, Optional<Boolean> isResizable, boolean showWithDelay) {
+        navigateTo(fxmlViewURL, title, layerIndex, isResizable, false, showWithDelay);
     }
 
-    public void navigateTo(URL fxmlViewURL, String title, int layerIndex, Optional<Boolean> isResizable, boolean waitUntilCloses) {
+    public void navigateTo(URL fxmlViewURL, String title, int layerIndex, Optional<Boolean> isResizable, boolean waitUntilCloses, boolean showWithDelay) {
         try {
             Stage stage = null;
             if (layerIndex > MAX_LAYERS || layerIndex < 0)
@@ -68,10 +73,12 @@ public class StageManager {
             }
             stages.put(layerIndex, stage);
             stagePaths.put(layerIndex, fxmlViewURL);
-            if (waitUntilCloses)
-                stage.showAndWait();
-            else
-                stage.show();
+            if (!showWithDelay) {
+                if (waitUntilCloses)
+                    stage.showAndWait();
+                else
+                    stage.show();
+            }
         }catch (NullPointerException ex){
             ex.printStackTrace();
         }
@@ -91,7 +98,7 @@ public class StageManager {
      * @param fxmlPath a URL ot the new view.
      * @param title a title for a new scene.
      * @param layerIndex a layer of a stage to be shown on
-     * @return
+     * @return the requested stage.
      */
     private Stage bakeStage(URL fxmlPath, String title, int layerIndex, Optional<Boolean> isResizable){
         Stage stage = null;
@@ -102,6 +109,7 @@ public class StageManager {
         loader.setResources(ResourceBundle.getBundle("locale/lang", Locale.getDefault()));
         try {
             parent = loader.load();
+            controllers.put(layerIndex, (Initializable)loader.getController());
             scene = new Scene(parent);
             scene.getStylesheets().add(UserConfigHelper.getInstance().getParameter(UserConfigHelper.SELECTED_THEME));
             stage = new Stage();
@@ -124,7 +132,6 @@ public class StageManager {
      * @param stage a stage to be added.
      * @param viewURL stage's url
      * @param layerNumber number of a layer, to bind a stage to.
-     * @return
      */
     private void addStage(Stage stage, URL viewURL,  int layerNumber) {
         if (stage != null) {
@@ -141,6 +148,15 @@ public class StageManager {
     }
 
     /**
+     * Returns stage's controller.
+     * @param layer layer, on which the view is displayed.
+     * @return controller for the selected view
+     */
+    public Initializable getControllerForViewOnLayer(int layer){
+        return controllers.get(layer);
+    }
+
+    /**
      * Shuts the application down
      */
     public void Shutdown(){
@@ -149,6 +165,20 @@ public class StageManager {
                 stages.get(i).close();
             }
         }
+    }
+
+    /**
+     * Shows all delayed views.
+     * @param andWait determines whether to wait until the view closes or not.
+     */
+    public void showAll(boolean andWait){
+        stages.entrySet().stream().filter(entry -> !entry.getValue().isShowing()).forEach(entry -> {
+            if (andWait) {
+                entry.getValue().showAndWait();
+            } else {
+                entry.getValue().show();
+            }
+        });
     }
 
     /**

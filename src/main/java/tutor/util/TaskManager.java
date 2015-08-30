@@ -29,6 +29,10 @@ public class TaskManager {
         LEARNING
     }
 
+    public List<Word> getWords(){
+        return wordsForTask;
+    }
+
 
     public List<Word> createTask(){
         /*Random random = new Random();

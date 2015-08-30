@@ -7,12 +7,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
 import tutor.dao.WordDAO;
 import tutor.models.Language;
+import tutor.Main;
 import tutor.models.Word;
+import tutor.util.StageManager;
 import tutor.util.TaskManager;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -54,5 +58,11 @@ public class DictationViewController implements Initializable {
 
     public void btnStartClicked(ActionEvent actionEvent) {
         tblView_wordTranslation.setVisible(false);
+    }
+
+    public void btnRepeatClicked(ActionEvent actionEvent) {
+        StageManager.getInstance().navigateTo(Main.class.getClassLoader().getResource(Navigator.REPEAT_WORDS_VIEW_PATH), "", 2, Optional.empty(), true, true);
+        ((RepeatWordsViewController)StageManager.getInstance().getControllerForViewOnLayer(2)).repeat(manager.getWords());
+        StageManager.getInstance().showAll(true);
     }
 }

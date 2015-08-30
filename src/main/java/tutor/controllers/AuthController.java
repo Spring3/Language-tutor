@@ -85,7 +85,7 @@ public class AuthController implements Initializable {
                     if (user.getPassword() == txtb_enter_password.getText().hashCode()) {
                         System.out.println("User: " + txtb_enter_username.getText() + ", password: " + txtb_enter_password.getText());
                         setActiveUser(user);
-                        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.MAIN_VIEW_PATH), "Language tutor", 0, Optional.of(true));
+                        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.MAIN_VIEW_PATH), "Language tutor", 0, Optional.of(true), false);
                     }
                     else{
                         validation_label.setText(bundle.getString(ResourceBundleKeys.WRONG_DATA));
@@ -137,7 +137,7 @@ public class AuthController implements Initializable {
                                         System.out.println("Registering user: " + txtb_reg_username.getText() + ", password: " + txtb_reg_pass1.getText() + ", repeated: " + txtb_reg_pass2.getText());
                                         user = UserDAO.getInstance().readByUserName(user.getUserName());
                                         setActiveUser(user);
-                                        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.MAIN_VIEW_PATH), "Language Tutor", 0, Optional.of(true));
+                                        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.MAIN_VIEW_PATH), "Language Tutor", 0, Optional.of(true), false);
                                     } else {
                                         validation_label_reg.setText(bundle.getString(ResourceBundleKeys.WRONG_DATA));
                                     }
@@ -165,6 +165,6 @@ public class AuthController implements Initializable {
     }
 
     public void navigateTo(URL fxmlViewURL, String title, int layerIndex, boolean isResizable){
-        stageManager.navigateTo(fxmlViewURL,title,layerIndex, Optional.of(isResizable));
+        stageManager.navigateTo(fxmlViewURL,title,layerIndex, Optional.of(isResizable), false);
     }
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="255.0" prefWidth="280.0" styleClass="settings_anchorpane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tutor.controllers.RepeatWordsViewController">
+   <children>
+      <Label fx:id="label_word" alignment="CENTER" layoutX="1.0" layoutY="51.0" prefHeight="35.0" prefWidth="216.0" styleClass="historyLabel" wrapText="true" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="51.0" />
+      <Label fx:id="label_translation" alignment="CENTER" layoutY="128.0" prefHeight="35.0" prefWidth="216.0" styleClass="historyLabel" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="128.0" />
+      <Button fx:id="btn_next" layoutX="108.0" layoutY="206.0" mnemonicParsing="false" onAction="#nextClicked" prefHeight="35.0" prefWidth="65.0" styleClass="custombutton" text="%btn_next" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="108.0" AnchorPane.rightAnchor="107.0" />
+   </children>
+</AnchorPane>
