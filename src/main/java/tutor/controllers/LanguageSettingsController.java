@@ -5,10 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import tutor.dao.LanguageDAO;
 import tutor.models.Language;
 import tutor.util.ResourceBundleKeys;
@@ -31,6 +28,18 @@ public class LanguageSettingsController implements Initializable {
     private Button btn_apply;
     @FXML
     private TextField tf_search;
+    @FXML
+    private TableColumn<Language, String> column_translationLang;
+    @FXML
+    private TableColumn<?, ?> column_download;
+    @FXML
+    private TableColumn<Language, String> column_wordsLang;
+    @FXML
+    private TableColumn<Integer, Integer> column_wordsAmount;
+    @FXML
+    private TableView tableView_library;
+    @FXML
+    private TextField textField_search;
 
     private ResourceBundle bundle;
 

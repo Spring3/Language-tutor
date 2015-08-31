@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -145,7 +146,8 @@ public class DictationViewController implements Initializable {
         }
         else{
             if (!manager.getWords().get(wordIndex).getArticle().get().isEmpty()) {
-                pane_answers.getChildren().add(0, txt_article);
+                if ( pane_answers.getChildren().size() < 2)
+                    pane_answers.getChildren().add(0, txt_article);
                 txt_article.setVisible(true);
             }
             else{
@@ -202,17 +204,17 @@ public class DictationViewController implements Initializable {
         if (reversed){
             if (hasArticle && !txt_word.getText().isEmpty() && !txt_article.getText().isEmpty()){
                 answer = taskWord.toString();
-                return txt_article.getText().toUpperCase().equals(taskWord.getArticle().get().toUpperCase()) && txt_word.getText().toUpperCase().equals(taskWord.getWord().get().toUpperCase());
+                return txt_article.getText().trim().toUpperCase().equals(taskWord.getArticle().get().toUpperCase()) && txt_word.getText().trim().toUpperCase().equals(taskWord.getWord().get().toUpperCase());
             }
             else {
                 answer = taskWord.getWord().get();
-                return (!hasArticle && !txt_word.getText().toUpperCase().equals(taskWord.getWord().get().toUpperCase()));
+                return (!hasArticle && txt_word.getText().trim().toUpperCase().equals(answer.toUpperCase()));
 
             }
         }
         else{
             answer = taskWord.getTranslation().get();
-            return txt_translation.getText().toUpperCase().equals(taskWord.getTranslation().get().toUpperCase());
+            return txt_translation.getText().trim().toUpperCase().equals(taskWord.getTranslation().get().toUpperCase());
         }
     }
 }

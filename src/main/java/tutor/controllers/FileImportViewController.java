@@ -31,9 +31,6 @@ public class FileImportViewController implements Initializable{
     private Label label_totalWords;
 
     @FXML
-    private TextField textField_search;
-
-    @FXML
     private Label label_importFailure;
 
     @FXML
@@ -43,25 +40,10 @@ public class FileImportViewController implements Initializable{
     private Button btn_openFile;
 
     @FXML
-    private TableColumn<Language, String> column_wordsLang;
-
-    @FXML
-    private TableColumn<Integer, Integer> column_wordsAmount;
-
-    @FXML
-    private TableView tableView_library;
-
-    @FXML
     private Label label_success;
 
     @FXML
     private Label label_ignoredWords;
-
-    @FXML
-    private TableColumn<Language, String> column_translationLang;
-
-    @FXML
-    private TableColumn<?, ?> column_download;
 
     @FXML
     private AnchorPane pane_importInfo;
@@ -73,7 +55,6 @@ public class FileImportViewController implements Initializable{
     private StageManager stageManager;
     private Language selectedLanguage;
     private Language selectedTranslationLanguage;
-    private File selectedFile;
 
 
     @Override
@@ -137,7 +118,7 @@ public class FileImportViewController implements Initializable{
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(bundle.getString(ResourceBundleKeys.FILE_CHOOSER_TITLE));
         fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("CVS files (*.csv)", "*.csv"));
-        selectedFile = fileChooser.showOpenDialog(null);
+        File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
             BasicParser parser = new BasicParser();
             parser.parse(selectedFile, selectedLanguage, selectedTranslationLanguage);

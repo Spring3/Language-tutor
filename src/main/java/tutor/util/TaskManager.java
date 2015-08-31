@@ -44,19 +44,18 @@ public class TaskManager {
 
 
     public List<Word> createTask(){
-        /*Random random = new Random();
-        TaskManagerMode mode = TaskManagerMode.values()[random.nextInt(4)];*/
-        mode = TaskManagerMode.NORMAL;
+        Random random = new Random();
+        mode = TaskManagerMode.values()[random.nextInt(2)];
         switch (mode){
             case NORMAL:{
                 createNormalTask();
                 break;
             }
-            /*case REVERSED:{
-                createReversedTask();
+            case REVERSED:{
+                createNormalTask();
                 break;
             }
-            case REPETITION:{
+            /*case REPETITION:{
                 createRepetitionTask();
                 break;
             }
@@ -86,9 +85,6 @@ public class TaskManager {
                 allWords.remove(randomIndex);
             }
         }
-    }
-
-    private void createReversedTask(){
     }
 
     private void createRepetitionTask(){
