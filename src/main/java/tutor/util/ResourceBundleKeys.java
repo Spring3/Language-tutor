@@ -30,4 +30,9 @@ public final class ResourceBundleKeys {
     public static final String LABEL_IMPORT = "btn_import";
     public static final String LABEL_LOCALE = "menuItem_locale";
     public static final String LABEL_THEME = "menuItem_theme";
+    public static final String LABEL_TASK_COMPLETE = "label_taskComplete";
+    public static final String LABEL_TASK_RESULTS = "label_results";
+    public static final String LABEL_TASK_WORDS_AMOUNT = "label_words_amount";
+    public static final String LABEL_TASK_MISTAKES = "label_mistakes";
+    public static final String LABEL_TASK_CORRECT_ANSWERS = "label_correctAnswers";
 }

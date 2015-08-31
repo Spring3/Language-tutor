@@ -20,9 +20,14 @@ public class TaskManager {
     private static final int MAX_WORDS_PER_TASK = 10;
     private Language languageToLearn;
     private List<Word> wordsForTask;
+    private TaskManagerMode mode;
+
+    public TaskManagerMode getMode(){
+        return mode;
+    }
 
 
-    private enum TaskManagerMode{
+    public enum TaskManagerMode{
         NORMAL,
         REVERSED,
         REPETITION,
@@ -33,11 +38,15 @@ public class TaskManager {
         return wordsForTask;
     }
 
+    public int getMaxWordsPerTask(){
+        return MAX_WORDS_PER_TASK;
+    }
+
 
     public List<Word> createTask(){
         /*Random random = new Random();
         TaskManagerMode mode = TaskManagerMode.values()[random.nextInt(4)];*/
-        TaskManagerMode mode = TaskManagerMode.NORMAL;
+        mode = TaskManagerMode.NORMAL;
         switch (mode){
             case NORMAL:{
                 createNormalTask();
