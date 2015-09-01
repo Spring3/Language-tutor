@@ -46,8 +46,6 @@ public class DictationViewController implements Initializable {
     @FXML
     private TextField txt_task;
     @FXML
-    private TextField txt_article;
-    @FXML
     private TextField txt_word;
     @FXML
     private TextField txt_translation;
@@ -71,6 +69,8 @@ public class DictationViewController implements Initializable {
     private Button btn_repeatWords;
     @FXML
     private Button btn_confirm;
+    @FXML
+    private TextArea txt_description;
     private ResourceBundle bundle;
     private TaskManager manager;
     private int wordsAmount;
@@ -98,9 +98,7 @@ public class DictationViewController implements Initializable {
             txt_translation.setVisible(true);
         }
         else{
-            pane_answers.getChildren().add(0, txt_article);
-            txt_article.setVisible(true);
-            pane_answers.getChildren().add(1, txt_word);
+            pane_answers.getChildren().add(0, txt_word);
             txt_word.setVisible(true);
         }
 
@@ -112,6 +110,7 @@ public class DictationViewController implements Initializable {
         btn_startTask.setVisible(false);
         btn_repeatWords.setVisible(false);
         btn_confirm.defaultButtonProperty().bind(btn_confirm.focusedProperty());
+        txt_description.setVisible(false);
         StageManager.getInstance().getStage(1).getScene().setOnKeyReleased(event ->
         {
             KeyCombination combo = new KeyCodeCombination(KeyCode.ENTER);
@@ -145,15 +144,6 @@ public class DictationViewController implements Initializable {
             txt_task.setText(manager.getWords().get(wordIndex).toString());
         }
         else{
-            if (!manager.getWords().get(wordIndex).getArticle().get().isEmpty()) {
-                if ( pane_answers.getChildren().size() < 2)
-                    pane_answers.getChildren().add(0, txt_article);
-                txt_article.setVisible(true);
-            }
-            else{
-                pane_answers.getChildren().remove(txt_article);
-                txt_article.setVisible(false);
-            }
             txt_task.setText(manager.getWords().get(wordIndex).getTranslation().get());
         }
         pane_answers.getChildren().get(0).requestFocus();
@@ -202,9 +192,11 @@ public class DictationViewController implements Initializable {
     private boolean checkAnswer(boolean hasArticle, boolean reversed){
         Word taskWord = manager.getWords().get(wordIndex);
         if (reversed){
-            if (hasArticle && !txt_word.getText().isEmpty() && !txt_article.getText().isEmpty()){
+            if (hasArticle && !txt_word.getText().isEmpty()){
                 answer = taskWord.toString();
-                return txt_article.getText().trim().toUpperCase().equals(taskWord.getArticle().get().toUpperCase()) && txt_word.getText().trim().toUpperCase().equals(taskWord.getWord().get().toUpperCase());
+                String article = txt_word.getText().substring(0, txt_word.getText().indexOf(" "));
+                return article.trim().toUpperCase().equals(taskWord.getArticle().get().toUpperCase()) && txt_word.getText().trim().toUpperCase().equals(taskWord.getWord().get().toUpperCase());
+
             }
             else {
                 answer = taskWord.getWord().get();
