@@ -91,8 +91,7 @@ public class Controller implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb){
         bundle = rb;
-        ObservableList<Language> currentUserLanguages = FXCollections.observableArrayList(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId()));
-        choiceBox_lang_to_learn.setItems(currentUserLanguages);
+        choiceBox_lang_to_learn.setItems(FXCollections.observableArrayList(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId())));
         choiceBox_lang_to_learn.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedLanguage = newValue;
         });
@@ -103,7 +102,6 @@ public class Controller implements Initializable
 
         scrollPane.setFitToWidth(true);
         task_dictation_img.setImage(new Image(Main.class.getClassLoader().getResource("tasks/dictation/dictation-image.jpg").toExternalForm(), true));
-
     }
 
     @FXML
@@ -151,5 +149,18 @@ public class Controller implements Initializable
 
     public void dictationTaskClicked(Event event) {
         stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.TASKVIEW_DICTATION_PATH), bundle.getString(ResourceBundleKeys.LABEL_DICTATION), 1, Optional.empty(), false);
+    }
+
+    public void workbenchSelected(Event event) {
+        if(event.getTarget().equals(workbench)){
+            choiceBox_lang_to_learn.setItems(FXCollections.observableArrayList(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId())));
+            choiceBox_lang_to_learn.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                selectedLanguage = newValue;
+            });
+            try {
+                choiceBox_lang_to_learn.setValue(choiceBox_lang_to_learn.getItems().get(0));
+            }
+            catch (IndexOutOfBoundsException ex){}
+        }
     }
 }

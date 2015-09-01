@@ -195,7 +195,8 @@ public class DictationViewController implements Initializable {
             if (hasArticle && !txt_word.getText().isEmpty()){
                 answer = taskWord.toString();
                 String article = txt_word.getText().substring(0, txt_word.getText().indexOf(" "));
-                return article.trim().toUpperCase().equals(taskWord.getArticle().get().toUpperCase()) && txt_word.getText().trim().toUpperCase().equals(taskWord.getWord().get().toUpperCase());
+                String word = txt_word.getText().substring(txt_word.getText().indexOf(" "), txt_word.getText().length());
+                return article.trim().toUpperCase().equals(taskWord.getArticle().get().toUpperCase()) && word.trim().toUpperCase().equals(taskWord.getWord().get().toUpperCase());
 
             }
             else {

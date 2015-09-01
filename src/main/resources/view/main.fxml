@@ -82,7 +82,7 @@
                             </AnchorPane>
                          </content>
                     </Tab>
-                    <Tab fx:id="workbench" styleClass="tabbutton" text="%workbench_tab_text">
+                    <Tab fx:id="workbench" styleClass="tabbutton" text="%workbench_tab_text" onSelectionChanged="#workbenchSelected">
                          <content>
                             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                <children>

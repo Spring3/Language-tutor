@@ -72,11 +72,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TaskManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/tutor/util/TaskManager.java">
+      <file leaf-file-name="Controller.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="74" column="100" selection-start-line="74" selection-start-column="35" selection-end-line="74" selection-end-column="35" />
+              <caret line="137" column="164" selection-start-line="137" selection-start-column="164" selection-end-line="137" selection-end-column="164" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -84,15 +84,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Controller.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/Controller.java">
+      <file leaf-file-name="main.fxml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/view/main.fxml">
+          <provider editor-type-id="JavaFX-Scene-Builder">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="152" column="188" selection-start-line="152" selection-start-column="188" selection-end-line="152" selection-end-column="188" />
-              <folding>
-                <element signature="e#982#983#0" expanded="false" />
-                <element signature="e#1039#1040#0" expanded="false" />
-              </folding>
+            <state vertical-scroll-proportion="-14.068966">
+              <caret line="84" column="131" selection-start-line="84" selection-start-column="131" selection-end-line="84" selection-end-column="131" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -101,7 +101,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/DictationViewController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="205" column="46" selection-start-line="205" selection-start-column="9" selection-end-line="205" selection-end-column="9" />
+              <caret line="198" column="109" selection-start-line="198" selection-start-column="109" selection-end-line="198" selection-end-column="109" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -109,59 +109,62 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DictionaryViewController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DictionaryViewController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/DictionaryViewController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.67257845">
-              <caret line="113" column="71" selection-start-line="113" selection-start-column="71" selection-end-line="113" selection-end-column="71" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="95" column="17" selection-start-line="95" selection-start-column="17" selection-end-line="95" selection-end-column="17" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Word.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DbManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/tutor/util/DbManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="85" column="254" selection-start-line="85" selection-start-column="194" selection-end-line="85" selection-end-column="254" />
+              <folding>
+                <marker date="1441133522251" expanded="true" signature="1689:1719" placeholder="select * fro..USERS..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WordDAO.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/tutor/dao/WordDAO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="248" column="0" selection-start-line="248" selection-start-column="0" selection-end-line="248" selection-end-column="0" />
+              <folding>
+                <marker date="1441134597726" expanded="true" signature="842:981" placeholder="INSERT INTO ..." />
+                <marker date="1441134597726" expanded="true" signature="1638:1689" placeholder="INSERT INTO ..." />
+                <marker date="1441134597726" expanded="true" signature="2429:2472" placeholder="SELECT * FRO..WORD..." />
+                <marker date="1441134597726" expanded="true" signature="2911:3111" placeholder="SELECT w.id,..WORD..." />
+                <marker date="1441134597726" expanded="true" signature="3658:3687" placeholder="SELECT * FRO..WORD..." />
+                <marker date="1441134597726" expanded="true" signature="5203:5237" placeholder="SELECT * FRO..WORD..." />
+                <marker date="1441134597726" expanded="true" signature="6612:6838" placeholder="SELECT w.id,..WORD..." />
+                <marker date="1441134597726" expanded="true" signature="8257:8383" placeholder="SELECT w.id,..." />
+                <marker date="1441134597726" expanded="true" signature="8257:8632" placeholder="SELECT w.id,..WORD..." />
+                <marker date="1441134597726" expanded="true" signature="9896:10036" placeholder="UPDATE WORD ..." />
+                <marker date="1441134597726" expanded="true" signature="11025:11076" placeholder="DELETE FROM ..." />
+                <marker date="1441134597726" expanded="true" signature="11336:11363" placeholder="DELETE FROM ..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Word.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/tutor/models/Word.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="112" column="58" selection-start-line="112" selection-start-column="58" selection-end-line="112" selection-end-column="58" />
+            <state vertical-scroll-proportion="0.25784448">
+              <caret line="133" column="37" selection-start-line="133" selection-start-column="37" selection-end-line="133" selection-end-column="37" />
               <folding>
-                <element signature="e#3141#3142#0" expanded="true" />
-                <element signature="e#3206#3207#0" expanded="true" />
+                <element signature="e#3123#3124#0" expanded="true" />
+                <element signature="e#3166#3167#0" expanded="true" />
+                <element signature="e#3212#3213#0" expanded="true" />
+                <element signature="e#3277#3278#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FileImportViewController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/FileImportViewController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="64" column="110" selection-start-line="64" selection-start-column="5" selection-end-line="64" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LanguageSettingsController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/LanguageSettingsController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="41" column="45" selection-start-line="41" selection-start-column="39" selection-end-line="41" selection-end-column="39" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="lang_en.properties" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/locale/lang_en.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -236,19 +239,14 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/main/resources/view/dictionary.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/dao/LanguageDAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tutor/dao/WordDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/dao/UserDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/models/User.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tutor/util/DbManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/util/PaginatorManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/util/FileParser.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/util/BasicParser.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/view/main.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/Navigator.java" />
         <option value="$PROJECT_DIR$/src/main/resources/view/repeatWords.fxml" />
-        <option value="$PROJECT_DIR$/src/main/java/tutor/models/Word.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/util/StageManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/Controller.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/AuthController.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/RepeatWordsViewController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/view/dictation.fxml" />
@@ -257,8 +255,13 @@
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/LanguageSettingsController.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/FileImportViewController.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/util/TaskManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/DictationViewController.java" />
         <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/DictionaryViewController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tutor/util/DbManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tutor/dao/WordDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/view/main.fxml" />
+        <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/Controller.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tutor/controllers/DictationViewController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tutor/models/Word.java" />
       </list>
     </option>
   </component>
@@ -562,6 +565,36 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="LanguageTutor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="LanguageTutor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tutor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dao" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1074,12 +1107,12 @@
       <workItem from="1441006475413" duration="656000" />
       <workItem from="1441014598047" duration="8341000" />
       <workItem from="1441033836337" duration="10358000" />
-      <workItem from="1441122412616" duration="4943000" />
+      <workItem from="1441122412616" duration="14939000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="641077000" />
+    <option name="totallyTimeSpent" value="651073000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1111,6 +1144,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32789558" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.32916668" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" x="433" y="299" width="636" height="280" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.07186082" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1772973" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1130,7 +1164,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.32916668" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" x="433" y="299" width="636" height="280" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1192,7 +1225,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="174" />
+      <option name="time" value="175" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1240,17 +1273,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="12" column="51" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/view/languageSettings.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.448276">
-          <caret line="23" column="24" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
           <folding />
         </state>
       </provider>
@@ -1383,13 +1405,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/util/DbManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="86" column="108" selection-start-line="86" selection-start-column="108" selection-end-line="86" selection-end-column="108" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_60/javafx-src.zip!/javafx/scene/control/Pagination.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33226836">
@@ -1432,17 +1447,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/view/main.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="112" column="230" selection-start-line="112" selection-start-column="230" selection-end-line="112" selection-end-column="230" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/view/dictionary.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder">
         <state />
@@ -1476,16 +1480,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="105" selection-start-line="10" selection-start-column="105" selection-end-line="10" selection-end-column="105" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/dao/WordDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="162" column="0" selection-start-line="162" selection-start-column="0" selection-end-line="162" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1538,20 +1532,9 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/FileImportViewController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="64" column="110" selection-start-line="64" selection-start-column="5" selection-end-line="64" selection-end-column="5" />
+          <caret line="64" column="5" selection-start-line="64" selection-start-column="5" selection-end-line="64" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="152" column="188" selection-start-line="152" selection-start-column="188" selection-end-line="152" selection-end-column="188" />
-          <folding>
-            <element signature="e#982#983#0" expanded="false" />
-            <element signature="e#1039#1040#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1559,7 +1542,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/tutor/util/TaskManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="74" column="100" selection-start-line="74" selection-start-column="35" selection-end-line="74" selection-end-column="35" />
+          <caret line="74" column="35" selection-start-line="74" selection-start-column="35" selection-end-line="74" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1585,14 +1568,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/util/StageManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_60/javafx-src.zip!/com/sun/javafx/tk/quantum/GlassViewEventHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3328786">
@@ -1601,32 +1576,105 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/models/Word.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/DictionaryViewController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="112" column="58" selection-start-line="112" selection-start-column="58" selection-end-line="112" selection-end-column="58" />
+          <caret line="95" column="17" selection-start-line="95" selection-start-column="17" selection-end-line="95" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/util/DbManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="85" column="254" selection-start-line="85" selection-start-column="194" selection-end-line="85" selection-end-column="254" />
           <folding>
-            <element signature="e#3141#3142#0" expanded="true" />
-            <element signature="e#3206#3207#0" expanded="true" />
+            <marker date="1441133522251" expanded="true" signature="1689:1719" placeholder="select * fro..USERS..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/DictationViewController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/dao/WordDAO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="205" column="46" selection-start-line="205" selection-start-column="9" selection-end-line="205" selection-end-column="9" />
+          <caret line="248" column="0" selection-start-line="248" selection-start-column="0" selection-end-line="248" selection-end-column="0" />
+          <folding>
+            <marker date="1441134597726" expanded="true" signature="842:981" placeholder="INSERT INTO ..." />
+            <marker date="1441134597726" expanded="true" signature="1638:1689" placeholder="INSERT INTO ..." />
+            <marker date="1441134597726" expanded="true" signature="2429:2472" placeholder="SELECT * FRO..WORD..." />
+            <marker date="1441134597726" expanded="true" signature="2911:3111" placeholder="SELECT w.id,..WORD..." />
+            <marker date="1441134597726" expanded="true" signature="3658:3687" placeholder="SELECT * FRO..WORD..." />
+            <marker date="1441134597726" expanded="true" signature="5203:5237" placeholder="SELECT * FRO..WORD..." />
+            <marker date="1441134597726" expanded="true" signature="6612:6838" placeholder="SELECT w.id,..WORD..." />
+            <marker date="1441134597726" expanded="true" signature="8257:8383" placeholder="SELECT w.id,..." />
+            <marker date="1441134597726" expanded="true" signature="8257:8632" placeholder="SELECT w.id,..WORD..." />
+            <marker date="1441134597726" expanded="true" signature="9896:10036" placeholder="UPDATE WORD ..." />
+            <marker date="1441134597726" expanded="true" signature="11025:11076" placeholder="DELETE FROM ..." />
+            <marker date="1441134597726" expanded="true" signature="11336:11363" placeholder="DELETE FROM ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/view/languageSettings.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.7586207">
+          <caret line="23" column="24" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/view/main.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.068966">
+          <caret line="84" column="131" selection-start-line="84" selection-start-column="131" selection-end-line="84" selection-end-column="131" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="137" column="164" selection-start-line="137" selection-start-column="164" selection-end-line="137" selection-end-column="164" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/DictionaryViewController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/util/StageManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.67257845">
-          <caret line="113" column="71" selection-start-line="113" selection-start-column="71" selection-end-line="113" selection-end-column="71" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/controllers/DictationViewController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="198" column="109" selection-start-line="198" selection-start-column="109" selection-end-line="198" selection-end-column="109" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tutor/models/Word.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25784448">
+          <caret line="133" column="37" selection-start-line="133" selection-start-column="37" selection-end-line="133" selection-end-column="37" />
+          <folding>
+            <element signature="e#3123#3124#0" expanded="true" />
+            <element signature="e#3166#3167#0" expanded="true" />
+            <element signature="e#3212#3213#0" expanded="true" />
+            <element signature="e#3277#3278#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

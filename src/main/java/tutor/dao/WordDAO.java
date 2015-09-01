@@ -34,12 +34,15 @@ public class WordDAO implements IDAO<Word> {
         try{
             Connection connection = DbManager.getInstance().getConnection();
             if (!contains(value)) {
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO WORD(article, word, word_translation, lang_id, translation_id) VALUES(?,?,?,?,?);");
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO WORD(article, word, word_translation, lang_id, translation_id, whenAdded, wrongAnswers, correctAnswers) VALUES(?,?,?,?,?,?,?,?);");
                 statement.setString(1, value.getArticle().get());
                 statement.setString(2, value.getWord().get());
                 statement.setString(3, value.getTranslation().get());
                 statement.setInt(4, value.getWordLang().getId());
                 statement.setInt(5, value.getTranslationLang().getId());
+                statement.setDate(6, value.getAddedDate());
+                statement.setInt(7, value.getWrongAnswerCount());
+                statement.setInt(8, value.getCorrectAnswerCount());
                 statement.execute();
                 PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO USER_WORD(user_id, word_id) VALUES(?,?);");
                 preparedStatement.setInt(1, AuthController.getActiveUser().getId());
@@ -76,7 +79,7 @@ public class WordDAO implements IDAO<Word> {
         Word result = null;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT w.id, article, word, word_translation, lang_id, translation_id FROM WORD as w INNER JOIN USER_WORD as uw ON uw.user_id =? WHERE w.word = ? GROUP BY w.id;");
+            PreparedStatement statement = connection.prepareStatement("SELECT w.id, article, word, word_translation, lang_id, translation_id, whenAdded, wrongAnswers, correctAnswers FROM WORD as w INNER JOIN USER_WORD as uw ON uw.user_id =? WHERE w.word = ? GROUP BY w.id;");
             statement.setInt(1, AuthController.getActiveUser().getId());
             statement.setString(2, word);
             result = readBy(statement);
@@ -109,7 +112,7 @@ public class WordDAO implements IDAO<Word> {
         try {
             statement.execute();
             ResultSet resultSet = statement.getResultSet();
-            if (resultSet.next() == true) {
+            if (resultSet.next()) {
                 result = new Word();
                 result.setId(resultSet.getInt(1));
                 result.setArticle(resultSet.getString(2));
@@ -117,6 +120,9 @@ public class WordDAO implements IDAO<Word> {
                 result.setTranslation(resultSet.getString(4));
                 result.setWordLang(LanguageDAO.getInstance().read(resultSet.getInt(5)));
                 result.setTranslationLang(LanguageDAO.getInstance().read(resultSet.getInt(6)));
+                result.setAddedDate(resultSet.getDate(7));
+                result.setWrongAnswerCount(resultSet.getInt(8));
+                result.setCorrectAnswerCount(resultSet.getInt(9));
             }
             resultSet.close();
         }
@@ -143,6 +149,9 @@ public class WordDAO implements IDAO<Word> {
                 result.setTranslation(resultSet.getString(4));
                 result.setWordLang(LanguageDAO.getInstance().read(resultSet.getInt(5)));
                 result.setTranslationLang(LanguageDAO.getInstance().read(resultSet.getInt(6)));
+                result.setAddedDate(resultSet.getDate(7));
+                result.setWrongAnswerCount(resultSet.getInt(8));
+                result.setCorrectAnswerCount(resultSet.getInt(9));
                 resultList.add(result);
             }
             resultSet.close();
@@ -158,7 +167,7 @@ public class WordDAO implements IDAO<Word> {
         List<Word> resultList = null;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT w.id, w.article, w.word, w.word_translation, w.lang_id, w.translation_id FROM WORD as w INNER JOIN USER_WORD ON user_id=? WHERE w.lang_id=? GROUP BY w.id ORDER BY w.id DESC; ");
+            PreparedStatement statement = connection.prepareStatement("SELECT w.id, w.article, w.word, w.word_translation, w.lang_id, w.translation_id, w.whenAdded, w.wrongAnswers, w.correctAnswers FROM WORD as w INNER JOIN USER_WORD ON user_id=? WHERE w.lang_id=? GROUP BY w.id ORDER BY w.id DESC; ");
             statement.setInt(1, AuthController.getActiveUser().getId());
             statement.setInt(2, lang.getId());
             statement.execute();
@@ -172,6 +181,9 @@ public class WordDAO implements IDAO<Word> {
                 result.setTranslation(resultSet.getString(4));
                 result.setWordLang(LanguageDAO.getInstance().read(resultSet.getInt(5)));
                 result.setTranslationLang(LanguageDAO.getInstance().read(resultSet.getInt(6)));
+                result.setAddedDate(resultSet.getDate(7));
+                result.setWrongAnswerCount(resultSet.getInt(8));
+                result.setCorrectAnswerCount(resultSet.getInt(9));
                 resultList.add(result);
             }
             resultSet.close();
@@ -187,13 +199,16 @@ public class WordDAO implements IDAO<Word> {
         boolean result = false;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT w.id, w.article, w.word, w.word_translation, w.lang_id, w.translation_id FROM WORD as w INNER JOIN USER_WORD as uw ON uw.word_id=w.id WHERE uw.user_id=? AND w.article=? AND w.word=? AND w.word_translation=? AND w.lang_id=? AND w.translation_id=? GROUP BY w.id;");
+            PreparedStatement statement = connection.prepareStatement("SELECT w.id, w.article, w.word, w.word_translation, w.lang_id, w.translation_id, w.whenAdded, w.wrongAnswers, w.correctAnswers FROM WORD as w INNER JOIN USER_WORD as uw ON uw.word_id=w.id WHERE uw.user_id=? AND w.article=? AND w.word=? AND w.word_translation=? AND w.lang_id=? AND w.translation_id=? AND w.whenAdded=? AND w.wrongAnswers=? AND w.correctAnswers=? GROUP BY w.id;");
             statement.setInt(1, AuthController.getActiveUser().getId());
             statement.setString(2, value.getArticle().get());
             statement.setString(3, value.getWord().get());
             statement.setString(4, value.getTranslation().get());
             statement.setInt(5, value.getWordLang().getId());
             statement.setInt(6, value.getTranslationLang().getId());
+            statement.setDate(7, value.getAddedDate());
+            statement.setInt(8, value.getWrongAnswerCount());
+            statement.setInt(9, value.getCorrectAnswerCount());
             statement.execute();
             ResultSet resultSet = statement.getResultSet();
             result = resultSet.next();
@@ -211,13 +226,16 @@ public class WordDAO implements IDAO<Word> {
     public boolean update(Word value) {
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("UPDATE WORD SET article=?, word=?, word_translation=?, lang_id=?, translation_id=? WHERE id=?;");
+            PreparedStatement statement = connection.prepareStatement("UPDATE WORD SET article=?, word=?, word_translation=?, lang_id=?, translation_id=?, whenAdded=?, wrongAnswers=?, correctAnswers=? WHERE id=?;");
             statement.setString(1, value.getArticle().get());
             statement.setString(2, value.getWord().get());
             statement.setString(3, value.getTranslation().get());
             statement.setInt(4, value.getWordLang().getId());
             statement.setInt(5, value.getTranslationLang().getId());
-            statement.setInt(6, value.getId());
+            statement.setDate(6, value.getAddedDate());
+            statement.setInt(7, value.getWrongAnswerCount());
+            statement.setInt(8, value.getCorrectAnswerCount());
+            statement.setInt(9, value.getId());
             statement.executeUpdate();
             connection.close();
             return true;

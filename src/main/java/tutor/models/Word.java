@@ -3,6 +3,9 @@ package tutor.models;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.sql.Date;
+import java.util.Calendar;
+
 /**
  * Created by user on 17.02.2015.
  */
@@ -11,6 +14,7 @@ public class Word {
         this.article = new SimpleStringProperty();
         this.word = new SimpleStringProperty();
         this.translation = new SimpleStringProperty();
+        setAddedDate(new Date(Calendar.getInstance().getTime().getTime()));
     }
 
     public Word(String word, String translation, Language word_lang, Language translation_lang){
@@ -18,6 +22,7 @@ public class Word {
         this.translation = new SimpleStringProperty(translation);
         setWordLang(word_lang);
         setTranslationLang(translation_lang);
+        setAddedDate(new Date(Calendar.getInstance().getTime().getTime()));
     }
 
     public Word(String article, String word, String translation, Language word_lang, Language translation_lang){
@@ -26,6 +31,7 @@ public class Word {
         this.translation = new SimpleStringProperty(translation);
         setWordLang(word_lang);
         setTranslationLang(translation_lang);
+        setAddedDate(new Date(Calendar.getInstance().getTime().getTime()));
     }
 
     private int id;
@@ -34,30 +40,41 @@ public class Word {
     private StringProperty translation;
     private Language wordLang;
     private Language translationLang;
+    private Date addedDate;
+    private int wrongAnswerCount;
+    private int correctAnswerCount;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Word word1 = (Word) o;
-
-        if (getArticle() != null ? !getArticle().equals(word1.getArticle()) : word1.getArticle() != null) return false;
-        if (!getWord().equals(word1.getWord())) return false;
-        if (!getTranslation().equals(word1.getTranslation())) return false;
-        if (!wordLang.equals(word1.wordLang)) return false;
-        return translationLang.equals(word1.translationLang);
-
+    public void setAddedDate(Date date){
+        addedDate = date;
     }
 
-    @Override
-    public int hashCode() {
-        int result = getArticle() != null ? getArticle().hashCode() : 0;
-        result = 31 * result + getWord().hashCode();
-        result = 31 * result + getTranslation().hashCode();
-        result = 31 * result + wordLang.hashCode();
-        result = 31 * result + translationLang.hashCode();
-        return result;
+    public Date getAddedDate(){
+        return addedDate;
+    }
+
+    public int getWrongAnswerCount(){
+        return wrongAnswerCount;
+    }
+
+    public void setWrongAnswerCount(int count)
+    {
+        wrongAnswerCount = count;
+    }
+
+    public int getCorrectAnswerCount(){
+        return correctAnswerCount;
+    }
+
+    public void setCorrectAnswerCount(int count){
+        correctAnswerCount = count;
+    }
+
+    public void incWrongAnswerCount(){
+        wrongAnswerCount ++;
+    }
+
+    public void incCorrectAnswerCount(){
+        correctAnswerCount ++;
     }
 
     public int getId(){
@@ -111,5 +128,32 @@ public class Word {
     @Override
     public String toString() {
         return getArticle().get() + " " + getWord().get();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Word word1 = (Word) o;
+
+        if (getArticle() != null ? !getArticle().equals(word1.getArticle()) : word1.getArticle() != null) return false;
+        if (!getWord().equals(word1.getWord())) return false;
+        if (!getTranslation().equals(word1.getTranslation())) return false;
+        if (!getWordLang().equals(word1.getWordLang())) return false;
+        if (!getTranslationLang().equals(word1.getTranslationLang())) return false;
+        return getAddedDate().equals(word1.getAddedDate());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getArticle() != null ? getArticle().hashCode() : 0;
+        result = 31 * result + getWord().hashCode();
+        result = 31 * result + getTranslation().hashCode();
+        result = 31 * result + getWordLang().hashCode();
+        result = 31 * result + getTranslationLang().hashCode();
+        result = 31 * result + getAddedDate().hashCode();
+        return result;
     }
 }
