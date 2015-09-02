@@ -13,6 +13,7 @@ public class Stats {
 
     public Stats(User user, TaskManager.TaskManagerMode task_type, Language language, float successRate){
         setUser(user);
+        setTaskType(task_type);
         setLanguage(language);
         setSuccessRate(successRate);
     }

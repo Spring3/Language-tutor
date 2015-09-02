@@ -13,9 +13,11 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
+import tutor.dao.StatsDAO;
 import tutor.dao.WordDAO;
 import tutor.models.Language;
 import tutor.Main;
+import tutor.models.Stats;
 import tutor.models.Word;
 import tutor.util.ResourceBundleKeys;
 import tutor.util.StageManager;
@@ -23,9 +25,8 @@ import tutor.util.TaskManager;
 
 import javax.xml.soap.Text;
 import java.net.URL;
-import java.util.Optional;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.text.Normalizer;
+import java.util.*;
 
 /**
  * Created by Spring on 8/30/2015.
@@ -77,11 +78,15 @@ public class DictationViewController implements Initializable {
     private int wordIndex;
     private int mistakes;
     private int correctAnswers;
+    private int firstTryGuessCounts;
     private String answer;
+    private List<Word> passedWords; //if boolean is true, then this word needs to be repeated again.
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         bundle = resources;
+        passedWords = new ArrayList<>();
         initializeUI();
     }
 
@@ -114,7 +119,7 @@ public class DictationViewController implements Initializable {
         StageManager.getInstance().getStage(1).getScene().setOnKeyReleased(event ->
         {
             KeyCombination combo = new KeyCodeCombination(KeyCode.ENTER);
-            if (combo.match(event)){
+            if (combo.match(event)) {
                 btn_confirm.fire();
             }
         });
@@ -132,10 +137,21 @@ public class DictationViewController implements Initializable {
                     .append("\n")
                     .append(bundle.getString(ResourceBundleKeys.LABEL_TASK_MISTAKES)).append(" : ").append(mistakes)
                     .append("\n")
-                    .append(bundle.getString(ResourceBundleKeys.LABEL_TASK_CORRECT_ANSWERS)).append(" : ").append(correctAnswers);
+                    .append(bundle.getString(ResourceBundleKeys.LABEL_TASK_CORRECT_ANSWERS)).append(" : ").append(correctAnswers)
+                    .append("\n")
+                    .append(bundle.getString(ResourceBundleKeys.SUCCESS_RATE)).append(" : ").append(getSuccessRate()).append("%");
             alert.setContentText(builder.toString());
             alert.showAndWait();
+
+            for(Word word : passedWords){
+                WordDAO.getInstance().update(word);
+            }
+
+            Stats statistics = new Stats(AuthController.getActiveUser(), manager.getMode(), Controller.selectedLanguage, getSuccessRate());
+            StatsDAO.getInstance().create(statistics);
+
             StageManager.getInstance().closeStage(StageManager.getInstance().getStage(1));
+
             return;
         }
         Random random = new Random();
@@ -149,6 +165,10 @@ public class DictationViewController implements Initializable {
         pane_answers.getChildren().get(0).requestFocus();
     }
 
+    private float getSuccessRate(){
+        return (firstTryGuessCounts/passedWords.size() * 60) + (firstTryGuessCounts/mistakes * 20) + (20 - (mistakes/correctAnswers) * 20);
+    }
+
     public void btnRepeatClicked(ActionEvent actionEvent) {
         StageManager.getInstance().navigateTo(Main.class.getClassLoader().getResource(Navigator.REPEAT_WORDS_VIEW_PATH), "", 2, Optional.empty(), true, true);
         ((RepeatWordsViewController)StageManager.getInstance().getControllerForViewOnLayer(2)).repeat(manager.getWords());
@@ -157,6 +177,7 @@ public class DictationViewController implements Initializable {
 
     public void confirmAnswer(ActionEvent actionEvent) {
         boolean isCorrect;
+
         if (manager.getMode().equals(TaskManager.TaskManagerMode.REVERSED)) {
             if (!manager.getWords().get(wordIndex).getArticle().get().isEmpty()){
                 isCorrect = checkAnswer(true, true);
@@ -168,7 +189,15 @@ public class DictationViewController implements Initializable {
             isCorrect = checkAnswer(false, false);
         }
         pane_taskInfo.setVisible(true);
+
+
         if (isCorrect){
+            if (!passedWords.contains(manager.getWords().get(wordIndex))){
+                manager.getWords().get(wordIndex).incCorrectAnswerCount();
+                WordDAO.getInstance().update(manager.getWords().get(wordIndex));
+                passedWords.add(manager.getWords().get(wordIndex));
+                firstTryGuessCounts ++;
+            }
             correctAnswers ++;
             label_answerWrong.setVisible(false);
             label_answerCorrect.setVisible(true);
@@ -176,12 +205,21 @@ public class DictationViewController implements Initializable {
         }
         else
         {
+            if (!passedWords.contains(manager.getWords().get(wordIndex))){
+                manager.getWords().get(wordIndex).incWrongAnswerCount();
+                WordDAO.getInstance().update(manager.getWords().get(wordIndex));
+                passedWords.add(manager.getWords().get(wordIndex));
+            }
             mistakes ++;
             label_answerWrong.setVisible(true);
             label_answerCorrect.setVisible(false);
         }
+
+
         label_answer.setText(answer);
         label_taskCount.setText(String.valueOf(wordsAmount - manager.getWords().size()) + "/" + wordsAmount);
+
+
         for(Node txt : pane_answers.getChildren()){
             assert (txt instanceof TextField);
             ((TextField) txt).setText("");
@@ -194,15 +232,21 @@ public class DictationViewController implements Initializable {
         if (reversed){
             if (hasArticle && !txt_word.getText().isEmpty()){
                 answer = taskWord.toString();
-                String article = txt_word.getText().substring(0, txt_word.getText().indexOf(" "));
+                String article = txt_word.getText().substring(0, txt_word.getText().indexOf(" ")).trim();
                 String word = txt_word.getText().substring(txt_word.getText().indexOf(" "), txt_word.getText().length());
-                return article.trim().toUpperCase().equals(taskWord.getArticle().get().toUpperCase()) && word.trim().toUpperCase().equals(taskWord.getWord().get().toUpperCase());
+                int length = article.length();
+                int originLength = taskWord.getArticle().get().length();
+                String article1 = Normalizer.normalize(article, Normalizer.Form.NFD);
+                String originalArticle = Normalizer.normalize(taskWord.getArticle().get(), Normalizer.Form.NFD);
+                boolean result1 = article1.equals(originalArticle);
+                boolean result2 = article1.equalsIgnoreCase(originalArticle);
 
+
+                return Normalizer.normalize(article, Normalizer.Form.NFC).equalsIgnoreCase(Normalizer.normalize(taskWord.getArticle().get(), Normalizer.Form.NFC)) && word.trim().equalsIgnoreCase(taskWord.getWord().get());
             }
             else {
                 answer = taskWord.getWord().get();
                 return (!hasArticle && txt_word.getText().trim().toUpperCase().equals(answer.toUpperCase()));
-
             }
         }
         else{

@@ -199,16 +199,13 @@ public class WordDAO implements IDAO<Word> {
         boolean result = false;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT w.id, w.article, w.word, w.word_translation, w.lang_id, w.translation_id, w.whenAdded, w.wrongAnswers, w.correctAnswers FROM WORD as w INNER JOIN USER_WORD as uw ON uw.word_id=w.id WHERE uw.user_id=? AND w.article=? AND w.word=? AND w.word_translation=? AND w.lang_id=? AND w.translation_id=? AND w.whenAdded=? AND w.wrongAnswers=? AND w.correctAnswers=? GROUP BY w.id;");
+            PreparedStatement statement = connection.prepareStatement("SELECT w.id, w.article, w.word, w.word_translation, w.lang_id, w.translation_id, w.whenAdded, w.wrongAnswers, w.correctAnswers FROM WORD as w INNER JOIN USER_WORD as uw ON uw.word_id=w.id WHERE uw.user_id=? AND w.article=? AND w.word=? AND w.word_translation=? AND w.lang_id=? AND w.translation_id=? GROUP BY w.id;");
             statement.setInt(1, AuthController.getActiveUser().getId());
             statement.setString(2, value.getArticle().get());
             statement.setString(3, value.getWord().get());
             statement.setString(4, value.getTranslation().get());
             statement.setInt(5, value.getWordLang().getId());
             statement.setInt(6, value.getTranslationLang().getId());
-            statement.setDate(7, value.getAddedDate());
-            statement.setInt(8, value.getWrongAnswerCount());
-            statement.setInt(9, value.getCorrectAnswerCount());
             statement.execute();
             ResultSet resultSet = statement.getResultSet();
             result = resultSet.next();

@@ -141,8 +141,7 @@ public class Word {
         if (!getWord().equals(word1.getWord())) return false;
         if (!getTranslation().equals(word1.getTranslation())) return false;
         if (!getWordLang().equals(word1.getWordLang())) return false;
-        if (!getTranslationLang().equals(word1.getTranslationLang())) return false;
-        return getAddedDate().equals(word1.getAddedDate());
+        return (!getTranslationLang().equals(word1.getTranslationLang()));
 
     }
 
@@ -153,7 +152,6 @@ public class Word {
         result = 31 * result + getTranslation().hashCode();
         result = 31 * result + getWordLang().hashCode();
         result = 31 * result + getTranslationLang().hashCode();
-        result = 31 * result + getAddedDate().hashCode();
         return result;
     }
 }
