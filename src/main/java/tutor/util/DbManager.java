@@ -86,7 +86,7 @@ public class DbManager {
                 "CREATE TABLE IF NOT EXISTS WORD(id integer IDENTITY PRIMARY KEY, article varchar(10), word varchar(100), word_translation varchar(100), lang_id integer, translation_id integer, whenAdded Date, wrongAnswers integer, correctAnswers integer, FOREIGN KEY(lang_id) REFERENCES LANGUAGES(id), FOREIGN KEY(translation_id) REFERENCES LANGUAGES(id));",
                 "CREATE TABLE IF NOT EXISTS USER_WORD(user_id integer, word_id integer, FOREIGN KEY (user_id) REFERENCES USERS(id), FOREIGN KEY (word_id) REFERENCES WORD(id));",
                 "CREATE TABLE IF NOT EXISTS USER_LANG(user_id integer, lang_id integer, FOREIGN KEY (user_id) REFERENCES USERS(id), FOREIGN KEY (lang_id) REFERENCES LANGUAGES(id));",
-                "CREATE TABLE IF NOT EXISTS USER_STATS(id integer, user_id integer, task_type varchar(20), rate double, FOREIGN KEY(user_id) REFERENCES USERS(id));",
+                "CREATE TABLE IF NOT EXISTS USER_STATS(id integer, user_id integer, task_type varchar(20), lang_id integer, rate double, FOREIGN KEY(user_id) REFERENCES USERS(id), FOREIGN KEY(lang_id) REFERENCES LANGUAGES(id));",
                 "INSERT INTO LANGUAGES (lang_name) VALUES ('Afrikaans');",
                 "INSERT INTO LANGUAGES (lang_name) VALUES ('Albanian');",
                 "INSERT INTO LANGUAGES (lang_name) VALUES ('Arabic');",

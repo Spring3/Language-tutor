@@ -118,7 +118,7 @@ public class LanguageDAO implements IDAO<Language> {
         try {
             sqlStatement.execute();
             ResultSet resultSet = sqlStatement.getResultSet();
-            if (resultSet.next() == true)
+            if (resultSet.next())
             {
                 result = new Language();
                 result.setId(resultSet.getInt(1));
