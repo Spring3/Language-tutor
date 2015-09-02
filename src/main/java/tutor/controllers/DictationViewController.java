@@ -25,6 +25,7 @@ import tutor.util.TaskManager;
 
 import javax.xml.soap.Text;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.text.Normalizer;
 import java.util.*;
 
@@ -166,7 +167,11 @@ public class DictationViewController implements Initializable {
     }
 
     private float getSuccessRate(){
+        if (mistakes == 0){
+            return (firstTryGuessCounts/passedWords.size() * 60) + 20 + (20 - (mistakes/correctAnswers) * 20);
+        }
         return (firstTryGuessCounts/passedWords.size() * 60) + (firstTryGuessCounts/mistakes * 20) + (20 - (mistakes/correctAnswers) * 20);
+
     }
 
     public void btnRepeatClicked(ActionEvent actionEvent) {
@@ -234,15 +239,8 @@ public class DictationViewController implements Initializable {
                 answer = taskWord.toString();
                 String article = txt_word.getText().substring(0, txt_word.getText().indexOf(" ")).trim();
                 String word = txt_word.getText().substring(txt_word.getText().indexOf(" "), txt_word.getText().length());
-                int length = article.length();
-                int originLength = taskWord.getArticle().get().length();
-                String article1 = Normalizer.normalize(article, Normalizer.Form.NFD);
-                String originalArticle = Normalizer.normalize(taskWord.getArticle().get(), Normalizer.Form.NFD);
-                boolean result1 = article1.equals(originalArticle);
-                boolean result2 = article1.equalsIgnoreCase(originalArticle);
-
-
-                return Normalizer.normalize(article, Normalizer.Form.NFC).equalsIgnoreCase(Normalizer.normalize(taskWord.getArticle().get(), Normalizer.Form.NFC)) && word.trim().equalsIgnoreCase(taskWord.getWord().get());
+                fixUTFString(taskWord);
+                return article.equalsIgnoreCase(taskWord.getArticle().get()) && word.trim().equalsIgnoreCase(taskWord.getWord().get());
             }
             else {
                 answer = taskWord.getWord().get();
@@ -252,6 +250,30 @@ public class DictationViewController implements Initializable {
         else{
             answer = taskWord.getTranslation().get();
             return txt_translation.getText().trim().toUpperCase().equals(taskWord.getTranslation().get().toUpperCase());
+        }
+    }
+
+    private void fixUTFString(Word word){
+        word.setArticle(removeTrashFromString(word.getArticle().get()));
+        word.setWord(removeTrashFromString(word.getWord().get()));
+        word.setTranslation(removeTrashFromString(word.getTranslation().get()));
+        WordDAO.getInstance().update(word);
+    }
+
+    private String removeTrashFromString(String string){
+        String[] buffer = string.split("");
+
+        if (buffer[0].charAt(0) == ('\ufeff')){
+            String[] tempBuffer = new String[buffer.length -1];
+            System.arraycopy(buffer, 1, tempBuffer, 0, tempBuffer.length);
+            StringBuilder builder = new StringBuilder();
+            for (String s : tempBuffer){
+                builder.append(s);
+            }
+            return builder.toString();
+        }
+        else{
+            return string;
         }
     }
 }
