@@ -18,17 +18,17 @@ public class Word {
     }
 
     public Word(String word, String translation, Language word_lang, Language translation_lang){
-        this.word = new SimpleStringProperty(word);
-        this.translation = new SimpleStringProperty(translation);
+        this.word = new SimpleStringProperty(removeTrashFromString(word));
+        this.translation = new SimpleStringProperty(removeTrashFromString(translation));
         setWordLang(word_lang);
         setTranslationLang(translation_lang);
         setAddedDate(new Date(Calendar.getInstance().getTime().getTime()));
     }
 
     public Word(String article, String word, String translation, Language word_lang, Language translation_lang){
-        this.article = new SimpleStringProperty(article);
-        this.word = new SimpleStringProperty(word);
-        this.translation = new SimpleStringProperty(translation);
+        this.article = new SimpleStringProperty(removeTrashFromString(article));
+        this.word = new SimpleStringProperty(removeTrashFromString(word));
+        this.translation = new SimpleStringProperty(removeTrashFromString(translation));
         setWordLang(word_lang);
         setTranslationLang(translation_lang);
         setAddedDate(new Date(Calendar.getInstance().getTime().getTime()));
@@ -153,5 +153,22 @@ public class Word {
         result = 31 * result + getWordLang().hashCode();
         result = 31 * result + getTranslationLang().hashCode();
         return result;
+    }
+
+    private String removeTrashFromString(String string){
+        String[] buffer = string.split("");
+
+        if (buffer[0].charAt(0) == ('\ufeff')){
+            String[] tempBuffer = new String[buffer.length -1];
+            System.arraycopy(buffer, 1, tempBuffer, 0, tempBuffer.length);
+            StringBuilder builder = new StringBuilder();
+            for (String s : tempBuffer){
+                builder.append(s);
+            }
+            return builder.toString();
+        }
+        else{
+            return string;
+        }
     }
 }

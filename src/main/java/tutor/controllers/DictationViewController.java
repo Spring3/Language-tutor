@@ -23,10 +23,7 @@ import tutor.util.ResourceBundleKeys;
 import tutor.util.StageManager;
 import tutor.util.TaskManager;
 
-import javax.xml.soap.Text;
 import java.net.URL;
-import java.nio.charset.Charset;
-import java.text.Normalizer;
 import java.util.*;
 
 /**
@@ -239,7 +236,6 @@ public class DictationViewController implements Initializable {
                 answer = taskWord.toString();
                 String article = txt_word.getText().substring(0, txt_word.getText().indexOf(" ")).trim();
                 String word = txt_word.getText().substring(txt_word.getText().indexOf(" "), txt_word.getText().length());
-                fixUTFString(taskWord);
                 return article.equalsIgnoreCase(taskWord.getArticle().get()) && word.trim().equalsIgnoreCase(taskWord.getWord().get());
             }
             else {
@@ -250,30 +246,6 @@ public class DictationViewController implements Initializable {
         else{
             answer = taskWord.getTranslation().get();
             return txt_translation.getText().trim().toUpperCase().equals(taskWord.getTranslation().get().toUpperCase());
-        }
-    }
-
-    private void fixUTFString(Word word){
-        word.setArticle(removeTrashFromString(word.getArticle().get()));
-        word.setWord(removeTrashFromString(word.getWord().get()));
-        word.setTranslation(removeTrashFromString(word.getTranslation().get()));
-        WordDAO.getInstance().update(word);
-    }
-
-    private String removeTrashFromString(String string){
-        String[] buffer = string.split("");
-
-        if (buffer[0].charAt(0) == ('\ufeff')){
-            String[] tempBuffer = new String[buffer.length -1];
-            System.arraycopy(buffer, 1, tempBuffer, 0, tempBuffer.length);
-            StringBuilder builder = new StringBuilder();
-            for (String s : tempBuffer){
-                builder.append(s);
-            }
-            return builder.toString();
-        }
-        else{
-            return string;
         }
     }
 }
