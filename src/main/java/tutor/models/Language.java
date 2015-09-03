@@ -37,6 +37,12 @@ public class Language {
         this.lang_name = lang_name;
     }
 
+
+    @Override
+    public String toString() {
+        return getLangName();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -44,19 +50,15 @@ public class Language {
 
         Language language = (Language) o;
 
-        if (lang_name != null ? !lang_name.equals(language.lang_name) : language.lang_name != null) return false;
-        return true;
+        if (getId() != language.getId()) return false;
+        return lang_name.equals(language.lang_name);
+
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (lang_name != null ? lang_name.hashCode() : 0);
+        int result = getId();
+        result = 31 * result + lang_name.hashCode();
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return getLangName();
     }
 }

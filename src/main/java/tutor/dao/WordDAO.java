@@ -200,7 +200,7 @@ public class WordDAO implements IDAO<Word> {
         List<Word> resultList = null;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT w.id, w.article, w.word, w.word_translation, w.lang_id, w.translation_id, w.whenAdded, w.wrongAnswers, w.correctAnswers FROM WORD as w INNER JOIN USER_WORD ON user_id=? WHERE w.lang_id=? AND w.translation_id=? AND w.word_translation=? AND w.id <=> ? GROUP BY w.id ORDER BY w.id DESC;");
+            PreparedStatement statement = connection.prepareStatement("SELECT w.id, w.article, w.word, w.word_translation, w.lang_id, w.translation_id, w.whenAdded, w.wrongAnswers, w.correctAnswers FROM WORD as w INNER JOIN USER_WORD ON user_id=? WHERE w.lang_id=? AND w.translation_id=? AND w.word_translation=? AND w.id != ? GROUP BY w.id ORDER BY w.id DESC;");
             statement.setInt(1, AuthController.getActiveUser().getId());
             statement.setInt(2, word.getWordLang().getId());
             statement.setInt(3, word.getTranslationLang().getId());
@@ -253,6 +253,26 @@ public class WordDAO implements IDAO<Word> {
         }
         resultSet.close();
         return resultList;
+    }
+
+    public int countFor(Language wordLang){
+        try{
+            Connection connection = DbManager.getInstance().getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM WORD AS w INNER JOIN USER_WORD ON user_id=? WHERE w.lang_id=? AND w.translation_id=? GROUP BY w.id;");
+            statement.setInt(1, AuthController.getActiveUser().getId());
+            statement.setInt(2, wordLang.getId());
+            statement.setInt(3, AuthController.getActiveUser().getNativeLanguage().getId());
+            statement.execute();
+            ResultSet resultSet = statement.getResultSet();
+            if (resultSet.next())
+            {
+                return resultSet.getInt(1);
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
     }
 
     public boolean contains(Word value){

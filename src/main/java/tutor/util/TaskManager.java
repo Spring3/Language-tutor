@@ -4,9 +4,7 @@ import tutor.dao.WordDAO;
 import tutor.models.Language;
 import tutor.models.Word;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by Spring on 8/30/2015.
@@ -14,12 +12,12 @@ import java.util.Random;
 public class TaskManager {
     public TaskManager(Language langToLearn){
         languageToLearn = langToLearn;
-        wordsForTask = new ArrayList<>();
+        wordsForTask = new HashSet<>();
     }
 
     private static final int MAX_WORDS_PER_TASK = 10;
     private Language languageToLearn;
-    private List<Word> wordsForTask;
+    private Set<Word> wordsForTask;
     private TaskManagerMode mode;
     private DictationMode dictationMode;
 
@@ -41,7 +39,7 @@ public class TaskManager {
         REVERSED
     }
 
-    public List<Word> getWords(){
+    public Set<Word> getWords(){
         return wordsForTask;
     }
 
@@ -49,8 +47,22 @@ public class TaskManager {
         return MAX_WORDS_PER_TASK;
     }
 
+    public Word get(int index){
+        if (index == 0){
+            return getWords().iterator().next();
+        }
+        int counter = 0;
+        if (getWords().size() > 0){
+            Iterator<Word> iterator;
+            for ( iterator = getWords().iterator(); counter < index && iterator.hasNext(); counter ++){
+                iterator.next();
+            }
+            return iterator.next();
+        }
+        throw new IndexOutOfBoundsException("Index out of bounds.");
+    }
 
-    public List<Word> createTask(){
+    public Set<Word> createTask(){
         Random random = new Random();
         mode = TaskManagerMode.values()[random.nextInt(3)];
         dictationMode = DictationMode.values()[random.nextInt(2)];
@@ -90,14 +102,18 @@ public class TaskManager {
         fillArrayWithWords(newWords);
     }
 
-    private void fillArrayWithWords(List<Word> allWords){
+    private void fillArrayWithWords(List<Word> allWords) {
         wordsForTask.clear();
         Random rand = new Random();
         try {
             if (allWords.size() < MAX_WORDS_PER_TASK) {
-                wordsForTask = allWords;
+                wordsForTask.addAll(allWords);
                 allWords = WordDAO.getInstance().readAllByLangForActiveUser(languageToLearn);
+
                 for (int i = wordsForTask.size(); i < MAX_WORDS_PER_TASK; i++) {
+                    if (allWords.size() == 0) {
+                        break;
+                    }
                     int randomIndex = rand.nextInt(allWords.size());
                     wordsForTask.add(allWords.get(randomIndex));
                     allWords.remove(randomIndex);
@@ -109,8 +125,7 @@ public class TaskManager {
                     allWords.remove(randomIndex);
                 }
             }
-        }
-        catch (NullPointerException ex){
+        } catch (NullPointerException ex) {
             createNormalTask();
         }
     }

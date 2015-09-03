@@ -36,4 +36,8 @@ public final class ResourceBundleKeys {
     public static final String LABEL_TASK_MISTAKES = "label_mistakes";
     public static final String LABEL_TASK_CORRECT_ANSWERS = "label_correctAnswers";
     public static final String SUCCESS_RATE = "label_total_success_rate";
+    public static final String LABEL_ERROR = "label_error";
+    public static final String LABEL_NO_WORDS = "label_no_words";
+    public static final String LABEL_NO_WORDS_CONTEXT = "label_no_words_context";
+
 }

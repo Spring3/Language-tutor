@@ -105,6 +105,7 @@ public class DictationViewController implements Initializable {
             txt_word.setVisible(true);
         }
 
+
     }
 
     public void btnStartClicked(ActionEvent actionEvent) {
@@ -155,10 +156,10 @@ public class DictationViewController implements Initializable {
         Random random = new Random();
         wordIndex = random.nextInt(manager.getWords().size());
         if (!manager.getDictationMode().equals(TaskManager.DictationMode.REVERSED)){
-            txt_task.setText(manager.getWords().get(wordIndex).toString());
+            txt_task.setText(manager.get(wordIndex).toString());
         }
         else{
-            txt_task.setText(manager.getWords().get(wordIndex).getTranslation().get());
+            txt_task.setText(manager.get(wordIndex).getTranslation().get());
         }
         pane_answers.getChildren().get(0).requestFocus();
     }
@@ -202,7 +203,7 @@ public class DictationViewController implements Initializable {
     public void confirmAnswer(ActionEvent actionEvent) {
 
         if (manager.getDictationMode().equals(TaskManager.DictationMode.REVERSED)) {
-            if (!manager.getWords().get(wordIndex).getArticle().get().isEmpty()) {
+            if (!manager.get(wordIndex).getArticle().get().isEmpty()) {
                 checkAnswer(true, true);
             } else {
                 checkAnswer(false, true);
@@ -221,7 +222,7 @@ public class DictationViewController implements Initializable {
     }
 
     private void checkAnswer(boolean hasArticle, boolean reversed){
-        Word taskWord = manager.getWords().get(wordIndex);
+        Word taskWord = manager.get(wordIndex);
         if (reversed){
             checkAnswerForReversedTest(true, hasArticle, taskWord);
         }
@@ -290,7 +291,7 @@ public class DictationViewController implements Initializable {
             }
             label_answerWrong.setVisible(false);
             label_answerCorrect.setVisible(true);
-            manager.getWords().remove(wordIndex);
+            manager.getWords().remove(manager.get(wordIndex));
         }
         else
         {

@@ -92,6 +92,22 @@ public class DictionaryViewController implements Initializable{
             return new ReadOnlyObjectWrapper<Button>(button);
         });
 
+        table_articles.setOnEditCommit( event -> {
+            Word editedWord = event.getTableView().getItems().get(event.getTablePosition().getRow());
+            if (editedWord.toString().isEmpty() || editedWord.getTranslation().get().isEmpty()){
+                editedWord.setArticle(event.getNewValue());
+            }
+            if (WordDAO.getInstance().contains(editedWord)) {
+                editedWord.setArticle(event.getNewValue());
+                WordDAO.getInstance().update(editedWord);
+            } else {
+                if (!editedWord.getTranslation().get().isEmpty() && !editedWord.getWord().get().isEmpty()) {
+                    WordDAO.getInstance().create(editedWord);
+                    loadWordsFor(chb_language.getSelectionModel().getSelectedItem());
+                }
+            }
+        });
+
         table_word.setOnEditCommit(event ->
                 {
                     Word editedWord = event.getTableView().getItems().get(event.getTablePosition().getRow());

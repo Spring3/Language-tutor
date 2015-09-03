@@ -15,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import sun.plugin.javascript.navig.Anchor;
 import tutor.Main;
 import tutor.dao.LanguageDAO;
+import tutor.dao.WordDAO;
 import tutor.models.Language;
 import tutor.util.DbManager;
 import tutor.util.ResourceBundleKeys;
@@ -148,7 +149,8 @@ public class Controller implements Initializable
     }
 
     public void dictationTaskClicked(Event event) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.TASKVIEW_DICTATION_PATH), bundle.getString(ResourceBundleKeys.LABEL_DICTATION), 1, Optional.empty(), false);
+        if (WordDAO.getInstance().countFor(selectedLanguage) > 0)
+            stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.TASKVIEW_DICTATION_PATH), bundle.getString(ResourceBundleKeys.LABEL_DICTATION), 1, Optional.empty(), false);
     }
 
     public void workbenchSelected(Event event) {
