@@ -242,7 +242,7 @@ public class DictationViewController implements Initializable {
                 for(Word synonym : taskWord.getWordsWithSimilarTranslation()){
                     if (article.equalsIgnoreCase(synonym.getArticle().get()) && word.trim().equalsIgnoreCase(synonym.getWord().get())) {
                         rememberAnswerResult(reversed, true, synonym);
-                        break;
+                        return;
                     }
                 }
                 rememberAnswerResult(reversed, false, taskWord);
@@ -256,7 +256,7 @@ public class DictationViewController implements Initializable {
                 for(Word word : taskWord.getWordsWithSimilarTranslation()){
                     if (txt_word.getText().trim().equalsIgnoreCase(word.toString())){
                         rememberAnswerResult(reversed, true, word);
-                        break;
+                        return;
                     }
                 }
                 rememberAnswerResult(reversed, false, taskWord);
@@ -273,7 +273,7 @@ public class DictationViewController implements Initializable {
             for(Word word : taskWord.getOtherTranslationVariants()){
                 if (txt_translation.getText().trim().equalsIgnoreCase(word.getTranslation().get())){
                     rememberAnswerResult(reversed, true, word);
-                    break;
+                    return;
                 }
             }
             rememberAnswerResult(reversed, false, taskWord);

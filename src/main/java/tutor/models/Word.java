@@ -30,11 +30,6 @@ public class Word {
         setAddedDate(new Date(Calendar.getInstance().getTime().getTime()));
     }
 
-    public Word(String article, String word, String translation){
-        System.out.println("Here!");
-
-    }
-
     public Word(String article, String word, String translation, Language word_lang, Language translation_lang){
         this.article = new SimpleStringProperty(removeTrashFromString(article));
         this.word = new SimpleStringProperty(removeTrashFromString(word));
@@ -153,41 +148,9 @@ public class Word {
 
     @Override
     public String toString() {
-        return getArticle().get() + " " + getWord().get();
+        return (getArticle().get() + " " + getWord().get()).trim();
     }
 
-    public boolean isFilled(){
-        if ( getWord().get() != null && getTranslation().get() != null) {
-            setArticle( article == null ? "" : getArticle().get());
-            return !getWord().get().isEmpty() && !getTranslation().get().isEmpty();
-        }
-        return false;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Word word1 = (Word) o;
-
-        if (getArticle() != null ? !getArticle().equals(word1.getArticle()) : word1.getArticle() != null) return false;
-        if (!getWord().equals(word1.getWord())) return false;
-        if (!getTranslation().equals(word1.getTranslation())) return false;
-        if (!getWordLang().equals(word1.getWordLang())) return false;
-        return (!getTranslationLang().equals(word1.getTranslationLang()));
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getArticle() != null ? getArticle().hashCode() : 0;
-        result = 31 * result + getWord().hashCode();
-        result = 31 * result + getTranslation().hashCode();
-        result = 31 * result + getWordLang().hashCode();
-        result = 31 * result + getTranslationLang().hashCode();
-        return result;
-    }
 
     private String removeTrashFromString(String string){
         String[] buffer = string.split("");
@@ -208,5 +171,32 @@ public class Word {
 
         }
         return string;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Word word1 = (Word) o;
+
+        if (getId() != word1.getId()) return false;
+        if (!getArticle().get().equals(word1.getArticle().get())) return false;
+        if (!getWord().get().equals(word1.getWord().get())) return false;
+        if (!getTranslation().get().equals(word1.getTranslation().get())) return false;
+        if (!getWordLang().equals(word1.getWordLang())) return false;
+        return getTranslationLang().equals(word1.getTranslationLang());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + getArticle().get().hashCode();
+        result = 31 * result + getWord().get().hashCode();
+        result = 31 * result + getTranslation().get().hashCode();
+        result = 31 * result + getWordLang().hashCode();
+        result = 31 * result + getTranslationLang().hashCode();
+        return result;
     }
 }

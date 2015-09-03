@@ -28,26 +28,13 @@ public class BasicParser implements FileParser {
             String fileLine;
             while ((fileLine = reader.readLine()) != null) {
                 String[] parsedDocLine = fileLine.split(",");
-                try {
-                    Word word = new Word(parsedDocLine[0], parsedDocLine[1], parsedDocLine[2], lang, translationLang);
-                    if (WordDAO.getInstance().create(word)) {
-                        addedWordsAmount++;
-                        isSuccessfull = true;
-                    }
-                    else
-                        ignoredWordsAmount ++;
-                    totalWordsAmount ++;
-                } catch (ArrayIndexOutOfBoundsException ex) {
-                    Word word = new Word(parsedDocLine[0], parsedDocLine[1], "", lang, translationLang);
-                    if (WordDAO.getInstance().create(word)) {
-                        addedWordsAmount++;
-                        isSuccessfull = true;
-                    }
-                    else
-                        ignoredWordsAmount ++;
-                    totalWordsAmount ++;
-                    return;
-                }
+                Word word = new Word(parsedDocLine[0], parsedDocLine[1], parsedDocLine[2], lang, translationLang);
+                if (WordDAO.getInstance().create(word)) {
+                    addedWordsAmount++;
+                    isSuccessfull = true;
+                } else
+                    ignoredWordsAmount++;
+                totalWordsAmount++;
             }
         }
         catch (Exception ex){
