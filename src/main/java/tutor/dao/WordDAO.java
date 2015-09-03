@@ -194,6 +194,22 @@ public class WordDAO implements IDAO<Word> {
         return resultList;
     }
 
+    public List<Word> readAllNewlyAddedWordsFor(Language lang){
+        List<Word> resultList = null;
+        try{
+            Connection connection = DbManager.getInstance().getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT w.id, w.article, w.word, w.word_translation, w.lang_id, w.translation_id, w.whenAdded, w.wrongAnswers, w.correctAnswers FROM WORD as w INNER JOIN USER_WORD ON user_id=? WHERE w.lang_id=? AND w.wrongAnswers = 0 AND w.correctAnswers = 0 GROUP BY w.id ORDER BY w.id DESC;");
+            statement.setInt(1, AuthController.getActiveUser().getId());
+            statement.setInt(2, lang.getId());
+            resultList = readAllBy(statement);
+            connection.close();
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return resultList;
+    }
+
     private List<Word> readAllBy(PreparedStatement statement) throws SQLException{
         statement.execute();
         ResultSet resultSet = statement.getResultSet();

@@ -21,17 +21,24 @@ public class TaskManager {
     private Language languageToLearn;
     private List<Word> wordsForTask;
     private TaskManagerMode mode;
+    private DictationMode dictationMode;
 
     public TaskManagerMode getMode(){
         return mode;
     }
 
+    public DictationMode getDictationMode() {return dictationMode;}
+
 
     public enum TaskManagerMode{
         NORMAL,
-        REVERSED,
         REPETITION,
         LEARNING
+    }
+
+    public enum DictationMode{
+        NORMAL,
+        REVERSED
     }
 
     public List<Word> getWords(){
@@ -45,13 +52,10 @@ public class TaskManager {
 
     public List<Word> createTask(){
         Random random = new Random();
-        mode = TaskManagerMode.values()[random.nextInt(4)];
+        mode = TaskManagerMode.values()[random.nextInt(3)];
+        dictationMode = DictationMode.values()[random.nextInt(2)];
         switch (mode){
             case NORMAL:{
-                createNormalTask();
-                break;
-            }
-            case REVERSED:{
                 createNormalTask();
                 break;
             }
@@ -59,10 +63,10 @@ public class TaskManager {
                 createRepetitionTask();
                 break;
             }
-            /*case LEARNING:{
+            case LEARNING:{
                 createLearningTask();
                 break;
-            }*/
+            }
             default:{
                 createNormalTask();
                 break;
@@ -74,7 +78,6 @@ public class TaskManager {
     private void createNormalTask(){
         List<Word> allWords = WordDAO.getInstance().readAllByLangForActiveUser(languageToLearn);
         fillArrayWithWords(allWords);
-
     }
 
     private void createRepetitionTask(){
@@ -83,6 +86,8 @@ public class TaskManager {
     }
 
     private void createLearningTask(){
+        List<Word> newWords = WordDAO.getInstance().readAllNewlyAddedWordsFor(languageToLearn);
+        fillArrayWithWords(newWords);
     }
 
     private void fillArrayWithWords(List<Word> allWords){

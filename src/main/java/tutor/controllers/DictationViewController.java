@@ -95,7 +95,7 @@ public class DictationViewController implements Initializable {
         manager = new TaskManager(Controller.selectedLanguage);
         tblView_wordTranslation.setItems(FXCollections.observableArrayList(manager.createTask()));
         wordsAmount = manager.getWords().size();
-        if (!manager.getMode().equals(TaskManager.TaskManagerMode.REVERSED)){
+        if (!manager.getDictationMode().equals(TaskManager.DictationMode.REVERSED)){
             pane_answers.getChildren().add(0, txt_translation);
             txt_translation.setVisible(true);
         }
@@ -153,7 +153,7 @@ public class DictationViewController implements Initializable {
         }
         Random random = new Random();
         wordIndex = random.nextInt(manager.getWords().size());
-        if (!manager.getMode().equals(TaskManager.TaskManagerMode.REVERSED)){
+        if (!manager.getDictationMode().equals(TaskManager.DictationMode.REVERSED)){
             txt_task.setText(manager.getWords().get(wordIndex).toString());
         }
         else{
@@ -201,7 +201,7 @@ public class DictationViewController implements Initializable {
     public void confirmAnswer(ActionEvent actionEvent) {
         boolean isCorrect;
 
-        if (manager.getMode().equals(TaskManager.TaskManagerMode.REVERSED)) {
+        if (manager.getDictationMode().equals(TaskManager.DictationMode.REVERSED)) {
             if (!manager.getWords().get(wordIndex).getArticle().get().isEmpty()) {
                 isCorrect = checkAnswer(true, true);
             } else {
