@@ -45,7 +45,7 @@ public class TaskManager {
 
     public List<Word> createTask(){
         Random random = new Random();
-        mode = TaskManagerMode.values()[random.nextInt(2)];
+        mode = TaskManagerMode.values()[random.nextInt(4)];
         switch (mode){
             case NORMAL:{
                 createNormalTask();
@@ -55,41 +55,58 @@ public class TaskManager {
                 createNormalTask();
                 break;
             }
-            /*case REPETITION:{
+            case REPETITION:{
                 createRepetitionTask();
                 break;
             }
-            case LEARNING:{
+            /*case LEARNING:{
                 createLearningTask();
                 break;
-            }
+            }*/
             default:{
                 createNormalTask();
                 break;
-            }      */
+            }
         }
         return wordsForTask;
     }
 
     private void createNormalTask(){
-        Random rand = new Random();
         List<Word> allWords = WordDAO.getInstance().readAllByLangForActiveUser(languageToLearn);
-        if (allWords.size() < MAX_WORDS_PER_TASK)    {
-            wordsForTask = allWords;
-        }
-        else{
-            wordsForTask.clear();
-            for(int i = 0; i < MAX_WORDS_PER_TASK; i ++){
-                int randomIndex = rand.nextInt(allWords.size());
-                wordsForTask.add(allWords.get(randomIndex));
-                allWords.remove(randomIndex);
-            }
-        }
+        fillArrayWithWords(allWords);
+
     }
 
     private void createRepetitionTask(){
+        List<Word> wordsToRepeat = WordDAO.getInstance().readAllWordsToRepeatFor(languageToLearn);
+        fillArrayWithWords(wordsToRepeat);
     }
 
     private void createLearningTask(){
+    }
+
+    private void fillArrayWithWords(List<Word> allWords){
+        wordsForTask.clear();
+        Random rand = new Random();
+        try {
+            if (allWords.size() < MAX_WORDS_PER_TASK) {
+                wordsForTask = allWords;
+                allWords = WordDAO.getInstance().readAllByLangForActiveUser(languageToLearn);
+                for (int i = wordsForTask.size(); i < MAX_WORDS_PER_TASK; i++) {
+                    int randomIndex = rand.nextInt(allWords.size());
+                    wordsForTask.add(allWords.get(randomIndex));
+                    allWords.remove(randomIndex);
+                }
+            } else {
+                for (int i = 0; i < MAX_WORDS_PER_TASK; i++) {
+                    int randomIndex = rand.nextInt(allWords.size());
+                    wordsForTask.add(allWords.get(randomIndex));
+                    allWords.remove(randomIndex);
+                }
+            }
+        }
+        catch (NullPointerException ex){
+            createNormalTask();
+        }
     }
 }

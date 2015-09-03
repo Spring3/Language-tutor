@@ -29,7 +29,7 @@ public class Language {
         this.id = id;
     }
 
-    public String getLang_name() {
+    public String getLangName() {
         return lang_name;
     }
 
@@ -57,6 +57,6 @@ public class Language {
 
     @Override
     public String toString() {
-        return getLang_name();
+        return getLangName();
     }
 }

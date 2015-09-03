@@ -35,9 +35,9 @@ public class LanguageDAO implements IDAO<Language> {
         try{
             Connection connection = DbManager.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO LANGUAGES(lang_name) VALUES(?);");
-            preparedStatement.setString(1, value.getLang_name());
+            preparedStatement.setString(1, value.getLangName());
             preparedStatement.execute();
-            System.out.println("New language: " + value.getLang_name() + " was created");
+            System.out.println("New language: " + value.getLangName() + " was created");
             assignLangToCurrentUser(value);
             connection.close();
             return true;
@@ -54,7 +54,7 @@ public class LanguageDAO implements IDAO<Language> {
                 Connection connection = DbManager.getInstance().getConnection();
                 PreparedStatement statement = connection.prepareStatement("INSERT INTO USER_LANG(user_id, lang_id) VALUES(?,?)");
                 statement.setInt(1, AuthController.getActiveUser().getId());
-                statement.setInt(2, readBy(lang.getLang_name()).getId());
+                statement.setInt(2, read(lang.getLangName()).getId());
                 statement.execute();
                 connection.close();
                 return true;
@@ -98,7 +98,7 @@ public class LanguageDAO implements IDAO<Language> {
         return result;
     }
 
-    public Language readBy(String lang_name){
+    public Language read(String lang_name){
         Language result = null;
         try{
             Connection connection = DbManager.getInstance().getConnection();
@@ -113,22 +113,16 @@ public class LanguageDAO implements IDAO<Language> {
         return result;
     }
 
-    private Language readBy(PreparedStatement sqlStatement){
+    private Language readBy(PreparedStatement sqlStatement) throws SQLException {
         Language result = null;
-        try {
-            sqlStatement.execute();
-            ResultSet resultSet = sqlStatement.getResultSet();
-            if (resultSet.next())
-            {
-                result = new Language();
-                result.setId(resultSet.getInt(1));
-                result.setLang_name(resultSet.getString(2));
-            }
-            resultSet.close();
+        sqlStatement.execute();
+        ResultSet resultSet = sqlStatement.getResultSet();
+        if (resultSet.next()) {
+            result = new Language();
+            result.setId(resultSet.getInt(1));
+            result.setLang_name(resultSet.getString(2));
         }
-        catch (SQLException ex){
-            ex.printStackTrace();
-        }
+        resultSet.close();
         return result;
     }
 
@@ -152,7 +146,7 @@ public class LanguageDAO implements IDAO<Language> {
             Connection connection = DbManager.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement("SELECT lang.id, lang.lang_name FROM LANGUAGES as lang INNER JOIN USER_LANG as ulang ON ulang.user_id=? WHERE ulang.lang_id = lang.id AND lang.lang_name = ?;");
             statement.setInt(1, user.getId());
-            statement.setString(2, language.getLang_name());
+            statement.setString(2, language.getLangName());
             statement.execute();
             boolean result  = statement.getResultSet().next();
             connection.close();
@@ -178,23 +172,17 @@ public class LanguageDAO implements IDAO<Language> {
         return resultList;
     }
 
-    private List<Language> readAllLanguages(PreparedStatement statement){
-        List<Language> resultList = null;
-        try {
-            statement.execute();
-            resultList = new ArrayList<>();
-            ResultSet resultSet = statement.getResultSet();
-            while (resultSet.next() == true) {
-                Language tempLanguage = new Language();
-                tempLanguage.setId(resultSet.getInt(1));
-                tempLanguage.setLang_name(resultSet.getString(2));
-                resultList.add(tempLanguage);
-            }
-            resultSet.close();
+    private List<Language> readAllLanguages(PreparedStatement statement) throws SQLException {
+        statement.execute();
+        List<Language> resultList = new ArrayList<>();
+        ResultSet resultSet = statement.getResultSet();
+        while (resultSet.next()) {
+            Language tempLanguage = new Language();
+            tempLanguage.setId(resultSet.getInt(1));
+            tempLanguage.setLang_name(resultSet.getString(2));
+            resultList.add(tempLanguage);
         }
-        catch (SQLException ex){
-            ex.printStackTrace();
-        }
+        resultSet.close();
         return resultList;
     }
 
@@ -204,7 +192,7 @@ public class LanguageDAO implements IDAO<Language> {
         try{
             Connection connection = DbManager.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement("UPDATE LANGUAGES SET lang_name=? WHERE id=?;");
-            statement.setString(1, value.getLang_name());
+            statement.setString(1, value.getLangName());
             statement.setInt(2, value.getId());
             statement.executeUpdate();
             connection.close();

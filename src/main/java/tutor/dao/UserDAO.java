@@ -80,31 +80,25 @@ public class UserDAO implements IDAO<User> {
         return resultUser;
     }
 
-    private User readBy(PreparedStatement sqlStatement){
+    private User readBy(PreparedStatement sqlStatement) throws SQLException {
         User resultUser = null;
-        try {
-            sqlStatement.execute();
-            ResultSet result = sqlStatement.getResultSet();
-            if (result.next())
-            {
-                resultUser = new User();
-                resultUser.setId(result.getInt(1));
-                resultUser.setUserName(result.getString(2));
-                resultUser.setEmail(result.getString(3));
-                String password = result.getString(4);
-                resultUser.setDateOfRegistery(result.getTimestamp(5));
-                resultUser.setSuccess_rate(result.getFloat(6));
-                int seed = result.getInt(7);
-                resultUser.setSeed(seed);
-                resultUser.setNativeLanguage(LanguageDAO.getInstance().read(result.getInt(8)));
-                String passSubString = password.substring(0, password.lastIndexOf(seed+""));
-                resultUser.setPassword(Integer.valueOf(passSubString));
-            }
-            result.close();
+        sqlStatement.execute();
+        ResultSet result = sqlStatement.getResultSet();
+        if (result.next()) {
+            resultUser = new User();
+            resultUser.setId(result.getInt(1));
+            resultUser.setUserName(result.getString(2));
+            resultUser.setEmail(result.getString(3));
+            String password = result.getString(4);
+            resultUser.setDateOfRegistery(result.getTimestamp(5));
+            resultUser.setSuccess_rate(result.getFloat(6));
+            int seed = result.getInt(7);
+            resultUser.setSeed(seed);
+            resultUser.setNativeLanguage(LanguageDAO.getInstance().read(result.getInt(8)));
+            String passSubString = password.substring(0, password.lastIndexOf(seed + ""));
+            resultUser.setPassword(Integer.valueOf(passSubString));
         }
-        catch (SQLException ex){
-            ex.printStackTrace();
-        }
+        result.close();
         return resultUser;
     }
 

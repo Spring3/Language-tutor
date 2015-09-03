@@ -170,28 +170,48 @@ public class WordDAO implements IDAO<Word> {
             PreparedStatement statement = connection.prepareStatement("SELECT w.id, w.article, w.word, w.word_translation, w.lang_id, w.translation_id, w.whenAdded, w.wrongAnswers, w.correctAnswers FROM WORD as w INNER JOIN USER_WORD ON user_id=? WHERE w.lang_id=? GROUP BY w.id ORDER BY w.id DESC; ");
             statement.setInt(1, AuthController.getActiveUser().getId());
             statement.setInt(2, lang.getId());
-            statement.execute();
-            ResultSet resultSet = statement.getResultSet();
-            resultList = new ArrayList<>();
-            while(resultSet.next()){
-                Word result = new Word();
-                result.setId(resultSet.getInt(1));
-                result.setArticle(resultSet.getString(2));
-                result.setWord(resultSet.getString(3));
-                result.setTranslation(resultSet.getString(4));
-                result.setWordLang(LanguageDAO.getInstance().read(resultSet.getInt(5)));
-                result.setTranslationLang(LanguageDAO.getInstance().read(resultSet.getInt(6)));
-                result.setAddedDate(resultSet.getDate(7));
-                result.setWrongAnswerCount(resultSet.getInt(8));
-                result.setCorrectAnswerCount(resultSet.getInt(9));
-                resultList.add(result);
-            }
-            resultSet.close();
+            resultList = readAllBy(statement);
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return resultList;
+    }
+
+    public List<Word> readAllWordsToRepeatFor(Language lang){
+        List<Word> resultList = null;
+        try{
+            Connection connection = DbManager.getInstance().getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT w.id, w.article, w.word, w.word_translation, w.lang_id, w.translation_id, w.whenAdded, w.wrongAnswers, w.correctAnswers FROM WORD as w INNER JOIN USER_WORD ON user_id=? WHERE w.lang_id=? AND w.correctAnswers / NULLIF(w.wrongAnswers,0) < 0.75 GROUP BY w.id ORDER BY w.id DESC;");
+            statement.setInt(1, AuthController.getActiveUser().getId());
+            statement.setInt(2, lang.getId());
+            resultList = readAllBy(statement);
             connection.close();
         }
         catch (SQLException ex){
             ex.printStackTrace();
         }
+        return resultList;
+    }
+
+    private List<Word> readAllBy(PreparedStatement statement) throws SQLException{
+        statement.execute();
+        ResultSet resultSet = statement.getResultSet();
+        List<Word> resultList = new ArrayList<>();
+        while(resultSet.next()){
+            Word result = new Word();
+            result.setId(resultSet.getInt(1));
+            result.setArticle(resultSet.getString(2));
+            result.setWord(resultSet.getString(3));
+            result.setTranslation(resultSet.getString(4));
+            result.setWordLang(LanguageDAO.getInstance().read(resultSet.getInt(5)));
+            result.setTranslationLang(LanguageDAO.getInstance().read(resultSet.getInt(6)));
+            result.setAddedDate(resultSet.getDate(7));
+            result.setWrongAnswerCount(resultSet.getInt(8));
+            result.setCorrectAnswerCount(resultSet.getInt(9));
+            resultList.add(result);
+        }
+        resultSet.close();
         return resultList;
     }
 

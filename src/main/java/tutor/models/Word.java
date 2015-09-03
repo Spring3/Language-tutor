@@ -157,18 +157,22 @@ public class Word {
 
     private String removeTrashFromString(String string){
         String[] buffer = string.split("");
-
-        if (buffer[0].charAt(0) == ('\ufeff')){
-            String[] tempBuffer = new String[buffer.length -1];
-            System.arraycopy(buffer, 1, tempBuffer, 0, tempBuffer.length);
-            StringBuilder builder = new StringBuilder();
-            for (String s : tempBuffer){
-                builder.append(s);
+        try {
+            if (buffer[0].charAt(0) == ('\ufeff')) {
+                String[] tempBuffer = new String[buffer.length - 1];
+                System.arraycopy(buffer, 1, tempBuffer, 0, tempBuffer.length);
+                StringBuilder builder = new StringBuilder();
+                for (String s : tempBuffer) {
+                    builder.append(s);
+                }
+                return builder.toString();
+            } else {
+                return string;
             }
-            return builder.toString();
         }
-        else{
-            return string;
+        catch (StringIndexOutOfBoundsException ex){
+
         }
+        return string;
     }
 }

@@ -76,7 +76,6 @@ public class DictationViewController implements Initializable {
     private int wordIndex;
     private int mistakes;
     private int correctAnswers;
-    private int firstTryGuessCounts;
     private String answer;
     private List<Word> passedWords; //if boolean is true, then this word needs to be repeated again.
 
@@ -164,16 +163,38 @@ public class DictationViewController implements Initializable {
     }
 
     private float getSuccessRate(){
-        if (mistakes == 0){
-            return (firstTryGuessCounts/passedWords.size() * 60) + 20 + (20 - (mistakes/correctAnswers) * 20);
+        if (correctAnswers != 0) {
+            if (mistakes != 0) {
+                if (mistakes > wordsAmount) {
+                    return (float) correctAnswers / passedWords.size() * 70 + (float) correctAnswers / mistakes * 15 + (float) wordsAmount / mistakes * 15;
+                }
+                else{
+                    return (float) correctAnswers / passedWords.size() * 70 + (float) correctAnswers/mistakes  * 15 + (float) mistakes/wordsAmount * 15;
+                }
+            }
+            else{
+                return (float) correctAnswers/passedWords.size() * 70 +  30;
+            }
         }
-        return (firstTryGuessCounts/passedWords.size() * 60) + (firstTryGuessCounts/mistakes * 20) + (20 - (mistakes/correctAnswers) * 20);
+        else{
+            if (mistakes != 0){
+                if (mistakes > wordsAmount){
+                    return (float) correctAnswers / passedWords.size() * 70 +  15 + (float) wordsAmount/mistakes * 15;
+                }
+                else {
+                    return (float) correctAnswers / passedWords.size() * 70 +  15 + (float) mistakes/wordsAmount * 15;
+                }
+            }
+            else{
+                return (float)correctAnswers/passedWords.size() * 70 + 30;
+            }
 
+        }
     }
 
     public void btnRepeatClicked(ActionEvent actionEvent) {
         StageManager.getInstance().navigateTo(Main.class.getClassLoader().getResource(Navigator.REPEAT_WORDS_VIEW_PATH), "", 2, Optional.empty(), true, true);
-        ((RepeatWordsViewController)StageManager.getInstance().getControllerForViewOnLayer(2)).repeat(manager.getWords());
+        ((RepeatWordsViewController) StageManager.getInstance().getControllerForViewOnLayer(2)).repeat(manager.getWords());
         StageManager.getInstance().showAll(true);
     }
 
@@ -181,10 +202,9 @@ public class DictationViewController implements Initializable {
         boolean isCorrect;
 
         if (manager.getMode().equals(TaskManager.TaskManagerMode.REVERSED)) {
-            if (!manager.getWords().get(wordIndex).getArticle().get().isEmpty()){
+            if (!manager.getWords().get(wordIndex).getArticle().get().isEmpty()) {
                 isCorrect = checkAnswer(true, true);
-            }
-            else{
+            } else {
                 isCorrect = checkAnswer(false, true);
             }
         } else {
@@ -198,9 +218,9 @@ public class DictationViewController implements Initializable {
                 manager.getWords().get(wordIndex).incCorrectAnswerCount();
                 WordDAO.getInstance().update(manager.getWords().get(wordIndex));
                 passedWords.add(manager.getWords().get(wordIndex));
-                firstTryGuessCounts ++;
+                correctAnswers ++;
+
             }
-            correctAnswers ++;
             label_answerWrong.setVisible(false);
             label_answerCorrect.setVisible(true);
             manager.getWords().remove(wordIndex);

@@ -60,7 +60,7 @@ public class LanguageSettingsController implements Initializable {
             else
             {
                 ObservableList<Language> filteredLanguages = FXCollections.observableArrayList(LanguageDAO.getInstance().readAllLanguages().parallelStream()
-                        .filter((lang) -> lang.getLang_name().toLowerCase().startsWith(newValue.toLowerCase()))
+                        .filter((lang) -> lang.getLangName().toLowerCase().startsWith(newValue.toLowerCase()))
                         .collect(Collectors.toList()));
                 listView_allLanguages.setItems(filteredLanguages);
             }
