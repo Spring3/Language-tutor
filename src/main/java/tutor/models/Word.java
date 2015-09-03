@@ -2,27 +2,37 @@ package tutor.models;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import tutor.dao.WordDAO;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by user on 17.02.2015.
  */
 public class Word {
     public Word(){
-        this.article = new SimpleStringProperty();
-        this.word = new SimpleStringProperty();
-        this.translation = new SimpleStringProperty();
+        this.article = new SimpleStringProperty("");
+        this.word = new SimpleStringProperty("");
+        this.translation = new SimpleStringProperty("");
         setAddedDate(new Date(Calendar.getInstance().getTime().getTime()));
     }
 
     public Word(String word, String translation, Language word_lang, Language translation_lang){
+        this.article = new SimpleStringProperty("");
         this.word = new SimpleStringProperty(removeTrashFromString(word));
         this.translation = new SimpleStringProperty(removeTrashFromString(translation));
         setWordLang(word_lang);
         setTranslationLang(translation_lang);
         setAddedDate(new Date(Calendar.getInstance().getTime().getTime()));
+    }
+
+    public Word(String article, String word, String translation){
+        System.out.println("Here!");
+
     }
 
     public Word(String article, String word, String translation, Language word_lang, Language translation_lang){
@@ -43,6 +53,8 @@ public class Word {
     private Date addedDate;
     private int wrongAnswerCount;
     private int correctAnswerCount;
+    private List<Word> otherTranslationVariants;
+    private List<Word> otherWordsWithSameTranslation;
 
     public void setAddedDate(Date date){
         addedDate = date;
@@ -75,6 +87,20 @@ public class Word {
 
     public void incCorrectAnswerCount(){
         correctAnswerCount ++;
+    }
+
+    public List<Word> getOtherTranslationVariants(){
+        if (otherTranslationVariants == null){
+            otherTranslationVariants = WordDAO.getInstance().readOtherTranslationVariantsFor(this);
+        }
+        return otherTranslationVariants;
+    }
+
+    public List<Word> getWordsWithSimilarTranslation(){
+        if (otherWordsWithSameTranslation == null){
+            otherWordsWithSameTranslation = WordDAO.getInstance().readWordsWithSimilarTranslationFor(this);
+        }
+        return otherWordsWithSameTranslation;
     }
 
     public int getId(){
@@ -128,6 +154,14 @@ public class Word {
     @Override
     public String toString() {
         return getArticle().get() + " " + getWord().get();
+    }
+
+    public boolean isFilled(){
+        if ( getWord().get() != null && getTranslation().get() != null) {
+            setArticle( article == null ? "" : getArticle().get());
+            return !getWord().get().isEmpty() && !getTranslation().get().isEmpty();
+        }
+        return false;
     }
 
     @Override

@@ -25,6 +25,7 @@ import tutor.util.TaskManager;
 
 import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Spring on 8/30/2015.
@@ -76,7 +77,7 @@ public class DictationViewController implements Initializable {
     private int wordIndex;
     private int mistakes;
     private int correctAnswers;
-    private String answer;
+    private String correctAnswer;
     private List<Word> passedWords; //if boolean is true, then this word needs to be repeated again.
 
 
@@ -199,47 +200,17 @@ public class DictationViewController implements Initializable {
     }
 
     public void confirmAnswer(ActionEvent actionEvent) {
-        boolean isCorrect;
 
         if (manager.getDictationMode().equals(TaskManager.DictationMode.REVERSED)) {
             if (!manager.getWords().get(wordIndex).getArticle().get().isEmpty()) {
-                isCorrect = checkAnswer(true, true);
+                checkAnswer(true, true);
             } else {
-                isCorrect = checkAnswer(false, true);
+                checkAnswer(false, true);
             }
         } else {
-            isCorrect = checkAnswer(false, false);
-        }
-        pane_taskInfo.setVisible(true);
-
-
-        if (isCorrect){
-            if (!passedWords.contains(manager.getWords().get(wordIndex))){
-                manager.getWords().get(wordIndex).incCorrectAnswerCount();
-                WordDAO.getInstance().update(manager.getWords().get(wordIndex));
-                passedWords.add(manager.getWords().get(wordIndex));
-                correctAnswers ++;
-
-            }
-            label_answerWrong.setVisible(false);
-            label_answerCorrect.setVisible(true);
-            manager.getWords().remove(wordIndex);
-        }
-        else
-        {
-            if (!passedWords.contains(manager.getWords().get(wordIndex))){
-                manager.getWords().get(wordIndex).incWrongAnswerCount();
-                WordDAO.getInstance().update(manager.getWords().get(wordIndex));
-                passedWords.add(manager.getWords().get(wordIndex));
-            }
-            mistakes ++;
-            label_answerWrong.setVisible(true);
-            label_answerCorrect.setVisible(false);
+            checkAnswer(false, false);
         }
 
-
-        label_answer.setText(answer);
-        label_taskCount.setText(String.valueOf(wordsAmount - manager.getWords().size()) + "/" + wordsAmount);
 
 
         for(Node txt : pane_answers.getChildren()){
@@ -249,23 +220,110 @@ public class DictationViewController implements Initializable {
         showTask();
     }
 
-    private boolean checkAnswer(boolean hasArticle, boolean reversed){
+    private void checkAnswer(boolean hasArticle, boolean reversed){
         Word taskWord = manager.getWords().get(wordIndex);
         if (reversed){
-            if (hasArticle && !txt_word.getText().isEmpty()){
-                answer = taskWord.toString();
-                String article = txt_word.getText().substring(0, txt_word.getText().indexOf(" ")).trim();
-                String word = txt_word.getText().substring(txt_word.getText().indexOf(" "), txt_word.getText().length());
-                return article.equalsIgnoreCase(taskWord.getArticle().get()) && word.trim().equalsIgnoreCase(taskWord.getWord().get());
+            checkAnswerForReversedTest(true, hasArticle, taskWord);
+        }
+        else{
+            checkAnswerForNormalTest(false, taskWord);
+
+        }
+    }
+
+    private void checkAnswerForReversedTest(boolean reversed, boolean hasArticle, Word taskWord){
+        if (hasArticle && !txt_word.getText().isEmpty()){
+            String article = txt_word.getText().substring(0, txt_word.getText().indexOf(" ")).trim();
+            String word = txt_word.getText().substring(txt_word.getText().indexOf(" "), txt_word.getText().length());
+            if(article.equalsIgnoreCase(taskWord.getArticle().get()) && word.trim().equalsIgnoreCase(taskWord.getWord().get()))
+                rememberAnswerResult(reversed, true, taskWord);
+            else{
+                for(Word synonym : taskWord.getWordsWithSimilarTranslation()){
+                    if (article.equalsIgnoreCase(synonym.getArticle().get()) && word.trim().equalsIgnoreCase(synonym.getWord().get())) {
+                        rememberAnswerResult(reversed, true, synonym);
+                        break;
+                    }
+                }
+                rememberAnswerResult(reversed, false, taskWord);
             }
-            else {
-                answer = taskWord.getWord().get();
-                return (!hasArticle && txt_word.getText().trim().toUpperCase().equals(answer.toUpperCase()));
+        }
+        else {
+            correctAnswer = taskWord.getWord().get();
+            if (!hasArticle && txt_word.getText().trim().equalsIgnoreCase(correctAnswer))
+                rememberAnswerResult(reversed, true, taskWord);
+            else{
+                for(Word word : taskWord.getWordsWithSimilarTranslation()){
+                    if (txt_word.getText().trim().equalsIgnoreCase(word.toString())){
+                        rememberAnswerResult(reversed, true, word);
+                        break;
+                    }
+                }
+                rememberAnswerResult(reversed, false, taskWord);
+            }
+        }
+    }
+
+    private void checkAnswerForNormalTest(boolean reversed, Word taskWord){
+        correctAnswer = taskWord.getTranslation().get();
+        if (txt_translation.getText().trim().equalsIgnoreCase(correctAnswer)){
+            rememberAnswerResult(reversed, true, taskWord);
+        }
+        else{
+            for(Word word : taskWord.getOtherTranslationVariants()){
+                if (txt_translation.getText().trim().equalsIgnoreCase(word.getTranslation().get())){
+                    rememberAnswerResult(reversed, true, word);
+                    break;
+                }
+            }
+            rememberAnswerResult(reversed, false, taskWord);
+        }
+    }
+
+    private void rememberAnswerResult(boolean reversed, boolean isCorrect, Word answer){
+        if (isCorrect){
+            if (!passedWords.contains(answer)){
+                answer.incCorrectAnswerCount();
+                WordDAO.getInstance().update(answer);
+                passedWords.add(answer);
+                correctAnswers ++;
+
+            }
+            label_answerWrong.setVisible(false);
+            label_answerCorrect.setVisible(true);
+            manager.getWords().remove(wordIndex);
+        }
+        else
+        {
+            if (!passedWords.contains(answer)){
+                answer.incWrongAnswerCount();
+                WordDAO.getInstance().update(answer);
+                passedWords.add(answer);
+            }
+            mistakes ++;
+            label_answerWrong.setVisible(true);
+            label_answerCorrect.setVisible(false);
+        }
+
+        pane_taskInfo.setVisible(true);
+
+        StringBuilder answerVariants = new StringBuilder();
+        if (reversed){
+            answerVariants.append(answer.toString()).append("\n");
+            for(String str : answer.getWordsWithSimilarTranslation().stream().map(Word::toString).collect(Collectors.toList())){
+                if (!str.equalsIgnoreCase(answer.toString())){
+                    answerVariants.append(str).append("\n");
+                }
             }
         }
         else{
-            answer = taskWord.getTranslation().get();
-            return txt_translation.getText().trim().toUpperCase().equals(taskWord.getTranslation().get().toUpperCase());
+            answerVariants.append(answer.getTranslation().get()).append("\n");
+            for(String str : answer.getOtherTranslationVariants().stream().map(word -> word.getTranslation().get()).collect(Collectors.toList())){
+                if (!str.equalsIgnoreCase(answer.getTranslation().get())){
+                    answerVariants.append(str).append("\n");
+                }
+            }
         }
+        label_answer.setText(answerVariants.toString());
+        label_taskCount.setText(String.valueOf(wordsAmount - manager.getWords().size()) + "/" + wordsAmount);
     }
 }

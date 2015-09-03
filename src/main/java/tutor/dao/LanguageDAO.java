@@ -73,7 +73,9 @@ public class LanguageDAO implements IDAO<Language> {
                 PreparedStatement statement = connection.prepareStatement("DELETE FROM USER_LANG WHERE user_id = ? AND lang_id = ?;");
                 statement.setInt(1, AuthController.getActiveUser().getId());
                 statement.setInt(2, lang.getId());
-                return statement.execute();
+                boolean result =  statement.execute();
+                connection.close();
+                return result;
             }
         }
         catch (SQLException ex){

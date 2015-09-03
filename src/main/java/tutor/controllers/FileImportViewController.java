@@ -52,7 +52,6 @@ public class FileImportViewController implements Initializable{
     private ChoiceBox<Language> chb_translation_lang;
 
     private ResourceBundle bundle;
-    private StageManager stageManager;
     private Language selectedLanguage;
     private Language selectedTranslationLanguage;
 
@@ -60,7 +59,6 @@ public class FileImportViewController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         bundle = resources;
-        stageManager = StageManager.getInstance();
         initializeChoiceBoxes();
     }
 
@@ -75,6 +73,8 @@ public class FileImportViewController implements Initializable{
             alert.setHeaderText(bundle.getString(ResourceBundleKeys.DIALOGS_LANG_NOT_SELECTED));
             alert.setContentText(bundle.getString(ResourceBundleKeys.DIALOGS_INFO_LANG_NOT_SELECTED));
             alert.showAndWait();
+            StageManager.getInstance().closeStage(StageManager.getInstance().getStage(1));
+            return;
         }
         chb_word_lang.setItems(selectedLanguages);
         chb_translation_lang.setItems(FXCollections.observableArrayList(LanguageDAO.getInstance().readAllLanguages()));
@@ -92,16 +92,15 @@ public class FileImportViewController implements Initializable{
         });
         chb_word_lang.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedLanguage = newValue;
-            fileLanguageSelectionChangedEventHandler(newValue);
+            fileLanguageSelectionChangedEventHandler();
         });
 
         chb_word_lang.getSelectionModel().clearSelection();
     }
     /**
-     * Event Handler for a choice box, responsoble for a local file data language selection
-     * @param newValue stands for a new Language, selected in current choice box
+     * Event Handler for a choice box, responsible for a local file data language selection
      */
-    private void fileLanguageSelectionChangedEventHandler(tutor.models.Language newValue){
+    private void fileLanguageSelectionChangedEventHandler(){
         if (selectedTranslationLanguage != null) {
             btn_openFile.setDisable(false);
             btn_openFile.setOnAction(event -> {

@@ -47,21 +47,40 @@ public class StageManager {
      * @param fxmlViewURL a URL to the new view
      * @param title title for a new scene
      * @param layerIndex is a layer of a stage to be shown on
+     * @param isResizable shows whether a user should be able to resize the stage.
+     * @param showWithDelay shows whether to display the stage instantly after it was initialized, or wait until showAll() method is called.
+     *        @implNote Please note: when showWithDelay is set to true, the stage will not be shown until showAll() method is called. You may need to use it when you have some parameters to be passed to the controller before the stage loads.
      */
     public void navigateTo(URL fxmlViewURL, String title, int layerIndex, Optional<Boolean> isResizable, boolean showWithDelay) {
         navigateTo(fxmlViewURL, title, layerIndex, isResizable, false, showWithDelay);
     }
 
+    /**
+     * Navigation dispatcher.
+     * @param fxmlViewURL a URL to the new view
+     * @param title title for a new scene
+     * @param layerIndex is a layer of a stage to be shown on
+     * @param isResizable shows whether a user should be able to resize the stage.
+     * @param waitUntilCloses stands for whether you'd like to wait until this stage is closed to proceed to other stages or to give user the opportunity to freely move between stages.
+     * @param showWithDelay shows whether to display the stage instantly after it was initialized, or wait until showAll() method is called.
+     *        @implNote  Please note: when showWithDelay is set to true, the stage will not be shown until showAll() method is called. You may need to use it when you have some parameters to be passed to the controller before the stage loads.
+     */
     public void navigateTo(URL fxmlViewURL, String title, int layerIndex, Optional<Boolean> isResizable, boolean waitUntilCloses, boolean showWithDelay) {
         try {
-            Stage stage = null;
+
             if (layerIndex > MAX_LAYERS || layerIndex < 0)
                 return;
-            if (stages.get(layerIndex) == null || stagePaths.get(layerIndex) == null) {
+
+            Stage stage = stages.get(layerIndex);
+            URL stagePath = stagePaths.get(layerIndex);
+
+            if (stage == null || stagePath == null) {
                 addStage(bakeStage(fxmlViewURL, title, layerIndex, isResizable), fxmlViewURL, layerIndex);
+                stage = stages.get(layerIndex);
+                stagePath = stagePaths.get(layerIndex);
             }
-            stage = stages.get(layerIndex);
-            String mainFMXLViewPath = stagePaths.get(layerIndex).toExternalForm();
+
+            String mainFMXLViewPath = stagePath.toExternalForm();
             if (mainFMXLViewPath.equals(fxmlViewURL.toExternalForm())) {
                 if (stage.isShowing())
                     return;
@@ -69,10 +88,10 @@ public class StageManager {
                 stage.close();
                 addStage(bakeStage(fxmlViewURL, title, layerIndex, isResizable), fxmlViewURL, layerIndex);
                 stage = stages.get(layerIndex);
-
             }
             stages.put(layerIndex, stage);
             stagePaths.put(layerIndex, fxmlViewURL);
+
             if (!showWithDelay) {
                 if (waitUntilCloses)
                     stage.showAndWait();
@@ -81,15 +100,6 @@ public class StageManager {
             }
         }catch (NullPointerException ex){
             ex.printStackTrace();
-        }
-    }
-
-    public void putStage(URL stagePath,Stage stage, int layer){
-        if (layer > 0 && layer < MAX_LAYERS) {
-            closeStage(stages.get(layer));
-            stages.put(layer, stage);
-            stagePaths.put(layer, stagePath);
-            stages.get(layer).show();
         }
     }
 
@@ -143,6 +153,11 @@ public class StageManager {
         }
     }
 
+    /**
+     * Returns a stage, currently displayed on a given layer.
+     * @param layer shows the layer of the stage to get.
+     * @return stage on a given layer.
+     */
     public Stage getStage(int layer){
         return stages.get(layer);
     }

@@ -95,6 +95,9 @@ public class DictionaryViewController implements Initializable{
         table_word.setOnEditCommit(event ->
                 {
                     Word editedWord = event.getTableView().getItems().get(event.getTablePosition().getRow());
+                    if (editedWord.toString().isEmpty() || editedWord.getTranslation().get().isEmpty()){
+                        editedWord.setWord(event.getNewValue());
+                    }
                     if (WordDAO.getInstance().contains(editedWord)) {
                         editedWord.setWord(event.getNewValue());
                         WordDAO.getInstance().update(editedWord);
@@ -110,6 +113,9 @@ public class DictionaryViewController implements Initializable{
         table_translation.setOnEditCommit(event ->
                 {
                     Word editedWord = event.getTableView().getItems().get(event.getTablePosition().getRow());
+                    if (editedWord.toString().isEmpty() || editedWord.getTranslation().get().isEmpty()){
+                        editedWord.setTranslation(event.getNewValue());
+                    }
                     if (WordDAO.getInstance().contains(editedWord)) {
                         editedWord.setTranslation(event.getNewValue());
                         WordDAO.getInstance().update(editedWord);
@@ -119,6 +125,7 @@ public class DictionaryViewController implements Initializable{
                             loadWordsFor(chb_language.getSelectionModel().getSelectedItem());
                         }
                     }
+
 
                 }
         );
