@@ -15,6 +15,7 @@ import tutor.models.Word;
 import tutor.util.PaginatorManager;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -148,16 +149,16 @@ public class DictionaryViewController implements Initializable{
     }
 
     private void loadWordsFor(Language wordLang){
-        ObservableList<Word> words = FXCollections.observableArrayList(WordDAO.getInstance().readAllByLangForActiveUser(wordLang));
-        paginatorManager = new PaginatorManager(words.size());
+        int totalWordsCount = WordDAO.getInstance().countFor(wordLang);
+        paginatorManager = new PaginatorManager(totalWordsCount);
         paginator.setPageCount(paginatorManager.getTotalPages());
         paginator.setCurrentPageIndex(paginatorManager.getCurrentPage() - 1);
         paginator.setPageFactory(param -> {
-            ObservableList<Word> addedWords = FXCollections.observableArrayList(WordDAO.getInstance().readAllByLangForActiveUser(wordLang));
             tblView_wordTranslation.getItems().clear();
             paginatorManager.goToPage(param);
+            ObservableList<Word> addedWords = FXCollections.observableArrayList(WordDAO.getInstance().readAllByLangForActiveUser(wordLang, param * paginatorManager.getMaxItemsPerPage(), paginatorManager.getMaxItemsPerPage()));
             try {
-                tblView_wordTranslation.setItems(FXCollections.observableArrayList(addedWords.subList(paginatorManager.getStartIndexForNextPageElements(), paginatorManager.getLastIndexForNextPageElements())));
+                tblView_wordTranslation.setItems(FXCollections.observableArrayList(addedWords));
             }
             catch (IndexOutOfBoundsException ex){}
             if (/*addedWords.size() > 0 &&*/ paginatorManager.getCurrentPage() == 1 /*&& tblView_wordTranslation.getItems().size() > 0 &&*/ /*tblView_wordTranslation.getItems().get(0).getId() != 0*/)

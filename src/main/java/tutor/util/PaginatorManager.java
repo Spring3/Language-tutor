@@ -6,28 +6,20 @@ package tutor.util;
 public class PaginatorManager {
     public PaginatorManager(int itemsCount){
         setItemsPerPage(10);
-        this.itemsCount = itemsCount;
-        lastIndexForNextPageElements = 10;
         init(itemsCount);
     }
 
     private int itemsPerPage;
     private int totalPages;
     private int currentPage;
-    private int lastIndexForNextPageElements;
-    private int itemsCount;
+    private static final int MAX_ITEMS_PER_PAGE = 10;
+
+    public int getMaxItemsPerPage(){
+        return MAX_ITEMS_PER_PAGE;
+    }
 
     public void goToPage(int pageIndex){
         setCurrentPage(pageIndex + 1);
-        lastIndexForNextPageElements = getCurrentPage() * 10;
-    }
-
-    public int getStartIndexForNextPageElements(){
-        return (currentPage - 1) * itemsPerPage;
-    }
-
-    public int getLastIndexForNextPageElements(){
-        return itemsCount < 10 * getCurrentPage() ? itemsCount : lastIndexForNextPageElements;
     }
 
     public int getCurrentPage(){

@@ -152,6 +152,13 @@ public class Controller implements Initializable
     public void dictationTaskClicked(Event event) {
         if (WordDAO.getInstance().countFor(selectedLanguage) > 0)
             stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.TASKVIEW_DICTATION_PATH), bundle.getString(ResourceBundleKeys.LABEL_DICTATION), 1, Optional.empty(), false);
+        else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle(bundle.getString(ResourceBundleKeys.LABEL_ERROR));
+            alert.setHeaderText(bundle.getString(ResourceBundleKeys.LABEL_NO_WORDS));
+            alert.setContentText(bundle.getString(ResourceBundleKeys.LABEL_NO_WORDS_CONTEXT));
+            alert.show();
+        }
     }
 
     public void workbenchSelected(Event event) {

@@ -164,6 +164,23 @@ public class WordDAO implements IDAO<Word> {
         return resultList;
     }
 
+    public List<Word> readAllByLangForActiveUser(Language lang, int from, int count){
+        List<Word> resultList = null;
+        try{
+            Connection connection = DbManager.getInstance().getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT w.id, w.article, w.word, w.word_translation, w.lang_id, w.translation_id, w.whenAdded, w.wrongAnswers, w.correctAnswers FROM WORD as w INNER JOIN USER_WORD ON w.id=word_id WHERE user_id=? AND w.lang_id=? GROUP BY w.id ORDER BY w.id DESC" + " LIMIT " + count + " OFFSET " + from + ";");
+            statement.setInt(1, AuthController.getActiveUser().getId());
+            statement.setInt(2, lang.getId());
+            //statement.setMaxRows(count);
+            resultList = readAllBy(statement);
+            connection.close();
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return resultList;
+    }
+
     public List<Word> readAllWordsToRepeatFor(Language lang){
         List<Word> resultList = null;
         try{
@@ -258,15 +275,14 @@ public class WordDAO implements IDAO<Word> {
     public int countFor(Language wordLang){
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM WORD AS w INNER JOIN USER_WORD ON word_id=w.id WHERE user_id=? AND w.lang_id=? AND w.translation_id=? GROUP BY w.id;");
+            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM WORD AS w INNER JOIN USER_WORD ON word_id=w.id WHERE user_id=? AND w.lang_id=? AND w.translation_id=? GROUP BY w.id;", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             statement.setInt(1, AuthController.getActiveUser().getId());
             statement.setInt(2, wordLang.getId());
             statement.setInt(3, AuthController.getActiveUser().getNativeLanguage().getId());
-            statement.execute();
-            ResultSet resultSet = statement.getResultSet();
-            if (resultSet.next())
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.last())
             {
-                return resultSet.getInt(1);
+                return resultSet.getRow();
             }
         }
         catch (SQLException ex) {
@@ -279,7 +295,7 @@ public class WordDAO implements IDAO<Word> {
         boolean result = false;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT w.id, w.article, w.word, w.word_translation, w.lang_id, w.translation_id, w.whenAdded, w.wrongAnswers, w.correctAnswers FROM WORD as w INNER JOIN USER_WORD as uw ON uw.word_id=wid WHERE w.user_id=? AND w.article=? AND w.word=? AND w.word_translation=? AND w.lang_id=? AND w.translation_id=? GROUP BY w.id;");
+            PreparedStatement statement = connection.prepareStatement("SELECT w.id, w.article, w.word, w.word_translation, w.lang_id, w.translation_id, w.whenAdded, w.wrongAnswers, w.correctAnswers FROM WORD as w INNER JOIN USER_WORD as uw ON uw.word_id=w.id WHERE w.user_id=? AND w.article=? AND w.word=? AND w.word_translation=? AND w.lang_id=? AND w.translation_id=? GROUP BY w.id;");
             statement.setInt(1, AuthController.getActiveUser().getId());
             statement.setString(2, value.getArticle().get());
             statement.setString(3, value.getWord().get());
