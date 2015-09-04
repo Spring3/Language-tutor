@@ -103,6 +103,7 @@ public class Controller implements Initializable
 
         scrollPane.setFitToWidth(true);
         task_dictation_img.setImage(new Image(Main.class.getClassLoader().getResource("tasks/dictation/dictation-image.jpg").toExternalForm(), true));
+
     }
 
     @FXML

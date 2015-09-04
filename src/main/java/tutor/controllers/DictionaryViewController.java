@@ -160,7 +160,7 @@ public class DictionaryViewController implements Initializable{
                 tblView_wordTranslation.setItems(FXCollections.observableArrayList(addedWords.subList(paginatorManager.getStartIndexForNextPageElements(), paginatorManager.getLastIndexForNextPageElements())));
             }
             catch (IndexOutOfBoundsException ex){}
-            if (addedWords.size() > 0 && paginatorManager.getCurrentPage() == 1 && tblView_wordTranslation.getItems().size() > 0 &&tblView_wordTranslation.getItems().get(0).getId() != 0)
+            if (/*addedWords.size() > 0 &&*/ paginatorManager.getCurrentPage() == 1 /*&& tblView_wordTranslation.getItems().size() > 0 &&*/ /*tblView_wordTranslation.getItems().get(0).getId() != 0*/)
                 tblView_wordTranslation.getItems().add(0, new Word("", "", wordLang, AuthController.getActiveUser().getNativeLanguage()));
             return new VBox();
         });
