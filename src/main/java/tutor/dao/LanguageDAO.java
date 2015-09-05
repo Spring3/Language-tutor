@@ -34,8 +34,9 @@ public class LanguageDAO implements IDAO<Language> {
     public boolean create(Language value) {
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO LANGUAGES(lang_name) VALUES(?);");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO LANGUAGES(lang_name, short_name) VALUES(?,?) ?;");
             preparedStatement.setString(1, value.getLangName());
+            preparedStatement.setString(2, value.getLangName());
             preparedStatement.execute();
             System.out.println("New language: " + value.getLangName() + " was created");
             assignLangToCurrentUser(value);
@@ -122,7 +123,8 @@ public class LanguageDAO implements IDAO<Language> {
         if (resultSet.next()) {
             result = new Language();
             result.setId(resultSet.getInt(1));
-            result.setLang_name(resultSet.getString(2));
+            result.setLangName(resultSet.getString(2));
+            result.setShortName(resultSet.getString(3));
         }
         resultSet.close();
         return result;
@@ -132,7 +134,7 @@ public class LanguageDAO implements IDAO<Language> {
         List<Language> resultList = null;
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT langs.id, langs.lang_name FROM LANGUAGES as langs INNER JOIN USER_LANG as ulang ON ulang.user_id =? WHERE langs.id = ulang.lang_id GROUP BY langs.id;");
+            PreparedStatement statement = connection.prepareStatement("SELECT langs.id, langs.lang_name, langs.short_name FROM LANGUAGES as langs INNER JOIN USER_LANG as ulang ON ulang.user_id =? WHERE langs.id = ulang.lang_id GROUP BY langs.id;");
             statement.setInt(1, userId);
             resultList = readAllLanguages(statement);
             connection.close();
@@ -146,9 +148,10 @@ public class LanguageDAO implements IDAO<Language> {
     public boolean contains(User user, Language language){
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT lang.id, lang.lang_name FROM LANGUAGES as lang INNER JOIN USER_LANG as ulang ON ulang.user_id=? WHERE ulang.lang_id = lang.id AND lang.lang_name = ?;");
+            PreparedStatement statement = connection.prepareStatement("SELECT lang.id, lang.lang_name, lang.short_name FROM LANGUAGES as lang INNER JOIN USER_LANG as ulang ON ulang.user_id=? WHERE ulang.lang_id = lang.id AND lang.lang_name = ? AND lang.short_name=?;");
             statement.setInt(1, user.getId());
             statement.setString(2, language.getLangName());
+            statement.setString(3, language.getShortName());
             statement.execute();
             boolean result  = statement.getResultSet().next();
             connection.close();
@@ -181,7 +184,8 @@ public class LanguageDAO implements IDAO<Language> {
         while (resultSet.next()) {
             Language tempLanguage = new Language();
             tempLanguage.setId(resultSet.getInt(1));
-            tempLanguage.setLang_name(resultSet.getString(2));
+            tempLanguage.setLangName(resultSet.getString(2));
+            tempLanguage.setShortName(resultSet.getString(3));
             resultList.add(tempLanguage);
         }
         resultSet.close();
@@ -193,9 +197,10 @@ public class LanguageDAO implements IDAO<Language> {
     public boolean update(Language value) {
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("UPDATE LANGUAGES SET lang_name=? WHERE id=?;");
+            PreparedStatement statement = connection.prepareStatement("UPDATE LANGUAGES SET lang_name=?, short_name=? WHERE id=?;");
             statement.setString(1, value.getLangName());
-            statement.setInt(2, value.getId());
+            statement.setString(2, value.getShortName());
+            statement.setInt(3, value.getId());
             statement.executeUpdate();
             connection.close();
             return true;

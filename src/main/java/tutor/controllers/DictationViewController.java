@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -12,10 +11,9 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import javafx.stage.Stage;
 import tutor.dao.StatsDAO;
 import tutor.dao.WordDAO;
-import tutor.models.Language;
+import tutor.google.Voice;
 import tutor.Main;
 import tutor.models.Stats;
 import tutor.models.Word;
@@ -79,12 +77,14 @@ public class DictationViewController implements Initializable {
     private int correctAnswers;
     private String correctAnswer;
     private List<Word> passedWords; //if boolean is true, then this word needs to be repeated again.
+    private Voice voice;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         bundle = resources;
         passedWords = new ArrayList<>();
+        voice = new Voice();
         initializeUI();
     }
 
@@ -150,23 +150,31 @@ public class DictationViewController implements Initializable {
             StatsDAO.getInstance().create(statistics);
 
             StageManager.getInstance().closeStage(StageManager.getInstance().getStage(1));
-
             return;
         }
         Random random = new Random();
         wordIndex = random.nextInt(manager.getWords().size());
+        int count = 0;
         if (!manager.getDictationMode().equals(TaskManager.DictationMode.REVERSED)){
-            while (manager.getWords().size() > 1 && manager.get(wordIndex).toString().equals(txt_task.getText())) {
+            while (manager.getWords().size() > 1 && manager.get(wordIndex).toString().equals(txt_task.getText()) && count < 6) {
                 wordIndex = random.nextInt(manager.getWords().size());
+                count ++;
             }
             txt_task.setText(manager.get(wordIndex).toString());
+            voice.play(txt_task.getText(), manager.get(wordIndex).getWordLang());
+
         }
         else{
-            while (manager.getWords().size() > 1 && manager.get(wordIndex).getTranslation().get().equals(txt_task.getText())){
+            while (manager.getWords().size() > 1 && manager.get(wordIndex).getTranslation().get().equals(txt_task.getText()) && count < 6){
                 wordIndex = random.nextInt(manager.getWords().size());
+                count ++;
             }
             txt_task.setText(manager.get(wordIndex).getTranslation().get());
+            voice.play(txt_task.getText(), manager.get(wordIndex).getTranslationLang());
+
         }
+
+
         pane_answers.getChildren().get(0).requestFocus();
     }
 
