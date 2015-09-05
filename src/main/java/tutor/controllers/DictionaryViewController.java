@@ -142,8 +142,6 @@ public class DictionaryViewController implements Initializable{
                             loadWordsFor(chb_language.getSelectionModel().getSelectedItem());
                         }
                     }
-
-
                 }
         );
     }

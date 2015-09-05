@@ -213,7 +213,6 @@ public class DictationViewController implements Initializable {
         }
 
 
-
         for(Node txt : pane_answers.getChildren()){
             assert (txt instanceof TextField);
             ((TextField) txt).setText("");
