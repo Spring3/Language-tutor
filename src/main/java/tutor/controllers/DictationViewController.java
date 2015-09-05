@@ -156,9 +156,15 @@ public class DictationViewController implements Initializable {
         Random random = new Random();
         wordIndex = random.nextInt(manager.getWords().size());
         if (!manager.getDictationMode().equals(TaskManager.DictationMode.REVERSED)){
+            while (manager.getWords().size() > 1 && manager.get(wordIndex).toString().equals(txt_task.getText())) {
+                wordIndex = random.nextInt(manager.getWords().size());
+            }
             txt_task.setText(manager.get(wordIndex).toString());
         }
         else{
+            while (manager.getWords().size() > 1 && manager.get(wordIndex).getTranslation().get().equals(txt_task.getText())){
+                wordIndex = random.nextInt(manager.getWords().size());
+            }
             txt_task.setText(manager.get(wordIndex).getTranslation().get());
         }
         pane_answers.getChildren().get(0).requestFocus();
