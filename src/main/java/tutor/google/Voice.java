@@ -4,11 +4,12 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import tutor.models.Language;
 
+import tutor.Main;
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -22,6 +23,17 @@ public class Voice {
         new Thread(consumer).start();
     }
 
+    static{
+        try {
+            MEDIA_ANSWER_CORRECT = Main.class.getClassLoader().getResource("sounds/correct.mp3").toURI().toString();
+            MEDIA_ANSWER_WRONG = Main.class.getClassLoader().getResource("sounds/wrong.mp3").toURI().toString();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String MEDIA_ANSWER_CORRECT;
+    public static String MEDIA_ANSWER_WRONG;
     private static Voice instance;
     private static final String URL_TEMPLATE = "http://translate.google.com/translate_tts?";
     private static final String URL_LANG_PARAM = "tl=";
@@ -51,11 +63,17 @@ public class Voice {
         return instance;
     }
 
-    public void play(String word, Language language) {
+    public void say(String word, Language language) {
         Media media = getMedia(word, language);
         Producer producer = new Producer(mediaQueue, media);
         new Thread(producer).start();
 
+    }
+
+    public void play(String soundPath){
+        Media media = new Media(soundPath);
+        Producer producer = new Producer(mediaQueue, media);
+        new Thread(producer).start();
     }
 
     private Media getMedia(String word, Language language) {
@@ -68,15 +86,18 @@ public class Voice {
             connection.setRequestProperty(REFERER_PARAM, REFERER);
             InputStream audioSrc = connection.getInputStream();
             createDirectory();
-            OutputStream outputStream = new FileOutputStream(new File("cache/" + word + ".mp3"));
-            int count;
-            byte[] buffer = new byte[1 << 20];
-            while ((count = audioSrc.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, count);
-                outputStream.flush();
+            File sound;
+            if (!(sound = new File("cache/" + word + ".mp3")).exists()) {
+                OutputStream outputStream = new FileOutputStream(new File("cache/" + word + ".mp3"));
+                int count;
+                byte[] buffer = new byte[1 << 20];
+                while ((count = audioSrc.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, count);
+                    outputStream.flush();
+                }
+                outputStream.close();
+                audioSrc.close();
             }
-            outputStream.close();
-            audioSrc.close();
             result =  new Media(Paths.get("cache/" + word + ".mp3").toUri().toString());
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -96,9 +117,9 @@ public class Voice {
         return word.replace(" ", "%20");
     }
 
-
     public synchronized void dispose(){
         isDisposed = true;
+        cacheDirectory = cacheDirectory == null ? new File("cache") : cacheDirectory;
         if (cacheDirectory.exists()){
             for(File file : cacheDirectory.listFiles()){
                 file.delete();

@@ -39,9 +39,9 @@ public class RepeatWordsViewController implements Initializable{
     public void repeat(Set<Word> wordList){
         wordsToRepeat = wordList;
         label_word.setText(get(index).toString());
-        voice.play(label_word.getText(), get(index).getWordLang());
+        voice.say(label_word.getText(), get(index).getWordLang());
         label_translation.setText(get(index).getTranslation().get());
-        voice.play(label_translation.getText(), get(index).getTranslationLang());
+        voice.say(label_translation.getText(), get(index).getTranslationLang());
     }
 
 
@@ -49,9 +49,9 @@ public class RepeatWordsViewController implements Initializable{
         if (index < wordsToRepeat.size() - 1) {
             index++;
             label_word.setText(get(index).toString());
-            voice.play(label_word.getText(), get(index).getWordLang());
+            voice.say(label_word.getText(), get(index).getWordLang());
             label_translation.setText(get(index).getTranslation().get());
-            voice.play(label_translation.getText(), get(index).getTranslationLang());
+            voice.say(label_translation.getText(), get(index).getTranslationLang());
         }
         else {
             voice.dispose();

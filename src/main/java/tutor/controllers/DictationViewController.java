@@ -141,7 +141,6 @@ public class DictationViewController implements Initializable {
                     .append(bundle.getString(ResourceBundleKeys.SUCCESS_RATE)).append(" : ").append(getSuccessRate()).append("%");
             alert.setContentText(builder.toString());
             alert.showAndWait();
-            voice.dispose();
 
             for(Word word : passedWords){
                 WordDAO.getInstance().update(word);
@@ -162,7 +161,7 @@ public class DictationViewController implements Initializable {
                 count ++;
             }
             txt_task.setText(manager.get(wordIndex).toString());
-            voice.play(txt_task.getText(), manager.get(wordIndex).getWordLang());
+            voice.say(txt_task.getText(), manager.get(wordIndex).getWordLang());
 
         }
         else{
@@ -171,7 +170,7 @@ public class DictationViewController implements Initializable {
                 count ++;
             }
             txt_task.setText(manager.get(wordIndex).getTranslation().get());
-            voice.play(txt_task.getText(), manager.get(wordIndex).getTranslationLang());
+            voice.say(txt_task.getText(), manager.get(wordIndex).getTranslationLang());
 
         }
 
@@ -303,6 +302,7 @@ public class DictationViewController implements Initializable {
                 correctAnswers ++;
 
             }
+            voice.play(voice.MEDIA_ANSWER_CORRECT);
             label_answerWrong.setVisible(false);
             label_answerCorrect.setVisible(true);
             manager.getWords().remove(manager.get(wordIndex));
@@ -315,6 +315,7 @@ public class DictationViewController implements Initializable {
                 passedWords.add(answer);
             }
             mistakes ++;
+            voice.play(voice.MEDIA_ANSWER_WRONG);
             label_answerWrong.setVisible(true);
             label_answerCorrect.setVisible(false);
         }
