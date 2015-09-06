@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import tutor.google.Voice;
 import tutor.models.Word;
 import tutor.util.StageManager;
 import tutor.util.TaskManager;
@@ -24,10 +25,12 @@ public class RepeatWordsViewController implements Initializable{
     private Label label_word;
     @FXML
     private Label label_translation;
+    private Voice voice;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         wordsToRepeat = new HashSet<>();
+        voice = Voice.getInstance();
     }
 
     private Set<Word> wordsToRepeat;
@@ -36,7 +39,9 @@ public class RepeatWordsViewController implements Initializable{
     public void repeat(Set<Word> wordList){
         wordsToRepeat = wordList;
         label_word.setText(get(index).toString());
+        voice.play(label_word.getText(), get(index).getWordLang());
         label_translation.setText(get(index).getTranslation().get());
+        voice.play(label_translation.getText(), get(index).getTranslationLang());
     }
 
 
@@ -44,9 +49,12 @@ public class RepeatWordsViewController implements Initializable{
         if (index < wordsToRepeat.size() - 1) {
             index++;
             label_word.setText(get(index).toString());
+            voice.play(label_word.getText(), get(index).getWordLang());
             label_translation.setText(get(index).getTranslation().get());
+            voice.play(label_translation.getText(), get(index).getTranslationLang());
         }
         else {
+            voice.dispose();
             StageManager.getInstance().closeStage(StageManager.getInstance().getStage(2));
         }
     }

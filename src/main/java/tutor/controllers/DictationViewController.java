@@ -84,7 +84,7 @@ public class DictationViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         bundle = resources;
         passedWords = new ArrayList<>();
-        voice = new Voice();
+        voice = Voice.getInstance();
         initializeUI();
     }
 
@@ -141,6 +141,7 @@ public class DictationViewController implements Initializable {
                     .append(bundle.getString(ResourceBundleKeys.SUCCESS_RATE)).append(" : ").append(getSuccessRate()).append("%");
             alert.setContentText(builder.toString());
             alert.showAndWait();
+            voice.dispose();
 
             for(Word word : passedWords){
                 WordDAO.getInstance().update(word);
