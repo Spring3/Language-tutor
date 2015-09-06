@@ -38,6 +38,7 @@ public class Voice {
     private Consumer consumer;
     private volatile boolean isDisposed;
     private volatile boolean isPlaying;
+    private File cacheDirectory;
 
     public static Voice getInstance(){
         if (instance == null){
@@ -50,8 +51,15 @@ public class Voice {
         return instance;
     }
 
-    public synchronized void play(String word, Language language) {
+    public void play(String word, Language language) {
+        Media media = getMedia(word, language);
+        Producer producer = new Producer(mediaQueue, media);
+        new Thread(producer).start();
 
+    }
+
+    private Media getMedia(String word, Language language) {
+        Media result = null;
         try {
             URL url = new URL(URL_TEMPLATE + URL_LANG_PARAM + language.getShortName() + URL_ENCODING_PARAM + URL_WORD_PARAM + prepareWordForQuery(word) + URL_CLIENT_PARAM);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -69,40 +77,11 @@ public class Voice {
             }
             outputStream.close();
             audioSrc.close();
-            Media media = new Media(Paths.get("cache/" + word + ".mp3").toUri().toString());
-            Producer producer = new Producer(mediaQueue, media);
-            new Thread(producer).start();
-            //mediaQueue.add(media);
-            //if (!isPlaying && mediaQueue.size() > 0){
-
-            /*if(isPlaying){
-                this.wait();
-            }
-            else{
-                mediaPlayer = new MediaPlayer(media);
-                mediaPlayer.play();
-                isPlaying = true;
-
-                mediaPlayer.setOnEndOfMedia(() -> {
-                    isPlaying = false;
-                    this.notifyAll();
-                });
-            }     */
-
-            //}
-           /* else {
-
-                mediaPlayer.setOnReady(() -> {
-                    if (mediaQueue.size() > 0) {
-                        mediaPlayer = new MediaPlayer(mediaQueue.poll());
-                        mediaPlayer.play();
-                    }
-                });
-            }     */
-
+            result =  new Media(Paths.get("cache/" + word + ".mp3").toUri().toString());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        return result;
     }
 
     private void createDirectory(){
@@ -110,6 +89,7 @@ public class Voice {
         if (!soundDirectory.exists()){
             soundDirectory.mkdir();
         }
+        cacheDirectory = soundDirectory;
     }
 
     private String prepareWordForQuery(String word){
@@ -119,13 +99,12 @@ public class Voice {
 
     public synchronized void dispose(){
         isDisposed = true;
-        File soundDirectory = new File("cache");
-        if (soundDirectory.exists() && soundDirectory.isDirectory()){
-            for(File file : soundDirectory.listFiles()){
+        if (cacheDirectory.exists()){
+            for(File file : cacheDirectory.listFiles()){
                 file.delete();
             }
         }
-        soundDirectory.delete();
+        cacheDirectory.delete();
     }
 
     private class Producer implements Runnable{
@@ -156,19 +135,21 @@ public class Voice {
 
         public void run() {
             while(!isDisposed) {
-                while (queue.size() == 0 || isPlaying) {
+                if (queue.size() == 0 || isPlaying) {
                     try {
                         Thread.sleep(200);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
-                mediaPlayer = new MediaPlayer(queue.poll());
-                mediaPlayer.play();
-                isPlaying = true;
-                mediaPlayer.setOnEndOfMedia(() ->{
-                    isPlaying = false;
-                });
+                else{
+                    mediaPlayer = new MediaPlayer(queue.poll());
+                    mediaPlayer.play();
+                    isPlaying = true;
+                    mediaPlayer.setOnEndOfMedia(() -> {
+                        isPlaying = false;
+                    });
+                }
             }
         }
     }

@@ -1,5 +1,6 @@
 config.properties
 user_config.properties
+cache
 
 # Created by https://www.gitignore.io
 

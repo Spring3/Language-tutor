@@ -5,7 +5,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import tutor.controllers.Controller;
 import tutor.controllers.RepeatWordsViewController;
+import tutor.google.Voice;
 import tutor.models.Word;
 
 import java.io.IOException;
@@ -128,7 +130,10 @@ public class StageManager {
             stage.setTitle(title);
             stage.setOnHiding(windowEvent -> System.out.println("A stage on layer " + layerIndex + " was resetted"));
             final Stage stageDuplicate = stage;
-            stageDuplicate.setOnCloseRequest(windowEvent -> StageManager.this.closeStage(stageDuplicate));
+            if (layerIndex != 0)
+                stageDuplicate.setOnCloseRequest(windowEvent -> StageManager.this.closeStage(stageDuplicate));
+            else
+                stageDuplicate.setOnCloseRequest(windowEvent -> Shutdown());
             return stageDuplicate;
         }
         catch(IOException ex){
@@ -180,6 +185,8 @@ public class StageManager {
                 stages.get(i).close();
             }
         }
+        DbManager.getInstance().shutdown();
+        Voice.getInstance().dispose();
     }
 
     /**
@@ -209,15 +216,12 @@ public class StageManager {
                     stages.put(i, null);
                     stagePaths.put(i, null);
                     foundStageIndex = i;
-                    break;
                 }
-            }
-        }
-        for (int i = foundStageIndex + 1; i < MAX_LAYERS; i ++){
-            if (stages.get(i) != null) {
-                stages.get(i).close();
-                stages.put(i, null);
-                stagePaths.put(i, null);
+                if (foundStageIndex != MAX_LAYERS  && i > foundStageIndex) {
+                    stages.get(i).close();
+                    stages.put(i, null);
+                    stagePaths.put(i, null);
+                }
             }
         }
     }

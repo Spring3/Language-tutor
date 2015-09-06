@@ -12,10 +12,12 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import sun.plugin.javascript.navig.Anchor;
 import tutor.Main;
 import tutor.dao.LanguageDAO;
 import tutor.dao.WordDAO;
+import tutor.google.Voice;
 import tutor.models.Language;
 import tutor.util.DbManager;
 import tutor.util.ResourceBundleKeys;
@@ -103,13 +105,13 @@ public class Controller implements Initializable
 
         scrollPane.setFitToWidth(true);
         task_dictation_img.setImage(new Image(Main.class.getClassLoader().getResource("tasks/dictation/dictation-image.jpg").toExternalForm(), true));
-
+        stageManager.getStage(0).setOnCloseRequest(windowEvent -> Shutdown(null));
     }
 
     @FXML
     public void Shutdown(ActionEvent actionEvent) {
         stageManager.Shutdown();
-        DbManager.getInstance().shutdown();
+
     }
 
     public void newsItemClicked(Event event) {
