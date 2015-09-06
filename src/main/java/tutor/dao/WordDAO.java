@@ -132,22 +132,6 @@ public class WordDAO implements IDAO<Word> {
         return result;
     }
 
-    public List<Word> readAllByLang(Language lang){
-        List<Word> resultList = null;
-        try{
-            Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM WORD WHERE lang_id=?;");
-            statement.setInt(1, lang.getId());
-            statement.execute();
-            resultList = readAllBy(statement);
-            connection.close();
-        }
-        catch (SQLException ex){
-            ex.printStackTrace();
-        }
-        return resultList;
-    }
-
     public List<Word> readAllByLangForActiveUser(Language lang){
         List<Word> resultList = null;
         try{
@@ -273,6 +257,7 @@ public class WordDAO implements IDAO<Word> {
     }
 
     public int countFor(Language wordLang){
+        int result = 0;
         try{
             Connection connection = DbManager.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM WORD AS w INNER JOIN USER_WORD ON word_id=w.id WHERE user_id=? AND w.lang_id=? AND w.translation_id=? GROUP BY w.id;", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -282,13 +267,15 @@ public class WordDAO implements IDAO<Word> {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.last())
             {
-                return resultSet.getRow();
+                result =  resultSet.getRow();
             }
+            resultSet.close();
+            connection.close();
         }
         catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return 0;
+        return result;
     }
 
     public boolean contains(Word value){

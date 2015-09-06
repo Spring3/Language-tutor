@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -69,6 +70,8 @@ public class DictationViewController implements Initializable {
     private Button btn_confirm;
     @FXML
     private TextArea txt_description;
+    @FXML
+    private ImageView imageView;
     private ResourceBundle bundle;
     private TaskManager manager;
     private int wordsAmount;
@@ -160,8 +163,9 @@ public class DictationViewController implements Initializable {
                 wordIndex = random.nextInt(manager.getWords().size());
                 count ++;
             }
-            txt_task.setText(manager.get(wordIndex).toString());
-            voice.say(txt_task.getText(), manager.get(wordIndex).getWordLang());
+            Word word = manager.get(wordIndex);
+            txt_task.setText(word.toString());
+            voice.say(txt_task.getText(), word.getWordLang());
 
         }
         else{
@@ -169,8 +173,9 @@ public class DictationViewController implements Initializable {
                 wordIndex = random.nextInt(manager.getWords().size());
                 count ++;
             }
-            txt_task.setText(manager.get(wordIndex).getTranslation().get());
-            voice.say(txt_task.getText(), manager.get(wordIndex).getTranslationLang());
+            Word word = manager.get(wordIndex);
+            txt_task.setText(word.getTranslation().get());
+            voice.say(txt_task.getText(), word.getTranslationLang());
 
         }
 
@@ -178,33 +183,15 @@ public class DictationViewController implements Initializable {
         pane_answers.getChildren().get(0).requestFocus();
     }
 
-    private float getSuccessRate(){
+    private float getSuccessRate() {
         if (correctAnswers != 0) {
             if (mistakes != 0) {
-                if (mistakes > wordsAmount) {
-                    return (float) correctAnswers / passedWords.size() * 70 + (float) correctAnswers / mistakes * 15 + (float) wordsAmount / mistakes * 15;
-                }
-                else{
-                    return (float) correctAnswers / passedWords.size() * 70 + (float) correctAnswers/mistakes  * 15 + (float) mistakes/wordsAmount * 15;
-                }
+                return (float) correctAnswers / wordsAmount * 70 + (float) correctAnswers / mistakes * 15 + (float) mistakes / wordsAmount * 15;
+            } else {
+                return (float) correctAnswers / wordsAmount * 70 + 30;
             }
-            else{
-                return (float) correctAnswers/passedWords.size() * 70 +  30;
-            }
-        }
-        else{
-            if (mistakes != 0){
-                if (mistakes > wordsAmount){
-                    return (float) correctAnswers / passedWords.size() * 70 +  15 + (float) wordsAmount/mistakes * 15;
-                }
-                else {
-                    return (float) correctAnswers / passedWords.size() * 70 +  15 + (float) mistakes/wordsAmount * 15;
-                }
-            }
-            else{
-                return (float)correctAnswers/passedWords.size() * 70 + 30;
-            }
-
+        } else {
+            return (float) correctAnswers / wordsAmount * 70 + 15 + (float) (15 - mistakes / wordsAmount * 15);
         }
     }
 
@@ -313,8 +300,8 @@ public class DictationViewController implements Initializable {
                 answer.incWrongAnswerCount();
                 WordDAO.getInstance().update(answer);
                 passedWords.add(answer);
+                mistakes ++;
             }
-            mistakes ++;
             voice.play(voice.MEDIA_ANSWER_WRONG);
             label_answerWrong.setVisible(true);
             label_answerCorrect.setVisible(false);
