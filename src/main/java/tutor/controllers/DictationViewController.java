@@ -45,9 +45,7 @@ public class DictationViewController implements Initializable {
     @FXML
     private TextField txt_task;
     @FXML
-    private TextField txt_word;
-    @FXML
-    private TextField txt_translation;
+    private TextField txt_answer;
     @FXML
     private AnchorPane pane_task;
     @FXML
@@ -74,19 +72,12 @@ public class DictationViewController implements Initializable {
     private ImageView imageView;
     private ResourceBundle bundle;
     private TaskManager manager;
-    private int wordsAmount;
-    private int wordIndex;
-    private int mistakes;
-    private int correctAnswers;
-    private String correctAnswer;
-    private List<Word> passedWords; //if boolean is true, then this word needs to be repeated again.
     private Voice voice;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         bundle = resources;
-        passedWords = new ArrayList<>();
         voice = Voice.getInstance();
         initializeUI();
     }
@@ -98,15 +89,6 @@ public class DictationViewController implements Initializable {
         table_translation.setCellValueFactory(param -> param.getValue().getTranslation());
         manager = new TaskManager(Controller.selectedLanguage);
         tblView_wordTranslation.setItems(FXCollections.observableArrayList(manager.createTask()));
-        wordsAmount = manager.getWords().size();
-        if (!manager.getDictationMode().equals(TaskManager.DictationMode.REVERSED)){
-            pane_answers.getChildren().add(0, txt_translation);
-            txt_translation.setVisible(true);
-        }
-        else{
-            pane_answers.getChildren().add(0, txt_word);
-            txt_word.setVisible(true);
-        }
 
 
     }
@@ -135,65 +117,29 @@ public class DictationViewController implements Initializable {
             StringBuilder builder = new StringBuilder();
             builder.append(bundle.getString(ResourceBundleKeys.LABEL_TASK_RESULTS))
                     .append("\n")
-                    .append(bundle.getString(ResourceBundleKeys.LABEL_TASK_WORDS_AMOUNT)).append(" : ").append(wordsAmount)
+                    .append(bundle.getString(ResourceBundleKeys.LABEL_TASK_WORDS_AMOUNT)).append(" : ").append(manager.getWordsAmount())
                     .append("\n")
-                    .append(bundle.getString(ResourceBundleKeys.LABEL_TASK_MISTAKES)).append(" : ").append(mistakes)
+                    .append(bundle.getString(ResourceBundleKeys.LABEL_TASK_MISTAKES)).append(" : ").append(manager.getMistakesCount())
                     .append("\n")
-                    .append(bundle.getString(ResourceBundleKeys.LABEL_TASK_CORRECT_ANSWERS)).append(" : ").append(correctAnswers)
+                    .append(bundle.getString(ResourceBundleKeys.LABEL_TASK_CORRECT_ANSWERS)).append(" : ").append(manager.getCorrectAnswersCount())
                     .append("\n")
-                    .append(bundle.getString(ResourceBundleKeys.SUCCESS_RATE)).append(" : ").append(getSuccessRate()).append("%");
+                    .append(bundle.getString(ResourceBundleKeys.SUCCESS_RATE)).append(" : ").append(manager.getSuccessRate()).append("%");
             alert.setContentText(builder.toString());
             alert.showAndWait();
 
-            for(Word word : passedWords){
-                WordDAO.getInstance().update(word);
-            }
-
-            Stats statistics = new Stats(AuthController.getActiveUser(), manager.getMode(), Controller.selectedLanguage, getSuccessRate());
-            StatsDAO.getInstance().create(statistics);
+            manager.endTask();
 
             StageManager.getInstance().closeStage(StageManager.getInstance().getStage(1));
             return;
         }
-        Random random = new Random();
-        wordIndex = random.nextInt(manager.getWords().size());
-        int count = 0;
-        if (!manager.getDictationMode().equals(TaskManager.DictationMode.REVERSED)){
-            while (manager.getWords().size() > 1 && manager.get(wordIndex).toString().equals(txt_task.getText()) && count < 6) {
-                wordIndex = random.nextInt(manager.getWords().size());
-                count ++;
-            }
-            Word word = manager.get(wordIndex);
-            txt_task.setText(word.toString());
-            voice.say(txt_task.getText(), word.getWordLang());
-
-        }
-        else{
-            while (manager.getWords().size() > 1 && manager.get(wordIndex).getTranslation().get().equals(txt_task.getText()) && count < 6){
-                wordIndex = random.nextInt(manager.getWords().size());
-                count ++;
-            }
-            Word word = manager.get(wordIndex);
-            txt_task.setText(word.getTranslation().get());
-            voice.say(txt_task.getText(), word.getTranslationLang());
-
-        }
+        txt_task.setText(manager.getNextTaskWord());
+        voice.say(txt_task.getText(), manager.getAnswerWordLanguage());
 
 
         pane_answers.getChildren().get(0).requestFocus();
     }
 
-    private float getSuccessRate() {
-        if (correctAnswers != 0) {
-            if (mistakes != 0) {
-                return (float) correctAnswers / wordsAmount * 70 + (float) correctAnswers / mistakes * 15 + (float) mistakes / wordsAmount * 15;
-            } else {
-                return (float) correctAnswers / wordsAmount * 70 + 30;
-            }
-        } else {
-            return (float) correctAnswers / wordsAmount * 70 + 15 + (float) (15 - mistakes / wordsAmount * 15);
-        }
-    }
+
 
     public void btnRepeatClicked(ActionEvent actionEvent) {
         StageManager.getInstance().navigateTo(Main.class.getClassLoader().getResource(Navigator.REPEAT_WORDS_VIEW_PATH), "", 2, Optional.empty(), true, true);
@@ -203,105 +149,13 @@ public class DictationViewController implements Initializable {
 
     public void confirmAnswer(ActionEvent actionEvent) {
 
-        if (manager.getDictationMode().equals(TaskManager.DictationMode.REVERSED)) {
-            if (!manager.get(wordIndex).getArticle().get().isEmpty()) {
-                checkAnswer(true, true);
-            } else {
-                checkAnswer(false, true);
-            }
-        } else {
-            checkAnswer(false, false);
-        }
-
-
-        for(Node txt : pane_answers.getChildren()){
-            assert (txt instanceof TextField);
-            ((TextField) txt).setText("");
-        }
-        showTask();
-    }
-
-    private void checkAnswer(boolean hasArticle, boolean reversed){
-        Word taskWord = manager.get(wordIndex);
-        if (reversed){
-            checkAnswerForReversedTest(true, hasArticle, taskWord);
-        }
-        else{
-            checkAnswerForNormalTest(false, taskWord);
-
-        }
-    }
-
-    private void checkAnswerForReversedTest(boolean reversed, boolean hasArticle, Word taskWord){
-        if (hasArticle && !txt_word.getText().isEmpty()){
-            String article = txt_word.getText().substring(0, txt_word.getText().indexOf(" ")).trim();
-            String word = txt_word.getText().substring(txt_word.getText().indexOf(" "), txt_word.getText().length());
-            if(article.equalsIgnoreCase(taskWord.getArticle().get()) && word.trim().equalsIgnoreCase(taskWord.getWord().get()))
-                rememberAnswerResult(reversed, true, taskWord);
-            else{
-                for(Word synonym : taskWord.getWordsWithSimilarTranslation()){
-                    if (article.equalsIgnoreCase(synonym.getArticle().get()) && word.trim().equalsIgnoreCase(synonym.getWord().get())) {
-                        rememberAnswerResult(reversed, true, synonym);
-                        return;
-                    }
-                }
-                rememberAnswerResult(reversed, false, taskWord);
-            }
-        }
-        else {
-            correctAnswer = taskWord.getWord().get();
-            if (!hasArticle && txt_word.getText().trim().equalsIgnoreCase(correctAnswer))
-                rememberAnswerResult(reversed, true, taskWord);
-            else{
-                for(Word word : taskWord.getWordsWithSimilarTranslation()){
-                    if (txt_word.getText().trim().equalsIgnoreCase(word.toString())){
-                        rememberAnswerResult(reversed, true, word);
-                        return;
-                    }
-                }
-                rememberAnswerResult(reversed, false, taskWord);
-            }
-        }
-    }
-
-    private void checkAnswerForNormalTest(boolean reversed, Word taskWord){
-        correctAnswer = taskWord.getTranslation().get();
-        if (txt_translation.getText().trim().equalsIgnoreCase(correctAnswer)){
-            rememberAnswerResult(reversed, true, taskWord);
-        }
-        else{
-            for(Word word : taskWord.getOtherTranslationVariants()){
-                if (txt_translation.getText().trim().equalsIgnoreCase(word.getTranslation().get())){
-                    rememberAnswerResult(reversed, true, word);
-                    return;
-                }
-            }
-            rememberAnswerResult(reversed, false, taskWord);
-        }
-    }
-
-    private void rememberAnswerResult(boolean reversed, boolean isCorrect, Word answer){
-        if (isCorrect){
-            if (!passedWords.contains(answer)){
-                answer.incCorrectAnswerCount();
-                WordDAO.getInstance().update(answer);
-                passedWords.add(answer);
-                correctAnswers ++;
-
-            }
+        boolean result = manager.confirmAnswer(txt_answer.getText());
+        if (result){
             voice.play(voice.MEDIA_ANSWER_CORRECT);
             label_answerWrong.setVisible(false);
             label_answerCorrect.setVisible(true);
-            manager.getWords().remove(manager.get(wordIndex));
         }
-        else
-        {
-            if (!passedWords.contains(answer)){
-                answer.incWrongAnswerCount();
-                WordDAO.getInstance().update(answer);
-                passedWords.add(answer);
-                mistakes ++;
-            }
+        else{
             voice.play(voice.MEDIA_ANSWER_WRONG);
             label_answerWrong.setVisible(true);
             label_answerCorrect.setVisible(false);
@@ -310,23 +164,27 @@ public class DictationViewController implements Initializable {
         pane_taskInfo.setVisible(true);
 
         StringBuilder answerVariants = new StringBuilder();
-        if (reversed){
-            answerVariants.append(answer.toString()).append("\n");
-            for(String str : answer.getWordsWithSimilarTranslation().stream().map(Word::toString).collect(Collectors.toList())){
-                if (!str.equalsIgnoreCase(answer.toString())){
+        Word answerWord = manager.getCorrectAnswerWord();
+        if (manager.getDictationMode().equals(TaskManager.DictationMode.REVERSED)){
+            answerVariants.append(answerWord.toString()).append("\n");
+            for(String str : answerWord.getWordsWithSimilarTranslation().stream().map(Word::toString).collect(Collectors.toList())){
+                if (!str.equalsIgnoreCase(answerWord.toString())){
                     answerVariants.append(str).append("\n");
                 }
             }
         }
         else{
-            answerVariants.append(answer.getTranslation().get()).append("\n");
-            for(String str : answer.getOtherTranslationVariants().stream().map(word -> word.getTranslation().get()).collect(Collectors.toList())){
-                if (!str.equalsIgnoreCase(answer.getTranslation().get())){
+            answerVariants.append(answerWord.getTranslation().get()).append("\n");
+            for(String str : answerWord.getOtherTranslationVariants().stream().map(word -> word.getTranslation().get()).collect(Collectors.toList())){
+                if (!str.equalsIgnoreCase(answerWord.getTranslation().get())){
                     answerVariants.append(str).append("\n");
                 }
             }
         }
         label_answer.setText(answerVariants.toString());
-        label_taskCount.setText(String.valueOf(wordsAmount - manager.getWords().size()) + "/" + wordsAmount);
+        label_taskCount.setText(String.valueOf(manager.getWordsAmount() - manager.getWords().size()) + "/" + manager.getWordsAmount());
+
+        txt_answer.setText("");
+        showTask();
     }
 }

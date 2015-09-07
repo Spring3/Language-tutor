@@ -1,7 +1,11 @@
 package tutor.util;
 
+import tutor.controllers.AuthController;
+import tutor.controllers.Controller;
+import tutor.dao.StatsDAO;
 import tutor.dao.WordDAO;
 import tutor.models.Language;
+import tutor.models.Stats;
 import tutor.models.Word;
 
 import java.util.*;
@@ -13,6 +17,7 @@ public class TaskManager {
     public TaskManager(Language langToLearn){
         languageToLearn = langToLearn;
         wordsForTask = new HashSet<>();
+        passedWords = new ArrayList<>();
     }
 
     private static final int MAX_WORDS_PER_TASK = 10;
@@ -20,6 +25,15 @@ public class TaskManager {
     private Set<Word> wordsForTask;
     private TaskManagerMode mode;
     private DictationMode dictationMode;
+
+    private int wordIndex;
+    private int wordsAmount;
+    private int mistakes;
+    private int correctAnswers;
+    private String correctAnswer;
+    private List<Word> passedWords;
+    private Language answerWordLanguage;
+    private Word correctAnswerWord;
 
     public TaskManagerMode getMode(){
         return mode;
@@ -31,7 +45,8 @@ public class TaskManager {
     public enum TaskManagerMode{
         NORMAL,
         REPETITION,
-        LEARNING
+        LEARNING,
+        TRADITIONAL
     }
 
     public enum DictationMode{
@@ -43,8 +58,183 @@ public class TaskManager {
         return wordsForTask;
     }
 
+    public int getWordsAmount(){
+        return wordsAmount;
+    }
+
+    public int getMistakesCount(){
+        return mistakes;
+    }
+
+    public int getCorrectAnswersCount(){
+        return correctAnswers;
+    }
+
+    public Word getCorrectAnswerWord(){
+        return correctAnswerWord;
+    }
+
+    public void incrementMistakesCounter(){
+        mistakes ++;
+    }
+
+    public void incrementCorrectAnswersCount(){
+        correctAnswers ++;
+    }
+
     public int getMaxWordsPerTask(){
         return MAX_WORDS_PER_TASK;
+    }
+
+    public Language getAnswerWordLanguage(){
+        return answerWordLanguage;
+    }
+
+    public float getSuccessRate() {
+        if (correctAnswers != 0) {
+            if (mistakes != 0) {
+                return (float) correctAnswers / getWordsAmount() * 70 + (float) correctAnswers / mistakes + (float) mistakes / getWordsAmount() * 21;
+            } else {
+                return (float) correctAnswers / getWordsAmount() * 70 + 30;
+            }
+        } else {
+            return (float) correctAnswers / getWordsAmount() * 70 + 15 + (float) (15 - mistakes / getWordsAmount() * 15);
+        }
+    }
+
+    public void endTask(){
+        for(Word word : passedWords){
+            WordDAO.getInstance().update(word);
+        }
+
+        Stats statistics = new Stats(AuthController.getActiveUser(), getMode(), Controller.selectedLanguage, getSuccessRate());
+        StatsDAO.getInstance().create(statistics);
+        mistakes = 0;
+        correctAnswers = 0;
+        correctAnswer = "";
+    }
+
+    public String getNextTaskWord(){
+        Random random = new Random();
+        wordIndex = random.nextInt(getWords().size());
+        int count = 0;
+        if (!getDictationMode().equals(TaskManager.DictationMode.REVERSED)){
+            while (getWords().size() > 1 && get(wordIndex).toString().equals(correctAnswer) && count < 6) {
+                wordIndex = random.nextInt(getWords().size());
+                count ++;
+            }
+
+            correctAnswerWord = get(wordIndex);
+            correctAnswer = correctAnswerWord.toString();
+            answerWordLanguage = correctAnswerWord.getWordLang();
+
+
+        }
+        else{
+            while (getWords().size() > 1 && get(wordIndex).getTranslation().get().equals(correctAnswer) && count < 6){
+                wordIndex = random.nextInt(getWords().size());
+                count ++;
+            }
+            correctAnswerWord = get(wordIndex);
+            correctAnswer = correctAnswerWord.getTranslation().get();
+            answerWordLanguage = correctAnswerWord.getTranslationLang();
+
+
+        }
+        return correctAnswer;
+    }
+
+    public boolean confirmAnswer(String confirmedAnswer) {
+
+        if (getDictationMode().equals(TaskManager.DictationMode.REVERSED)) {
+            if (!get(wordIndex).getArticle().get().isEmpty()) {
+                return checkAnswer(confirmedAnswer, true, true);
+            } else {
+                return checkAnswer(confirmedAnswer, false, true);
+            }
+        } else {
+            return checkAnswer(confirmedAnswer, false, false);
+        }
+    }
+
+    private boolean checkAnswer( String enteredText, boolean hasArticle, boolean reversed){
+        Word taskWord = get(wordIndex);
+        if (reversed){
+            return checkAnswerForReversedTest(enteredText, hasArticle, taskWord);
+        }
+        else{
+            return checkAnswerForNormalTest(enteredText, taskWord);
+
+        }
+    }
+
+    private boolean checkAnswerForReversedTest(String enteredText, boolean hasArticle, Word taskWord){
+        if (hasArticle && !enteredText.isEmpty()){
+            String article = enteredText.substring(0, enteredText.indexOf(" ")).trim();
+            String word = enteredText.substring(enteredText.indexOf(" "), enteredText.length());
+            if(article.equalsIgnoreCase(taskWord.getArticle().get()) && word.trim().equalsIgnoreCase(taskWord.getWord().get()))
+                return rememberAnswerResult( true, taskWord);
+            else{
+                for(Word synonym : taskWord.getWordsWithSimilarTranslation()){
+                    if (article.equalsIgnoreCase(synonym.getArticle().get()) && word.trim().equalsIgnoreCase(synonym.getWord().get())) {
+                        return rememberAnswerResult( true, synonym);
+                    }
+                }
+                return rememberAnswerResult(false, taskWord);
+            }
+        }
+        else {
+            correctAnswer = taskWord.getWord().get();
+            if (!hasArticle && enteredText.trim().equalsIgnoreCase(correctAnswer))
+                return rememberAnswerResult( true, taskWord);
+            else{
+                for(Word word : taskWord.getWordsWithSimilarTranslation()){
+                    if (enteredText.trim().equalsIgnoreCase(word.toString())){
+                        return rememberAnswerResult( true, word);
+                    }
+                }
+                return rememberAnswerResult(false, taskWord);
+            }
+        }
+    }
+
+    private boolean checkAnswerForNormalTest(String enteredText, Word taskWord){
+        correctAnswer = taskWord.getTranslation().get();
+        if (enteredText.trim().equalsIgnoreCase(correctAnswer)){
+            return rememberAnswerResult(true, taskWord);
+        }
+        else{
+            for(Word word : taskWord.getOtherTranslationVariants()){
+                if (enteredText.trim().equalsIgnoreCase(word.getTranslation().get())){
+                    return rememberAnswerResult(true, word);
+                }
+            }
+            return rememberAnswerResult(false, taskWord);
+        }
+    }
+
+    private boolean rememberAnswerResult( boolean isCorrect, Word answer){
+        if (isCorrect){
+            if (!passedWords.contains(answer)){
+                answer.incCorrectAnswerCount();
+                WordDAO.getInstance().update(answer);
+                passedWords.add(answer);
+                incrementCorrectAnswersCount();
+
+            }
+            getWords().remove(get(wordIndex));
+            return true;
+        }
+        else
+        {
+            if (!passedWords.contains(answer)){
+                answer.incWrongAnswerCount();
+                WordDAO.getInstance().update(answer);
+                passedWords.add(answer);
+                incrementMistakesCounter();
+            }
+            return false;
+        }
     }
 
     public Word get(int index){
@@ -78,6 +268,9 @@ public class TaskManager {
             case LEARNING:{
                 createLearningTask();
                 break;
+            }
+            case TRADITIONAL: {
+                createNormalTask();
             }
             default:{
                 createNormalTask();
@@ -128,5 +321,9 @@ public class TaskManager {
         } catch (NullPointerException ex) {
             createNormalTask();
         }
+        finally {
+            wordsAmount = wordsForTask.size();
+        }
+
     }
 }

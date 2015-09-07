@@ -63,6 +63,11 @@ public class Voice {
         return instance;
     }
 
+    /**
+     * Uses google text to speech api to play the sound of the word, passed as a query for the request.
+     * @param word a word to be spoken.
+     * @param language the language of the word.
+     */
     public void say(String word, Language language) {
         Media media = getMedia(word, language);
         Producer producer = new Producer(mediaQueue, media);
@@ -70,6 +75,10 @@ public class Voice {
 
     }
 
+    /**
+     * Plays an .mp3 or .wav sound.
+     * @param soundPath path to the sound file.
+     */
     public void play(String soundPath){
         Media media = new Media(soundPath);
         Producer producer = new Producer(mediaQueue, media);
@@ -117,6 +126,9 @@ public class Voice {
         return word.replace(" ", "%20");
     }
 
+    /**
+     * Stops active threads, clears cache folder.
+     */
     public synchronized void dispose(){
         isDisposed = true;
         cacheDirectory = cacheDirectory == null ? new File("cache") : cacheDirectory;

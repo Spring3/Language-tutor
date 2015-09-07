@@ -17,17 +17,16 @@
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
+                     <children>
+                        <TextField fx:id="txt_answer" alignment="CENTER" prefHeight="44.0" prefWidth="450.0" promptText="%key.unspecified" style="-fx-font-size: 20;" styleClass="auth_input">
+                           <padding>
+                              <Insets right="5.0" />
+                           </padding>
+                        </TextField>
+                     </children>
                   </FlowPane>
                   <Button fx:id="btn_confirm" defaultButton="true" layoutX="193.0" layoutY="335.0" mnemonicParsing="false" onAction="#confirmAnswer" prefHeight="31.0" prefWidth="113.0" styleClass="custombutton" text="%btn_confirm" AnchorPane.leftAnchor="193.0" AnchorPane.rightAnchor="193.0" AnchorPane.topAnchor="335.0" />
                   <TextField fx:id="txt_task" alignment="CENTER" editable="false" layoutX="22.0" layoutY="149.0" prefHeight="47.0" prefWidth="359.0" style="-fx-font-size: 20;" styleClass="auth_input" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="149.0" />
-                  <TextField fx:id="txt_word" alignment="CENTER" layoutX="14.0" layoutY="30.0" prefHeight="44.0" prefWidth="450.0" promptText="%prompt_label_word" style="-fx-font-size: 20;" styleClass="auth_input" visible="false">
-                     <padding>
-                        <Insets right="5.0" />
-                     </padding></TextField>
-                  <TextField fx:id="txt_translation" alignment="CENTER" layoutX="14.0" layoutY="31.0" prefHeight="44.0" prefWidth="450.0" promptText="%prompt_label_translation" style="-fx-font-size: 20;" styleClass="auth_input" visible="false">
-                     <padding>
-                        <Insets right="5.0" />
-                     </padding></TextField>
                </children>
             </AnchorPane>
             <TableView fx:id="tblView_wordTranslation" editable="true" prefHeight="429.0" prefWidth="395.0" styleClass="settings_tableview" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

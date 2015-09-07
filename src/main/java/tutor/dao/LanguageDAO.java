@@ -30,6 +30,11 @@ public class LanguageDAO implements IDAO<Language> {
         return instance;
     }
 
+    /**
+     * Saves the passed object as a new entity of the database.
+     * @param value an object to be saved.
+     * @return true if the object was saved successfully, false if otherwise.
+     */
     @Override
     public boolean create(Language value) {
         try{
@@ -49,6 +54,11 @@ public class LanguageDAO implements IDAO<Language> {
         return false;
     }
 
+    /**
+     * Assigns a passed language to the currently logged in user. Marks that the user wants to learn this language.
+     * @param lang language to learn.
+     * @return true, if language has been assigned successfully.
+     */
     public boolean assignLangToCurrentUser(Language lang){
         try{
             if (!contains(AuthController.getActiveUser(), lang)) {
@@ -67,6 +77,11 @@ public class LanguageDAO implements IDAO<Language> {
         return false;
     }
 
+    /**
+     * Marks that a user doesn't want to learn a given language anymore.
+     * @param lang language to unassign.
+     * @return true, if a language has been successfully assigned.
+     */
     public boolean unAssignLangFromCurrentUser(Language lang){
         try{
             if (contains(AuthController.getActiveUser(), lang)){
@@ -85,6 +100,11 @@ public class LanguageDAO implements IDAO<Language> {
         return false;
     }
 
+    /**
+     * Searches for the language that matches the given id.
+     * @param id id of the language to find.
+     * @return language if found.
+     */
     @Override
     public Language read(int id) {
         Language result = null;
@@ -101,6 +121,11 @@ public class LanguageDAO implements IDAO<Language> {
         return result;
     }
 
+    /**
+     * Searches for the language that matches the given name.
+     * @param lang_name the name of the language to look for.
+     * @return language if found.
+     */
     public Language read(String lang_name){
         Language result = null;
         try{
@@ -130,6 +155,11 @@ public class LanguageDAO implements IDAO<Language> {
         return result;
     }
 
+    /**
+     * Read all languages, assigned to the user with given id.
+     * @param userId id of the user.
+     * @return a list of assigned languages.
+     */
     public List<Language> readAllLanguagesByUser(int userId){
         List<Language> resultList = null;
         try{
@@ -145,6 +175,12 @@ public class LanguageDAO implements IDAO<Language> {
         return resultList;
     }
 
+    /**
+     * Checks if such language was already assigned to a given user.
+     * @param user a user to be checked.
+     * @param language a language to look for.
+     * @return true if one has already been assigned.
+     */
     public boolean contains(User user, Language language){
         try{
             Connection connection = DbManager.getInstance().getConnection();
@@ -163,6 +199,10 @@ public class LanguageDAO implements IDAO<Language> {
         return false;
     }
 
+    /**
+     * Finds all the languages accessible.
+     * @return the list of languages.
+     */
     public List<Language> readAllLanguages(){
         List<Language> resultList = null;
         try{
@@ -192,6 +232,12 @@ public class LanguageDAO implements IDAO<Language> {
         return resultList;
     }
 
+    /**
+     * Updates the given language.
+     * @param value language to be updated.
+     * @return true if updating process was successful.
+     * @deprecated since it was implemented only to match interface policy.
+     */
     @Deprecated
     @Override
     public boolean update(Language value) {
@@ -211,6 +257,11 @@ public class LanguageDAO implements IDAO<Language> {
         return false;
     }
 
+    /**
+     * Deletes from the database the entity of a given object if such exists.
+     * @param value the language to delete.
+     * @return true if the deletion process was successful.
+     */
     @Override
     public boolean delete(Language value) {
         try{
