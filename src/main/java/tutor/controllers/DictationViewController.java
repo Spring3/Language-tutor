@@ -61,11 +61,17 @@ public class DictationViewController implements Initializable {
     @FXML
     private Label label_taskCount;
     @FXML
+    private Label lbl_dictation_traditional_normal;
+    @FXML
+    private Label lbl_dictation_traditional_reversed;
+    @FXML
     private Button btn_startTask;
     @FXML
     private Button btn_repeatWords;
     @FXML
     private Button btn_confirm;
+    @FXML
+    private Button btn_update;
     @FXML
     private TextArea txt_description;
     @FXML
@@ -132,14 +138,28 @@ public class DictationViewController implements Initializable {
             StageManager.getInstance().closeStage(StageManager.getInstance().getStage(1));
             return;
         }
-        txt_task.setText(manager.getNextTaskWord());
-        voice.say(txt_task.getText(), manager.getAnswerWordLanguage());
+        if (!manager.getMode().equals(TaskManager.TaskManagerMode.TRADITIONAL)){
 
-
+            txt_task.setText(manager.getNextTaskWord());
+            voice.say(txt_task.getText(), manager.getAnswerWordLanguage());
+        }
+        else{
+            btn_update.setVisible(true);
+            if (manager.getDictationMode().equals(TaskManager.DictationMode.NORMAL)){
+                lbl_dictation_traditional_normal.setVisible(true);
+            }
+            else{
+                lbl_dictation_traditional_reversed.setVisible(true);
+            }
+            txt_task.setVisible(false);
+            voice.say(manager.getNextTaskWord(), manager.getAnswerWordLanguage());
+        }
         pane_answers.getChildren().get(0).requestFocus();
     }
 
-
+    public void repeatVoice(ActionEvent actionEvent) {
+        voice.say(manager.getCorrectAnswer(), manager.getAnswerWordLanguage());
+    }
 
     public void btnRepeatClicked(ActionEvent actionEvent) {
         StageManager.getInstance().navigateTo(Main.class.getClassLoader().getResource(Navigator.REPEAT_WORDS_VIEW_PATH), "", 2, Optional.empty(), true, true);

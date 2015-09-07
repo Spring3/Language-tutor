@@ -27,6 +27,17 @@
                   </FlowPane>
                   <Button fx:id="btn_confirm" defaultButton="true" layoutX="193.0" layoutY="335.0" mnemonicParsing="false" onAction="#confirmAnswer" prefHeight="31.0" prefWidth="113.0" styleClass="custombutton" text="%btn_confirm" AnchorPane.leftAnchor="193.0" AnchorPane.rightAnchor="193.0" AnchorPane.topAnchor="335.0" />
                   <TextField fx:id="txt_task" alignment="CENTER" editable="false" layoutX="22.0" layoutY="149.0" prefHeight="47.0" prefWidth="359.0" style="-fx-font-size: 20;" styleClass="auth_input" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="149.0" />
+                  <Label fx:id="lbl_dictation_traditional_normal" alignment="CENTER" layoutX="26.0" layoutY="46.0" prefHeight="36.0" prefWidth="459.0" style="-fx-font-size: 20;" styleClass="settings_label" text="%label_traditional_normal_descr" visible="false" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="46.0" />
+                  <Label fx:id="lbl_dictation_traditional_reversed" alignment="CENTER" layoutX="22.0" layoutY="46.0" prefHeight="36.0" prefWidth="459.0" style="-fx-font-size: 20;" styleClass="settings_label" text="%label_traditional_reversed_descr" visible="false" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="46.0" />
+                  <Button fx:id="btn_update" layoutX="200.0" layoutY="123.0" mnemonicParsing="false" onAction="#repeatVoice" prefHeight="100.0" prefWidth="100.0" styleClass="custombutton" text="%key.unspecified" visible="false" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="199.0" AnchorPane.topAnchor="123.0">
+                     <graphic>
+                        <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../common/updatepng.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                </children>
             </AnchorPane>
             <TableView fx:id="tblView_wordTranslation" editable="true" prefHeight="429.0" prefWidth="395.0" styleClass="settings_tableview" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -69,11 +80,10 @@
                   <Label fx:id="label_answerCorrect" alignment="CENTER" layoutX="10.0" layoutY="35.0" prefHeight="22.0" prefWidth="233.0" style="-fx-text-fill: #2C3; -fx-font-size: 30;" styleClass="settings_label" text="%taskResult_correct" visible="false" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="35.0" />
                   <Label fx:id="label_answerWrong" alignment="CENTER" layoutX="10.0" layoutY="35.0" prefHeight="22.0" prefWidth="233.0" style="-fx-text-fill: #E34; -fx-font-size: 30;" styleClass="settings_label" text="%taskResult_wrong" visible="false" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="35.0" />
                   <Label fx:id="label_answer" alignment="CENTER" layoutX="5.0" layoutY="116.0" prefHeight="126.0" prefWidth="282.0" style="-fx-font-size: 22;" styleClass="settings_label" wrapText="true" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="116.0" />
-                  <Label layoutX="107.0" layoutY="93.0" prefHeight="22.0" prefWidth="79.0" style="-fx-font-size: 20;" styleClass="settings_label" text="%label_answer" AnchorPane.leftAnchor="107.0" AnchorPane.rightAnchor="112.0" AnchorPane.topAnchor="93.0" />
                   <Label fx:id="label_taskCount" alignment="CENTER" layoutY="272.0" prefHeight="22.0" prefWidth="126.0" style="-fx-font-size: 20;" styleClass="settings_label" text="4/10" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                </children>
             </AnchorPane>
-            <TextArea fx:id="txt_description" editable="false" prefHeight="160.0" prefWidth="298.0" style="-fx-border-width: 0;" styleClass="news_textarea" text="%translate_words_description" wrapText="true" AnchorPane.bottomAnchor="231.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <TextArea fx:id="txt_description" editable="false" prefHeight="254.0" prefWidth="298.0" style="-fx-border-width: 0;" styleClass="news_textarea" text="%translate_words_description" wrapText="true" AnchorPane.bottomAnchor="197.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
          <effect>
             <InnerShadow choke="0.3" color="#0a121b" height="6.17" radius="2.585" width="6.17" />
