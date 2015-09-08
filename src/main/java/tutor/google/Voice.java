@@ -70,9 +70,10 @@ public class Voice {
      */
     public void say(String word, Language language) {
         Media media = getMedia(word, language);
-        Producer producer = new Producer(mediaQueue, media);
-        new Thread(producer).start();
-
+        if (media != null) {
+            Producer producer = new Producer(mediaQueue, media);
+            new Thread(producer).start();
+        }
     }
 
     /**
@@ -107,9 +108,9 @@ public class Voice {
                 outputStream.close();
                 audioSrc.close();
             }
-            result =  new Media(Paths.get("cache/" + word + ".mp3").toUri().toString());
+            result = new Media(Paths.get("cache/" + word + ".mp3").toUri().toString());
         } catch (Exception ex) {
-            ex.printStackTrace();
+            System.err.println("No internet connection.");
         }
         return result;
     }

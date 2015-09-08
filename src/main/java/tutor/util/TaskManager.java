@@ -8,6 +8,8 @@ import tutor.models.Language;
 import tutor.models.Stats;
 import tutor.models.Word;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.*;
 
 /**
@@ -264,7 +266,10 @@ public class TaskManager {
 
     public Set<Word> createTask(){
         Random random = new Random();
-        mode = TaskManagerMode.values()[random.nextInt(4)];
+        if (checkInternetConnection())
+            mode = TaskManagerMode.values()[random.nextInt(4)];
+        else
+            mode = TaskManagerMode.values()[random.nextInt(3)];
         dictationMode = DictationMode.values()[random.nextInt(2)];
         switch (mode){
             case NORMAL:{
@@ -285,6 +290,20 @@ public class TaskManager {
             }
         }
         return wordsForTask;
+    }
+
+    private boolean checkInternetConnection(){
+        try{
+            URL url = new URL("http://www.google.com");
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.connect();
+            if (connection.getResponseCode() == 200)
+                return true;
+            return false;
+        }
+        catch (Exception ex){
+            return false;
+        }
     }
 
     private void createNormalTask(){
