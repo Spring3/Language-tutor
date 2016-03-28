@@ -51,7 +51,6 @@ public class Language {
         return getLangName();
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -59,6 +58,7 @@ public class Language {
 
         Language language = (Language) o;
 
+        if (getId() != language.getId()) return false;
         if (!getLangName().equals(language.getLangName())) return false;
         return getShortName().equals(language.getShortName());
 
@@ -66,7 +66,8 @@ public class Language {
 
     @Override
     public int hashCode() {
-        int result = getLangName().hashCode();
+        int result = getId();
+        result = 31 * result + getLangName().hashCode();
         result = 31 * result + getShortName().hashCode();
         return result;
     }

@@ -13,6 +13,7 @@ import tutor.dao.WordDAO;
 import tutor.models.Language;
 import tutor.models.Word;
 import tutor.util.PaginatorManager;
+import tutor.util.StageManager;
 
 import java.net.URL;
 import java.util.List;
@@ -24,8 +25,6 @@ import java.util.ResourceBundle;
 
 public class DictionaryViewController implements Initializable{
 
-    @FXML
-    private ChoiceBox<Language> chb_language;
     @FXML
     private Pagination paginator;
     @FXML
@@ -44,6 +43,7 @@ public class DictionaryViewController implements Initializable{
     private CheckBox check_articles;
 
     private PaginatorManager paginatorManager;
+    private Language selectedLanguage;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -54,30 +54,18 @@ public class DictionaryViewController implements Initializable{
     private ResourceBundle bundle;
 
     private void initializeUI(){
+        selectedLanguage = ((Controller) StageManager.getInstance().getControllerForViewOnLayer(0)).selectedLanguage;
         table_word.setCellValueFactory(param -> param.getValue().getWord());
         table_translation.setCellValueFactory(param -> param.getValue().getTranslation());
         table_articles.setCellValueFactory(param -> param.getValue().getArticle());
         table_word.setCellFactory(TextFieldTableCell.forTableColumn());
         table_translation.setCellFactory(TextFieldTableCell.forTableColumn());
-        table_articles.setCellFactory(TextFieldTableCell.forTableColumn());;
+        table_articles.setCellFactory(TextFieldTableCell.forTableColumn());
         initializeTableViewColumns();
 
         check_articles.selectedProperty().addListener((observable1, oldValue1, newValue1) -> {
             table_articles.setVisible(newValue1);
         });
-
-        ObservableList<Language> languages = FXCollections.observableList(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId()));
-        chb_language.setItems(languages);
-        chb_language.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.equals(oldValue)) {
-                loadWordsFor(newValue);
-            }
-        });
-        try {
-            chb_language.setValue(chb_language.getItems().get(0));
-        }
-        catch (IndexOutOfBoundsException ex){}
-
     }
 
     private void initializeTableViewColumns(){
@@ -87,7 +75,7 @@ public class DictionaryViewController implements Initializable{
             button.setOnAction(event -> {
                 if (WordDAO.getInstance().contains(param.getValue())) {
                     WordDAO.getInstance().delete(WordDAO.getInstance().readByContentForActiveUser(param.getValue().getWord().get()));
-                    loadWordsFor(chb_language.getSelectionModel().getSelectedItem());
+                    loadWordsFor(selectedLanguage);
                 }
             });
             return new ReadOnlyObjectWrapper<Button>(button);
@@ -104,7 +92,7 @@ public class DictionaryViewController implements Initializable{
             } else {
                 if (!editedWord.getTranslation().get().isEmpty() && !editedWord.getWord().get().isEmpty()) {
                     WordDAO.getInstance().create(editedWord);
-                    loadWordsFor(chb_language.getSelectionModel().getSelectedItem());
+                    loadWordsFor(selectedLanguage);
                 }
             }
         });
@@ -121,7 +109,7 @@ public class DictionaryViewController implements Initializable{
                     } else {
                         if (!editedWord.getTranslation().get().isEmpty() && !editedWord.getWord().get().isEmpty()) {
                             WordDAO.getInstance().create(editedWord);
-                            loadWordsFor(chb_language.getSelectionModel().getSelectedItem());
+                            loadWordsFor(selectedLanguage);
                         }
                     }
                 }
@@ -139,7 +127,7 @@ public class DictionaryViewController implements Initializable{
                     } else {
                         if (!editedWord.getTranslation().get().isEmpty() && !editedWord.getWord().get().isEmpty()) {
                             WordDAO.getInstance().create(editedWord);
-                            loadWordsFor(chb_language.getSelectionModel().getSelectedItem());
+                            loadWordsFor(selectedLanguage);
                         }
                     }
                 }

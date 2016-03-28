@@ -1,32 +1,22 @@
 package tutor.controllers;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import sun.plugin.javascript.navig.Anchor;
 import tutor.Main;
 import tutor.dao.LanguageDAO;
 import tutor.dao.WordDAO;
-import tutor.google.Voice;
 import tutor.models.Language;
-import tutor.util.DbManager;
 import tutor.util.ResourceBundleKeys;
 import tutor.util.StageManager;
-
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -71,15 +61,13 @@ public class Controller implements Initializable
     @FXML
     private ImageView newsItemImage;
     @FXML
-    private ChoiceBox<Language> choiceBox_lang_to_learn;
+    private ListView<Language> listView_languages;
     @FXML
     private MenuItem mItem_newTask;
     @FXML
     private MenuItem mItem_about;
     @FXML
     private MenuItem mItem_statistics;
-    @FXML
-    private ScrollPane scrollPane;
     @FXML
     private AnchorPane taskPane;
     @FXML
@@ -94,16 +82,31 @@ public class Controller implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb){
         bundle = rb;
-        choiceBox_lang_to_learn.setItems(FXCollections.observableArrayList(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId())));
-        choiceBox_lang_to_learn.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        listView_languages.getItems().addAll(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId()));
+        listView_languages.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedLanguage = newValue;
         });
-        try {
-            choiceBox_lang_to_learn.setValue(choiceBox_lang_to_learn.getItems().get(0));
-        }
-        catch (IndexOutOfBoundsException ex){}
 
-        scrollPane.setFitToWidth(true);
+        final ContextMenu contextMenu = new ContextMenu();
+        MenuItem add = new MenuItem("Add language");
+        MenuItem remove = new MenuItem("Remove language");
+        contextMenu.getItems().addAll(add, remove);
+
+        add.setOnAction((event) -> {
+            stageManager.navigateTo(Navigator.getPathFor(Navigator.LANGUAGE_SETTINGS_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_LANGUAGE_SETTINGS), 1, Optional.empty(), false);
+            updateLanguageList();
+        });
+
+        remove.setOnAction((event) -> {
+            Language selectedItem = listView_languages.getSelectionModel().getSelectedItem();
+            if (selectedItem != null) {
+                LanguageDAO.getInstance().unAssignLangFromCurrentUser(selectedItem);
+                updateLanguageList();
+            }
+        });
+
+        listView_languages.setContextMenu(contextMenu);
+
         task_dictation_img.setImage(new Image(Main.class.getClassLoader().getResource("tasks/dictation/dictation-image.jpg").toExternalForm(), true));
         stageManager.getStage(0).setOnCloseRequest(windowEvent -> Shutdown(null));
     }
@@ -114,46 +117,44 @@ public class Controller implements Initializable
 
     }
 
-    public void newsItemClicked(Event event) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.NEWS_ITEM_VIEW_PATH), newsItemLabel.getText(), 1, Optional.empty(), false);
-    }
-
     public void statisticsClicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.USER_RATE_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_STATISTICS), 1, Optional.empty(), false);
+        stageManager.navigateTo(Navigator.getPathFor(Navigator.USER_RATE_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_STATISTICS), 1, Optional.empty(), false);
     }
 
     public void menuItem_about_clicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.ABOUT_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_ABOUT), 1, Optional.empty(), false);
+        stageManager.navigateTo(Navigator.getPathFor(Navigator.ABOUT_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_ABOUT), 1, Optional.empty(), false);
     }
 
     public void menuItem_dictionary_clicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.DICTIONARY_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_DICTIONARY), 1, Optional.empty(), false);
+        stageManager.navigateTo(Navigator.getPathFor(Navigator.DICTIONARY_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_DICTIONARY), 1, Optional.empty(), false);
     }
 
     public void editLangClicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.LANGUAGE_SETTINGS_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_LANGUAGE_SETTINGS), 1, Optional.empty(), false);
+        stageManager.navigateTo(Navigator.getPathFor(Navigator.LANGUAGE_SETTINGS_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_LANGUAGE_SETTINGS), 1, Optional.empty(), false);
     }
 
     public void importFileClicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.FILE_IMPORT_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_IMPORT), 1, Optional.empty(), false);
+        stageManager.navigateTo(Navigator.getPathFor(Navigator.FILE_IMPORT_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_IMPORT), 1, Optional.empty(), false);
     }
 
     public void localeClicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.LOCALE_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_LOCALE), 1, Optional.empty(), false);
+        stageManager.navigateTo(Navigator.getPathFor(Navigator.LOCALE_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_LOCALE), 1, Optional.empty(), false);
     }
 
     public void themeClicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.THEME_SETTINGS_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_THEME), 1, Optional.empty(), false);
+        stageManager.navigateTo(Navigator.getPathFor(Navigator.THEME_SETTINGS_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_THEME), 1, Optional.empty(), false);
     }
 
     public void LogOut(ActionEvent actionEvent) {
         AuthController.setActiveUser(null);
-        stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.AUTHENTICATION_VIEW_PATH), "Language Tutor", 0, Optional.empty(), false);
+        stageManager.navigateTo(Navigator.getPathFor(Navigator.AUTHENTICATION_VIEW_PATH), "Language Tutor", 0, Optional.empty(), false);
     }
 
     public void dictationTaskClicked(Event event) {
+        if (selectedLanguage == null)
+            return;                       //TODO: add alert notification
         if (WordDAO.getInstance().countFor(selectedLanguage) > 0)
-            stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.TASKVIEW_DICTATION_PATH), bundle.getString(ResourceBundleKeys.LABEL_DICTATION), 1, Optional.empty(), false);
+            stageManager.navigateTo(Navigator.getPathFor(Navigator.TASKVIEW_DICTATION_PATH), bundle.getString(ResourceBundleKeys.LABEL_DICTATION), 1, Optional.empty(), false);
         else{
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle(bundle.getString(ResourceBundleKeys.LABEL_ERROR));
@@ -163,16 +164,8 @@ public class Controller implements Initializable
         }
     }
 
-    public void workbenchSelected(Event event) {
-        if(event.getTarget().equals(workbench)){
-            choiceBox_lang_to_learn.setItems(FXCollections.observableArrayList(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId())));
-            choiceBox_lang_to_learn.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                selectedLanguage = newValue;
-            });
-            try {
-                choiceBox_lang_to_learn.setValue(choiceBox_lang_to_learn.getItems().get(0));
-            }
-            catch (IndexOutOfBoundsException ex){}
-        }
+    public void updateLanguageList(){
+        listView_languages.getItems().clear();
+        listView_languages.getItems().addAll(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId()));
     }
 }

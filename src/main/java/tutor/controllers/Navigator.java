@@ -1,5 +1,9 @@
 package tutor.controllers;
 
+import java.io.IOException;
+import java.net.URL;
+import tutor.Main;
+
 /**
  * Created by user on 19.12.2014.
  * Contains all the links to all the views, used within this software.
@@ -12,7 +16,6 @@ public final class Navigator {
     }
 
     public static final String MAIN_VIEW_PATH = "view/main.fxml";
-    public static final String NEWS_ITEM_VIEW_PATH = "view/news.fxml";
     public static final String TASKVIEW_DICTATION_PATH = "view/dictation.fxml";
     public static final String HISTORY_ITEM_VIEW_PATH = "view/historyDetails.fxml";
     public static final String DICTIONARY_VIEW_PATH = "view/dictionary.fxml";
@@ -24,4 +27,8 @@ public final class Navigator {
     public static final String THEME_SETTINGS_VIEW_PATH = "view/themeSettings.fxml";
     public static final String LOCALE_VIEW_PATH = "view/localeSettings.fxml";
     public static final String REPEAT_WORDS_VIEW_PATH = "view/repeatWords.fxml";
+
+    public static URL getPathFor(String view){
+        return Main.class.getClassLoader().getResource(view);
+    }
 }
