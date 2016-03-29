@@ -1,0 +1,169 @@
+package tutor.util;
+
+import com.sun.speech.freetts.VoiceManager;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import marytts.LocalMaryInterface;
+import marytts.MaryInterface;
+import marytts.datatypes.MaryDataType;
+import marytts.exceptions.MaryConfigurationException;
+import marytts.exceptions.SynthesisException;
+import marytts.util.data.audio.AudioPlayer;
+import tutor.models.Language;
+
+import tutor.Main;
+
+import javax.sound.sampled.AudioInputStream;
+import java.io.*;
+import java.lang.reflect.Array;
+import java.net.HttpURLConnection;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+
+/**
+ * Created by Spring on 9/5/2015.
+ */
+public class Voice {
+    private Voice(){
+        mediaQueue = new ArrayBlockingQueue<Media>(20);
+        consumer = new Consumer(mediaQueue);
+        new Thread(consumer).start();
+    }
+
+    static{
+        try {
+            MEDIA_ANSWER_CORRECT = Main.class.getClassLoader().getResource("sounds/correct.mp3").toURI().toString();
+            MEDIA_ANSWER_WRONG = Main.class.getClassLoader().getResource("sounds/wrong.mp3").toURI().toString();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String MEDIA_ANSWER_CORRECT;
+    public static String MEDIA_ANSWER_WRONG;
+    private static Voice instance;
+    private BlockingQueue<Media> mediaQueue;
+    private Consumer consumer;
+    private volatile boolean isDisposed;
+    private volatile boolean isPlaying;
+    private File cacheDirectory;
+    private MaryInterface marytts;
+    private AudioPlayer ap;
+
+    public static Voice getInstance(){
+        if (instance == null){
+            synchronized (Voice.class){
+                if (instance == null){
+                    instance = new Voice();
+                    try {
+                        instance.marytts = new LocalMaryInterface();
+                        instance.marytts.setVoice("dfki-spike-hsmm");   //TODO: add localization support for the language and automatic voice switching
+                    }
+                    catch (MaryConfigurationException ex){
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        }
+        return instance;
+    }
+
+    /**
+     * Uses google text to speech api to play the sound of the word, passed as a query for the request.
+     * @param word a word to be spoken.
+     * @param language the language of the word.
+     */
+    public void say(String word, Language language) {
+        try{
+
+            AudioInputStream audio = marytts.generateAudio(word);
+            ap = new AudioPlayer();
+            marytts.setLocale(Locale.US);
+            marytts.setOutputType(MaryDataType.AUDIO.name());
+            marytts.setInputType(MaryDataType.TEXT.name());
+            System.out.println(marytts.getAvailableVoices(Locale.US));
+
+            ap.setAudio(audio);
+            ap.start();
+        }
+        catch (SynthesisException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * Plays an .mp3 or .wav sound.
+     * @param soundPath path to the sound file.
+     */
+    public void play(String soundPath){
+        Media media = new Media(soundPath);
+        Producer producer = new Producer(mediaQueue, media);
+        new Thread(producer).start();
+    }
+
+    /**
+     * Stops active threads, clears cache folder.
+     */
+    public synchronized void dispose(){
+        isDisposed = true;
+        cacheDirectory = cacheDirectory == null ? new File("cache") : cacheDirectory;
+        if (cacheDirectory.exists()){
+            for(File file : cacheDirectory.listFiles()){
+                file.delete();
+            }
+        }
+        cacheDirectory.delete();
+    }
+
+    private class Producer implements Runnable{
+        protected BlockingQueue<Media> queue = null;
+        private Media media;
+
+        public Producer(BlockingQueue<Media> queue, Media media){
+            this.queue = queue;
+            this.media = media;
+        }
+
+        public void run(){
+            try {
+                queue.put(media);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private class Consumer implements Runnable{
+        protected BlockingQueue<Media> queue = null;
+        private MediaPlayer mediaPlayer;
+
+        public Consumer(BlockingQueue<Media> queue){
+            this.queue = queue;
+        }
+
+        public void run() {
+            while(!isDisposed) {
+                if (queue.size() == 0 || isPlaying) {
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    mediaPlayer = new MediaPlayer(queue.poll());
+                    mediaPlayer.play();
+                    isPlaying = true;
+                    mediaPlayer.setOnEndOfMedia(() -> {
+                        isPlaying = false;
+                    });
+                }
+            }
+        }
+    }
+}

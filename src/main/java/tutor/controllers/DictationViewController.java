@@ -11,7 +11,7 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import tutor.google.Voice;
+import tutor.util.Voice;
 import tutor.Main;
 import tutor.models.Word;
 import tutor.util.ResourceBundleKeys;

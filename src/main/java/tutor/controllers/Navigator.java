@@ -17,7 +17,6 @@ public final class Navigator {
 
     public static final String MAIN_VIEW_PATH = "view/main.fxml";
     public static final String TASKVIEW_DICTATION_PATH = "view/dictation.fxml";
-    public static final String HISTORY_ITEM_VIEW_PATH = "view/historyDetails.fxml";
     public static final String DICTIONARY_VIEW_PATH = "view/dictionary.fxml";
     public static final String USER_RATE_VIEW_PATH = "view/userRate.fxml";
     public static final String ABOUT_VIEW_PATH = "view/about.fxml";

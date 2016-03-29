@@ -5,10 +5,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import tutor.controllers.Controller;
-import tutor.controllers.RepeatWordsViewController;
-import tutor.google.Voice;
-import tutor.models.Word;
 
 import java.io.IOException;
 import java.net.URL;

@@ -25,28 +25,10 @@ import java.util.ResourceBundle;
 public class FileImportViewController implements Initializable{
 
     @FXML
-    private Label label_addedWords;
-
-    @FXML
-    private Label label_totalWords;
-
-    @FXML
-    private Label label_importFailure;
-
-    @FXML
     private ChoiceBox<Language> chb_word_lang;
 
     @FXML
     private Button btn_openFile;
-
-    @FXML
-    private Label label_success;
-
-    @FXML
-    private Label label_ignoredWords;
-
-    @FXML
-    private AnchorPane pane_importInfo;
 
     @FXML
     private ChoiceBox<Language> chb_translation_lang;
@@ -76,8 +58,8 @@ public class FileImportViewController implements Initializable{
             StageManager.getInstance().closeStage(StageManager.getInstance().getStage(1));
             return;
         }
-        chb_word_lang.setItems(selectedLanguages);
-        chb_translation_lang.setItems(FXCollections.observableArrayList(LanguageDAO.getInstance().readAllLanguages()));
+        chb_word_lang.getItems().addAll(selectedLanguages);
+        chb_translation_lang.getItems().addAll(LanguageDAO.getInstance().readAllLanguages());
         chb_translation_lang.getSelectionModel().selectedItemProperty().addListener((observable1, oldValue1, newValue1) -> {
             selectedTranslationLanguage = newValue1;
             if (selectedLanguage != null){
@@ -96,6 +78,9 @@ public class FileImportViewController implements Initializable{
         });
 
         chb_word_lang.getSelectionModel().clearSelection();
+
+        chb_word_lang.getSelectionModel().select(Controller.selectedLanguage);
+        chb_translation_lang.getSelectionModel().select(AuthController.getActiveUser().getNativeLanguage());
     }
     /**
      * Event Handler for a choice box, responsible for a local file data language selection
@@ -121,18 +106,15 @@ public class FileImportViewController implements Initializable{
         if (selectedFile != null) {
             BasicParser parser = new BasicParser();
             parser.parse(selectedFile, selectedLanguage, selectedTranslationLanguage);
-            pane_importInfo.setVisible(true);
-            if (parser.isSuccessfull()){
-                label_success.setVisible(true);
-                label_importFailure.setVisible(false);
-            }
-            else{
-                label_success.setVisible(false);
-                label_importFailure.setVisible(true);
-            }
-            label_totalWords.setText(parser.getTotalWordsAmount() + "");
-            label_addedWords.setText(parser.getAddedWordsAmount() + "");
-            label_ignoredWords.setText(parser.getIgnoredWordsAmount() + "");
+
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText("Files imported successfully");
+            alert.setContentText("Total words imported: " + parser.getTotalWordsAmount() + "\n"
+            + "Total words added: " + parser.getAddedWordsAmount() + "\n"
+            + "Total words ignored: " + parser.getIgnoredWordsAmount() + "\n");
+            alert.show();
+            StageManager.getInstance().closeStage(StageManager.getInstance().getStage(1));
         }
     }
 }

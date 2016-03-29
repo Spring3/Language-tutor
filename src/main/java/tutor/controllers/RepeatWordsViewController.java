@@ -4,10 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import tutor.google.Voice;
+import tutor.util.Voice;
 import tutor.models.Word;
 import tutor.util.StageManager;
-import tutor.util.TaskManager;
 
 import java.net.URL;
 import java.util.*;

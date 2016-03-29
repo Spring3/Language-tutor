@@ -28,7 +28,6 @@
                   <MenuItem fx:id="mItem_lang" mnemonicParsing="false" onAction="#editLangClicked" text="%label_settings_lang" />
                   <MenuItem fx:id="mItem_importFile" mnemonicParsing="false" onAction="#importFileClicked" text="%btn_import" />
                   <MenuItem fx:id="mItem_locale" mnemonicParsing="false" onAction="#localeClicked" text="%menuItem_locale" />
-                  <MenuItem fx:id="mItem_theme" mnemonicParsing="false" onAction="#themeClicked" text="%menuItem_theme" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="%menuItem_progress">

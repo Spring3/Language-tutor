@@ -55,8 +55,6 @@ public class Controller implements Initializable
     @FXML
     private MenuItem mItem_locale;
     @FXML
-    private MenuItem mItem_theme;
-    @FXML
     private MenuItem mItem_dictionary;
     @FXML
     private ImageView newsItemImage;
@@ -76,6 +74,7 @@ public class Controller implements Initializable
     private ImageView task_dictation_img;
     @FXML
     private Label task_dictation_header;
+
     private ResourceBundle bundle;
     public static Language selectedLanguage;
 
@@ -86,6 +85,10 @@ public class Controller implements Initializable
         listView_languages.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedLanguage = newValue;
         });
+
+        if (listView_languages.getItems().get(0) != null){
+            listView_languages.getSelectionModel().select(0);
+        }
 
         final ContextMenu contextMenu = new ContextMenu();
         MenuItem add = new MenuItem("Add language");
@@ -139,10 +142,6 @@ public class Controller implements Initializable
 
     public void localeClicked(ActionEvent actionEvent) {
         stageManager.navigateTo(Navigator.getPathFor(Navigator.LOCALE_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_LOCALE), 1, Optional.empty(), false);
-    }
-
-    public void themeClicked(ActionEvent actionEvent) {
-        stageManager.navigateTo(Navigator.getPathFor(Navigator.THEME_SETTINGS_VIEW_PATH), bundle.getString(ResourceBundleKeys.LABEL_THEME), 1, Optional.empty(), false);
     }
 
     public void LogOut(ActionEvent actionEvent) {
