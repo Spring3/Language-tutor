@@ -40,7 +40,6 @@ public class RepeatWordsViewController implements Initializable{
         label_word.setText(get(index).toString());
         voice.say(label_word.getText(), get(index).getWordLang());
         label_translation.setText(get(index).getTranslation().get());
-        voice.say(label_translation.getText(), get(index).getTranslationLang());
     }
 
 
@@ -50,7 +49,6 @@ public class RepeatWordsViewController implements Initializable{
             label_word.setText(get(index).toString());
             voice.say(label_word.getText(), get(index).getWordLang());
             label_translation.setText(get(index).getTranslation().get());
-            voice.say(label_translation.getText(), get(index).getTranslationLang());
         }
         else {
             voice.dispose();

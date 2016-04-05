@@ -14,6 +14,12 @@
       <root url="jar://$PROJECT_DIR$/lib/marytts-runtime-5.1.2-jar-with-dependencies.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/voice-cmu-slt-hsmm-5.1.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/voice-dfki-spike-hsmm-5.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/voice-bits3-hsmm-5.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/voice-upmc-pierre-hsmm-5.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/voice-istc-lucia-hsmm-5.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/voice-cmu-nk-hsmm-5.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/voice-voxforge-ru-nsh-5.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/voice-dfki-ot-hsmm-5.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

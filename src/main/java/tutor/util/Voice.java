@@ -9,6 +9,7 @@ import marytts.datatypes.MaryDataType;
 import marytts.exceptions.MaryConfigurationException;
 import marytts.exceptions.SynthesisException;
 import marytts.util.data.audio.AudioPlayer;
+import tutor.controllers.Controller;
 import tutor.models.Language;
 
 import tutor.Main;
@@ -55,16 +56,45 @@ public class Voice {
     private MaryInterface marytts;
     private AudioPlayer ap;
 
+    private enum SupportedLanguages{
+        ENGLISH("dfki-spike-hsmm"),
+        GERMAN("bits3-hsmm"),
+        FRENCH("upmc-pierre-hsmm"),
+        ITALIAN("istc-lucia-hsmm"),
+        //RUSSIAN("voxforge-ru-nsh"),
+        TELUGU("cmu-slt-hsmm"),
+        TURKISH("dfki-ot-hsmm");
+
+        private String voice;
+
+        SupportedLanguages(String voice){
+            this.voice = voice;
+        }
+
+        public String getVoice(){
+            return voice;
+        }
+
+        public static boolean contains(Language lang){
+            for(SupportedLanguages language : values()){
+                if (language.name().toLowerCase().equals(lang.getLangName().toLowerCase()))
+                    return true;
+            }
+            return false;
+        }
+    }
+
     public static Voice getInstance(){
         if (instance == null){
             synchronized (Voice.class){
-                if (instance == null){
+                if (instance == null) {
                     instance = new Voice();
+
                     try {
                         instance.marytts = new LocalMaryInterface();
-                        instance.marytts.setVoice("dfki-spike-hsmm");   //TODO: add localization support for the language and automatic voice switching
-                    }
-                    catch (MaryConfigurationException ex){
+
+
+                    } catch (MaryConfigurationException ex) {
                         ex.printStackTrace();
                     }
                 }
@@ -80,19 +110,17 @@ public class Voice {
      */
     public void say(String word, Language language) {
         try{
-
-            AudioInputStream audio = marytts.generateAudio(word);
-            ap = new AudioPlayer();
-            marytts.setLocale(Locale.US);
-            marytts.setOutputType(MaryDataType.AUDIO.name());
-            marytts.setInputType(MaryDataType.TEXT.name());
-            System.out.println(marytts.getAvailableVoices(Locale.US));
-
-            ap.setAudio(audio);
-            ap.start();
+            if (SupportedLanguages.contains(language)) {
+                marytts.setVoice(SupportedLanguages.valueOf(language.getLangName().toUpperCase()).getVoice());
+                marytts.setOutputType(MaryDataType.AUDIO.name());
+                marytts.setInputType(MaryDataType.TEXT.name());
+                AudioInputStream audio = marytts.generateAudio(word);
+                ap = new AudioPlayer();
+                ap.setAudio(audio);
+                ap.start();
+            }
         }
         catch (SynthesisException ex){
-            ex.printStackTrace();
         }
     }
 

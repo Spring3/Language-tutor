@@ -1,6 +1,7 @@
 config.properties
 user_config.properties
 cache
+lib/voices
 
 # Created by https://www.gitignore.io
 
