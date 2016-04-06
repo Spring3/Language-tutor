@@ -1,6 +1,5 @@
 package tutor.util;
 
-import com.sun.speech.freetts.VoiceManager;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import marytts.LocalMaryInterface;
@@ -9,20 +8,11 @@ import marytts.datatypes.MaryDataType;
 import marytts.exceptions.MaryConfigurationException;
 import marytts.exceptions.SynthesisException;
 import marytts.util.data.audio.AudioPlayer;
-import tutor.controllers.Controller;
 import tutor.models.Language;
-
 import tutor.Main;
-
 import javax.sound.sampled.AudioInputStream;
 import java.io.*;
-import java.lang.reflect.Array;
-import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Locale;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -90,13 +80,17 @@ public class Voice {
                 if (instance == null) {
                     instance = new Voice();
 
-                    try {
-                        instance.marytts = new LocalMaryInterface();
+                    Thread thread = new Thread(() -> {
+                        try {
+                            instance.marytts = new LocalMaryInterface();
 
 
-                    } catch (MaryConfigurationException ex) {
-                        ex.printStackTrace();
-                    }
+                        } catch (MaryConfigurationException ex) {
+                            ex.printStackTrace();
+                        }
+                    });
+                    thread.setDaemon(true);
+                    thread.start();
                 }
             }
         }
@@ -111,7 +105,9 @@ public class Voice {
     public void say(String word, Language language) {
         try{
             if (SupportedLanguages.contains(language)) {
-                marytts.setVoice(SupportedLanguages.valueOf(language.getLangName().toUpperCase()).getVoice());
+                String voice = SupportedLanguages.valueOf(language.getLangName().toUpperCase()).getVoice();
+                if (voice != null)
+                    marytts.setVoice(voice);
                 marytts.setOutputType(MaryDataType.AUDIO.name());
                 marytts.setInputType(MaryDataType.TEXT.name());
                 AudioInputStream audio = marytts.generateAudio(word);

@@ -9,6 +9,7 @@ import tutor.controllers.AuthController;
 import tutor.controllers.Navigator;
 import tutor.util.DbManager;
 import tutor.util.UserConfigHelper;
+import tutor.util.Voice;
 
 import java.net.URL;
 import java.util.Locale;
@@ -33,6 +34,7 @@ public class Main extends Application {
         Parent root = loader.load();
         AuthController controller = loader.getController();
         controller.navigateTo(Main.class.getClassLoader().getResource(Navigator.AUTHENTICATION_VIEW_PATH),"Language Tutor", 0, false);
+        Voice.getInstance(); //to initialize maryTTS
     }
 
 

@@ -17,7 +17,6 @@
       <root url="jar://$PROJECT_DIR$/lib/voice-bits3-hsmm-5.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/voice-upmc-pierre-hsmm-5.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/voice-istc-lucia-hsmm-5.1.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/voice-cmu-nk-hsmm-5.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/voice-voxforge-ru-nsh-5.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/voice-dfki-ot-hsmm-5.1.jar!/" />
     </CLASSES>

@@ -25,7 +25,6 @@ public final class Navigator {
     public static final String LANGUAGE_SETTINGS_VIEW_PATH = "view/languageSettings.fxml";
     public static final String THEME_SETTINGS_VIEW_PATH = "view/themeSettings.fxml";
     public static final String LOCALE_VIEW_PATH = "view/localeSettings.fxml";
-    public static final String REPEAT_WORDS_VIEW_PATH = "view/repeatWords.fxml";
 
     public static URL getPathFor(String view){
         return Main.class.getClassLoader().getResource(view);

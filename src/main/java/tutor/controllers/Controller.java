@@ -152,8 +152,10 @@ public class Controller implements Initializable
     public void dictationTaskClicked(Event event) {
         if (selectedLanguage == null)
             return;                       //TODO: add alert notification
-        if (WordDAO.getInstance().countFor(selectedLanguage) > 0)
+        if (WordDAO.getInstance().countFor(selectedLanguage) > 0) {
             stageManager.navigateTo(Navigator.getPathFor(Navigator.TASKVIEW_DICTATION_PATH), bundle.getString(ResourceBundleKeys.LABEL_DICTATION), 1, Optional.empty(), false);
+            ((DictationViewController) stageManager.getControllerForViewOnLayer(1)).init();
+        }
         else{
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle(bundle.getString(ResourceBundleKeys.LABEL_ERROR));

@@ -26,9 +26,9 @@
             <plugin>
                 <groupId>com.zenjava</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
-                <version>8.1.2</version>
+                <version>8.4.0</version>
                 <configuration>
-                    <mainClass>tutor.Main</mainClass>
+                    <mainClass>your.package.with.Launcher</mainClass>
                 </configuration>
             </plugin>
         </plugins>
@@ -39,6 +39,22 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.4.186</version>
+        </dependency>
+
+        <dependency>
+            <groupId>marytts</groupId>
+            <artifactId>marytts</artifactId>
+            <version>${java.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/marytts-client-5.1.2-jar-with-dependencies.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>marytts</groupId>
+            <artifactId>marytts</artifactId>
+            <version>${java.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/marytts-runtime-5.1.2-jar-with-dependencies.jar</systemPath>
         </dependency>
 
     </dependencies>

@@ -7,87 +7,46 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="797.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tutor.controllers.DictationViewController">
-   <center>
-      <AnchorPane prefHeight="239.0" prefWidth="600.0" styleClass="settings_anchorpane" BorderPane.alignment="CENTER">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="469.0" prefWidth="570.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tutor.controllers.DictationViewController">
+   <effect>
+      <DropShadow />
+   </effect>
+   <bottom>
+      <AnchorPane fx:id="pane_taskInfo" prefHeight="56.0" prefWidth="570.0" styleClass="settings_anchorpane" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane fx:id="pane_task" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Label fx:id="label_answerCorrect" alignment="CENTER" prefHeight="22.0" prefWidth="233.0" style="-fx-text-fill: #2C3; -fx-font-size: 30;" styleClass="settings_label" text="%taskResult_correct" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
+            <Label fx:id="label_answerWrong" alignment="CENTER" prefHeight="22.0" prefWidth="233.0" style="-fx-text-fill: #E34; -fx-font-size: 30;" styleClass="settings_label" text="%taskResult_wrong" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
+            <Label fx:id="label_taskCount" alignment="CENTER" prefHeight="23.0" prefWidth="56.0" style="-fx-font-size: 20;" styleClass="settings_label" text="0/10" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+         </children>
+      </AnchorPane>
+   </bottom>
+   <center>
+      <AnchorPane fx:id="pane_task" prefWidth="570.0" styleClass="settings_anchorpane" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <FlowPane fx:id="pane_answers" alignment="CENTER" layoutX="2.0" layoutY="232.0" prefHeight="76.0" prefWidth="361.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="232.0">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <children>
-                        <TextField fx:id="txt_answer" alignment="CENTER" prefHeight="44.0" prefWidth="450.0" promptText="%key.unspecified" style="-fx-font-size: 20;" styleClass="auth_input">
-                           <padding>
-                              <Insets right="5.0" />
-                           </padding>
-                        </TextField>
-                     </children>
-                  </FlowPane>
-                  <Button fx:id="btn_confirm" defaultButton="true" layoutX="193.0" layoutY="335.0" mnemonicParsing="false" onAction="#confirmAnswer" prefHeight="31.0" prefWidth="113.0" styleClass="custombutton" text="%btn_confirm" AnchorPane.leftAnchor="193.0" AnchorPane.rightAnchor="193.0" AnchorPane.topAnchor="335.0" />
-                  <TextField fx:id="txt_task" alignment="CENTER" editable="false" layoutX="22.0" layoutY="149.0" prefHeight="47.0" prefWidth="359.0" style="-fx-font-size: 20;" styleClass="auth_input" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="149.0" />
-                  <Label fx:id="lbl_dictation_traditional_normal" alignment="CENTER" layoutX="26.0" layoutY="46.0" prefHeight="36.0" prefWidth="459.0" style="-fx-font-size: 20;" styleClass="settings_label" text="%label_traditional_normal_descr" visible="false" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="46.0" />
-                  <Label fx:id="lbl_dictation_traditional_reversed" alignment="CENTER" layoutX="22.0" layoutY="46.0" prefHeight="36.0" prefWidth="459.0" style="-fx-font-size: 20;" styleClass="settings_label" text="%label_traditional_reversed_descr" visible="false" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="46.0" />
-                  <Button fx:id="btn_update" layoutX="200.0" layoutY="123.0" mnemonicParsing="false" onAction="#repeatVoice" prefHeight="100.0" prefWidth="100.0" styleClass="custombutton" text="%key.unspecified" visible="false" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="199.0" AnchorPane.topAnchor="123.0">
+                  <TextField fx:id="txt_answer" alignment="CENTER" layoutX="75.0" layoutY="192.0" prefHeight="51.0" prefWidth="430.0" promptText="%key.unspecified" style="-fx-font-size: 20;" styleClass="auth_input" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0">
+                     <padding>
+                        <Insets right="5.0" />
+                     </padding>
+                  </TextField>
+                  <TextField fx:id="txt_task" alignment="CENTER" editable="false" layoutY="68.0" prefHeight="99.0" prefWidth="570.0" style="-fx-font-size: 20;" styleClass="auth_input" AnchorPane.bottomAnchor="246.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="68.0" />
+                  <Label fx:id="lbl_dictation_traditional_normal" alignment="CENTER" layoutY="168.0" prefHeight="53.0" prefWidth="570.0" style="-fx-font-size: 20;" styleClass="settings_label" text="%label_traditional_normal_descr" visible="false" AnchorPane.bottomAnchor="242.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="108.0" />
+                  <Label fx:id="lbl_dictation_traditional_reversed" alignment="CENTER" layoutX="106.0" layoutY="156.0" prefHeight="47.0" prefWidth="349.0" style="-fx-font-size: 20;" styleClass="settings_label" text="%label_traditional_reversed_descr" visible="false" AnchorPane.bottomAnchor="242.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="108.0" />
+                  <VBox fx:id="vbox_answers" alignment="CENTER" layoutX="215.0" layoutY="246.0" prefHeight="133.0" prefWidth="210.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="180.0" />
+                  <Button fx:id="btn_update" layoutX="215.0" layoutY="117.0" mnemonicParsing="false" onAction="#repeatVoice" prefHeight="150.0" prefWidth="150.0" styleClass="custombutton" text="%key.unspecified" visible="false" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="235.0" AnchorPane.rightAnchor="235.0" AnchorPane.topAnchor="70.0">
                      <graphic>
-                        <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="img_repeat" fitHeight="75.0" fitWidth="231.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true" visible="false">
                            <image>
                               <Image url="@../common/updatepng.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
+                  <Label fx:id="lbl_answerCaption" alignment="CENTER" contentDisplay="CENTER" layoutX="266.0" layoutY="171.0" styleClass="settings_label" text="Other possible answers" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="250.0" />
                </children>
             </AnchorPane>
-            <TableView fx:id="tblView_wordTranslation" editable="true" prefHeight="429.0" prefWidth="395.0" styleClass="settings_tableview" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <columns>
-                  <TableColumn fx:id="table_articles" prefWidth="77.0" sortable="false" text="%label_article" />
-                  <TableColumn fx:id="table_word" maxWidth="250.0" prefWidth="210.0" sortable="false" text="%prompt_label_word" />
-                  <TableColumn fx:id="table_translation" maxWidth="335.0" prefWidth="210.0" sortable="false" text="%prompt_label_translation" />
-               </columns>
-            </TableView>
          </children>
       </AnchorPane>
    </center>
-   <bottom>
-      <FlowPane alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="600.0" styleClass="footer" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="btn_repeatWords" defaultButton="true" mnemonicParsing="false" onAction="#btnRepeatClicked" styleClass="bigButton" text="%btn_repeat">
-               <FlowPane.margin>
-                  <Insets right="10.0" />
-               </FlowPane.margin>
-            </Button>
-            <Button fx:id="btn_startTask" defaultButton="true" mnemonicParsing="false" onAction="#btnStartClicked" styleClass="bigButton" text="%btn_start">
-               <FlowPane.margin>
-                  <Insets right="10.0" />
-               </FlowPane.margin>
-            </Button>
-         </children>
-         <effect>
-            <InnerShadow height="6.5" radius="2.375" width="5.0" />
-         </effect>
-      </FlowPane>
-   </bottom>
-   <effect>
-      <DropShadow />
-   </effect>
-   <left>
-      <AnchorPane prefHeight="343.0" prefWidth="298.0" styleClass="settings_anchorpane" BorderPane.alignment="CENTER">
-         <children>
-            <AnchorPane fx:id="pane_taskInfo" layoutX="3.0" layoutY="66.0" prefHeight="210.0" prefWidth="292.0" visible="false" AnchorPane.bottomAnchor="67.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="66.0">
-               <children>
-                  <Label fx:id="label_answerCorrect" alignment="CENTER" layoutX="10.0" layoutY="35.0" prefHeight="22.0" prefWidth="233.0" style="-fx-text-fill: #2C3; -fx-font-size: 30;" styleClass="settings_label" text="%taskResult_correct" visible="false" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="35.0" />
-                  <Label fx:id="label_answerWrong" alignment="CENTER" layoutX="10.0" layoutY="35.0" prefHeight="22.0" prefWidth="233.0" style="-fx-text-fill: #E34; -fx-font-size: 30;" styleClass="settings_label" text="%taskResult_wrong" visible="false" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="35.0" />
-                  <Label fx:id="label_answer" alignment="CENTER" layoutX="5.0" layoutY="116.0" prefHeight="126.0" prefWidth="282.0" style="-fx-font-size: 22;" styleClass="settings_label" wrapText="true" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="116.0" />
-                  <Label fx:id="label_taskCount" alignment="CENTER" layoutY="272.0" prefHeight="22.0" prefWidth="126.0" style="-fx-font-size: 20;" styleClass="settings_label" text="4/10" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-               </children>
-            </AnchorPane>
-            <TextArea fx:id="txt_description" editable="false" prefHeight="254.0" prefWidth="298.0" style="-fx-border-width: 0;" styleClass="news_textarea" text="%translate_words_description" wrapText="true" AnchorPane.bottomAnchor="197.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-         <effect>
-            <InnerShadow choke="0.3" color="#0a121b" height="6.17" radius="2.585" width="6.17" />
-         </effect>
-      </AnchorPane>
-   </left>
 </BorderPane>

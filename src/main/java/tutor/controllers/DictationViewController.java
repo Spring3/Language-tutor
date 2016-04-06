@@ -1,16 +1,18 @@
 package tutor.controllers;
 
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import tutor.util.Voice;
 import tutor.Main;
 import tutor.models.Word;
@@ -18,6 +20,7 @@ import tutor.util.ResourceBundleKeys;
 import tutor.util.StageManager;
 import tutor.util.TaskManager;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -31,21 +34,13 @@ public class DictationViewController implements Initializable {
     }
 
     @FXML
-    private TableView<Word> tblView_wordTranslation;
-    @FXML
-    private TableColumn<Word, String> table_articles;
-    @FXML
-    private TableColumn<Word, String> table_word;
-    @FXML
-    private TableColumn<Word, String> table_translation;
-    @FXML
     private TextField txt_task;
     @FXML
     private TextField txt_answer;
     @FXML
     private AnchorPane pane_task;
     @FXML
-    private FlowPane pane_answers;
+    private VBox vbox_answers;
     @FXML
     private AnchorPane pane_taskInfo;
     @FXML
@@ -53,23 +48,15 @@ public class DictationViewController implements Initializable {
     @FXML
     private Label label_answerWrong;
     @FXML
-    private Label label_answer;
-    @FXML
     private Label label_taskCount;
     @FXML
     private Label lbl_dictation_traditional_normal;
     @FXML
     private Label lbl_dictation_traditional_reversed;
     @FXML
-    private Button btn_startTask;
-    @FXML
-    private Button btn_repeatWords;
-    @FXML
-    private Button btn_confirm;
+    private Label lbl_answerCaption;
     @FXML
     private Button btn_update;
-    @FXML
-    private TextArea txt_description;
     @FXML
     private ImageView imageView;
     private ResourceBundle bundle;
@@ -86,27 +73,18 @@ public class DictationViewController implements Initializable {
 
     private void initializeUI(){
 
-        table_articles.setCellValueFactory(param -> param.getValue().getArticle());
-        table_word.setCellValueFactory(param -> param.getValue().getWord());
-        table_translation.setCellValueFactory(param -> param.getValue().getTranslation());
         manager = new TaskManager(Controller.selectedLanguage);
-        tblView_wordTranslation.setItems(FXCollections.observableArrayList(manager.createTask()));
-
+        manager.createTask();
 
     }
 
-    public void btnStartClicked(ActionEvent actionEvent) {
-        tblView_wordTranslation.setVisible(false);
+    public void init(){
         pane_task.setVisible(true);
-        btn_startTask.setVisible(false);
-        btn_repeatWords.setVisible(false);
-        btn_confirm.defaultButtonProperty().bind(btn_confirm.focusedProperty());
-        txt_description.setVisible(false);
         StageManager.getInstance().getStage(1).getScene().setOnKeyReleased(event ->
         {
             KeyCombination combo = new KeyCodeCombination(KeyCode.ENTER);
             if (combo.match(event)) {
-                btn_confirm.fire();
+                confirmAnswer();
             }
         });
         showTask();
@@ -135,12 +113,17 @@ public class DictationViewController implements Initializable {
             return;
         }
         if (!manager.getMode().equals(TaskManager.TaskManagerMode.TRADITIONAL)){
-
+            lbl_answerCaption.setVisible(true);
             txt_task.setText(manager.getNextTaskWord());
             voice.say(txt_task.getText(), manager.getAnswerWordLanguage());
         }
         else{
+            lbl_answerCaption.setVisible(false);
             btn_update.setVisible(true);
+            ImageView imageView = new ImageView(Main.class.getClassLoader().getResource("common/updatepng.png").toExternalForm());
+            imageView.setFitHeight(50);
+            imageView.setFitWidth(50);
+            btn_update.setGraphic(imageView);
             if (manager.getDictationMode().equals(TaskManager.DictationMode.NORMAL)){
                 lbl_dictation_traditional_normal.setVisible(true);
             }
@@ -150,21 +133,16 @@ public class DictationViewController implements Initializable {
             txt_task.setVisible(false);
             voice.say(manager.getNextTaskWord(), manager.getAnswerWordLanguage());
         }
-        pane_answers.getChildren().get(0).requestFocus();
+        txt_answer.requestFocus();
     }
 
     public void repeatVoice(ActionEvent actionEvent) {
         voice.say(manager.getCorrectAnswer(), manager.getAnswerWordLanguage());
     }
 
-    public void btnRepeatClicked(ActionEvent actionEvent) {
-        StageManager.getInstance().navigateTo(Main.class.getClassLoader().getResource(Navigator.REPEAT_WORDS_VIEW_PATH), "", 2, Optional.empty(), true, true);
-        ((RepeatWordsViewController) StageManager.getInstance().getControllerForViewOnLayer(2)).repeat(manager.getWords());
-        StageManager.getInstance().showAll(true);
-    }
+    public void confirmAnswer() {
 
-    public void confirmAnswer(ActionEvent actionEvent) {
-
+        vbox_answers.getChildren().clear();
         boolean result = manager.confirmAnswer(txt_answer.getText());
         if (result){
             voice.play(voice.MEDIA_ANSWER_CORRECT);
@@ -179,28 +157,32 @@ public class DictationViewController implements Initializable {
 
         pane_taskInfo.setVisible(true);
 
-        StringBuilder answerVariants = new StringBuilder();
         Word answerWord = manager.getCorrectAnswerWord();
         if (manager.getDictationMode().equals(TaskManager.DictationMode.REVERSED)){
-            answerVariants.append(answerWord.toString()).append("\n");
+            vbox_answers.getChildren().add(makeLabel(answerWord.toString()));
             for(String str : answerWord.getWordsWithSimilarTranslation().stream().map(Word::toString).collect(Collectors.toList())){
                 if (!str.equalsIgnoreCase(answerWord.toString())){
-                    answerVariants.append(str).append("\n");
+                    vbox_answers.getChildren().add(makeLabel(str));
                 }
             }
         }
         else{
-            answerVariants.append(answerWord.getTranslation().get()).append("\n");
+            vbox_answers.getChildren().add(makeLabel(answerWord.getTranslation().get()));
             for(String str : answerWord.getOtherTranslationVariants().stream().map(word -> word.getTranslation().get()).collect(Collectors.toList())){
                 if (!str.equalsIgnoreCase(answerWord.getTranslation().get())){
-                    answerVariants.append(str).append("\n");
+                    vbox_answers.getChildren().add(makeLabel(str));
                 }
             }
         }
-        label_answer.setText(answerVariants.toString());
         label_taskCount.setText(String.valueOf(manager.getWordsAmount() - manager.getWords().size()) + "/" + manager.getWordsAmount());
-
         txt_answer.setText("");
         showTask();
+    }
+
+    private Label makeLabel(String text){
+        Label result = new Label(text);
+        result.getStyleClass().add("settings_label");
+        result.setStyle("-fx-font-size: 20");
+        return result;
     }
 }
