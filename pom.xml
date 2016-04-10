@@ -41,7 +41,7 @@
             <version>1.4.186</version>
         </dependency>
 
-        <dependency>
+        <!-- <dependency>
             <groupId>marytts</groupId>
             <artifactId>marytts</artifactId>
             <version>${java.version}</version>
@@ -55,7 +55,7 @@
             <version>${java.version}</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/marytts-runtime-5.1.2-jar-with-dependencies.jar</systemPath>
-        </dependency>
+        </dependency> -->
 
     </dependencies>
 </project>

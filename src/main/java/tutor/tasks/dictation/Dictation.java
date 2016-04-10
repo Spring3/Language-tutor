@@ -19,18 +19,18 @@ public abstract class Dictation implements ITask {
     }
 
     public enum DictationType{
-        NORMAL,
-        REPEATING,
-        LEARNING
+        NORMAL,      // random words
+        REPEATING,   // repeat words, where made mistakes
+        LEARNING     // learn most recently added words
     }
 
     private static int MAX_WORDS_PER_TASK = 10;
     private int wordsAmount;
     private boolean firstTry;
+    private Word correctWord;
     Language languageToLearn;
     Set<Word> wordsForTask;
     Map<Word, Boolean> passedWords;
-    Word correctWord;
     DictationType dictationType;
     Mode dictationMode;
 
@@ -108,7 +108,7 @@ public abstract class Dictation implements ITask {
         return Dictation.Mode.values()[rand.nextInt(Dictation.Mode.values().length)];
     }
 
-    protected void fillArrayWithWords(List<Word> allWords) {
+    void fillArrayWithWords(List<Word> allWords) {
         getWords().clear();
         Random rand = new Random();
         try {
@@ -153,26 +153,38 @@ public abstract class Dictation implements ITask {
     public Word getNextWord() {
         Random random = new Random();
         Word nextWord;
-        int nextWordIndex = random.nextInt(getWords().size());
 
+        int maxtries = 6;
+
+        do {
+            int nextWordIndex = random.nextInt(getWords().size());
+            nextWord = get(nextWordIndex);
+            maxtries --;
+            if (getCorrectWord() == null)
+                break;
+        } while((nextWord.equals(getCorrectWord()) && getWords().size() > 1) || maxtries > 0);
+
+        correctWord = nextWord;
+        return nextWord;
+    }
+
+    private Word get(int index){
+
+        Word nextWord = null;
         if (getWords().size() > 0) {
-            if (nextWordIndex == 0) {
+            if (index == 0) {
                 nextWord = getWords().iterator().next();
-                correctWord = nextWord;
                 return nextWord;
             }
 
             int counter = 0;
             Iterator<Word> iterator;
-            for (iterator = getWords().iterator(); counter < nextWordIndex && iterator.hasNext(); counter ++){
+            for (iterator = getWords().iterator(); counter < index && iterator.hasNext(); counter ++){
                 iterator.next();
             }
             nextWord = iterator.next();
-            correctWord = nextWord;
-            return nextWord;
         }
-
-        return null;
+        return nextWord;
     }
 
     @Override
@@ -220,7 +232,7 @@ public abstract class Dictation implements ITask {
                 }
             }
         }
-
+        saveProgress(getCorrectWord(), false);
         return false;
     }
 }

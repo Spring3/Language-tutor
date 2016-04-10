@@ -14,14 +14,5 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="marytts" level="project" />
     <orderEntry type="library" name="Maven: com.h2database:h2:1.4.186" level="project" />
-    <orderEntry type="module-library">
-      <library name="Maven: marytts:marytts:1.8.0_60">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/marytts-runtime-5.1.2-jar-with-dependencies.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
   </component>
 </module>
