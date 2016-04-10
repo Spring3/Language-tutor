@@ -1,6 +1,7 @@
 package tutor.models;
 
-import tutor.util.TaskManager;
+import tutor.tasks.TaskManager;
+import tutor.tasks.TaskType;
 
 /**
  * Created by Spring on 9/1/2015.
@@ -11,7 +12,7 @@ public class Stats {
 
     }
 
-    public Stats(User user, TaskManager.TaskManagerMode task_type, Language language, float successRate){
+    public Stats(User user, TaskType task_type, Language language, float successRate){
         setUser(user);
         setTaskType(task_type);
         setLanguage(language);
@@ -22,18 +23,18 @@ public class Stats {
     private User user;
     private Language language;
     private float successRate;
-    private TaskManager.TaskManagerMode taskType;
+    private TaskType taskType;
 
-    public TaskManager.TaskManagerMode getTaskType() {
+    public TaskType getTaskType() {
         return taskType;
     }
 
-    public void setTaskType(TaskManager.TaskManagerMode taskType) {
+    public void setTaskType(TaskType taskType) {
         this.taskType = taskType;
     }
 
     public void setTaskType(String taskType) {
-        this.taskType = TaskManager.TaskManagerMode.valueOf(taskType);
+        this.taskType = TaskType.valueOf(taskType);
     }
 
     public int getId(){

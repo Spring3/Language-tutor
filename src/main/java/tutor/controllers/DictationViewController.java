@@ -13,14 +13,16 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import tutor.tasks.AbstractTask;
+import tutor.tasks.TaskType;
+import tutor.tasks.dictation.Dictation;
 import tutor.util.Voice;
 import tutor.Main;
 import tutor.models.Word;
 import tutor.util.ResourceBundleKeys;
 import tutor.util.StageManager;
-import tutor.util.TaskManager;
+import tutor.tasks.TaskManager;
 
-import java.awt.*;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -62,6 +64,7 @@ public class DictationViewController implements Initializable {
     private ResourceBundle bundle;
     private TaskManager manager;
     private Voice voice;
+    private Dictation task;
 
 
     @Override
@@ -72,9 +75,10 @@ public class DictationViewController implements Initializable {
     }
 
     private void initializeUI(){
-
-        manager = new TaskManager(Controller.selectedLanguage);
-        manager.createTask();
+        Random rand = new Random();
+        manager = new TaskManager(TaskManager.Output.values()[rand.nextInt(TaskManager.Output.values().length)]);
+        AbstractTask abstractTask = new AbstractTask(TaskType.DICTATION, Controller.selectedLanguage);
+        task = (Dictation) manager.createTask(abstractTask);
 
     }
 
@@ -87,11 +91,17 @@ public class DictationViewController implements Initializable {
                 confirmAnswer();
             }
         });
+
         showTask();
     }
 
     private void showTask(){
-        if (manager.getWords().size() == 0){
+        /*if (task.getWords().size() == 0 && task.getPassedWords().size() == 0) {
+            StageManager.getInstance().closeStage(StageManager.getInstance().getStage(1));
+            return;
+        }  */
+
+        /*else*/ if (task.getWords().size() == 0 /*&& task.getPassedWords().size() > 0*/){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle(bundle.getString(ResourceBundleKeys.LABEL_TASK_COMPLETE));
             StringBuilder builder = new StringBuilder();
@@ -112,10 +122,10 @@ public class DictationViewController implements Initializable {
             StageManager.getInstance().closeStage(StageManager.getInstance().getStage(1));
             return;
         }
-        if (!manager.getMode().equals(TaskManager.TaskManagerMode.TRADITIONAL)){
+        if (!manager.getOutputMode().equals(TaskManager.Output.TEXT)){
             lbl_answerCaption.setVisible(true);
             txt_task.setText(manager.getNextTaskWord());
-            voice.say(txt_task.getText(), manager.getAnswerWordLanguage());
+            voice.say(txt_task.getText(), task.getAnswerLanguage());
         }
         else{
             lbl_answerCaption.setVisible(false);
@@ -124,20 +134,20 @@ public class DictationViewController implements Initializable {
             imageView.setFitHeight(50);
             imageView.setFitWidth(50);
             btn_update.setGraphic(imageView);
-            if (manager.getDictationMode().equals(TaskManager.DictationMode.NORMAL)){
+            if (task.getMode().equals(Dictation.Mode.NORMAL)){
                 lbl_dictation_traditional_normal.setVisible(true);
             }
             else{
                 lbl_dictation_traditional_reversed.setVisible(true);
             }
             txt_task.setVisible(false);
-            voice.say(manager.getNextTaskWord(), manager.getAnswerWordLanguage());
+            voice.say(manager.getNextTaskWord(), task.getAnswerLanguage());
         }
         txt_answer.requestFocus();
     }
 
     public void repeatVoice(ActionEvent actionEvent) {
-        voice.say(manager.getCorrectAnswer(), manager.getAnswerWordLanguage());
+        voice.say(manager.getCorrectAnswer(), task.getAnswerLanguage());
     }
 
     public void confirmAnswer() {
@@ -157,8 +167,8 @@ public class DictationViewController implements Initializable {
 
         pane_taskInfo.setVisible(true);
 
-        Word answerWord = manager.getCorrectAnswerWord();
-        if (manager.getDictationMode().equals(TaskManager.DictationMode.REVERSED)){
+        Word answerWord = manager.getCorrectWord();
+        if (task.getMode().equals(Dictation.Mode.REVERSED)){
             vbox_answers.getChildren().add(makeLabel(answerWord.toString()));
             for(String str : answerWord.getWordsWithSimilarTranslation().stream().map(Word::toString).collect(Collectors.toList())){
                 if (!str.equalsIgnoreCase(answerWord.toString())){
@@ -174,7 +184,7 @@ public class DictationViewController implements Initializable {
                 }
             }
         }
-        label_taskCount.setText(String.valueOf(manager.getWordsAmount() - manager.getWords().size()) + "/" + manager.getWordsAmount());
+        label_taskCount.setText(String.valueOf(manager.getWordsAmount() - task.getWords().size()) + "/" + manager.getWordsAmount());
         txt_answer.setText("");
         showTask();
     }
