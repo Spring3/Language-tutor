@@ -7,46 +7,68 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="469.0" prefWidth="570.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tutor.controllers.DictationViewController">
+<BorderPane prefHeight="388.0" prefWidth="675.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tutor.controllers.DictationViewController">
    <effect>
       <DropShadow />
    </effect>
    <bottom>
-      <AnchorPane fx:id="pane_taskInfo" prefHeight="56.0" prefWidth="570.0" styleClass="settings_anchorpane" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="pane_taskInfo" prefHeight="56.0" prefWidth="562.0" styleClass="settings_anchorpane" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="label_answerCorrect" alignment="CENTER" prefHeight="22.0" prefWidth="233.0" style="-fx-text-fill: #2C3; -fx-font-size: 30;" styleClass="settings_label" text="%taskResult_correct" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
-            <Label fx:id="label_answerWrong" alignment="CENTER" prefHeight="22.0" prefWidth="233.0" style="-fx-text-fill: #E34; -fx-font-size: 30;" styleClass="settings_label" text="%taskResult_wrong" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
-            <Label fx:id="label_taskCount" alignment="CENTER" prefHeight="23.0" prefWidth="56.0" style="-fx-font-size: 20;" styleClass="settings_label" text="0/10" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+            <Label fx:id="label_answerCorrect" alignment="CENTER" prefHeight="35.0" prefWidth="572.0" style="-fx-text-fill: #2C3; -fx-font-size: 30;" styleClass="settings_label" text="%taskResult_correct" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="179.0" AnchorPane.topAnchor="10.0" />
+            <Label fx:id="label_answerWrong" alignment="CENTER" prefHeight="22.0" prefWidth="233.0" style="-fx-text-fill: #E34; -fx-font-size: 30;" styleClass="settings_label" text="%taskResult_wrong" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="179.0" AnchorPane.topAnchor="10.0" />
          </children>
       </AnchorPane>
    </bottom>
    <center>
-      <AnchorPane fx:id="pane_task" prefWidth="570.0" styleClass="settings_anchorpane" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="pane_task" prefHeight="332.0" prefWidth="493.0" styleClass="settings_anchorpane" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane prefHeight="332.0" prefWidth="446.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <TextField fx:id="txt_answer" alignment="CENTER" layoutX="75.0" layoutY="192.0" prefHeight="51.0" prefWidth="430.0" promptText="%key.unspecified" style="-fx-font-size: 20;" styleClass="auth_input" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0">
+                  <TextField fx:id="txt_answer" alignment="CENTER" layoutX="75.0" layoutY="192.0" prefHeight="51.0" prefWidth="430.0" promptText="%key.unspecified" style="-fx-font-size: 20;" styleClass="auth_input" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="200.0">
                      <padding>
                         <Insets right="5.0" />
                      </padding>
+                     <effect>
+                        <DropShadow blurType="ONE_PASS_BOX" color="#081b2e" />
+                     </effect>
                   </TextField>
-                  <TextField fx:id="txt_task" alignment="CENTER" editable="false" layoutY="68.0" prefHeight="99.0" prefWidth="570.0" style="-fx-font-size: 20;" styleClass="auth_input" AnchorPane.bottomAnchor="246.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="68.0" />
-                  <Label fx:id="lbl_dictation_traditional_normal" alignment="CENTER" layoutY="168.0" prefHeight="53.0" prefWidth="570.0" style="-fx-font-size: 20;" styleClass="settings_label" text="%label_traditional_normal_descr" visible="false" AnchorPane.bottomAnchor="242.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="108.0" />
-                  <Label fx:id="lbl_dictation_traditional_reversed" alignment="CENTER" layoutX="106.0" layoutY="156.0" prefHeight="47.0" prefWidth="349.0" style="-fx-font-size: 20;" styleClass="settings_label" text="%label_traditional_reversed_descr" visible="false" AnchorPane.bottomAnchor="242.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="108.0" />
-                  <VBox fx:id="vbox_answers" alignment="CENTER" layoutX="215.0" layoutY="246.0" prefHeight="133.0" prefWidth="210.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="180.0" />
-                  <Button fx:id="btn_update" layoutX="215.0" layoutY="117.0" mnemonicParsing="false" onAction="#repeatVoice" prefHeight="150.0" prefWidth="150.0" styleClass="custombutton" text="%key.unspecified" visible="false" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="235.0" AnchorPane.rightAnchor="235.0" AnchorPane.topAnchor="70.0">
+                  <TextField fx:id="txt_task" alignment="CENTER" editable="false" layoutY="68.0" prefHeight="99.0" prefWidth="570.0" style="-fx-font-size: 20;" styleClass="auth_input" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="48.0">
+                     <effect>
+                        <DropShadow blurType="ONE_PASS_BOX" color="#081b2e" />
+                     </effect></TextField>
+                  <Label fx:id="lbl_dictation_traditional_normal" alignment="CENTER" layoutY="168.0" prefHeight="53.0" prefWidth="570.0" style="-fx-font-size: 20;" styleClass="settings_label" text="%label_traditional_normal_descr" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="108.0" />
+                  <Label fx:id="lbl_dictation_traditional_reversed" alignment="CENTER" layoutX="106.0" layoutY="156.0" prefHeight="53.0" prefWidth="349.0" style="-fx-font-size: 20;" styleClass="settings_label" text="%label_traditional_reversed_descr" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="108.0" />
+                  <Label fx:id="label_taskCount" alignment="CENTER" prefHeight="23.0" prefWidth="56.0" style="-fx-font-size: 20;" styleClass="settings_label" text="0/10" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="btn_update" layoutX="215.0" layoutY="117.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#repeatVoice" prefHeight="62.0" prefWidth="62.0" styleClass="custombutton" text="%key.unspecified" visible="false" AnchorPane.leftAnchor="215.0" AnchorPane.rightAnchor="217.0" AnchorPane.topAnchor="20.0">
                      <graphic>
-                        <ImageView fx:id="img_repeat" fitHeight="75.0" fitWidth="231.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true" visible="false">
+                        <ImageView fx:id="img_repeat" fitHeight="40.0" fitWidth="40.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true" visible="false">
                            <image>
                               <Image url="@../common/updatepng.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Label fx:id="lbl_answerCaption" alignment="CENTER" contentDisplay="CENTER" layoutX="266.0" layoutY="171.0" styleClass="settings_label" text="Other possible answers" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="250.0" />
                </children>
             </AnchorPane>
          </children>
+         <effect>
+            <DropShadow blurType="ONE_PASS_BOX" color="#081b2e" />
+         </effect>
       </AnchorPane>
    </center>
+   <right>
+      <AnchorPane prefHeight="332.0" prefWidth="181.0" styleClass="settings_anchorpane" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="lbl_answerCaption" alignment="CENTER" contentDisplay="CENTER" styleClass="settings_label" text="Other possible answers" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+               <effect>
+                  <DropShadow blurType="ONE_PASS_BOX" color="#081b2e" />
+               </effect>
+            </Label>
+            <VBox fx:id="vbox_answers" alignment="CENTER" prefHeight="133.0" prefWidth="210.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
+         </children>
+         <effect>
+            <DropShadow blurType="ONE_PASS_BOX" color="#081b2e" />
+         </effect>
+      </AnchorPane>
+   </right>
 </BorderPane>

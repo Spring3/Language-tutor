@@ -74,6 +74,11 @@ public abstract class Dictation implements ITask {
     }
 
     @Override
+    public Language getTaskWordLanguage(){
+        return getMode() == Mode.NORMAL ? getCorrectWord().getWordLang() : getCorrectWord().getTranslationLang();
+    }
+
+    @Override
     public Language getLanguageToLearn() {
         return languageToLearn;
     }

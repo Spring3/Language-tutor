@@ -18,6 +18,7 @@ public interface ITask {
     void setMaxWordsForTask(int value);
     int getMaxWordsForTask();
     Language getAnswerLanguage();
+    Language getTaskWordLanguage();
     Language getLanguageToLearn();
     String getCorrectAnswer();
     String getTaskWord();

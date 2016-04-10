@@ -119,8 +119,12 @@ public class DictationViewController implements Initializable {
         }
         if (manager.getOutputMode().equals(TaskManager.Output.TEXT)){
             lbl_answerCaption.setVisible(true);
-            txt_task.setText(manager.getNextTaskWord());
-            voice.say(txt_task.getText(), task.getAnswerLanguage());
+            manager.getNextTaskWord();
+            txt_task.setText(task.getTaskWord());
+            if (task.getMode() == Dictation.Mode.REVERSED)
+                voice.say(txt_task.getText(), task.getAnswerLanguage());
+            else
+                voice.say(txt_task.getText(), task.getTaskWordLanguage());
         }
         else{
             lbl_answerCaption.setVisible(false);
@@ -129,6 +133,7 @@ public class DictationViewController implements Initializable {
             imageView.setFitHeight(30);
             imageView.setFitWidth(30);
             btn_update.setGraphic(imageView);
+            btn_update.setPrefSize(60, 60);
             if (task.getMode().equals(Dictation.Mode.NORMAL)){
                 lbl_dictation_traditional_normal.setVisible(true);
             }
@@ -137,13 +142,20 @@ public class DictationViewController implements Initializable {
             }
             txt_task.setVisible(false);
             manager.getNextTaskWord();
-            voice.say(task.getCorrectAnswer(), task.getAnswerLanguage());
+            if (task.getMode() == Dictation.Mode.NORMAL)
+                voice.say(task.getTaskWord(), task.getTaskWordLanguage());
+            else
+                voice.say(manager.getCorrectAnswer(), task.getAnswerLanguage());
+
         }
         txt_answer.requestFocus();
     }
 
     public void repeatVoice(ActionEvent actionEvent) {
-        voice.say(manager.getCorrectAnswer(), task.getAnswerLanguage());
+        if (task.getMode() == Dictation.Mode.NORMAL)
+            voice.say(task.getTaskWord(), task.getTaskWordLanguage());
+        else
+            voice.say(manager.getCorrectAnswer(), task.getAnswerLanguage());
     }
 
     public void confirmAnswer() {
