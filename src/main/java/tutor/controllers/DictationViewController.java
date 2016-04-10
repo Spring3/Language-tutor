@@ -96,12 +96,7 @@ public class DictationViewController implements Initializable {
     }
 
     private void showTask(){
-        /*if (task.getWords().size() == 0 && task.getPassedWords().size() == 0) {
-            StageManager.getInstance().closeStage(StageManager.getInstance().getStage(1));
-            return;
-        }  */
-
-        /*else*/ if (task.getWords().size() == 0 /*&& task.getPassedWords().size() > 0*/){
+        if (task.getWords().size() == 0){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle(bundle.getString(ResourceBundleKeys.LABEL_TASK_COMPLETE));
             StringBuilder builder = new StringBuilder();
@@ -122,7 +117,7 @@ public class DictationViewController implements Initializable {
             StageManager.getInstance().closeStage(StageManager.getInstance().getStage(1));
             return;
         }
-        if (!manager.getOutputMode().equals(TaskManager.Output.TEXT)){
+        if (manager.getOutputMode().equals(TaskManager.Output.TEXT)){
             lbl_answerCaption.setVisible(true);
             txt_task.setText(manager.getNextTaskWord());
             voice.say(txt_task.getText(), task.getAnswerLanguage());
@@ -131,8 +126,8 @@ public class DictationViewController implements Initializable {
             lbl_answerCaption.setVisible(false);
             btn_update.setVisible(true);
             ImageView imageView = new ImageView(Main.class.getClassLoader().getResource("common/updatepng.png").toExternalForm());
-            imageView.setFitHeight(50);
-            imageView.setFitWidth(50);
+            imageView.setFitHeight(30);
+            imageView.setFitWidth(30);
             btn_update.setGraphic(imageView);
             if (task.getMode().equals(Dictation.Mode.NORMAL)){
                 lbl_dictation_traditional_normal.setVisible(true);
@@ -141,7 +136,8 @@ public class DictationViewController implements Initializable {
                 lbl_dictation_traditional_reversed.setVisible(true);
             }
             txt_task.setVisible(false);
-            voice.say(manager.getNextTaskWord(), task.getAnswerLanguage());
+            manager.getNextTaskWord();
+            voice.say(task.getCorrectAnswer(), task.getAnswerLanguage());
         }
         txt_answer.requestFocus();
     }

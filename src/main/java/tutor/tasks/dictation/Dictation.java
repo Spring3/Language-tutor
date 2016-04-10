@@ -70,7 +70,7 @@ public abstract class Dictation implements ITask {
 
     @Override
     public Language getAnswerLanguage() {
-        return getMode() == Mode.NORMAL ? getCorrectWord().getWordLang() : getCorrectWord().getTranslationLang();
+        return getMode() == Mode.NORMAL ? getCorrectWord().getTranslationLang() : getCorrectWord().getWordLang();
     }
 
     @Override
