@@ -14,6 +14,8 @@ import tutor.Main;
 import tutor.dao.LanguageDAO;
 import tutor.dao.WordDAO;
 import tutor.models.Language;
+import tutor.tasks.TaskManager;
+import tutor.tasks.dictation.Dictation;
 import tutor.util.ResourceBundleKeys;
 import tutor.util.StageManager;
 import java.net.URL;
@@ -86,9 +88,12 @@ public class Controller implements Initializable
             selectedLanguage = newValue;
         });
 
-        if (listView_languages.getItems().get(0) != null){
-            listView_languages.getSelectionModel().select(0);
+        try {
+            if (listView_languages.getItems().get(0) != null) {
+                listView_languages.getSelectionModel().select(0);
+            }
         }
+        catch (IndexOutOfBoundsException ex){        }
 
         final ContextMenu contextMenu = new ContextMenu();
         MenuItem add = new MenuItem("Add language");
@@ -157,16 +162,56 @@ public class Controller implements Initializable
             ((DictationViewController) stageManager.getControllerForViewOnLayer(1)).init();
         }
         else{
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle(bundle.getString(ResourceBundleKeys.LABEL_ERROR));
-            alert.setHeaderText(bundle.getString(ResourceBundleKeys.LABEL_NO_WORDS));
-            alert.setContentText(bundle.getString(ResourceBundleKeys.LABEL_NO_WORDS_CONTEXT));
-            alert.show();
+            showAlert();
         }
+    }
+
+    private void showAlert(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(bundle.getString(ResourceBundleKeys.LABEL_ERROR));
+        alert.setHeaderText(bundle.getString(ResourceBundleKeys.LABEL_NO_WORDS));
+        alert.setContentText(bundle.getString(ResourceBundleKeys.LABEL_NO_WORDS_CONTEXT));
+        alert.show();
     }
 
     public void updateLanguageList(){
         listView_languages.getItems().clear();
         listView_languages.getItems().addAll(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId()));
+    }
+
+    public void learningDictationTaskClicked(Event event) {
+        if (selectedLanguage == null)
+            return;
+        if (WordDAO.getInstance().countFor(selectedLanguage) > 0){
+            stageManager.navigateTo(Navigator.getPathFor(Navigator.TASKVIEW_DICTATION_PATH), bundle.getString(ResourceBundleKeys.LABEL_DICTATION), 1, Optional.empty(), false);
+            ((DictationViewController) stageManager.getControllerForViewOnLayer(1)).init(Dictation.DictationType.LEARNING, TaskManager.Output.random());
+        }
+        else{
+            showAlert();
+        }
+    }
+
+    public void repeatingDictationTaskClicked(Event event) {
+        if (selectedLanguage == null)
+            return;
+        if (WordDAO.getInstance().countFor(selectedLanguage) > 0){
+            stageManager.navigateTo(Navigator.getPathFor(Navigator.TASKVIEW_DICTATION_PATH), bundle.getString(ResourceBundleKeys.LABEL_DICTATION), 1, Optional.empty(), false);
+            ((DictationViewController) stageManager.getControllerForViewOnLayer(1)).init(Dictation.DictationType.REPEATING, TaskManager.Output.random());
+        }
+        else{
+            showAlert();
+        }
+    }
+
+    public void voiceDictationTaskClicked(Event event) {
+        if (selectedLanguage == null)
+            return;
+        if (WordDAO.getInstance().countFor(selectedLanguage) > 0){
+            stageManager.navigateTo(Navigator.getPathFor(Navigator.TASKVIEW_DICTATION_PATH), bundle.getString(ResourceBundleKeys.LABEL_DICTATION), 1, Optional.empty(), false);
+            ((DictationViewController) stageManager.getControllerForViewOnLayer(1)).init(Dictation.DictationType.random(), TaskManager.Output.VOICE);
+        }
+        else{
+            showAlert();
+        }
     }
 }

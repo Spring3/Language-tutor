@@ -21,7 +21,12 @@ public abstract class Dictation implements ITask {
     public enum DictationType{
         NORMAL,      // random words
         REPEATING,   // repeat words, where made mistakes
-        LEARNING     // learn most recently added words
+        LEARNING;     // learn most recently added words
+
+        public static DictationType random(){
+            Random rand = new Random();
+            return values()[rand.nextInt(values().length)];
+        }
     }
 
     private static int MAX_WORDS_PER_TASK = 10;

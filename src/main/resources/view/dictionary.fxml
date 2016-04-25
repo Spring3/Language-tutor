@@ -20,7 +20,7 @@
               </columns>
             </TableView>
             <CheckBox fx:id="check_articles" layoutX="20.0" layoutY="513.0" mnemonicParsing="false" styleClass="settings_checkbox" text="%label_articles?" AnchorPane.bottomAnchor="44.0" AnchorPane.rightAnchor="554.0" />
-            <Button layoutX="581.0" layoutY="508.0" mnemonicParsing="false" styleClass="custombutton" text="Import .csv" />
+            <Button layoutX="581.0" layoutY="508.0" mnemonicParsing="false" onAction="#importFileClicked" styleClass="custombutton" text="Import .csv" />
          </children>
       </AnchorPane>
    </center>

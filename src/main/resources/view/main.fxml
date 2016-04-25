@@ -25,7 +25,7 @@
             </Menu>
           <Menu mnemonicParsing="false" styleClass="topmenubutton" text="%menuItem_settings">
             <items>
-                  <MenuItem fx:id="mItem_lang" mnemonicParsing="false" onAction="#editLangClicked" text="%label_settings_lang" />
+                  <MenuItem fx:id="mItem_lang" mnemonicParsing="false" onAction="#editLangClicked" text="Add language" />
                   <MenuItem fx:id="mItem_importFile" mnemonicParsing="false" onAction="#importFileClicked" text="%btn_import" />
                   <MenuItem fx:id="mItem_locale" mnemonicParsing="false" onAction="#localeClicked" text="%menuItem_locale" />
             </items>
@@ -59,7 +59,10 @@
                      </padding>
                   </Label>
                   <Separator layoutY="62.0" maxWidth="1.7976931348623157E308" prefWidth="200.0" styleClass="taskheaderseparator" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="62.0" />
-                  <FlowPane hgap="10.0" layoutY="79.0" prefHeight="486.0" prefWidth="569.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="79.0">
+                  <FlowPane hgap="10.0" layoutY="79.0" prefHeight="486.0" prefWidth="569.0" vgap="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="79.0">
+                     <padding>
+                        <Insets left="10.0" right="10.0" top="10.0" />
+                     </padding>
                      <children>
                         <AnchorPane prefHeight="144.0" prefWidth="200.0" styleClass="newsItem">
                            <children>
@@ -69,27 +72,43 @@
                                  </image>
                               </ImageView>
                               <Label alignment="CENTER" layoutX="1.0" layoutY="122.0" prefHeight="28.0" prefWidth="200.0" styleClass="blurredLabel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="116.0" />
-                              <Label fx:id="task_dictation_header" alignment="CENTER" layoutX="3.0" layoutY="124.0" prefHeight="35.0" prefWidth="199.0" styleClass="settings_label" text="%label_dictation" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                              <Label fx:id="task_dictation_header" alignment="CENTER" layoutX="3.0" layoutY="124.0" prefHeight="35.0" prefWidth="199.0" styleClass="settings_label" text="Random dication" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="144.0" prefWidth="200.0" styleClass="newsItem">
                            <children>
-                              <ImageView id="img_highRes" fx:id="offlineTask_img1" fitHeight="150.0" fitWidth="200.0" layoutY="-3.0" styleClass="newsImage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <ImageView id="img_highRes" fx:id="task_dictation_img1" fitHeight="150.0" fitWidth="200.0" layoutY="-3.0" onMouseClicked="#learningDictationTaskClicked" styleClass="newsImage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <image>
+                                    <Image url="@../tasks/dictation/dictation-image.jpg" />
+                                 </image>
+                              </ImageView>
                               <Label alignment="CENTER" layoutX="1.0" layoutY="122.0" prefHeight="28.0" prefWidth="200.0" styleClass="blurredLabel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="116.0" />
-                              <Label fx:id="task_header1" alignment="CENTER" layoutX="3.0" layoutY="124.0" prefHeight="35.0" prefWidth="199.0" styleClass="settings_label" text="Hello world!" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                              <Label fx:id="task_dictation_header1" alignment="CENTER" layoutX="3.0" layoutY="124.0" prefHeight="35.0" prefWidth="199.0" styleClass="settings_label" text="Learning dication" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="144.0" prefWidth="200.0" styleClass="newsItem">
                            <children>
-                              <ImageView id="img_highRes" fx:id="offlineTask_img2" fitHeight="150.0" fitWidth="200.0" layoutY="-3.0" styleClass="newsImage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <ImageView id="img_highRes" fx:id="task_dictation_img2" fitHeight="150.0" fitWidth="200.0" layoutY="-3.0" onMouseClicked="#repeatingDictationTaskClicked" styleClass="newsImage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <image>
+                                    <Image url="@../tasks/dictation/dictation-image.jpg" />
+                                 </image>
+                              </ImageView>
                               <Label alignment="CENTER" layoutX="1.0" layoutY="122.0" prefHeight="28.0" prefWidth="200.0" styleClass="blurredLabel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="116.0" />
-                              <Label fx:id="task_header2" alignment="CENTER" layoutX="3.0" layoutY="124.0" prefHeight="35.0" prefWidth="199.0" styleClass="settings_label" text="Hello world!" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                              <Label fx:id="task_dictation_header2" alignment="CENTER" layoutX="3.0" layoutY="124.0" prefHeight="35.0" prefWidth="199.0" styleClass="settings_label" text="Repeating dication" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="144.0" prefWidth="200.0" styleClass="newsItem">
+                           <children>
+                              <ImageView id="img_highRes" fx:id="task_dictation_img3" fitHeight="150.0" fitWidth="200.0" layoutY="-3.0" onMouseClicked="#voiceDictationTaskClicked" styleClass="newsImage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <image>
+                                    <Image url="@../tasks/dictation/dictation-image.jpg" />
+                                 </image>
+                              </ImageView>
+                              <Label alignment="CENTER" layoutX="1.0" layoutY="122.0" prefHeight="28.0" prefWidth="200.0" styleClass="blurredLabel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="116.0" />
+                              <Label fx:id="task_dictation_header3" alignment="CENTER" layoutX="3.0" layoutY="124.0" prefHeight="35.0" prefWidth="199.0" styleClass="settings_label" text="Voice dictation" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                            </children>
                         </AnchorPane>
                      </children>
-                     <padding>
-                        <Insets left="10.0" right="10.0" top="10.0" />
-                     </padding>
                   </FlowPane>
                </children>
             </AnchorPane>

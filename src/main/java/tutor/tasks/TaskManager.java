@@ -28,7 +28,12 @@ public class TaskManager {
 
     public enum Output{
         VOICE,
-        TEXT
+        TEXT;
+
+        public static Output random(){
+            Random rand = new Random();
+            return values()[rand.nextInt(values().length)];
+        }
     }
 
     public Output getOutputMode(){

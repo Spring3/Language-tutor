@@ -3,6 +3,7 @@ package tutor.controllers;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -13,10 +14,12 @@ import tutor.dao.WordDAO;
 import tutor.models.Language;
 import tutor.models.Word;
 import tutor.util.PaginatorManager;
+import tutor.util.ResourceBundleKeys;
 import tutor.util.StageManager;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -43,7 +46,6 @@ public class DictionaryViewController implements Initializable{
     private CheckBox check_articles;
 
     private PaginatorManager paginatorManager;
-    private Language selectedLanguage;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -54,7 +56,6 @@ public class DictionaryViewController implements Initializable{
     private ResourceBundle bundle;
 
     private void initializeUI(){
-        selectedLanguage = ((Controller) StageManager.getInstance().getControllerForViewOnLayer(0)).selectedLanguage;
         table_word.setCellValueFactory(param -> param.getValue().getWord());
         table_translation.setCellValueFactory(param -> param.getValue().getTranslation());
         table_articles.setCellValueFactory(param -> param.getValue().getArticle());
@@ -62,7 +63,7 @@ public class DictionaryViewController implements Initializable{
         table_translation.setCellFactory(TextFieldTableCell.forTableColumn());
         table_articles.setCellFactory(TextFieldTableCell.forTableColumn());
         initializeTableViewColumns();
-
+        loadWordsFor(Controller.selectedLanguage);
         check_articles.selectedProperty().addListener((observable1, oldValue1, newValue1) -> {
             table_articles.setVisible(newValue1);
         });
@@ -75,7 +76,7 @@ public class DictionaryViewController implements Initializable{
             button.setOnAction(event -> {
                 if (WordDAO.getInstance().contains(param.getValue())) {
                     WordDAO.getInstance().delete(WordDAO.getInstance().readByContentForActiveUser(param.getValue().getWord().get()));
-                    loadWordsFor(selectedLanguage);
+                    loadWordsFor(Controller.selectedLanguage);
                 }
             });
             return new ReadOnlyObjectWrapper<Button>(button);
@@ -92,7 +93,7 @@ public class DictionaryViewController implements Initializable{
             } else {
                 if (!editedWord.getTranslation().get().isEmpty() && !editedWord.getWord().get().isEmpty()) {
                     WordDAO.getInstance().create(editedWord);
-                    loadWordsFor(selectedLanguage);
+                    loadWordsFor(Controller.selectedLanguage);
                 }
             }
         });
@@ -109,7 +110,7 @@ public class DictionaryViewController implements Initializable{
                     } else {
                         if (!editedWord.getTranslation().get().isEmpty() && !editedWord.getWord().get().isEmpty()) {
                             WordDAO.getInstance().create(editedWord);
-                            loadWordsFor(selectedLanguage);
+                            loadWordsFor(Controller.selectedLanguage);
                         }
                     }
                 }
@@ -127,7 +128,7 @@ public class DictionaryViewController implements Initializable{
                     } else {
                         if (!editedWord.getTranslation().get().isEmpty() && !editedWord.getWord().get().isEmpty()) {
                             WordDAO.getInstance().create(editedWord);
-                            loadWordsFor(selectedLanguage);
+                            loadWordsFor(Controller.selectedLanguage);
                         }
                     }
                 }
@@ -151,5 +152,10 @@ public class DictionaryViewController implements Initializable{
                 tblView_wordTranslation.getItems().add(0, new Word("", "", wordLang, AuthController.getActiveUser().getNativeLanguage()));
             return new VBox();
         });
+    }
+
+    public void importFileClicked(ActionEvent actionEvent) {
+        StageManager.getInstance().navigateTo(Navigator.getPathFor(Navigator.FILE_IMPORT_VIEW_PATH), ResourceBundleKeys.FILE_CHOOSER_TITLE, 2, Optional.empty(), true, false);
+        initializeUI();
     }
 }

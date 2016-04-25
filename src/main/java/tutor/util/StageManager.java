@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.stream.IntStream;
 
 /**
  * Created by user on 08.02.2015.
@@ -161,6 +162,10 @@ public class StageManager {
      */
     public Stage getStage(int layer){
         return stages.get(layer);
+    }
+
+    public Stage getStage(Initializable controller){
+        return stages.get(IntStream.range(0, controllers.size()).filter(index -> controllers.get(index) == controller).findFirst().getAsInt());
     }
 
     /**

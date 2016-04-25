@@ -7,15 +7,15 @@
 
 
 <BorderPane fx:controller="tutor.controllers.FileImportViewController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="210.0" prefWidth="316.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <center>
-      <AnchorPane maxWidth="800.0" minHeight="0.0" minWidth="10.0" prefHeight="410.0" prefWidth="302.0" styleClass="settings_stackpane" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="btn_openFile" disable="true" layoutX="158.0" layoutY="154.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="93.0" styleClass="settings_button" text="%btn_import" AnchorPane.rightAnchor="51.0" AnchorPane.topAnchor="154.0" />
-            <Label layoutX="14.0" layoutY="104.0" prefHeight="22.0" prefWidth="111.0" styleClass="settings_label" text="%data_translation_label" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="104.0" />
-            <ChoiceBox fx:id="chb_translation_lang" layoutX="141.0" layoutY="100.0" maxWidth="400.0" prefHeight="30.0" prefWidth="126.0" styleClass="settings_choiceBox" AnchorPane.leftAnchor="141.0" AnchorPane.topAnchor="100.0" />
-            <ChoiceBox fx:id="chb_word_lang" layoutX="140.0" layoutY="54.0" maxWidth="400.0" prefHeight="30.0" prefWidth="129.0" styleClass="settings_choiceBox" />
-            <Label layoutX="14.0" layoutY="58.0" prefHeight="22.0" prefWidth="68.0" styleClass="settings_label" text="%data_language_label" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="58.0" />
-         </children>
-      </AnchorPane>
-   </center>
+  <center>
+    <AnchorPane maxWidth="800.0" minHeight="0.0" minWidth="10.0" prefHeight="410.0" prefWidth="302.0" styleClass="settings_stackpane" BorderPane.alignment="CENTER">
+      <children>
+        <Button fx:id="btn_openFile" disable="true" layoutX="158.0" layoutY="154.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="93.0" styleClass="settings_button" text="%btn_import" AnchorPane.rightAnchor="51.0" AnchorPane.topAnchor="154.0" />
+        <Label layoutX="14.0" layoutY="104.0" prefHeight="22.0" prefWidth="111.0" styleClass="settings_label" text="%data_translation_label" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="104.0" />
+        <ChoiceBox fx:id="chb_translation_lang" layoutX="141.0" layoutY="100.0" maxWidth="400.0" prefHeight="30.0" prefWidth="126.0" styleClass="settings_choiceBox" AnchorPane.leftAnchor="141.0" AnchorPane.topAnchor="100.0" />
+        <ChoiceBox fx:id="chb_word_lang" layoutX="140.0" layoutY="54.0" maxWidth="400.0" prefHeight="30.0" prefWidth="129.0" styleClass="settings_choiceBox" />
+        <Label layoutX="14.0" layoutY="58.0" prefHeight="22.0" prefWidth="68.0" styleClass="settings_label" text="%data_language_label" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="58.0" />
+      </children>
+    </AnchorPane>
+  </center>
 </BorderPane>

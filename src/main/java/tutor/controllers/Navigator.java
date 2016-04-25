@@ -1,6 +1,5 @@
 package tutor.controllers;
 
-import java.io.IOException;
 import java.net.URL;
 import tutor.Main;
 
@@ -23,7 +22,6 @@ public final class Navigator {
     public static final String AUTHENTICATION_VIEW_PATH = "view/auth.fxml";
     public static final String FILE_IMPORT_VIEW_PATH = "view/fileImport.fxml";
     public static final String LANGUAGE_SETTINGS_VIEW_PATH = "view/languageSettings.fxml";
-    public static final String THEME_SETTINGS_VIEW_PATH = "view/themeSettings.fxml";
     public static final String LOCALE_VIEW_PATH = "view/localeSettings.fxml";
 
     public static URL getPathFor(String view){

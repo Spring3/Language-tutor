@@ -114,7 +114,7 @@ public class FileImportViewController implements Initializable{
             + "Total words added: " + parser.getAddedWordsAmount() + "\n"
             + "Total words ignored: " + parser.getIgnoredWordsAmount() + "\n");
             alert.show();
-            StageManager.getInstance().closeStage(StageManager.getInstance().getStage(1));
+            StageManager.getInstance().closeStage(StageManager.getInstance().getStage(this));
         }
     }
 }

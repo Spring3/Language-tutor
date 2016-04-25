@@ -14,7 +14,9 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import tutor.tasks.AbstractTask;
+import tutor.tasks.ITask;
 import tutor.tasks.TaskType;
+import tutor.tasks.dictation.AbstractDictation;
 import tutor.tasks.dictation.Dictation;
 import tutor.util.Voice;
 import tutor.Main;
@@ -71,19 +73,11 @@ public class DictationViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         bundle = resources;
         voice = Voice.getInstance();
-        initializeUI();
     }
 
     private void initializeUI(){
-        Random rand = new Random();
-        manager = new TaskManager(TaskManager.Output.values()[rand.nextInt(TaskManager.Output.values().length)]);
-        AbstractTask abstractTask = new AbstractTask(TaskType.DICTATION, Controller.selectedLanguage);
-        task = (Dictation) manager.createTask(abstractTask);
-
-    }
-
-    public void init(){
         pane_task.setVisible(true);
+
         StageManager.getInstance().getStage(1).getScene().setOnKeyReleased(event ->
         {
             KeyCombination combo = new KeyCodeCombination(KeyCode.ENTER);
@@ -93,6 +87,29 @@ public class DictationViewController implements Initializable {
         });
 
         showTask();
+    }
+
+    public void init(){
+        Random rand = new Random();
+        manager = new TaskManager(TaskManager.Output.values()[rand.nextInt(TaskManager.Output.values().length)]);
+        AbstractTask abstractTask = new AbstractTask(TaskType.DICTATION, Controller.selectedLanguage);
+        task = (Dictation) manager.createTask(abstractTask);
+        initializeUI();
+    }
+
+    public void init(Dictation.DictationType type, TaskManager.Output outputType){
+        if (task == null){
+            init();
+        }else{
+            manager = new TaskManager(outputType);
+            AbstractTask abstractTask = new AbstractTask(
+                    TaskType.DICTATION,
+                    new AbstractDictation(type, Controller.selectedLanguage),
+                    Controller.selectedLanguage
+            );
+            task = (Dictation) manager.createTask(abstractTask);
+            initializeUI();
+        }
     }
 
     private void showTask(){
