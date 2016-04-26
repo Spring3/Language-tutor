@@ -31,6 +31,8 @@ public class WordDAO implements IDAO<Word> {
 
     @Override
     public boolean create(Word value) {
+        if (value == null)
+            return false;
         try{
             Connection connection = DbManager.getInstance().getConnection();
             if (!contains(value)) {
@@ -280,6 +282,8 @@ public class WordDAO implements IDAO<Word> {
 
     public boolean contains(Word value){
         boolean result = false;
+        if (value == null)
+            return result;
         try{
             Connection connection = DbManager.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement("SELECT w.id, w.article, w.word, w.word_translation, w.lang_id, w.translation_id, w.whenAdded, w.wrongAnswers, w.correctAnswers FROM WORD as w INNER JOIN USER_WORD as uw ON uw.word_id=w.id WHERE uw.user_id=? AND w.article=? AND w.word=? AND w.word_translation=? AND w.lang_id=? AND w.translation_id=? GROUP BY w.id;");

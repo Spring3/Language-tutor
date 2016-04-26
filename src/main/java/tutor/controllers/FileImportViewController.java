@@ -108,8 +108,14 @@ public class FileImportViewController implements Initializable{
             parser.parse(selectedFile, selectedLanguage, selectedTranslationLanguage);
 
             Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Success");
-            alert.setHeaderText("Files imported successfully");
+            if (parser.isSuccessfull()) {
+                alert.setTitle("Success");
+                alert.setHeaderText("Files imported successfully");
+            }
+            else{
+                alert.setTitle("Failure");
+                alert.setHeaderText("Failed to import words. Probably a wrong .csv file format.");
+            }
             alert.setContentText("Total words imported: " + parser.getTotalWordsAmount() + "\n"
             + "Total words added: " + parser.getAddedWordsAmount() + "\n"
             + "Total words ignored: " + parser.getIgnoredWordsAmount() + "\n");
