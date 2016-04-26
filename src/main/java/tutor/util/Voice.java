@@ -46,7 +46,7 @@ public class Voice {
     private MaryInterface marytts;
     private AudioPlayer ap;
 
-    private enum SupportedLanguages{
+    public enum SupportedLanguages{
         ENGLISH("dfki-spike-hsmm"),
         GERMAN("bits3-hsmm"),
         FRENCH("upmc-pierre-hsmm"),

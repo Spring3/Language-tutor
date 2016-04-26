@@ -97,7 +97,7 @@
                               <Label fx:id="task_dictation_header2" alignment="CENTER" layoutX="3.0" layoutY="124.0" prefHeight="35.0" prefWidth="199.0" styleClass="settings_label" text="Repeating dication" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane prefHeight="144.0" prefWidth="200.0" styleClass="newsItem">
+                        <AnchorPane prefHeight="144.0" prefWidth="200.0" styleClass="newsItem" fx:id="voiceDictationPanel">
                            <children>
                               <ImageView id="img_highRes" fx:id="task_dictation_img3" fitHeight="150.0" fitWidth="200.0" layoutY="-3.0" onMouseClicked="#voiceDictationTaskClicked" styleClass="newsImage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <image>

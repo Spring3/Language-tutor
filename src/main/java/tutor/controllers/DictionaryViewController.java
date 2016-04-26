@@ -4,6 +4,7 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -39,8 +40,6 @@ public class DictionaryViewController implements Initializable{
     @FXML
     private TableColumn<Word, String> table_translation;
     @FXML
-    private TableColumn<Word, Button> table_remove;
-    @FXML
     private TableColumn<Word, String> table_articles;
     @FXML
     private CheckBox check_articles;
@@ -70,17 +69,22 @@ public class DictionaryViewController implements Initializable{
     }
 
     private void initializeTableViewColumns(){
-        table_remove.setCellValueFactory(param -> {
-            Button button = new Button("x");
-            button.getStyleClass().add("custombutton");
-            button.setOnAction(event -> {
-                if (WordDAO.getInstance().contains(param.getValue())) {
-                    WordDAO.getInstance().delete(WordDAO.getInstance().readByContentForActiveUser(param.getValue().getWord().get()));
-                    loadWordsFor(Controller.selectedLanguage);
+
+        MenuItem mnuDel = new MenuItem("Delete word");
+        mnuDel.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                Word item = tblView_wordTranslation.getSelectionModel().getSelectedItem();
+                if (item != null){
+                    if (WordDAO.getInstance().contains(item)) {
+                        WordDAO.getInstance().delete(WordDAO.getInstance().readByContentForActiveUser(item.getWord().get()));
+                        loadWordsFor(Controller.selectedLanguage);
+                    }
                 }
-            });
-            return new ReadOnlyObjectWrapper<Button>(button);
+            }
         });
+
+        tblView_wordTranslation.setContextMenu(new ContextMenu(mnuDel));
 
         table_articles.setOnEditCommit( event -> {
             Word editedWord = event.getTableView().getItems().get(event.getTablePosition().getRow());
@@ -148,8 +152,9 @@ public class DictionaryViewController implements Initializable{
                 tblView_wordTranslation.setItems(FXCollections.observableArrayList(addedWords));
             }
             catch (IndexOutOfBoundsException ex){}
-            if ( paginatorManager.getCurrentPage() == 1 )
+            if ( paginatorManager.getCurrentPage() == 1 ) {
                 tblView_wordTranslation.getItems().add(0, new Word("", "", wordLang, AuthController.getActiveUser().getNativeLanguage()));
+            }
             return new VBox();
         });
     }

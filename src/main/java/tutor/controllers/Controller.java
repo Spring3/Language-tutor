@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import sun.plugin.javascript.navig.Anchor;
 import tutor.Main;
 import tutor.dao.LanguageDAO;
 import tutor.dao.WordDAO;
@@ -18,6 +19,8 @@ import tutor.tasks.TaskManager;
 import tutor.tasks.dictation.Dictation;
 import tutor.util.ResourceBundleKeys;
 import tutor.util.StageManager;
+import tutor.util.Voice;
+
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -71,6 +74,8 @@ public class Controller implements Initializable
     @FXML
     private AnchorPane taskPane;
     @FXML
+    private AnchorPane voiceDictationPanel;
+    @FXML
     private Tab workbench;
     @FXML
     private ImageView task_dictation_img;
@@ -86,6 +91,11 @@ public class Controller implements Initializable
         listView_languages.getItems().addAll(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId()));
         listView_languages.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedLanguage = newValue;
+            if (!Voice.SupportedLanguages.contains(selectedLanguage)){
+                voiceDictationPanel.setVisible(false);
+            }else{
+                voiceDictationPanel.setVisible(true);
+            }
         });
 
         try {

@@ -90,8 +90,7 @@ public class DictationViewController implements Initializable {
     }
 
     public void init(){
-        Random rand = new Random();
-        manager = new TaskManager(TaskManager.Output.values()[rand.nextInt(TaskManager.Output.values().length)]);
+        manager = new TaskManager(TaskManager.Output.random());
         AbstractTask abstractTask = new AbstractTask(TaskType.DICTATION, Controller.selectedLanguage);
         task = (Dictation) manager.createTask(abstractTask);
         initializeUI();

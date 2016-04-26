@@ -9,6 +9,7 @@ import tutor.models.Stats;
 import tutor.models.Word;
 import tutor.tasks.dictation.Dictation;
 import tutor.tasks.factories.DictationFactory;
+import tutor.util.Voice;
 
 import java.util.*;
 
@@ -32,7 +33,11 @@ public class TaskManager {
 
         public static Output random(){
             Random rand = new Random();
-            return values()[rand.nextInt(values().length)];
+            if (Voice.SupportedLanguages.contains(Controller.selectedLanguage)){
+                return values()[rand.nextInt(values().length)];
+            }
+            return TEXT;
+
         }
     }
 
