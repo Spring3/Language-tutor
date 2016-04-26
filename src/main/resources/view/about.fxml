@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
@@ -10,30 +11,11 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="anchor-pane" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="211.0" layoutY="14.0" styleClass="settings_header_label" text="%about_mainHeader" AnchorPane.leftAnchor="211.0" AnchorPane.topAnchor="14.0" />
-            <Label layoutX="159.0" layoutY="56.0" prefHeight="22.0" prefWidth="270.0" styleClass="settings_label" text="%about_developed_by_label" AnchorPane.leftAnchor="159.0" AnchorPane.rightAnchor="171.0" AnchorPane.topAnchor="56.0" />
-            <Label layoutX="231.0" layoutY="89.0" prefHeight="22.0" prefWidth="127.0" styleClass="settings_label" text="Daniel Vasylenko" AnchorPane.leftAnchor="231.0" AnchorPane.topAnchor="89.0" />
-            <Label layoutX="233.0" layoutY="133.0" prefHeight="22.0" prefWidth="132.0" styleClass="settings_label" text="MEMBER_NAME" AnchorPane.leftAnchor="233.0" AnchorPane.topAnchor="133.0" />
-            <Label layoutX="231.0" layoutY="111.0" styleClass="settings_label" text="MEMBER_NAME" AnchorPane.leftAnchor="231.0" AnchorPane.topAnchor="111.0" />
-            <Label layoutX="173.0" layoutY="364.0" styleClass="settings_label" text="Copyright 2015" AnchorPane.leftAnchor="173.0" AnchorPane.topAnchor="364.0" />
-            <Label layoutX="16.0" layoutY="167.0" prefHeight="138.0" prefWidth="566.0" styleClass="settings_label" text="%about_aim" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="167.0" />
-            <Hyperlink layoutX="284.0" layoutY="364.0" text="COMPANY_NAME_WEBSITE_LINK" AnchorPane.leftAnchor="284.0" AnchorPane.topAnchor="364.0" />
-            <Button layoutX="191.0" layoutY="319.0" mnemonicParsing="false" styleClass="settings_button" text="%btn_feedback_text" AnchorPane.leftAnchor="191.0" AnchorPane.topAnchor="319.0">
-               <font>
-                  <Font name="Calibri Light Italic" size="14.0" />
-               </font>
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </Button>
-            <Button alignment="CENTER" layoutX="316.0" layoutY="318.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="73.0" styleClass="settings_button" text="%btn_donate_text" textAlignment="CENTER" AnchorPane.leftAnchor="316.0" AnchorPane.topAnchor="318.0">
-               <font>
-                  <Font name="Calibri Light Italic" size="14.0" />
-               </font>
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </Button>
+            <Label alignment="CENTER" layoutX="211.0" layoutY="14.0" styleClass="settings_header_label" text="%about_mainHeader" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="175.0" AnchorPane.topAnchor="14.0" />
+            <Label alignment="CENTER" layoutX="159.0" layoutY="56.0" prefHeight="22.0" prefWidth="270.0" styleClass="settings_label" text="Created by Daniyil Vasylenko" textAlignment="CENTER" AnchorPane.leftAnchor="159.0" AnchorPane.rightAnchor="159.0" AnchorPane.topAnchor="56.0" />
+            <Label layoutX="266.0" layoutY="328.0" styleClass="settings_label" text="Contact" AnchorPane.leftAnchor="266.0" AnchorPane.rightAnchor="266.0" AnchorPane.topAnchor="328.0" />
+            <Label layoutX="16.0" layoutY="95.0" prefHeight="210.0" prefWidth="566.0" styleClass="settings_label" text="Language tutor is a software, intended to help people lean words for new languages. It was intended to be my persona application, but I would like to share it with others. If you find it useful, I will be really happy with it. For now there is only a few types of tasks available, but I hope that I will find motivation to do more. Check for updates." textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="95.0" />
+            <Hyperlink layoutX="180.0" layoutY="361.0" text="https://ua.linkedin.com/in/dvasylenko" AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="361.0" />
          </children>
       </AnchorPane>
    </center>
