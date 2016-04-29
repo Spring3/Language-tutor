@@ -108,6 +108,10 @@ public class User {
     }
 
 
+    public String toString(){
+        return userName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

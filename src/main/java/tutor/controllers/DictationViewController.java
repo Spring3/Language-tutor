@@ -127,7 +127,6 @@ public class DictationViewController implements Initializable {
                     .append(bundle.getString(ResourceBundleKeys.SUCCESS_RATE)).append(" : ").append(manager.getSuccessRate()).append("%");
             alert.setContentText(builder.toString());
             alert.showAndWait();
-
             manager.endTask();
 
             StageManager.getInstance().closeStage(StageManager.getInstance().getStage(1));

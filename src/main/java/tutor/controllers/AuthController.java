@@ -78,12 +78,14 @@ public class AuthController implements Initializable {
     }
 
     public void enterProgramClicked(ActionEvent actionEvent) {
-        if (!txtb_enter_username.getText().isEmpty()) {
-            if (!txtb_enter_password.getText().isEmpty()) {
-                User user = UserDAO.getInstance().readByUserName(txtb_enter_username.getText());
+        String username = txtb_enter_username.getText().trim();
+        String password = txtb_enter_password.getText().trim();
+        if (!username.isEmpty()) {
+            if (!password.isEmpty()) {
+                User user = UserDAO.getInstance().readByUserName(username);
                 if (user != null) {
-                    if (user.getPassword() == txtb_enter_password.getText().hashCode()) {
-                        System.out.println("User: " + txtb_enter_username.getText() + ", password: " + txtb_enter_password.getText());
+                    if (user.getPassword() == password.hashCode()) {
+                        System.out.println("User: " + username + ", password: " + password.trim());
                         setActiveUser(user);
                         stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.MAIN_VIEW_PATH), "Language tutor", 0, Optional.of(true), false);
                     }
@@ -124,17 +126,20 @@ public class AuthController implements Initializable {
     }
 
     public void registerClicked(ActionEvent actionEvent) {
-        if (!txtb_reg_username.getText().isEmpty()) {
-            if (txtb_reg_username.getText().length() >= 5) {
-                if (!txtb_reg_pass1.getText().isEmpty() && !txtb_reg_pass2.getText().isEmpty()) {
-                    if (txtb_reg_pass1.getText().length() >= 5 || txtb_reg_pass2.getText().length() >= 5) {
-                        if (txtb_reg_pass1.getText().equals(txtb_reg_pass2.getText())) {
+        String username = txtb_reg_username.getText().trim();
+        String password1 = txtb_reg_pass1.getText().trim();
+        String password2 = txtb_reg_pass2.getText().trim();
+        if (!username.isEmpty()) {
+            if (username.length() >= 5) {
+                if (!password1.isEmpty() && !password2.isEmpty()) {
+                    if (password1.length() >= 5 || password2.length() >= 5) {
+                        if (password1.equals(password2)) {
                             if (chb_language.getSelectionModel().getSelectedItem() != null) {
-                                User user = UserDAO.getInstance().readByUserName(txtb_reg_username.getText());
+                                User user = UserDAO.getInstance().readByUserName(username);
                                 if (user == null) {
-                                    user = new User(txtb_reg_username.getText(), txtb_reg_pass1.getText().hashCode(), chb_language.getSelectionModel().getSelectedItem());
+                                    user = new User(username, password1.hashCode(), chb_language.getSelectionModel().getSelectedItem());
                                     if (UserDAO.getInstance().create(user)) {
-                                        System.out.println("Registering user: " + txtb_reg_username.getText() + ", password: " + txtb_reg_pass1.getText() + ", repeated: " + txtb_reg_pass2.getText());
+                                        System.out.println("Registering user: " + username + ", password: " + password1 + ", repeated: " + password2);
                                         user = UserDAO.getInstance().readByUserName(user.getUserName());
                                         setActiveUser(user);
                                         stageManager.navigateTo(Main.class.getClassLoader().getResource(Navigator.MAIN_VIEW_PATH), "Language Tutor", 0, Optional.of(true), false);

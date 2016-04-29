@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Class-Path: icu4j-54.1.1.jar marytts-client-5.1.2-jar-with-dependencie
+ s.jar marytts-lang-de-5.1.2.jar marytts-lang-en-5.1.2.jar marytts-lan
+ g-fr-5.1.2.jar marytts-lang-it-5.1.2.jar marytts-lang-ru-5.1.2.jar ma
+ rytts-lang-sv-5.1.2.jar marytts-lang-te-5.1.2.jar marytts-lang-tr-5.1
+ .2.jar marytts-runtime-5.1.2-jar-with-dependencies.jar voice-cmu-slt-
+ hsmm-5.1.2.jar voice-dfki-spike-hsmm-5.1.jar voice-bits3-hsmm-5.1.jar
+  voice-upmc-pierre-hsmm-5.1.jar voice-istc-lucia-hsmm-5.1.jar voice-d
+ fki-ot-hsmm-5.1.jar h2-1.4.186.jar marytts-runtime-5.1.2-jar-with-dep
+ endencies.jar
+Main-Class: tutor.Main
+

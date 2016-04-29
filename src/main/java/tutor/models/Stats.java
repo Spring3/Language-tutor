@@ -1,5 +1,6 @@
 package tutor.models;
 
+import tutor.dao.StatsDAO;
 import tutor.tasks.TaskManager;
 import tutor.tasks.TaskType;
 
@@ -24,6 +25,7 @@ public class Stats {
     private Language language;
     private float successRate;
     private TaskType taskType;
+    private int tries;
 
     public TaskType getTaskType() {
         return taskType;
@@ -69,6 +71,15 @@ public class Stats {
         this.successRate = successRate;
     }
 
+    public int getTries(){
+        return tries;
+    }
+
+    public void setTries(int tries)
+    {
+        this.tries = tries;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -76,19 +87,21 @@ public class Stats {
 
         Stats stats = (Stats) o;
 
-        if (Float.compare(stats.getSuccessRate(), getSuccessRate()) != 0) return false;
-        if (!getUser().equals(stats.getUser())) return false;
-        if (!getLanguage().equals(stats.getLanguage())) return false;
-        return getTaskType() == stats.getTaskType();
+        if (Float.compare(stats.successRate, successRate) != 0) return false;
+        if (tries != stats.tries) return false;
+        if (user != null ? !user.equals(stats.user) : stats.user != null) return false;
+        if (language != null ? !language.equals(stats.language) : stats.language != null) return false;
+        return taskType == stats.taskType;
 
     }
 
     @Override
     public int hashCode() {
-        int result = getUser().hashCode();
-        result = 31 * result + getLanguage().hashCode();
-        result = 31 * result + (getSuccessRate() != +0.0f ? Float.floatToIntBits(getSuccessRate()) : 0);
-        result = 31 * result + getTaskType().hashCode();
+        int result = user != null ? user.hashCode() : 0;
+        result = 31 * result + (language != null ? language.hashCode() : 0);
+        result = 31 * result + (successRate != +0.0f ? Float.floatToIntBits(successRate) : 0);
+        result = 31 * result + (taskType != null ? taskType.hashCode() : 0);
+        result = 31 * result + tries;
         return result;
     }
 }

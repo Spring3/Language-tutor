@@ -1,6 +1,7 @@
 package tutor.dao;
 
 import tutor.controllers.AuthController;
+import tutor.models.User;
 import tutor.models.Word;
 import tutor.models.Language;
 import tutor.util.DbManager;
@@ -165,6 +166,48 @@ public class WordDAO implements IDAO<Word> {
             ex.printStackTrace();
         }
         return resultList;
+    }
+
+    public int getWordsCount(Language lang, User user){
+        int result = 0;
+        try{
+            Connection connection = DbManager.getInstance().getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*)FROM WORD as w INNER JOIN USER_WORD ON w.id=word_id WHERE user_id=? AND w.lang_id=?;");
+            statement.setInt(1, user.getId());
+            statement.setInt(2, lang.getId());
+            statement.execute();
+            ResultSet resultSet = statement.getResultSet();
+            if(resultSet.next()) {
+                result = resultSet.getInt(1);
+                resultSet.close();
+            }
+            connection.close();
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return result;
+    }
+
+    public float getAnswersRatio(Language lang, User user){
+        float result = 0f;
+        try{
+            Connection connection = DbManager.getInstance().getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT SUM(w.correctAnswers) as correct, SUM(w.wrongAnswers) as wrong FROM WORD as w INNER JOIN USER_WORD ON word_id=w.id WHERE user_id=? AND w.lang_id=? ;");
+            statement.setInt(1, user.getId());
+            statement.setInt(2, lang.getId());
+            statement.execute();
+            ResultSet resultSet = statement.getResultSet();
+            if (resultSet.next()){
+                result = resultSet.getFloat(1) / resultSet.getFloat(2);
+                resultSet.close();
+            }
+            connection.close();
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return result;
     }
 
     public List<Word> readAllWordsToRepeatFor(Language lang){

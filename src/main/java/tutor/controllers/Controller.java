@@ -1,16 +1,13 @@
 package tutor.controllers;
 
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import sun.plugin.javascript.navig.Anchor;
 import tutor.Main;
 import tutor.dao.LanguageDAO;
 import tutor.dao.WordDAO;
@@ -47,12 +44,6 @@ public class Controller implements Initializable
     private MenuItem mItem_check4Updates;
     @FXML
     private ImageView onlineTask_img;
-    /*
-      <MenuItem fx:id="mItem_lang" mnemonicParsing="false" text="Language" />
-                  <MenuItem fx:id="mItem_importFile" mnemonicParsing="false" text="Import File" />
-                  <MenuItem fx:id="mItem_locale" mnemonicParsing="false" text="Locale" />
-                  <MenuItem fx:id="mItem_theme" mnemonicParsing="false" text="Theme" />
-     */
     @FXML
     private MenuItem mItem_lang;
     @FXML
@@ -118,7 +109,7 @@ public class Controller implements Initializable
         remove.setOnAction((event) -> {
             Language selectedItem = listView_languages.getSelectionModel().getSelectedItem();
             if (selectedItem != null) {
-                LanguageDAO.getInstance().unAssignLangFromCurrentUser(selectedItem);
+                LanguageDAO.getInstance().unAssignLangFromCurrentUser(selectedItem, AuthController.getActiveUser());
                 updateLanguageList();
             }
         });
@@ -187,6 +178,7 @@ public class Controller implements Initializable
     public void updateLanguageList(){
         listView_languages.getItems().clear();
         listView_languages.getItems().addAll(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId()));
+        listView_languages.getSelectionModel().select(0);
     }
 
     public void learningDictationTaskClicked(Event event) {

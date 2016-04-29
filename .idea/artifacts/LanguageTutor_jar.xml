@@ -1,0 +1,23 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" build-on-make="true" name="LanguageTutor:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/LanguageTutor_jar</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="tutor.Main" />
+        <option name="description" value="" />
+        <option name="htmlParamFile" value="" />
+        <option name="paramFile" value="" />
+        <option name="title" value="" />
+        <option name="vendor" value="" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="LanguageTutor.jar">
+        <element id="module-output" name="LanguageTutor" />
+      </element>
+      <element id="library" level="project" name="marytts" />
+      <element id="library" level="project" name="Maven: com.h2database:h2:1.4.186" />
+      <element id="library" level="module" name="Maven: marytts:marytts:1.8.0_40-release" module-name="LanguageTutor" />
+    </root>
+  </artifact>
+</component>

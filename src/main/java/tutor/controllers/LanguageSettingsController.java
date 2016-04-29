@@ -58,14 +58,15 @@ public class LanguageSettingsController implements Initializable {
 
     private void saveLanguages(){
         for(Language lang : selectedLanguages)
-            LanguageDAO.getInstance().assignLangToCurrentUser(lang);
+            LanguageDAO.getInstance().assignLangToCurrentUser(lang, AuthController.getActiveUser());
     }
 
 
     public void btnApplyClicked(ActionEvent actionEvent) {
         saveLanguages();
         StageManager stageManager = StageManager.getInstance();
-        ((Controller)stageManager.getControllerForViewOnLayer(0)).updateLanguageList();
+        Controller controller = ((Controller)stageManager.getControllerForViewOnLayer(0));
+        controller.updateLanguageList();
         stageManager.closeStage(stageManager.getStage(1));
     }
 }

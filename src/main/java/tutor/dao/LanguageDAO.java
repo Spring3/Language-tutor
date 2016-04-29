@@ -39,12 +39,12 @@ public class LanguageDAO implements IDAO<Language> {
     public boolean create(Language value) {
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO LANGUAGES(lang_name, short_name) VALUES(?,?) ?;");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO LANGUAGES(lang_name, short_name) VALUES(?,?);");
             preparedStatement.setString(1, value.getLangName());
             preparedStatement.setString(2, value.getLangName());
-            preparedStatement.execute();
-            System.out.println("New language: " + value.getLangName() + " was created");
-            assignLangToCurrentUser(value);
+            if (preparedStatement.execute())
+                System.out.println("New language: " + value.getLangName() + " was created");
+            assignLangToCurrentUser(value, null);
             connection.close();
             return true;
         }
@@ -59,12 +59,15 @@ public class LanguageDAO implements IDAO<Language> {
      * @param lang language to learn.
      * @return true, if language has been assigned successfully.
      */
-    public boolean assignLangToCurrentUser(Language lang){
+    public boolean assignLangToCurrentUser(Language lang, User user){
         try{
-            if (!contains(AuthController.getActiveUser(), lang)) {
+            if (!contains(user, lang)) {
                 Connection connection = DbManager.getInstance().getConnection();
                 PreparedStatement statement = connection.prepareStatement("INSERT INTO USER_LANG(user_id, lang_id) VALUES(?,?)");
-                statement.setInt(1, AuthController.getActiveUser().getId());
+                if (user == null)
+                    statement.setInt(1, AuthController.getActiveUser().getId());
+                else
+                    statement.setInt(1, user.getId());
                 statement.setInt(2, read(lang.getLangName()).getId());
                 statement.execute();
                 connection.close();
@@ -82,12 +85,15 @@ public class LanguageDAO implements IDAO<Language> {
      * @param lang language to unassign.
      * @return true, if a language has been successfully assigned.
      */
-    public boolean unAssignLangFromCurrentUser(Language lang){
+    public boolean unAssignLangFromCurrentUser(Language lang, User user){
         try{
-            if (contains(AuthController.getActiveUser(), lang)){
+            if (contains(user, lang)){
                 Connection connection = DbManager.getInstance().getConnection();
                 PreparedStatement statement = connection.prepareStatement("DELETE FROM USER_LANG WHERE user_id = ? AND lang_id = ?;");
-                statement.setInt(1, AuthController.getActiveUser().getId());
+                if (user == null)
+                    statement.setInt(1, AuthController.getActiveUser().getId());
+                else
+                    statement.setInt(1, user.getId());
                 statement.setInt(2, lang.getId());
                 boolean result =  statement.execute();
                 connection.close();

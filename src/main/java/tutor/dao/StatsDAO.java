@@ -1,6 +1,9 @@
 package tutor.dao;
 
+import tutor.models.Language;
 import tutor.models.Stats;
+import tutor.models.User;
+import tutor.tasks.TaskType;
 import tutor.util.DbManager;
 
 import java.sql.Connection;
@@ -33,22 +36,31 @@ public class StatsDAO implements IDAO<Stats>{
     //"CREATE TABLE IF NOT EXISTS USER_STATS(id integer, user_id integer, task_type varchar(20), lang_id integer, rate double, FOREIGN KEY(user_id) REFERENCES USERS(id), FOREIGN KEY(lang_id) REFERENCES LANGUAGES(id));",
     @Override
     public boolean create(Stats value) {
-        try{
-            Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO USER_STATS(user_id, task_type, lang_id, rate) VALUES(?,?,?,?);");
-            statement.setInt(1, value.getUser().getId());
-            statement.setString(2, value.getTaskType().name());
-            statement.setInt(3, value.getLanguage().getId());
-            statement.setFloat(4, value.getSuccessRate());
-            statement.execute();
-            connection.close();
-            return true;
+        if (value == null)
+            return false;
 
+        if (!exists(value)) {
+            try {
+                Connection connection = DbManager.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO USER_STATS(user_id, task_type, lang_id, rate, tries) VALUES(?,?,?,?,?);");
+                statement.setInt(1, value.getUser().getId());
+                statement.setString(2, value.getTaskType().name());
+                statement.setInt(3, value.getLanguage().getId());
+                statement.setFloat(4, value.getSuccessRate());
+                statement.setInt(5, 1); //first try
+                statement.execute();
+                connection.close();
+                return true;
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return false;
         }
-        catch (SQLException ex){
-            ex.printStackTrace();
+        else
+        {
+            return refresh(value);
         }
-        return false;
     }
 
     @Override
@@ -67,6 +79,24 @@ public class StatsDAO implements IDAO<Stats>{
         return result;
     }
 
+    public Stats read(User user, Language language, TaskType taskType){
+        Stats result = null;
+        try{
+            Connection connection = DbManager.getInstance().getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM USER_STATS WHERE user_id=? AND lang_id=? AND task_type=?;");
+            statement.setInt(1, user.getId());
+            statement.setInt(2, language.getId());
+            statement.setString(3, taskType.name());
+            result = readBy(statement);
+            connection.close();
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+        }
+
+        return result;
+    }
+
     private Stats readBy(PreparedStatement statement){
         Stats result = null;
         try{
@@ -74,10 +104,12 @@ public class StatsDAO implements IDAO<Stats>{
             ResultSet resultSet = statement.getResultSet();
             if(resultSet.next()){
                 result = new Stats();
-                result.setUser(UserDAO.getInstance().read(resultSet.getInt(1)));
-                result.setTaskType(resultSet.getString(2));
-                result.setLanguage(LanguageDAO.getInstance().read(resultSet.getInt(3)));
-                result.setSuccessRate(resultSet.getFloat(4));
+                result.setId(resultSet.getInt(1));
+                result.setUser(UserDAO.getInstance().read(resultSet.getInt(2)));
+                result.setTaskType(resultSet.getString(3));
+                result.setLanguage(LanguageDAO.getInstance().read(resultSet.getInt(4)));
+                result.setSuccessRate(resultSet.getFloat(5));
+                result.setTries(resultSet.getInt(6));
             }
             resultSet.close();
         }
@@ -91,13 +123,11 @@ public class StatsDAO implements IDAO<Stats>{
     public boolean update(Stats value) {
         try{
             Connection connection = DbManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("UPDATE USER_STATS SET user_id=? AND task_type=? AND lang_id=? AND rate=? WHERE id=?;");
-            statement.setInt(1, value.getUser().getId());
-            statement.setString(2, value.getTaskType().name());
-            statement.setInt(3, value.getLanguage().getId());
-            statement.setFloat(4, value.getSuccessRate());
-            statement.setInt(5, value.getId());
-            statement.executeUpdate();
+            PreparedStatement statement = connection.prepareStatement("UPDATE USER_STATS SET rate=?, tries=? WHERE id=?;");
+            statement.setFloat(1, value.getSuccessRate());
+            statement.setInt(2, value.getTries());
+            statement.setInt(3, value.getId());
+            int result = statement.executeUpdate();
             connection.close();
             return true;
         }
@@ -105,6 +135,39 @@ public class StatsDAO implements IDAO<Stats>{
             ex.printStackTrace();
         }
         return false;
+    }
+
+    private boolean refresh(Stats value){
+        Stats statsFromDB;
+        if (value.getId() != 0){
+            statsFromDB = read(value.getId());
+        }
+        else {
+            statsFromDB = read(value.getUser(), value.getLanguage(), value.getTaskType());
+        }
+        float newSuccessRate = (statsFromDB.getSuccessRate() * statsFromDB.getTries() + value.getSuccessRate()) / (statsFromDB.getTries() + 1);
+        statsFromDB.setTries(statsFromDB.getTries() + 1);
+        statsFromDB.setSuccessRate(newSuccessRate);
+        return update(statsFromDB);
+    }
+
+    private boolean exists(Stats value){
+        boolean result = false;
+
+        try{
+            Connection connection = DbManager.getInstance().getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM USER_STATS WHERE user_id=? AND task_type=? AND lang_id=?;");
+            statement.setInt(1, value.getUser().getId());
+            statement.setString(2, value.getTaskType().name());
+            statement.setInt(3, value.getLanguage().getId());
+            statement.execute();
+            result = statement.getResultSet().first();
+            connection.close();
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return result;
     }
 
     @Override

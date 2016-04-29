@@ -9,13 +9,16 @@ public class Language {
 
     }
 
-    public Language (String name){
+    public Language (String name, String shortName){
+
         setLangName(name);
+        setShortName(shortName);
     }
 
-    public Language(int id, String name){
+    public Language(int id, String name, String shortName){
         setId(id);
         setLangName(name);
+        setShortName(shortName);
     }
 
     private int id;
