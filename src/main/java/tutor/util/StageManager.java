@@ -47,24 +47,9 @@ public class StageManager {
      * @param title title for a new scene
      * @param layerIndex is a layer of a stage to be shown on
      * @param isResizable shows whether a user should be able to resize the stage.
-     * @param showWithDelay shows whether to display the stage instantly after it was initialized, or wait until showAll() method is called.
-     *        @implNote Please note: when showWithDelay is set to true, the stage will not be shown until showAll() method is called. You may need to use it when you have some parameters to be passed to the controller before the stage loads.
-     */
-    public void navigateTo(URL fxmlViewURL, String title, int layerIndex, Optional<Boolean> isResizable, boolean showWithDelay) {
-        navigateTo(fxmlViewURL, title, layerIndex, isResizable, false, showWithDelay);
-    }
-
-    /**
-     * Navigation dispatcher.
-     * @param fxmlViewURL a URL to the new view
-     * @param title title for a new scene
-     * @param layerIndex is a layer of a stage to be shown on
-     * @param isResizable shows whether a user should be able to resize the stage.
      * @param waitUntilCloses stands for whether you'd like to wait until this stage is closed to proceed to other stages or to give user the opportunity to freely move between stages.
-     * @param showWithDelay shows whether to display the stage instantly after it was initialized, or wait until showAll() method is called.
-     *        @implNote  Please note: when showWithDelay is set to true, the stage will not be shown until showAll() method is called. You may need to use it when you have some parameters to be passed to the controller before the stage loads.
      */
-    public void navigateTo(URL fxmlViewURL, String title, int layerIndex, Optional<Boolean> isResizable, boolean waitUntilCloses, boolean showWithDelay) {
+    public void navigateTo(URL fxmlViewURL, String title, int layerIndex, Optional<Boolean> isResizable, boolean waitUntilCloses) {
         try {
 
             if (layerIndex > MAX_LAYERS || layerIndex < 0)
@@ -91,12 +76,10 @@ public class StageManager {
             stages.put(layerIndex, stage);
             stagePaths.put(layerIndex, fxmlViewURL);
 
-            if (!showWithDelay) {
-                if (waitUntilCloses)
-                    stage.showAndWait();
-                else
-                    stage.show();
-            }
+            if (waitUntilCloses)
+                stage.showAndWait();
+            else
+                stage.show();
         }catch (NullPointerException ex){
             ex.printStackTrace();
         }
@@ -188,20 +171,6 @@ public class StageManager {
         }
         DbManager.getInstance().shutdown();
         Voice.getInstance().dispose();
-    }
-
-    /**
-     * Shows all delayed views.
-     * @param andWait determines whether to wait until the view closes or not.
-     */
-    public void showAll(boolean andWait){
-        stages.entrySet().stream().filter(entry -> !entry.getValue().isShowing()).forEach(entry -> {
-            if (andWait) {
-                entry.getValue().showAndWait();
-            } else {
-                entry.getValue().show();
-            }
-        });
     }
 
     /**

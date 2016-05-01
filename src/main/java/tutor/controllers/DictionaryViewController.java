@@ -160,7 +160,7 @@ public class DictionaryViewController implements Initializable{
     }
 
     public void importFileClicked(ActionEvent actionEvent) {
-        StageManager.getInstance().navigateTo(Navigator.getPathFor(Navigator.FILE_IMPORT_VIEW_PATH), ResourceBundleKeys.FILE_CHOOSER_TITLE, 2, Optional.empty(), true, false);
+        StageManager.getInstance().navigateTo(Navigator.getPathFor(Navigator.FILE_IMPORT_VIEW_PATH), ResourceBundleKeys.FILE_CHOOSER_TITLE, 2, Optional.empty(), true);
         initializeUI();
     }
 }

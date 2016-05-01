@@ -317,26 +317,6 @@
   -fx-border-width: 0.4;
 }
 
-//vk
-#socb_vk{
-  -fx-image: url("icons/vk_icon.png");
-}
-
-//facebook
-#socb_fb{
-  -fx-image: url("icons/fb_icon.png");
-}
-
-//google +
-#socb_ggle{
-  -fx-image: url("icons/google_plus_icon.png");
-}
-
-//twitter
-#socb_tw{
-  -fx-image: url("icons/twitter-icon.png");
-}
-
 //task headers
 .taskheader{
   -fx-font-size: 36;
