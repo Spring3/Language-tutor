@@ -62,7 +62,8 @@ public class DictionaryViewController implements Initializable{
         table_translation.setCellFactory(TextFieldTableCell.forTableColumn());
         table_articles.setCellFactory(TextFieldTableCell.forTableColumn());
         initializeTableViewColumns();
-        loadWordsFor(Controller.selectedLanguage);
+        if (Controller.selectedLanguage != null)
+            loadWordsFor(Controller.selectedLanguage);
         check_articles.selectedProperty().addListener((observable1, oldValue1, newValue1) -> {
             table_articles.setVisible(newValue1);
         });
