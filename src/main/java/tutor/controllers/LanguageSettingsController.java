@@ -1,5 +1,6 @@
 package tutor.controllers;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,22 +34,25 @@ public class LanguageSettingsController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         bundle = resources;
         selectedLanguages = new LinkedHashSet<>();
-        ObservableList<Language> allLanguages = FXCollections.observableList(LanguageDAO.getInstance().readAllLanguages());
-        listView_allLanguages.setItems(allLanguages);
-
+        listView_allLanguages.getItems().addAll(FXCollections.observableList(LanguageDAO.getInstance().readAllLanguages()));
+        listView_allLanguages.getItems().removeAll(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId()));
         tf_search.textProperty().addListener((observable, oldValue, newValue) ->
         {
             if (newValue.isEmpty()){
-                ObservableList<Language> allLanguageslist = FXCollections.observableList(LanguageDAO.getInstance().readAllLanguages());
+                ObservableList<Language> allLanguageslist = FXCollections.observableList(listView_allLanguages.getItems());
                 listView_allLanguages.setItems(allLanguageslist);
             }
             else
             {
-                ObservableList<Language> filteredLanguages = FXCollections.observableArrayList(LanguageDAO.getInstance().readAllLanguages().parallelStream()
+                ObservableList<Language> filteredLanguages = FXCollections.observableArrayList(listView_allLanguages.getItems().parallelStream()
                         .filter((lang) -> lang.getLangName().toLowerCase().startsWith(newValue.toLowerCase()))
                         .collect(Collectors.toList()));
                 listView_allLanguages.setItems(filteredLanguages);
             }
+        });
+
+        Platform.runLater(() -> {
+            tf_search.requestFocus();
         });
 
         listView_allLanguages.setOnMouseClicked(value ->{

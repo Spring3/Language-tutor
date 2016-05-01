@@ -82,7 +82,7 @@ public class Controller implements Initializable
         listView_languages.getItems().addAll(LanguageDAO.getInstance().readAllLanguagesByUser(AuthController.getActiveUser().getId()));
         listView_languages.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedLanguage = newValue;
-            if (!Voice.SupportedLanguages.contains(selectedLanguage)){
+            if (selectedLanguage != null && !Voice.SupportedLanguages.contains(selectedLanguage)){
                 voiceDictationPanel.setVisible(false);
             }else{
                 voiceDictationPanel.setVisible(true);
