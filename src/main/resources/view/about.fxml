@@ -7,7 +7,7 @@
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:controller="tutor.controllers.AboutViewController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="anchor-pane" BorderPane.alignment="CENTER">
          <children>
@@ -15,7 +15,7 @@
             <Label alignment="CENTER" layoutX="159.0" layoutY="56.0" prefHeight="22.0" prefWidth="270.0" styleClass="settings_label" text="Created by Daniyil Vasylenko" textAlignment="CENTER" AnchorPane.leftAnchor="159.0" AnchorPane.rightAnchor="159.0" AnchorPane.topAnchor="56.0" />
             <Label layoutX="266.0" layoutY="328.0" styleClass="settings_label" text="Contact" AnchorPane.leftAnchor="266.0" AnchorPane.rightAnchor="266.0" AnchorPane.topAnchor="328.0" />
             <Label layoutX="16.0" layoutY="95.0" prefHeight="210.0" prefWidth="566.0" styleClass="settings_label" text="Language tutor is a software, intended to help people lean words for new languages. It was intended to be my persona application, but I would like to share it with others. If you find it useful, I will be really happy with it. For now there is only a few types of tasks available, but I hope that I will find motivation to do more. Check for updates." textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="95.0" />
-            <Hyperlink layoutX="180.0" layoutY="361.0" text="https://ua.linkedin.com/in/dvasylenko" AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="361.0" />
+            <Hyperlink fx:id="profileLink" layoutX="180.0" layoutY="361.0" text="https://ua.linkedin.com/in/dvasylenko" onAction="#linkClicked" AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="361.0" />
          </children>
       </AnchorPane>
    </center>

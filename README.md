@@ -5,3 +5,5 @@
 <p>Other resources can be found at src/resources/ folder</p>
 <p>Localisation files can be found at src/resources/locale/ folder</p>
 
+### Project stopped. Will be redeveloped as a separate project soon.
+
